@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    // justify-content: space-evenly;
+}
+
+.label {
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-bottom: 8px;
+}
+
+.margin_top {
+    margin-top: 64px;
+}
+
+.margin_to_button {
+    margin-bottom: 64px;
+}

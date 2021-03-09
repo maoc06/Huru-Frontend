@@ -1,0 +1,27 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    display: flex;
+    max-width: 100%;
+    min-height: 112px;
+    max-height: 150px;
+    border-radius: 10px;
+    border: 1px solid $gray_2;
+    overflow: hidden;
+    input {
+        display: none;
+    }
+    .image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+    .loading {
+        opacity: 0.7;
+    }
+}
+
+.without_image {
+    border: 1px solid $primary;
+    justify-content: center;
+    align-items: center;
+}

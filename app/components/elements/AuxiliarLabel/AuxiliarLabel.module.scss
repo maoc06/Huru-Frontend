@@ -1,0 +1,11 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    display: flex;
+    p {
+        font-size: 14px;
+        color: $gray_1;
+    }
+    .bold_label {
+        font-weight: bold;
+    }
+}

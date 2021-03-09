@@ -1,0 +1,17 @@
+@import '../../../styles/abstracts/colors';
+.margin_top {
+    margin-top: 16px;
+}
+
+.margin_bottom {
+    margin-bottom: 16px;
+}
+
+.margin_to_button {
+    margin-bottom: 32px;
+}
+
+.statusMsg {
+    font-size: 14px;
+    color: $error;
+}

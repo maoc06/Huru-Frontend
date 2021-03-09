@@ -1,0 +1,22 @@
+@import '../../../styles/app.scss';
+.container {
+    display: flex;
+    flex-direction: column;
+    background: $background;
+    width: 100vw;
+    padding: 32px;
+    // align-items: center;
+    justify-content: center;
+    background-image: url('/images/mobile-bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.full {
+    min-height: 100vh;
+    height: fit-content;
+}
+
+.inline {
+    height: 100%;
+}
