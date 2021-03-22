@@ -11,7 +11,8 @@ import Checkbox from '../../../elements/Checkbox/Checkbox';
 import SubmitButton from '../../../elements/Button/SubmitButton';
 
 import ActivityIndicator from '../../../elements/ActivityIndicator/ActivityIndicator';
-import CheckIndicator from '../../../elements/CheckIndicator/CheckIndicator';
+import StatusIndicator from '../../../elements/StatusIndicator/StatusIndicator';
+import checkAnimationData from '../../../../../public/animations/check.json';
 
 import acceptTermsSchema from '../../../../constants/validationSchema/acceptTerms';
 
@@ -91,7 +92,8 @@ export default function Terms() {
         }
       />
 
-      <CheckIndicator
+      <StatusIndicator
+        animationData={checkAnimationData}
         visible={
           !postVehicleFeatures.error &&
           !postVehicleFeatures.loading &&

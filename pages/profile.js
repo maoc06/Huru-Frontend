@@ -1,13 +1,11 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import AppLayout from '../app/components/layouts/AppLayout/AppLayout';
-import Button from '../app/components/elements/Button/Button';
+import UserProfileTemplate from '../app/components/templates/UserProfile/UserProfile';
 import useAuth from '../app/hooks/useAuth';
 import authStorage from '../app/utils/storageAuth';
-import ProtectRoute from '../app/components/layouts/ProtectRoute/ProtectRouteLayout';
 
 function Profile() {
   const auth = useAuth();
@@ -36,18 +34,8 @@ function Profile() {
         />
       </Head>
 
-      <AppLayout>
-        <h1>Bienvenido,</h1>
-
-        <h1>
-          {user.firstName} {user.lastName}
-        </h1>
-
-        <Link href="/add-vehicle">
-          <a>Hazte Host</a>
-        </Link>
-
-        <Button onClick={handleLogOut}>Cerrar sesión</Button>
+      <AppLayout withImage={false}>
+        <UserProfileTemplate user={user} onLogOut={handleLogOut} />
       </AppLayout>
     </div>
   );

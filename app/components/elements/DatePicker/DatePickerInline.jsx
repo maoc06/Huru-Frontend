@@ -2,7 +2,6 @@ import 'date-fns';
 import { useFormikContext } from 'formik';
 import { useState, useEffect } from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import esLocale from 'date-fns/locale/es';
 import DateFnsUtils from '@date-io/date-fns';
@@ -13,24 +12,8 @@ import {
 
 import styles from './DatePickerInline.module.scss';
 import themeMaterialUI from '../../../styles/material/theme';
+import { materialStyles } from '../../../styles/material/materialBase';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-
-const useStyles = makeStyles({
-  field: {
-    height: 55,
-    padding: '16px 24px',
-    border: '1px solid #828282',
-    borderRadius: '4px',
-    marginTop: '8px',
-    marginBottom: 0,
-  },
-  input: {
-    padding: 0,
-  },
-  fieldError: {
-    border: '1px solid #df0611',
-  },
-});
 
 export default function DatePickerInline({
   name,
@@ -38,7 +21,7 @@ export default function DatePickerInline({
   dateError,
   setDateError,
 }) {
-  const classes = useStyles();
+  const classes = materialStyles();
 
   const { errors, setFieldValue, setErrors } = useFormikContext();
 
@@ -85,7 +68,7 @@ export default function DatePickerInline({
             }}
             InputProps={{
               disableUnderline: true,
-              classes: { input: classes.input },
+              classes: { input: classes.root },
             }}
             hiddenLabel={true}
             disableFuture={true}
@@ -96,7 +79,6 @@ export default function DatePickerInline({
         </MuiPickersUtilsProvider>
       </ThemeProvider>
 
-      {/* {dateError && <p className={styles.statusMsg}>{errors[name]}</p>} */}
       <ErrorMessage visible={dateError} message={errors[name]} />
     </div>
   );

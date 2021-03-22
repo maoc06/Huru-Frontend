@@ -1,9 +1,11 @@
+import ErrorMessage from '../../elements/ErrorMessage/ErrorMessage';
 import styles from './TextFieldRow.module.scss';
 
 export default function TextFieldRow({
   children,
   label,
   error,
+  errorMsg,
   marginTop,
   marginToButton,
 }) {
@@ -18,7 +20,7 @@ export default function TextFieldRow({
 
         <div className={`${styles.container}`}>{children}</div>
 
-        {error && <p>Error</p>}
+        <ErrorMessage visible={error} message={errorMsg} />
       </main>
     </>
   );

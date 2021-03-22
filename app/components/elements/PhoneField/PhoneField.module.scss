@@ -1,0 +1,42 @@
+@import '../../../styles/abstracts/colors';
+.wrapper {
+    margin: 16px 0;
+    label {
+        font-weight: bold;
+        text-transform: 'capitalize';
+    }
+    .container {
+        display: flex;
+        margin-top: 8px;
+        .wrap_phone_field {
+            flex: 1;
+            display: flex;
+            margin-left: 8px;
+            border-radius: 4px;
+            border: 1px solid $gray_3;
+            padding-left: 24px;
+            &:focus-within {
+                border: 1px solid $primary;
+            }
+            span {
+                align-self: center;
+                color: $gray_2;
+            }
+            .input {
+                width: 100%;
+                height: 55px;
+                background-color: transparent;
+                font-size: 16px;
+                color: $black_2;
+                font-weight: bold;
+                padding-left: 8px;
+                padding-right: 16px;
+                outline: 0;
+                border: 0;
+                &:invalid {
+                    border: 1px solid $error;
+                }
+            }
+        }
+    }
+}

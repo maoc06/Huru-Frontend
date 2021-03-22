@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        p {
+            text-transform: capitalize;
+        }
+    }
+    margin-bottom: 32px;
+}

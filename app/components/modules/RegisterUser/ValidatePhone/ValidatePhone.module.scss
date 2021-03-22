@@ -1,0 +1,9 @@
+@import '../../../../styles/abstracts/colors';
+.bottom_label {
+    margin-top: 4px;
+    margin-bottom: 64px;
+    span {
+        font-weight: bold;
+        color: $primary;
+    }
+}

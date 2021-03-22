@@ -8,6 +8,7 @@ const initialState = {
   identityDocument: '',
   dateOfBirth: '',
   phone: '',
+  isPhoneVerified: false,
 };
 
 export const userRegisterSlice = createSlice({
@@ -27,8 +28,11 @@ export const userRegisterSlice = createSlice({
       state.identityDocument = cc;
     },
     setPhone: (state, action) => {
-      const { phone } = action.payload;
-      state.phone = phone;
+      const { phoneNumber } = action.payload;
+      state.phone = phoneNumber;
+    },
+    setPhoneVerified: (state, action) => {
+      state.isPhoneVerified = action.payload;
     },
   },
 });
@@ -37,6 +41,7 @@ export const {
   setEmailPassword,
   setPersonalData,
   setPhone,
+  setPhoneVerified,
 } = userRegisterSlice.actions;
 
 export default userRegisterSlice.reducer;

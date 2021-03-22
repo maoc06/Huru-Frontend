@@ -4,6 +4,8 @@ import authReducer from '../slices/authSlice';
 import userRegisterReducer from '../slices/userRegisterSlice';
 import vehicleRegisterReducer from '../slices/vehicleRegisterSlice';
 import vehicleRegisterObjectsReducer from '../slices/vehicleRegisterObjectsSlice';
+import searchParamsReducer from '../slices/searchParamsSlice';
+import filterSearchReducer from '../slices/filterSearchSlice';
 
 export default configureStore({
   reducer: {
@@ -11,5 +13,7 @@ export default configureStore({
     userRegister: userRegisterReducer,
     vehicleRegister: vehicleRegisterReducer,
     vehicleRegisterObjects: vehicleRegisterObjectsReducer,
+    searchParams: searchParamsReducer,
+    filterSearch: filterSearchReducer,
   },
 });

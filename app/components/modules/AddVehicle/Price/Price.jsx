@@ -12,10 +12,13 @@ export default function SetPricePerDay({ setStep, next }) {
   const dispatch = useDispatch();
 
   const initialValues = {
-    price: 0,
+    price: '',
   };
 
-  const handleSubmit = (price) => {
+  const handleSubmit = (param) => {
+    let { price } = param;
+    price = price.replace(/[\D\s\._\-]+/g, '');
+    price = price ? parseInt(price, 10) : 0;
     dispatch(setPrice(price));
     setStep(next);
   };
@@ -37,7 +40,8 @@ export default function SetPricePerDay({ setStep, next }) {
           name="price"
           placeholder="¿Cúal sera el precio por día de tu carro?"
           label="Precio base"
-          type="text"
+          type="tel"
+          isTypePrice={true}
           step="any"
         />
 

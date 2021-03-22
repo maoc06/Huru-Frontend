@@ -1,0 +1,11 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 55px;
+    min-width: 85px;
+    max-width: 85px;
+    border-radius: 4px;
+    border: 1px solid $gray_3;
+}

@@ -15,7 +15,7 @@ export default function Signin() {
         />
       </Head>
 
-      <AppLayout>
+      <AppLayout centerContent={true}>
         <LoginTemplate />
       </AppLayout>
     </div>

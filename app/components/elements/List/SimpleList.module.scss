@@ -1,0 +1,10 @@
+@import '../../../styles/abstracts/colors';
+.item_text {
+    text-transform: capitalize;
+    font-weight: bold;
+    color: $gray_1;
+}
+
+.item_reset {
+    color: $gray_3;
+}

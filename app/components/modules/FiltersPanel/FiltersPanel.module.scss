@@ -1,0 +1,55 @@
+@import '../../../styles/abstracts/colors';
+.wrapper {
+    position: relative;
+    .scroll_container {
+        display: flex;
+        height: 32px;
+        padding-bottom: 40px;
+        .filter {
+            height: 32px;
+            position: relative;
+            margin-right: 32px;
+            color: $gray_3;
+            &::after {
+                display: none;
+                border-top: 16px solid transparent;
+                border-right: 16px solid transparent;
+                border-bottom: 16px solid $white;
+                border-left: 16px solid transparent;
+                overflow: hidden;
+                content: '';
+                left: 50%;
+                position: absolute;
+                top: 10px;
+                transform: translateX(-50%);
+            }
+        }
+        .triangle_show {
+            &::after {
+                display: block;
+            }
+        }
+        .triangle_hide {
+            &::after {
+                display: none;
+            }
+        }
+    }
+    .filter_aux {
+        position: absolute;
+        top: 40px;
+        left: 0;
+        padding: 16px;
+        width: 100%;
+        z-index: 999;
+        background-color: $white;
+        border-radius: 10px;
+        box-shadow: 0px 20px 20px #8b8b8b99;
+    }
+    .filter_aux_show {
+        visibility: visible;
+    }
+    .filter_aux_hide {
+        visibility: hidden;
+    }
+}

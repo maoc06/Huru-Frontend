@@ -1,0 +1,30 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    display: flex;
+    position: sticky;
+    padding: 8px 16px;
+    bottom: 0;
+    min-height: 70px;
+    max-height: 70px;
+    background-color: $background;
+    box-shadow: 0 -4px 20px #99999999;
+    .price {
+        flex: 0.5;
+        p {
+            &:first-child {
+                font-weight: bold;
+                span {
+                    font-size: 16px;
+                }
+            }
+            &:last-child {
+                font-size: 14px;
+                color: $gray_3;
+            }
+        }
+    }
+    .button {
+        flex: 0.5;
+        margin-left: 16px;
+    }
+}

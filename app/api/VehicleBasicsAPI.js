@@ -9,6 +9,12 @@ const getVehicleModels = async () => {
   });
 };
 
+const getVehicleCategory = async () => {
+  return await client.get(`${endpoint}/car-category`, {
+    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
+  });
+};
+
 const getTransmissions = async () => {
   return await client.get(`${endpoint}/transmissions`, {
     headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
@@ -70,6 +76,7 @@ const updateOwnerCarImage = async (data) => {
 
 export default {
   getVehicleModels,
+  getVehicleCategory,
   getTransmissions,
   getOdometerRanges,
   getFeaturesOptions,

@@ -1,0 +1,23 @@
+.wrapper {
+    header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 64px;
+        h5 {
+            margin: 0;
+            margin-left: 16px;
+        }
+    }
+    section {
+        margin-bottom: 64px;
+        h6 {
+            font-size: 14px;
+            margin: 0;
+        }
+        &:last-child {
+            bottom: 0;
+            margin: 0;
+            position: relative;
+        }
+    }
+}

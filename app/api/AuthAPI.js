@@ -13,4 +13,21 @@ const checkDocument = (document) =>
 
 const checkPhone = (phone) => client.get(`${endpoint}/check-phone/${phone}`);
 
-export default { signUp, signIn, checkEmail, checkDocument, checkPhone };
+const sendSms = (phone) => client.get(`${endpoint}/send-verify-sms/${phone}`);
+
+const verifySmsCode = (phone, code) =>
+  client.get(`${endpoint}/check-verify-code/${phone}/${code}`);
+
+const verifyEmail = (token) =>
+  client.get(`${endpoint}/check-verify-email/${token}`);
+
+export default {
+  signUp,
+  signIn,
+  checkEmail,
+  checkDocument,
+  checkPhone,
+  sendSms,
+  verifySmsCode,
+  verifyEmail,
+};

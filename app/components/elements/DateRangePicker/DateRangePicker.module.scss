@@ -1,0 +1,41 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    z-index: 999999;
+    .times {
+        display: flex;
+        flex-direction: column;
+        padding: 0 12px;
+        div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            label {
+                color: $gray_3;
+            }
+            input {
+                flex: 1;
+                margin-left: 16px;
+                border-radius: 4px;
+                border: 1px solid $gray_3;
+                padding: 8px 16px;
+                background-color: transparent;
+                min-width: 150px;
+                max-width: 200px;
+            }
+        }
+    }
+}
+
+.show {
+    display: inline-block;
+}
+
+.hide {
+    display: none;
+}

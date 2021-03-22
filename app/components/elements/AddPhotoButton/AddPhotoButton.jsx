@@ -47,11 +47,10 @@ export default function AddPhotoButton({
       {!photoUri && (
         <>
           <input
-            accept="image/*"
-            id="photo-input"
             type="file"
-            capture="environment"
+            accept="image/*"
             onChange={handleCapture}
+            id="photo-input"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"

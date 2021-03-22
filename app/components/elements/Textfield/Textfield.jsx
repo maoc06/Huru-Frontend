@@ -1,16 +1,23 @@
 import { useEffect } from 'react';
 import { useFormikContext } from 'formik';
 
+import formatPrice from '../../../utils/formatPrice';
+
 import styles from './Textfield.module.scss';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 export default function Textfield({
   name,
   placeholder,
+  withLabel = true,
   label,
   upperCase = false,
   apiError,
   errorMsg,
+  isTypePrice = false,
+  withIcon = false,
+  iconComponent,
+  withContainerMargings = true,
   withSmallBottomMargin,
   ...otherProps
 }) {
@@ -19,6 +26,7 @@ export default function Textfield({
     errors,
     touched,
     setFieldTouched,
+    setFieldValue,
     handleChange,
     setErrors,
   } = useFormikContext();
@@ -33,29 +41,37 @@ export default function Textfield({
     }
   }, [apiError]);
 
+  const handleTypePriceChange = (event) => {
+    setFieldValue(name, formatPrice(event.target.value));
+  };
+
   return (
     <div
       className={`${styles.container} ${
         withSmallBottomMargin && styles.with_small_bottom_margin
-      }`}
+      } ${withContainerMargings && styles.container_margins}`}
     >
-      <label>{label}</label>
+      {withLabel && <label>{label}</label>}
 
-      <input
-        onBlur={() => setFieldTouched(name)}
-        onChange={handleChange}
-        value={values[name]}
-        name={name}
-        className={`${styles.input} ${
-          touched[name] && errors[name] && styles.inputError
-        } ${upperCase && styles.upperCase}`}
-        placeholder={placeholder}
-        {...otherProps}
-      />
+      <div
+        className={`${styles.textfield} ${
+          withLabel && styles.with_margin_to_label
+        } ${withIcon && styles.paddingIcon}`}
+      >
+        {withIcon && <div>{iconComponent}</div>}
 
-      {/* {touched[name] && errors[name] && (
-        <p className={styles.statusMsg}>{errors[name]}</p>
-      )} */}
+        <input
+          onBlur={() => setFieldTouched(name)}
+          onChange={isTypePrice ? handleTypePriceChange : handleChange}
+          value={values[name]}
+          name={name}
+          className={`${styles.input} ${
+            touched[name] && errors[name] && styles.inputError
+          } ${upperCase && styles.upperCase} `}
+          placeholder={placeholder}
+          {...otherProps}
+        />
+      </div>
 
       <ErrorMessage
         visible={touched[name] && errors[name]}

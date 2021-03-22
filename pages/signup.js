@@ -1,6 +1,5 @@
 import Head from 'next/head';
 
-import AppLayout from '../app/components/layouts/AppLayout/AppLayout';
 import RegisterUserTemplate from '../app/components/templates/RegisterUserPage/RegisterUserPage';
 
 export default function Signup() {
@@ -15,9 +14,9 @@ export default function Signup() {
         />
       </Head>
 
-      <AppLayout>
+      <>
         <RegisterUserTemplate />
-      </AppLayout>
+      </>
     </div>
   );
 }

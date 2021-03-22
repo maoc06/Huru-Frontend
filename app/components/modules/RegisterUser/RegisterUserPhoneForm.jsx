@@ -7,7 +7,9 @@ import useApi from '../../../hooks/useApi';
 import authApi from '../../../api/AuthAPI';
 
 import Form from '../Forms/Form';
+import PhoneFiled from '../../elements/PhoneField/PhoneField';
 import Textfield from '../../elements/Textfield/Textfield';
+import CountryPicker from '../../elements/CountryPicker/CountryPicker';
 import SubmitButton from '../../elements/Button/SubmitButton';
 
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';
@@ -16,25 +18,29 @@ import userPhoneSchema from '../../../constants/validationSchema/userPhone';
 
 export default function RegisterUserPhone({ setStep }) {
   const dispatch = useDispatch();
-
   const checkPhoneApi = useApi(authApi.checkPhone);
-
+  const sendVerificationSms = useApi(authApi.sendSms);
+  const [countryCode, setCountryCode] = useState();
   const [apiError, setApiError] = useState(false);
 
   const initialValues = { phone: '' };
 
   const handleSubmit = async ({ phone }) => {
-    const res = await checkPhoneApi.request(phone);
+    const phoneNumber = `+${countryCode} ${phone}`;
+    const res = await checkPhoneApi.request(phoneNumber);
     if (res.data.data.phone !== undefined) setApiError(true);
     else {
-      dispatch(setPhone({ phone }));
+      dispatch(setPhone({ phoneNumber }));
+      await sendVerificationSms.request(phoneNumber.replace(/\D/g, ''));
       setStep(4);
     }
   };
 
   return (
     <>
-      <ActivityIndicator visible={checkPhoneApi.loading} />
+      <ActivityIndicator
+        visible={checkPhoneApi.loading || sendVerificationSms.loading}
+      />
 
       <div>
         <h3>¡Empecemos el viaje!</h3>
@@ -46,13 +52,13 @@ export default function RegisterUserPhone({ setStep }) {
           validationSchema={userPhoneSchema}
           onSubmit={handleSubmit}
         >
-          <Textfield
+          <PhoneFiled
             name="phone"
-            type="text"
-            label="Teléfono"
             placeholder="¿Cúal es tu numero de teléfono?"
+            label="Teléfono"
             apiError={apiError}
-            errorMsg={'El número de teléfono ya está registrado'}
+            countryCode={countryCode}
+            setCountryCode={setCountryCode}
           />
 
           <SubmitButton>Continuar</SubmitButton>

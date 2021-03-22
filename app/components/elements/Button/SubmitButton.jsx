@@ -6,7 +6,7 @@ export default function SubmitButton({ children, marginTop }) {
   const { handleSubmit } = useFormikContext();
 
   return (
-    <Button type="submit" onClick={handleSubmit} marginTop>
+    <Button type="submit" onClick={handleSubmit} marginTop={marginTop}>
       {children}
     </Button>
   );

@@ -9,7 +9,8 @@ import AppTerms from '../../elements/Terms/Terms';
 import SubmitButton from '../../elements/Button/SubmitButton';
 
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';
-import CheckIndicator from '../../elements/CheckIndicator/CheckIndicator';
+import StatusIndicator from '../../elements/StatusIndicator/StatusIndicator';
+import emailAnimationData from '../../../../public/animations/sent-email.json';
 
 import acceptTermsSchema from '../../../constants/validationSchema/acceptTerms';
 
@@ -38,7 +39,8 @@ export default function Terms() {
     <>
       <ActivityIndicator visible={singUp.loading || signIn.loading} />
 
-      <CheckIndicator
+      <StatusIndicator
+        animationData={emailAnimationData}
         visible={
           !singUp.error &&
           !singUp.loading &&
@@ -48,7 +50,9 @@ export default function Terms() {
           signIn.data.constructor === Object
         }
         title={`¡Bienvenido, ${user.firstName}!`}
-        message={'Explora Huru mientras validamos tu información.'}
+        message={
+          'Para finalizar, enviamos un correo de verificación. Mientras puedes ir explorando el universo Huru.'
+        }
         buttonMsg={'Explorar'}
         route={'/profile'}
       />

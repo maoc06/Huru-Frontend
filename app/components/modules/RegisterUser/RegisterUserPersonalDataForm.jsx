@@ -77,7 +77,7 @@ export default function RegisterUserPersonalData({ setStep }) {
 
           <Textfield
             name="cc"
-            type="text"
+            type="tel"
             label="Cédula"
             placeholder="Digita el número de tu cédula"
             apiError={apiError}

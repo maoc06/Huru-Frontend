@@ -1,12 +1,15 @@
 import { useState } from 'react';
 
+import AppLayout from '../../layouts/AppLayout/AppLayout';
+import StepBarProgress from '../../elements/StepBarProgress/StepBarProgress';
 import RegisterUserCredentials from '../../modules/RegisterUser/RegisterUserForm';
 import RegisterUserPersonalData from '../../modules/RegisterUser/RegisterUserPersonalDataForm';
 import RegisterUserPhone from '../../modules/RegisterUser/RegisterUserPhoneForm';
-import ValidatePhone from '../../modules/RegisterUser/ValidatePhone';
+import ValidatePhone from '../../modules/RegisterUser/ValidatePhone/ValidatePhone';
 import Terms from '../../modules/RegisterUser/Terms';
 
 const RegisterUserPage = () => {
+  const numOfSteps = 5;
   const [step, setSetp] = useState(1);
 
   const renderStep = () => {
@@ -26,12 +29,12 @@ const RegisterUserPage = () => {
     }
   };
 
-  return <>{renderStep()}</>;
-  // return (
-  //   <>
-  //     <Terms />
-  //   </>
-  // );
+  return (
+    <>
+      <StepBarProgress numOfSteps={numOfSteps} currStep={step} />
+      <AppLayout centerContent={true}>{renderStep()}</AppLayout>
+    </>
+  );
 };
 
 export default RegisterUserPage;

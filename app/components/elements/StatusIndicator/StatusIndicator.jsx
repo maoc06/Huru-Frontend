@@ -1,12 +1,13 @@
 import Lottie from 'react-lottie';
-import animationData from '../../../../public/animations/check.json';
 import { useRouter } from 'next/router';
 
 import Button from '../Button/Button';
 
-import styles from './CheckIndicator.module.scss';
+import styles from './StatusIndicator.module.scss';
 
-export default function CheckIndicator({
+export default function ErrorIndicator({
+  animationData,
+  isLoop = true,
   visible = false,
   title,
   message,
@@ -16,7 +17,7 @@ export default function CheckIndicator({
   const router = useRouter();
 
   const defaultOptions = {
-    loop: true,
+    loop: isLoop,
     autoPlay: true,
     animationData: animationData,
     rendererSettings: {

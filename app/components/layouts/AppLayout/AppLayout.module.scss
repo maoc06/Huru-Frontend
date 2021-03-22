@@ -5,8 +5,14 @@
     background: $background;
     width: 100vw;
     padding: 32px;
-    // align-items: center;
+    overflow: hidden;
+}
+
+.center_content {
     justify-content: center;
+}
+
+.with_image {
     background-image: url('/images/mobile-bg.png');
     background-size: cover;
     background-repeat: no-repeat;

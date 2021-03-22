@@ -1,9 +1,15 @@
 import * as Yup from 'yup';
 
 const setPircePerDaySchema = Yup.object().shape({
-  price: Yup.number('El precio deben ser digitos')
-    .min(50000, 'El precio minimo son $50,000 COP')
+  price: Yup.string('El precio deben ser digitos')
     .required('El precio por día es un campo obligatorio')
+    .test('min', 'El precio minimo son COP 50.000', (val) => {
+      if (val) {
+        val = val.replace(/[\D\s\._\-]+/g, '');
+        val = val ? parseInt(val, 10) : 0;
+        return 50000 < val;
+      }
+    })
     .label('Precio'),
 });
 

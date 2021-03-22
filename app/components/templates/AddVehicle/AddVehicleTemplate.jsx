@@ -111,6 +111,11 @@ const AddVehcileTemplate = () => {
       {renderStep()}
     </>
   );
+  // return (
+  //   <AppLayout>
+  //     <AddPhotos setStep={setStep} next={8} />
+  //   </AppLayout>
+  // );
 };
 
 export default AddVehcileTemplate;
