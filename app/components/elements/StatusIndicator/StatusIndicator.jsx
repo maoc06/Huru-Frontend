@@ -1,21 +1,18 @@
 import Lottie from 'react-lottie';
-import { useRouter } from 'next/router';
 
 import Button from '../Button/Button';
 
 import styles from './StatusIndicator.module.scss';
 
-export default function ErrorIndicator({
+export default function StatusIndicator({
   animationData,
   isLoop = true,
   visible = false,
   title,
   message,
   buttonMsg,
-  route,
+  onClickButton,
 }) {
-  const router = useRouter();
-
   const defaultOptions = {
     loop: isLoop,
     autoPlay: true,
@@ -32,19 +29,21 @@ export default function ErrorIndicator({
       <div className={styles.overlay}>
         <Lottie
           options={defaultOptions}
-          height={150}
-          width={150}
+          height={125}
+          width={125}
           style={{
             alignSelf: 'center',
           }}
         />
-        <h4>{title}</h4>
+        <h6>{title}</h6>
 
         <p>{message}</p>
 
-        <Button onClick={() => router.push(route)} marginBottom>
-          {buttonMsg}
-        </Button>
+        <div className={styles.button}>
+          <Button invert={true} onClick={onClickButton}>
+            {buttonMsg}
+          </Button>
+        </div>
       </div>
     </div>
   );

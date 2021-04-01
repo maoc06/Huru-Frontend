@@ -10,7 +10,6 @@ export default function CardHorizontal({ slug, title, price, imageSrc }) {
   const router = useRouter();
 
   const handleClick = () => {
-    console.log('Go to slug:', slug);
     router.push(`/car/${encodeURIComponent(slug)}`);
   };
 

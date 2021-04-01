@@ -13,4 +13,8 @@ export const materialAvatarStyles = makeStyles((theme) => ({
     width: theme.spacing(7),
     height: theme.spacing(7),
   },
+  xl: {
+    width: theme.spacing(10),
+    height: theme.spacing(10),
+  },
 }));

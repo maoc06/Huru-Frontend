@@ -31,6 +31,12 @@ import SportsType from '../components/elements/Icons/CarTypes/SportsType';
 import SuvType from '../components/elements/Icons/CarTypes/SuvType';
 import VanType from '../components/elements/Icons/CarTypes/VanType';
 
+// Payment methods icons
+import VisaIcon from '../components/elements/Icons/PaymentMethods/VisaIcon';
+import MastercardIcon from '../components/elements/Icons/PaymentMethods/MastercardIcon';
+import AmexIcon from '../components/elements/Icons/PaymentMethods/AmexIcon';
+import NequiIcon from '../components/elements/Icons/PaymentMethods/NequiIcon';
+
 // type Transmissions
 const typeTransmissionEnum = Object.freeze({ 1: 'Manual', 2: 'Automático' });
 
@@ -63,6 +69,26 @@ const carFeaturesIcons = Object.freeze({
   17: <UsbInput />,
 });
 
+// Car features name
+const carFeaturesNames = Object.freeze({
+  1: 'accesibilidad para silla de ruedas',
+  2: 'tracción en las cuatro ruedas',
+  3: 'android auto',
+  4: 'apple CarPlay',
+  5: 'entrada AUX',
+  6: 'camara trasera',
+  7: 'portabicicletas',
+  8: 'alerta de puntos ciegos',
+  9: 'bluetooth',
+  10: 'asiento para niños',
+  11: 'gps',
+  12: 'asientos con calefacción',
+  13: 'entrada sin llave',
+  14: 'pet friendly',
+  16: 'cargador USB',
+  17: 'entrada USB',
+});
+
 // Car types icons
 const carTypesIcons = Object.freeze({
   1: <CarType />,
@@ -74,4 +100,19 @@ const carTypesIcons = Object.freeze({
   7: <VanType />,
 });
 
-export { typeTransmissionEnum, carBrandLogos, carFeaturesIcons, carTypesIcons };
+// Payment methods icons
+const paymentMethodsIcons = Object.freeze({
+  VISA: <VisaIcon />,
+  MASTERCARD: <MastercardIcon />,
+  AMEX: <AmexIcon />,
+  NEQUI: <NequiIcon />,
+});
+
+export {
+  typeTransmissionEnum,
+  carBrandLogos,
+  carFeaturesIcons,
+  carFeaturesNames,
+  carTypesIcons,
+  paymentMethodsIcons,
+};

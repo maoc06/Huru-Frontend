@@ -15,7 +15,7 @@ export default function AppAvatar({
       src={src}
       className={`${size === 'small' && classes.small} ${
         size === 'large' && classes.large
-      } ${size === 'medium' && classes.medium}`}
+      } ${size === 'medium' && classes.medium} ${size === 'xl' && classes.xl}`}
     />
   );
 }

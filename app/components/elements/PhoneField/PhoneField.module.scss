@@ -1,6 +1,6 @@
 @import '../../../styles/abstracts/colors';
 .wrapper {
-    margin: 16px 0;
+    margin-top: 16px;
     label {
         font-weight: bold;
         text-transform: 'capitalize';
@@ -11,7 +11,6 @@
         .wrap_phone_field {
             flex: 1;
             display: flex;
-            margin-left: 8px;
             border-radius: 4px;
             border: 1px solid $gray_3;
             padding-left: 24px;
@@ -28,7 +27,6 @@
                 background-color: transparent;
                 font-size: 16px;
                 color: $black_2;
-                font-weight: bold;
                 padding-left: 8px;
                 padding-right: 16px;
                 outline: 0;
@@ -37,6 +35,16 @@
                     border: 1px solid $error;
                 }
             }
+            .input_bold {
+                font-weight: bold;
+            }
+        }
+        .wrap_margin {
+            margin-left: 8px;
         }
     }
+}
+
+.marginBottom {
+    margin-bottom: 16px;
 }

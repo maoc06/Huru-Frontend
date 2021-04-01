@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 import useApi from '../../../hooks/useApi';
 import useAuth from '../../../hooks/useAuth';
@@ -15,6 +16,7 @@ import emailAnimationData from '../../../../public/animations/sent-email.json';
 import acceptTermsSchema from '../../../constants/validationSchema/acceptTerms';
 
 export default function Terms() {
+  const router = useRouter();
   const auth = useAuth();
   const singUp = useApi(authApi.signUp);
   const signIn = useApi(authApi.signIn);
@@ -23,6 +25,10 @@ export default function Terms() {
   const initialValues = {
     checkTerms: false,
   };
+  
+  const handleButtonPopUp = () => {
+    router.push('/profile')
+  }
 
   const handleSubmit = async (checkTerms) => {
     if (checkTerms) {
@@ -54,7 +60,7 @@ export default function Terms() {
           'Para finalizar, enviamos un correo de verificación. Mientras puedes ir explorando el universo Huru.'
         }
         buttonMsg={'Explorar'}
-        route={'/profile'}
+        onClickButton={handleButtonPopUp}
       />
 
       <div>

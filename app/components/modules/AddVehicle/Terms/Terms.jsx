@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 import useApi from '../../../../hooks/useApi';
 import vehicleApi from '../../../../api/VehicleApi';
@@ -17,6 +18,7 @@ import checkAnimationData from '../../../../../public/animations/check.json';
 import acceptTermsSchema from '../../../../constants/validationSchema/acceptTerms';
 
 export default function Terms() {
+  const router = useRouter();
   const [uid, setUid] = useState('');
   const store = useSelector((state) => state.vehicleRegister);
 
@@ -32,6 +34,10 @@ export default function Terms() {
   const initialValues = {
     checkTerms: false,
   };
+
+  const handleButtonPopUp = () => {
+    router.push('/profile')
+  }
 
   const handleSubmit = async (checkTerms) => {
     if (checkTerms && uid) {
@@ -107,7 +113,7 @@ export default function Terms() {
         title={'Listo!'}
         message={'En ese momento tu solicitud está siendo revisada.'}
         buttonMsg={'Entendido'}
-        route={'/profile'}
+        onClickButton={handleButtonPopUp}
       />
 
       <div>

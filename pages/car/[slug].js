@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 
 import useApi from '../../app/hooks/useApi';
 import carApi from '../../app/api/VehicleApi';
+import userApi from '../../app/api/UserAPI';
 
-import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
 import Carousel from '../../app/components/elements/Carousel/Carousel';
 import PriceBottomBar from '../../app/components/modules/PriceBottomBar/PriceBottomBar';
 import CarProfileTemplate from '../../app/components/templates/CarProfile/CarProfileTempate';
@@ -16,14 +16,21 @@ import { typeTransmissionEnum } from '../../app/utils/enums';
 
 function CarSlug() {
   const router = useRouter();
+
   const getCar = useApi(carApi.findCar);
+  const getOwner = useApi(userApi.findUser);
+
   const [car, setCar] = useState({});
+  const [owner, setOwner] = useState({});
+
   const { slug } = router.query;
 
   const handleGetCar = async () => {
-    const res = await getCar.request(slug);
-    console.log('Enum Transmission:', typeTransmissionEnum[1]);
-    setCar(res.data.data);
+    const resCar = await getCar.request(slug);
+    const resUser = await getOwner.request(resCar.data.data.user_id);
+
+    setCar(resCar.data.data);
+    setOwner(resUser.data.data);
   };
 
   useEffect(() => {
@@ -43,19 +50,22 @@ function CarSlug() {
 
       <ActivityIndicator visible={getCar.loading} />
 
-      {!getCar.loading && (
+      {!getCar.loading && !getOwner.loading && (
         <>
           <Carousel images={car.images} />
-          <AppLayout withImage={false} isFullHeigh={false}>
-            <CarProfileTemplate
-              title={`${car.name} ${car.model} ${car.year}`}
-              description={car.description}
-              numSeats={car.number_of_seats}
-              typeTransmission={typeTransmissionEnum[car.transmission_id]}
-              typeGas="extra"
-            />
-          </AppLayout>
-          <PriceBottomBar pricePerDay={car.price} total={150000} />
+
+          <CarProfileTemplate
+            owner={owner}
+            title={`${car.name} ${car.model} ${car.year}`}
+            description={car.description}
+            numSeats={car.number_of_seats}
+            typeTransmission={typeTransmissionEnum[car.transmission_id]}
+            typeGas="extra"
+            features={car.features}
+            slug={slug}
+          />
+
+          <PriceBottomBar pricePerDay={car.price} total={150000} slug={slug} />
         </>
       )}
     </div>

@@ -11,8 +11,10 @@ export default function PhoneField({
   name,
   placeholder,
   label,
+  withCountryCode = true,
   countryCode,
   setCountryCode,
+  withMarginBottom = true,
 }) {
   const {
     values,
@@ -45,20 +47,27 @@ export default function PhoneField({
   };
 
   return (
-    <section className={styles.wrapper}>
+    <section
+      className={`${styles.wrapper} ${withMarginBottom && styles.marginBottom}`}
+    >
       <label>{label}</label>
 
       <div className={styles.container}>
-        <CountryPicker setCountryCode={setCountryCode} />
+        {withCountryCode && <CountryPicker setCountryCode={setCountryCode} />}
 
-        <div className={`${styles.wrap_phone_field}`}>
-          <span>{`+${countryCode}`}</span>
+        <div
+          className={`${styles.wrap_phone_field} ${
+            withCountryCode && style.wrap_margin
+          }`}
+        >
+          {withCountryCode && <span>{`+${countryCode}`}</span>}
+
           <input
             onBlur={() => setFieldTouched(name)}
             onChange={handleChange}
             value={values[name]}
             name={name}
-            className={`${styles.input}`}
+            className={`${styles.input} ${withCountryCode && style.input_bold}`}
             placeholder={placeholder}
             type="tel"
             pattern="[0-9]{3}-[0-9]{7}"

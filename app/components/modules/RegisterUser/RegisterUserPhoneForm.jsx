@@ -8,8 +8,6 @@ import authApi from '../../../api/AuthAPI';
 
 import Form from '../Forms/Form';
 import PhoneFiled from '../../elements/PhoneField/PhoneField';
-import Textfield from '../../elements/Textfield/Textfield';
-import CountryPicker from '../../elements/CountryPicker/CountryPicker';
 import SubmitButton from '../../elements/Button/SubmitButton';
 
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';

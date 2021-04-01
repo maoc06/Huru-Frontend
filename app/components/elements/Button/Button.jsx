@@ -7,6 +7,7 @@ export default function Button({
   isSecondary,
   marginTop,
   marginBottom,
+  invert = false,
 }) {
   return (
     <>
@@ -15,7 +16,7 @@ export default function Button({
         onClick={onClick}
         className={`${styles.baseButton} ${
           isSecondary ? styles.sencondaryButton : styles.primaryButton
-        } ${marginTop && styles.margin_top} ${
+        } ${invert && styles.invertButton} ${marginTop && styles.margin_top} ${
           marginBottom && styles.margin_bottom
         }`}
       >

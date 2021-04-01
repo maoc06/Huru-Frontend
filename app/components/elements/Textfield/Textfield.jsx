@@ -42,7 +42,7 @@ export default function Textfield({
   }, [apiError]);
 
   const handleTypePriceChange = (event) => {
-    setFieldValue(name, formatPrice(event.target.value));
+    setFieldValue(name, formatPrice({ price: event.target.value }));
   };
 
   return (

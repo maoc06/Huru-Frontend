@@ -15,21 +15,11 @@ const SearchResultsTemplate = () => {
     }
   }, [filterStore.filterRes]);
 
-  const handleGetFilters = () => {
-    console.log('Filters:', filterStore.listFilters);
-  };
-
   return (
     <>
-      <SearchForm isCompact={true} />
+      <SearchForm isCompact={true} showTopLabels={false} showBorder={true} />
 
       <FiletersPanel />
-
-      {/* <p onClick={handleFilterByMaker}>Fabricante</p> */}
-      {/* <p onClick={handleFilterByNumOfSeats}>Asientos</p> */}
-      {/* <p onClick={handleFilterByTransmission}>Transmisión</p> */}
-      {/* <p onClick={handleFilterByPrice}>Precio</p> */}
-      {/* <p onClick={handleGetFilters}>get filters</p> */}
 
       <h6
         style={{ marginTop: '32px' }}

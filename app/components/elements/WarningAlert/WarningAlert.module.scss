@@ -1,0 +1,19 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    align-items: center;
+    background-color: rgba(255, 179, 2, 0.1);
+    border: 3px solid $warning;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    margin: 32px 0;
+    padding: 16px;
+    justify-content: center;
+    width: 100%;
+    p {
+        margin-top: 8px;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}

@@ -38,7 +38,11 @@ const UserProfile = ({ user, onLogOut }) => {
 
           <Divider />
 
-          <ListItem text="Metodos de pago" icon={<LocalAtmOutlined />} />
+          <ListItem
+            text="Metodos de pago"
+            icon={<LocalAtmOutlined />}
+            href="/profile/payment-methods"
+          />
 
           <Divider />
 

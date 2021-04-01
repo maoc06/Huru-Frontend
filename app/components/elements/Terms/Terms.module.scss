@@ -1,5 +1,6 @@
 .container {
     display: flex;
+    margin-top: 32px;
     p {
         font-size: 16px;
         line-height: 22px;
@@ -7,4 +8,8 @@
             font-weight: bold;
         }
     }
+}
+
+.space {
+    margin-bottom: 32px;
 }

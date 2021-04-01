@@ -1,8 +1,16 @@
+import { useRouter } from 'next/router';
+
 import Button from '../../elements/Button/Button';
 
 import styles from './PriceBottomBar.module.scss';
 
-export default function PriceBottomBar({ pricePerDay, total }) {
+export default function PriceBottomBar({ pricePerDay, total, slug }) {
+  const router = useRouter();
+
+  const handleContinue = () => {
+    router.push(`/car/confirmation/${encodeURIComponent(slug)}`);
+  };
+
   return (
     <main className={styles.container}>
       <div className={styles.price}>
@@ -13,7 +21,7 @@ export default function PriceBottomBar({ pricePerDay, total }) {
       </div>
 
       <div className={styles.button}>
-        <Button>Continuar</Button>
+        <Button onClick={handleContinue}>Continuar</Button>
       </div>
     </main>
   );

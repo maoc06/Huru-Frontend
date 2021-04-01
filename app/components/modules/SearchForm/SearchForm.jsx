@@ -23,7 +23,14 @@ import searchSchema from '../../../constants/validationSchema/search';
 
 import styles from './SearchForm.module.scss';
 
-export default function SearchForm({ isCompact = false }) {
+export default function SearchForm({
+  isCompact = false,
+  showTopLabels = true,
+  showInputPlaces = true,
+  showBorder = false,
+  withMarginBottom = true,
+  clickleable = true,
+}) {
   const dispatch = useDispatch();
   const searchParamsStored = useSelector((state) => state.searchParams);
   const router = useRouter();
@@ -91,6 +98,8 @@ export default function SearchForm({ isCompact = false }) {
     <div
       className={`${styles.container} ${
         isCompact ? styles.container_compact : styles.container_full
+      } ${showBorder && styles.container_border} ${
+        withMarginBottom && styles.margin_bottom
       }`}
     >
       <Form
@@ -98,23 +107,32 @@ export default function SearchForm({ isCompact = false }) {
         validationSchema={searchSchema}
         onSubmit={handleSubmit}
       >
-        <AutoCompletePlaces
-          name="location"
-          placeholder={'Ciudad o punto de referencia'}
-          isCompact={isCompact}
-        />
+        {showInputPlaces && (
+          <AutoCompletePlaces
+            name="location"
+            placeholder={'Ciudad o punto de referencia'}
+            isCompact={isCompact}
+          />
+        )}
 
         <section>
-          <div onClick={handleDates}>
-            {!isCompact && <p>Fecha y hora de inicio</p>}
+          <div onClick={clickleable ? handleDates : () => {}}>
+            {showTopLabels && (
+              <p className={styles.top_label}>Fecha y hora de inicio</p>
+            )}
             <p>
               <span>{selectedDates.formatLocale.start}</span> -
               {` ${hourStart.format.hours}`}:{`${hourStart.format.minutes} `}
               <span>{hourStart.format.range}</span>
             </p>
           </div>
-          <div className={styles.end_date} onClick={handleDates}>
-            {!isCompact && <p>Fecha y hora de fin</p>}
+          <div
+            className={styles.end_date}
+            onClick={clickleable ? handleDates : () => {}}
+          >
+            {showTopLabels && (
+              <p className={styles.top_label}>Fecha y hora de fin</p>
+            )}
             <p>
               <span>{selectedDates.formatLocale.end}</span> -
               {` ${hourEnd.format.hours}`}:{`${hourEnd.format.minutes} `}

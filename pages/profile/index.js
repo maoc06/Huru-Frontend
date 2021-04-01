@@ -2,10 +2,10 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import AppLayout from '../app/components/layouts/AppLayout/AppLayout';
-import UserProfileTemplate from '../app/components/templates/UserProfile/UserProfile';
-import useAuth from '../app/hooks/useAuth';
-import authStorage from '../app/utils/storageAuth';
+import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
+import UserProfileTemplate from '../../app/components/templates/UserProfile/UserProfile';
+import useAuth from '../../app/hooks/useAuth';
+import authStorage from '../../app/utils/storageAuth';
 
 function Profile() {
   const auth = useAuth();

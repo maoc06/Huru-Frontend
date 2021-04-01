@@ -28,6 +28,15 @@
     }
 }
 
+.invertButton {
+    background: transparent;
+    border: 3px solid $primary;
+    color: $primary;
+    &:hover {
+        border-color: $primary_hover;
+    }
+}
+
 .margin_top {
     margin-top: 32px;
 }

@@ -1,16 +1,41 @@
 @import '../../../styles/abstracts/colors';
 .wrapper {
+    padding: 32px 0;
+    background-color: $background;
+    .inner {
+        margin: 0 32px;
+        // margin-bottom: 64px;
+    }
+    .inner_left {
+        margin-left: 32px;
+        .reviews_container {
+            display: flex;
+            padding-bottom: 32px;
+        }
+    }
+    .inner,
+    .inner_left {
+        .title {
+            display: block;
+            font-weight: bold;
+            color: $gray_2;
+            margin-bottom: 16px;
+        }
+        .long_text {
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+        .see_details {
+            color: $gray_3;
+            text-align: right;
+            margin-top: 8px;
+        }
+        .extra_space {
+            margin-right: 32px;
+            // margin-bottom: 64px;
+        }
+    }
     h5 {
         text-transform: capitalize;
-    }
-    p {
-        margin-bottom: 16px;
-        font-size: 16px;
-    }
-    span {
-        display: block;
-        font-weight: bold;
-        color: $gray_2;
-        margin-bottom: 16px;
     }
 }

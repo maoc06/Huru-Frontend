@@ -37,6 +37,8 @@ export default function AppTerms({ name }) {
       </div>
 
       <ErrorMessage visible={touched[name]} message={errors[name]} />
+
+      <div className={styles.space}></div>
     </>
   );
 }

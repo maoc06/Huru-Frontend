@@ -1,0 +1,42 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    align-items: center;
+    display: flex;
+    margin-bottom: 16px;
+    height: 55px;
+    width: 100%;
+    .brand,
+    .select,
+    .number {
+        align-items: center;
+        display: flex;
+        height: 100%;
+    }
+    .brand,
+    .select {
+        flex: 0.1;
+    }
+    .number {
+        flex: 0.8;
+        margin: 0 8px 0 16px;
+    }
+    .select {
+        justify-content: center;
+        div {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid $primary;
+        }
+    }
+}
+
+.container_full {
+    border: 1px solid $primary;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+.container_compact {
+    padding: 8px 0;
+}

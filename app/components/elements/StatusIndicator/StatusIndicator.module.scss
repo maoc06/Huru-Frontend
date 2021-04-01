@@ -17,18 +17,31 @@
         transform: translate(-50%, -50%);
         background-color: $background;
         height: fit-content;
-        max-width: 85%;
+        max-width: 75%;
         width: 100%;
         border-radius: 10px;
         z-index: 999;
-        padding: 16px 32px;
+        padding: 16px 32px 55px 32px;
         border: 1px solid rgba(255, 255, 255, 0.18);
-        h4,
+        h6 {
+            border-bottom: 1px solid $gray_4;
+            color: $primary;
+            padding-bottom: 16px;
+        }
+        h6,
         p {
             text-align: center;
         }
         p {
+            font-size: 14px;
+            line-height: 1.4;
             margin-bottom: 32px;
+        }
+        .button {
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            width: 100%;
         }
     }
 }

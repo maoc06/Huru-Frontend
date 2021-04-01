@@ -1,0 +1,18 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    p {
+        font-size: 14px;
+        text-transform: capitalize;
+    }
+    svg {
+        width: 55px;
+        height: 55px;
+        path {
+            fill: $gray_1 !important;
+        }
+    }
+}

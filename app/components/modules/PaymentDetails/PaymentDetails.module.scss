@@ -1,0 +1,15 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    div {
+        display: flex;
+        justify-content: space-between;
+    }
+    .total {
+        padding-top: 8px;
+        p {
+            font-size: 22px;
+            font-weight: bold;
+            color: $gray_2;
+        }
+    }
+}

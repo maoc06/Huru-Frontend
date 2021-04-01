@@ -1,0 +1,16 @@
+@import '../../../styles/abstracts/colors';
+.tab {
+    align-items: center;
+    border: 1px solid $primary;
+    border-radius: 6px;
+    display: flex;
+    height: 38px;
+    justify-content: center;
+    width: 160px;
+    transition: all 0.1s ease-in;
+}
+
+.active {
+    background: linear-gradient(to right, $primary, $primary_alt);
+    color: $white;
+}

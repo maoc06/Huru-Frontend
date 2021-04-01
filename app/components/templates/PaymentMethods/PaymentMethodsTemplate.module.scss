@@ -1,0 +1,8 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    margin-top: 32px;
+    .empty {
+        color: $primary;
+        margin-bottom: 16px;
+    }
+}
