@@ -1,6 +1,6 @@
 const nextConfig = {
   env: {
-    BASE_API_URL: 'http://192.168.0.14:4000/api',
+    BASE_API_URL: 'http://192.168.20.30:4000/api',
     GCP_API_KEY: 'AIzaSyCiByOVsTONV6IbAiApGDLIq1S-WSp8WHY',
   },
   images: {

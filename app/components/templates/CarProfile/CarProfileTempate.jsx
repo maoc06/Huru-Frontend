@@ -50,7 +50,8 @@ const CarProfileTemplate = ({
         <span className={styles.title}>Caracteristicas</span>
 
         {features.length === 0 && (
-          <p>Este carro no tiene caracteristicas asignadas.</p>
+          <p>Este carro no
+            ticas asignadas.</p>
         )}
 
         {features.length > 0 &&
