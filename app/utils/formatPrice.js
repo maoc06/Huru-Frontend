@@ -15,9 +15,5 @@ export default function formatPrice({
   });
   const res = formatter.format(price);
 
-  console.log('price', price);
-
-  console.log(res);
-
-  return res.replaceAll('.', ',');
+  return res.replace(/\./g, ',');
 }

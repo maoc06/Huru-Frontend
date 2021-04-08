@@ -19,6 +19,7 @@ export default function Textfield({
   iconComponent,
   withContainerMargings = true,
   withSmallBottomMargin,
+  readOnly = false,
   ...otherProps
 }) {
   const {
@@ -69,6 +70,7 @@ export default function Textfield({
             touched[name] && errors[name] && styles.inputError
           } ${upperCase && styles.upperCase} `}
           placeholder={placeholder}
+          disabled={readOnly}
           {...otherProps}
         />
       </div>

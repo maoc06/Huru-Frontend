@@ -8,6 +8,7 @@ export default function Button({
   marginTop,
   marginBottom,
   invert = false,
+  isRejectAction = false,
 }) {
   return (
     <>
@@ -18,7 +19,7 @@ export default function Button({
           isSecondary ? styles.sencondaryButton : styles.primaryButton
         } ${invert && styles.invertButton} ${marginTop && styles.margin_top} ${
           marginBottom && styles.margin_bottom
-        }`}
+        } ${isRejectAction && styles.rejectButton}`}
       >
         {children}
       </button>

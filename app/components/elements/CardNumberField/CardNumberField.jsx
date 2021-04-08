@@ -12,6 +12,7 @@ export default function CardNumberField({
   placeholder,
   label,
   errorMsg,
+  readOnly = false,
   ...otherProps
 }) {
   const [brand, setBrand] = useState();
@@ -55,6 +56,7 @@ export default function CardNumberField({
           }`}
           placeholder={placeholder}
           maxLength={maxLength}
+          disabled={readOnly}
           {...otherProps}
         />
 

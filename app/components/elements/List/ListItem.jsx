@@ -6,8 +6,29 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import { materialListStyles } from '../../../styles/material/lists';
 
-export default function AppListItem({ text, icon, href = '/' }) {
+export default function AppListItem({
+  text,
+  icon,
+  href = '/',
+  isLink = true,
+  onSelectNotLink = () => {},
+}) {
   const classes = materialListStyles();
+
+  if (!isLink) {
+    return (
+      <ListItem button classes={{ root: classes.root }}>
+        <ListItemText primary={text} />
+
+        <ListItemIcon
+          classes={{ root: classes.icon }}
+          onClick={onSelectNotLink}
+        >
+          {icon}
+        </ListItemIcon>
+      </ListItem>
+    );
+  }
 
   return (
     <Link href={href}>

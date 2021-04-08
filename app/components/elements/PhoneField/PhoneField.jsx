@@ -14,6 +14,7 @@ export default function PhoneField({
   withCountryCode = true,
   countryCode,
   setCountryCode,
+  readOnly = false,
   withMarginBottom = true,
 }) {
   const {
@@ -71,6 +72,7 @@ export default function PhoneField({
             placeholder={placeholder}
             type="tel"
             pattern="[0-9]{3}-[0-9]{7}"
+            disabled={readOnly}
           />
         </div>
       </div>

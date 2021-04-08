@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 
-import SearchIcon from '../../elements/Icons/SearchIcon';
-import FavotiteIcon from '../../elements/Icons/FavoriteIcon';
-import CarIcon from '../../elements/Icons/CarIcon';
-import ProfileIcon from '../../elements/Icons/ProfileIcon';
+import useMood from '../../../hooks/useMood';
+
+import MobileGuestNavBar from '../../modules/NavBar/MobileGuestNavBar';
+import MobileHostNavBar from '../../modules/NavBar/MobileHostNavBar';
 
 import storageAuth from '../../../utils/storageAuth';
 
 import styles from './NavBarLayout.module.scss';
 
 export default function NavBarLayout({ children }) {
+  const app = useMood();
+  const [isHostMood, setIsHostMood] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const [showHideMobileNavbar, setShowHideMobileNavbar] = useState(true);
 
@@ -26,56 +27,23 @@ export default function NavBarLayout({ children }) {
         setShowHideMobileNavbar(true);
       }
     });
+
+    setIsHostMood(app.getMood());
   }, []);
+
+  const renderNavBar = () => {
+    if (!isHostMood) {
+      return <MobileGuestNavBar isAuth={isAuth} />;
+    } else {
+      return <MobileHostNavBar />;
+    }
+  };
 
   return (
     <>
       <main>{children}</main>
 
-      {showHideMobileNavbar && (
-        <nav className={styles.mobileNav}>
-          <Link href="/">
-            <a className={styles.item}>
-              <SearchIcon />
-              <p>Explorar</p>
-            </a>
-          </Link>
-
-          {isAuth && (
-            <Link href="/">
-              <a className={styles.item}>
-                <CarIcon />
-                <p>Viajes</p>
-              </a>
-            </Link>
-          )}
-
-          <Link href="/">
-            <a className={styles.item}>
-              <FavotiteIcon />
-              <p>Favoritos</p>
-            </a>
-          </Link>
-
-          {isAuth && (
-            <Link href="/profile">
-              <a className={styles.item}>
-                <ProfileIcon />
-                <p>Perfil</p>
-              </a>
-            </Link>
-          )}
-
-          {!isAuth && (
-            <Link href="/signin">
-              <a className={styles.item}>
-                <ProfileIcon />
-                <p>Iniciar sesión</p>
-              </a>
-            </Link>
-          )}
-        </nav>
-      )}
+      {showHideMobileNavbar && renderNavBar()}
     </>
   );
 }

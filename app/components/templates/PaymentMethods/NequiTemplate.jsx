@@ -14,8 +14,8 @@ import useApi from '../../../hooks/useApi';
 import paymentGatewayApi from '../../../api/PaymentGatewayAPI';
 import nequiSchema from '../../../constants/validationSchema/nequi';
 
-const NequiTemplate = ({ uid, email }) => {
-  const initialValues = { phone: '' };
+const NequiTemplate = ({ uid, email, phone = '', readOnly = false }) => {
+  const initialValues = { phone };
 
   const saveNequi = useApi(paymentGatewayApi.savePaymentSourceNequi);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -79,16 +79,19 @@ const NequiTemplate = ({ uid, email }) => {
           label="Teléfono"
           withCountryCode={false}
           withMarginBottom={false}
+          readOnly={readOnly}
         />
 
-        <WarningAlert
-          warningMessage={`Recuerda que para realizar 
+        {!readOnly && (
+          <WarningAlert
+            warningMessage={`Recuerda que para realizar 
           reservas por este método, debes tener descargada la 
           aplicación de Nequi para confirmar el proceso de pago.
           `}
-        />
+          />
+        )}
 
-        <SubmitButton>Agregar metodo</SubmitButton>
+        {!readOnly && <SubmitButton>Agregar metodo</SubmitButton>}
       </Form>
     </>
   );

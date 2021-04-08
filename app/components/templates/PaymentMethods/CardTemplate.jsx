@@ -18,8 +18,8 @@ import cardSchema from '../../../constants/validationSchema/card';
 
 import style from './CardTemplate.module.scss';
 
-const CardTemplate = ({ uid, email }) => {
-  const initialValues = { card_holder: '', number: '', expiry: '', cvc: '' };
+const CardTemplate = ({ uid, email, number = '', readOnly = false }) => {
+  const initialValues = { card_holder: '', number, expiry: '', cvc: '' };
 
   const saveCard = useApi(paymentGatewayApi.savePaymentSourceCard);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -85,40 +85,45 @@ const CardTemplate = ({ uid, email }) => {
         validationSchema={cardSchema}
         onSubmit={handleSubmit}
       >
-        <Textfield
-          name="card_holder"
-          type="text"
-          label="Titular"
-          placeholder="Titular de la tarjeta"
-          upperCase={true}
-        />
+        {!readOnly && (
+          <Textfield
+            name="card_holder"
+            type="text"
+            label="Titular"
+            placeholder="Titular de la tarjeta"
+            upperCase={true}
+          />
+        )}
 
         <CardNumberField
           name="number"
           type="tel"
           label="Número"
           placeholder="xxxx xxxx xxxx xxxx"
+          readOnly={readOnly}
         />
 
-        <section className={style.row_fields}>
-          <ExpityDateField
-            name="expiry"
-            type="text"
-            label="Fecha de expiración"
-            placeholder="Mes/Año"
-            maxLength={5}
-          />
+        {!readOnly && (
+          <section className={style.row_fields}>
+            <ExpityDateField
+              name="expiry"
+              type="text"
+              label="Fecha de exp."
+              placeholder="Mes/Año"
+              maxLength={5}
+            />
 
-          <Textfield
-            name="cvc"
-            type="tel"
-            label="CVV"
-            placeholder="123"
-            maxLength={4}
-          />
-        </section>
+            <Textfield
+              name="cvc"
+              type="tel"
+              label="CVV"
+              placeholder="123"
+              maxLength={4}
+            />
+          </section>
+        )}
 
-        <SubmitButton>Agregar metodo</SubmitButton>
+        {!readOnly && <SubmitButton>Agregar metodo</SubmitButton>}
       </Form>
     </>
   );

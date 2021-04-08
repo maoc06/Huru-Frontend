@@ -1,17 +1,13 @@
 import Lottie from 'react-lottie';
-import animationData from '../../../../public/animations/loader.json';
-import animationDataChange from '../../../../public/animations/change.json';
+import animationData from '../../../../public/animations/change.json';
 
-import styles from './ActivityIndicator.module.scss';
+import styles from './SwitchIndicator.module.scss';
 
-export default function ActivityIndicator({
-  visible = false,
-  type = 'loader',
-}) {
+export default function SwitchIndicator({ visible = false }) {
   const defaultOptions = {
     loop: true,
     autoPlay: true,
-    animationData: type === 'loader' ? animationData : animationDataChange,
+    animationData: animationData,
     rendererSettings: {
       preserveAspectRatio: 'xMidYMid slice',
     },
@@ -24,12 +20,13 @@ export default function ActivityIndicator({
       <div className={styles.overlay}>
         <Lottie
           options={defaultOptions}
-          height={150}
-          width={150}
+          height={100}
+          width={100}
           style={{
             alignSelf: 'center',
           }}
         />
+        <h6>Cambiando de modo...</h6>
       </div>
     </div>
   );

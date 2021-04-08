@@ -1,11 +1,11 @@
+@import '../../../styles/abstracts/colors';
 .wrap {
     display: flex;
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #fff;
+    background-color: $background;
     height: 100vh;
-    opacity: 0.7;
     width: 100vw;
     z-index: 999;
     .overlay {
@@ -13,5 +13,8 @@
         position: sticky;
         top: 0;
         margin: auto;
+        h6 {
+            margin: 16px 0;
+        }
     }
 }

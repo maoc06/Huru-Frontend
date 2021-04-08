@@ -1,10 +1,21 @@
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
+
+import useMood from '../app/hooks/useMood';
 
 import NavBarLayout from '../app/components/layouts/NavBarLayout/NavBarLayout';
 import HeroImageLayout from '../app/components/layouts/HeroImageLayout/HeroImageLayout';
 import HomeTemplate from '../app/components/templates/HomePage/HomeTemplate';
+import HomeHostTemplate from '../app/components/templates/HomeHostMode/HomeHostTemplate';
 
 export default function Home() {
+  const app = useMood();
+  const [hostMode, setHostMode] = useState(false);
+
+  useEffect(() => {
+    setHostMode(app.getMood());
+  }, []);
+
   return (
     <div>
       <Head>
@@ -17,9 +28,13 @@ export default function Home() {
       </Head>
 
       <NavBarLayout>
-        <HeroImageLayout heroSrc="/images/home-hero.png">
-          <HomeTemplate />
-        </HeroImageLayout>
+        {hostMode ? (
+          <HomeHostTemplate />
+        ) : (
+          <HeroImageLayout heroSrc="/images/home-hero.png">
+            <HomeTemplate />
+          </HeroImageLayout>
+        )}
       </NavBarLayout>
     </div>
   );

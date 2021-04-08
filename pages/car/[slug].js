@@ -55,14 +55,14 @@ function CarSlug() {
           <Carousel images={car.images} />
 
           <CarProfileTemplate
-            owner={owner}
+            username={`${owner.firstName} ${owner.lastName}`}
+            userJoinAt={owner.createdAt}
             title={`${car.name} ${car.model} ${car.year}`}
             description={car.description}
             numSeats={car.number_of_seats}
             typeTransmission={typeTransmissionEnum[car.transmission_id]}
             typeGas="extra"
             features={car.features}
-            slug={slug}
           />
 
           <PriceBottomBar pricePerDay={car.price} total={150000} slug={slug} />

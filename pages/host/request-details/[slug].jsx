@@ -1,58 +1,109 @@
 import Head from 'next/head';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import authStorage from '../../../app/utils/storageAuth';
+// import authStorage from '../../../app/utils/storageAuth';
 import useApi from '../../../app/hooks/useApi';
 import bookingApi from '../../../app/api/BookingAPI';
-import SearchForm from '../../../app/components/modules/SearchForm/SearchForm';
+import userApi from '../../../app/api/UserAPI';
+import carApi from '../../../app/api/VehicleApi';
+
+// import SearchForm from '../../../app/components/modules/SearchForm/SearchForm';
 
 import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
+import CarProfileTemplate from '../../../app/components/templates/CarProfile/CarProfileTempate';
+import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import TwoBottons from '../../../app/components/modules/TwoBottons/TwoBottons';
-import Carousel from '../../../app/components/elements/Carousel/Carousel'; 
+import Carousel from '../../../app/components/elements/Carousel/Carousel';
 
-export default function RequestDetail(){
+export default function RequestDetail() {
   const router = useRouter();
+
   const getBooking = useApi(bookingApi.findBooking);
-  const [booking, setBooking] = useState({data: {user: {email: '@'}}});
+  const getApplicant = useApi(userApi.findUser);
+  const getCarBooking = useApi(carApi.findCar);
+  const confirmBooking = useApi(bookingApi.confirmBookingRequest);
+
+  const [applicant, setApplicant] = useState({});
+  const [carBooking, setCarBooking] = useState({});
+
   const { slug } = router.query;
 
   const handleGetData = async () => {
-    console.log('slug', slug);
     const res = await getBooking.request(slug);
-    const bookingRes= res.data.data;
-    setBooking(bookingRes);
-  }
+    if (res.data.data) {
+      const bookingRes = res.data.data;
+
+      const applicantRes = await getApplicant.request(bookingRes.bookingBy);
+      const carBookingRes = await getCarBooking.request(bookingRes.bookingCar);
+
+      setApplicant(applicantRes.data.data);
+      setCarBooking(carBookingRes.data.data);
+    }
+  };
+
+  const handleAcceptBooking = () => {
+    confirmBooking.request({
+      bookingId: slug,
+      confirm: 5,
+      email: applicant.email,
+    });
+  };
+
+  const handleRejectBooking = () => {
+    confirmBooking.request({
+      bookingId: slug,
+      confirm: 6,
+      email: applicant.email,
+    });
+  };
 
   useEffect(() => {
     handleGetData();
   }, []);
 
-
- return(
+  return (
     <div>
-    <Head>
-      <title>Huru | Renta carros</title>
-      <link rel="icon" href="/favicon.ico" />
-      <meta
-        name="viewport"
-        content="minimum-scale=1, initial-scale=1, width=device-width"
+      <Head>
+        <title>Huru | Renta carros</title>
+        <link rel="icon" href="/favicon.ico" />
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
+      </Head>
+
+      <ActivityIndicator
+        visible={
+          getBooking.loading ||
+          getApplicant.loading ||
+          getCarBooking.loading ||
+          confirmBooking.loading
+        }
       />
-    </Head>
 
-    <AppLayout>
-      <Carousel images={[]} />
-      <h3>{`$MOnye el dinero es dinero`}</h3>
-      
+      <>
+        <Carousel images={carBooking.images} />
 
-      
-      {!getBooking.loading && <TwoBottons bookingId={slug} email={booking} />}
-    </AppLayout>
-    
-  </div>
-     
+        <CarProfileTemplate
+          title={`${carBooking.name} ${carBooking.model} ${carBooking.year}`}
+          titleDates="Marco de tiempo"
+          titleUser="Solicitante"
+          username={`${applicant.firstName} ${applicant.lastName}`}
+          userJoinAt={applicant.createdAt}
+          showDescription={false}
+          showSpecifications={false}
+          showFeatures={false}
+          showPolicies={false}
+        />
 
- );
-
-
+        <TwoBottons
+          affirmativeText="Aceptar"
+          declinedText="Rechazar"
+          onSelectAffirmative={handleAcceptBooking}
+          onSelectDelcined={handleRejectBooking}
+        />
+      </>
+    </div>
+  );
 }

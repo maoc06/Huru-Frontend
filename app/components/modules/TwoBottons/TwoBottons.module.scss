@@ -1,4 +1,13 @@
+@import '../../../styles/abstracts/colors';
 .container {
     display: flex;
-    gap: 8px;
+    gap: 16px;
+}
+
+.withPadding {
+    padding: 0 32px 64px;
+}
+
+.withBackground {
+    background-color: $background;
 }
