@@ -26,7 +26,7 @@ const UserProfile = ({ user, isHostMood, onLogOut }) => {
   const router = useRouter();
   const [showIndicator, setShowIndicator] = useState(false);
 
-  const { firstName, lastName } = user;
+  const { firstName, lastName, profilePicture } = user;
 
   const handleSwitchMood = () => {
     app.setMood();
@@ -34,7 +34,7 @@ const UserProfile = ({ user, isHostMood, onLogOut }) => {
     setTimeout(() => {
       setShowIndicator(false);
       router.push('/');
-    }, 2500);
+    }, 2000);
   };
 
   return (
@@ -43,7 +43,7 @@ const UserProfile = ({ user, isHostMood, onLogOut }) => {
 
       <main className={styles.wrapper}>
         <header>
-          <Avatar />
+          <Avatar src={profilePicture} />
           <h5>
             {firstName} {lastName}
           </h5>

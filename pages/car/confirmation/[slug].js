@@ -42,15 +42,15 @@ function ConfirmationBooking() {
 
   const handleCreateBooking = async (booking) => {
     try {
-      const res = await postBooking.request(booking);
+      await postBooking.request(booking);
       setShowConfirm(true);
-      console.log(res);
     } catch (error) {
       setShowFail(true);
     }
   };
 
   const handleButtonPopUpConfirm = () => {
+    router.push('/trips');
     setShowConfirm(false);
   };
 
@@ -85,6 +85,7 @@ function ConfirmationBooking() {
 
       <StatusIndicator
         animationData={checkAnimationData}
+        isLoop={false}
         visible={showConfirm}
         title={'Reserva realizada exitosamente'}
         message={
@@ -105,6 +106,7 @@ function ConfirmationBooking() {
 
       <AppLayout withImage={false}>
         <h3>Confirmación</h3>
+
         <CarConfirmationTemplate
           uid={user.uid}
           carId={slug}

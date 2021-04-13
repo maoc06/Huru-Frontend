@@ -3,7 +3,7 @@ import ScrollContainer from 'react-indiana-drag-scroll';
 
 import CarSpecifications from '../../modules/CarSpecifications/CarSpecifications';
 import UserProfileBasicInfo from '../../modules/UserProfileBasicInfo/UserProfileBasicInfo';
-import SearchForm from '../../modules/SearchForm/SearchForm';
+import DatesPanel from '../../modules/DatesPanel/DatesPanel';
 import CardReview from '../../elements/CardReview/CardReview';
 import FeatureSimple from '../../elements/FeatureSimple/FeatureSimple';
 import Divider from '../../elements/Divider/Divider';
@@ -12,6 +12,7 @@ import styles from './CarProfileTemplate.module.scss';
 
 const CarProfileTemplate = ({
   username = '',
+  userPic = '',
   userJoinAt = '',
   title,
   titleDates = 'Disponibilidad',
@@ -79,7 +80,7 @@ const CarProfileTemplate = ({
       <article className={styles.inner}>
         <span className={styles.title}>{titleDates}</span>
 
-        <SearchForm isCompact={true} showInputPlaces={false} />
+        <DatesPanel compact={true} />
       </article>
 
       <Divider />
@@ -89,7 +90,11 @@ const CarProfileTemplate = ({
           <article className={styles.inner}>
             <span className={styles.title}>{titleUser}</span>
 
-            <UserProfileBasicInfo name={username} createdAt={userJoinAt} />
+            <UserProfileBasicInfo
+              name={username}
+              profilePicture={userPic}
+              createdAt={userJoinAt}
+            />
             <div></div>
           </article>
 

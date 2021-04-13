@@ -1,36 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  cityLabel: {},
+  place: {},
   dates: {},
-  startHour: {},
-  endHour: {},
 };
 
 export const searchParamsSlice = createSlice({
   name: 'searchParams',
   initialState,
   reducers: {
-    setCityLabel: (state, action) => {
-      state.cityLabel = action.payload;
+    setPlace: (state, action) => {
+      state.place = action.payload;
     },
     setDates: (state, action) => {
-      state.dates = action.payload;
-    },
-    setStartHour: (state, action) => {
-      state.startHour = action.payload;
-    },
-    setEndHour: (state, action) => {
-      state.endHour = action.payload;
+      const { raw, format } = JSON.parse(action.payload);
+
+      state.dates = { raw, format };
     },
   },
 });
 
-export const {
-  setCityLabel,
-  setDates,
-  setStartHour,
-  setEndHour,
-} = searchParamsSlice.actions;
+export const { setPlace, setDates } = searchParamsSlice.actions;
 
 export default searchParamsSlice.reducer;

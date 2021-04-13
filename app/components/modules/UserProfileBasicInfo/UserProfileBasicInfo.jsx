@@ -1,19 +1,18 @@
 import formatJoinDate from '../../../utils/formatJoinDate';
 
 import Avatar from '../../elements/Avatar/Avatar';
-import FillStartIcon from '../../elements/Icons/FillStarIcon';
+import { FillStartIcon } from '../../elements/Icons/Shared';
 
 import styles from './UserProfileBasicInfo.module.scss';
 
-export default function UserProfileBasicInfo({ name, createdAt }) {
+export default function UserProfileBasicInfo({
+  name,
+  profilePicture,
+  createdAt,
+}) {
   return (
     <section className={styles.container}>
-      <Avatar
-        // size="xl"
-        src={
-          'https://www.biografiasyvidas.com/biografia/k/fotos/kubrick_stanley.jpg'
-        }
-      />
+      <Avatar src={profilePicture} />
       <div className={styles.info}>
         <p className={styles.name}>{name}</p>
         <p>Se unio en {formatJoinDate(createdAt)}</p>

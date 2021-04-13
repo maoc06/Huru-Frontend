@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import { EqualizerOutlined, CalendarTodayOutlined } from '@material-ui/icons';
 
-import CarIcon from '../../elements/Icons/CarIcon';
-import ProfileIcon from '../../elements/Icons/ProfileIcon';
+import { CarIcon, ProfileIcon } from '../../elements/Icons/Shared';
 
 import styles from './MobileNavBar.module.scss';
 

@@ -1,0 +1,29 @@
+@import '../../../styles/abstracts/colors';
+.wrapper {
+    ul {
+        position: relative;
+        padding-left: 2rem;
+        margin-left: 1rem;
+        &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 6px;
+            height: 100%;
+            border-radius: 50px;
+            background: $gray_4;
+        }
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 18%;
+            border-radius: 50px;
+            background: $primary;
+            margin: 1px;
+        }
+    }
+}

@@ -21,4 +21,15 @@ const findDefaultPaymentByUser = async (uuid) => {
   });
 };
 
-export default { findPayment, findPaymentsByUser, findDefaultPaymentByUser };
+const updateDefaultPayment = async (data) => {
+  return await client.put(`${endpoint}`, data, {
+    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
+  });
+};
+
+export default {
+  findPayment,
+  findPaymentsByUser,
+  findDefaultPaymentByUser,
+  updateDefaultPayment,
+};

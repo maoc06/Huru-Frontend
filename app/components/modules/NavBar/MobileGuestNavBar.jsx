@@ -1,9 +1,11 @@
 import Link from 'next/link';
 
-import SearchIcon from '../../elements/Icons/SearchIcon';
-import FavotiteIcon from '../../elements/Icons/FavoriteIcon';
-import CarIcon from '../../elements/Icons/CarIcon';
-import ProfileIcon from '../../elements/Icons/ProfileIcon';
+import {
+  CarIcon,
+  FavoriteIcon,
+  ProfileIcon,
+  SearchIcon,
+} from '../../elements/Icons/Shared';
 
 import styles from './MobileNavBar.module.scss';
 
@@ -28,7 +30,7 @@ export default function MobileGuestNavBar({ isAuth }) {
 
       <Link href="/">
         <a className={styles.item}>
-          <FavotiteIcon />
+          <FavoriteIcon />
           <p>Favoritos</p>
         </a>
       </Link>

@@ -9,6 +9,18 @@ const findBooking = async (id) => {
   });
 };
 
+const findUpcomingBookings = async (uuid) => {
+  return await client.get(`${endpoint}/upcoming/${uuid}`, {
+    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
+  });
+};
+
+const findBookingsHistory = async (uuid) => {
+  return await client.get(`${endpoint}/history/${uuid}`, {
+    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
+  });
+};
+
 const findBookingRequests = async (uuid) => {
   return await client.get(`${endpoint}/by-owner/${uuid}`, {
     headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
@@ -27,4 +39,18 @@ const confirmBookingRequest = async (confirm) => {
   });
 };
 
-export default { createBookingRequest, findBooking, findBookingRequests, confirmBookingRequest };
+const cancelBooking = async (data) => {
+  return await client.put(`${endpoint}/cancel`, data, {
+    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
+  });
+};
+
+export default {
+  createBookingRequest,
+  findBooking,
+  findUpcomingBookings,
+  findBookingsHistory,
+  findBookingRequests,
+  confirmBookingRequest,
+  cancelBooking,
+};

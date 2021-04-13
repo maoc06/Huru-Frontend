@@ -4,6 +4,8 @@ export default function formatPrice({
   currency = 'COP',
   currencyDisplay = 'code',
 }) {
+  if (price === undefined) return '0';
+
   price = price.toString().replace(/[\D\s\._\-]+/g, '');
   price = price ? parseInt(price, 10) : 0;
   const formatter = new Intl.NumberFormat(locale, {

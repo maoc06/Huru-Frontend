@@ -1,4 +1,4 @@
-import CheckedIcon from '../../elements/Icons/CheckedIcon';
+import { CheckedIcon } from '../../elements/Icons/Shared';
 import { paymentMethodsIcons } from '../../../utils/enums';
 
 import styles from './PaymentMethod.module.scss';

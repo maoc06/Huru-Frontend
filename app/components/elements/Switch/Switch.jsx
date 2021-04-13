@@ -4,11 +4,14 @@ import Switch from '@material-ui/core/Switch';
 
 import themeMaterialUI from '../../../styles/material/theme';
 
-export default function AppSwitch({ name, checked = false }) {
+export default function AppSwitch({ name, checked = false, onChangeState }) {
   const [state, setState] = useState(checked);
 
   const handleChange = (event) => {
     setState(event.target.checked);
+    if (typeof onChangeState === 'function') {
+      onChangeState();
+    }
   };
 
   return (

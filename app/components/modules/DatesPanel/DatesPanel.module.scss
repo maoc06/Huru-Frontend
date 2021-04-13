@@ -1,0 +1,40 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    position: relative;
+    display: flex;
+    // height: 55px;
+    div {
+        flex: 1;
+        p {
+            text-transform: capitalize;
+            &:nth-child(2) {
+                font-size: 14px;
+                color: $gray_2;
+            }
+        }
+        .top_label {
+            font-size: 12px;
+            color: $gray_3;
+            margin-top: 6px;
+            height: 22px;
+        }
+    }
+    .end_date {
+        border-left: 1px solid $gray_4;
+        text-align: right;
+    }
+}
+
+.not_compact {
+    margin: 16px 0;
+}
+
+.compact {
+    padding: 0 8px 8px;
+    div {
+        p {
+            font-size: 16px;
+            color: $gray_2;
+        }
+    }
+}

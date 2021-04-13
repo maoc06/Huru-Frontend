@@ -1,21 +1,22 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { switchMood } from '../redux/slices/moodAppSlice';
+import modeStorage from '../utils/storageMode';
 
 const useMood = () => {
   const dispatch = useDispatch();
-  const moodState = useSelector((state) => state.moodApp.hostMoodEnabled);
-  const key = 'hostMood';
+  const modeState = useSelector((state) => state.moodApp.hostMoodEnabled);
 
   const setMood = () => {
-    const updatedMood = !moodState;
-    localStorage.setItem(key, JSON.stringify(updatedMood));
-    dispatch(switchMood(updatedMood));
+    const mode = !modeState;
+    modeStorage.storeMode(mode);
+    dispatch(switchMood(mode));
   };
 
   const getMood = () => {
-    const mood = localStorage.getItem(key);
-    if (mood !== null) return JSON.parse(mood);
+    if (process.browser) {
+      return modeStorage.getMode();
+    }
     return false;
   };
 

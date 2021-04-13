@@ -2,13 +2,18 @@ import formatPrice from '../../../utils/formatPrice';
 
 import styles from './PaymentDetails.module.scss';
 
-export default function PaymentDetails({ pricePerDay, serviceFeePercentage }) {
-  const priceDays = pricePerDay * 2;
+export default function PaymentDetails({
+  pricePerDay,
+  serviceFeePercentage,
+  numberOfDays = 2,
+  showTitle = true,
+}) {
+  const priceDays = pricePerDay * numberOfDays;
   const serviceFee = Math.round(priceDays * serviceFeePercentage);
 
   return (
     <section className={styles.container}>
-      <h5>Detalle del pago</h5>
+      {showTitle && <h5>Detalle del pago</h5>}
 
       <div>
         <p>
@@ -16,7 +21,7 @@ export default function PaymentDetails({ pricePerDay, serviceFeePercentage }) {
             price: pricePerDay,
             currencyDisplay: 'symbol',
           })}{' '}
-          x 2 dias
+          x {numberOfDays} {numberOfDays > 1 ? 'dias' : 'dia'}
         </p>
         <p>
           {formatPrice({

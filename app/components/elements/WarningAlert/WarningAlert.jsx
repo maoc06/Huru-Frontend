@@ -1,11 +1,11 @@
-import WarningAlerIcon from '../../elements/Icons/WarningAlertIcon';
+import { WarningIcon } from '../../elements/Icons/Shared';
 
 import style from './WarningAlert.module.scss';
 
 export default function WarningAlert({ warningMessage = '' }) {
   return (
     <article className={style.container}>
-      <WarningAlerIcon />
+      <WarningIcon />
       <p>{warningMessage}</p>
     </article>
   );

@@ -7,9 +7,11 @@ const AppDivider = ({ size = 'medium' }) => {
 
   return (
     <Divider
-      className={`${size === 'small' && classes.small} ${
-        size === 'medium' && classes.medium
-      } ${size === 'mediumTop' && classes.mediumTop}`}
+      className={`${size === 'xs' && classes.extraSmall} ${
+        size === 'small' && classes.small
+      } ${size === 'medium' && classes.medium} ${
+        size === 'mediumTop' && classes.mediumTop
+      }`}
     />
   );
 };

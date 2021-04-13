@@ -1,11 +1,10 @@
 import { useRouter } from 'next/router';
 
-import styles from './RequestCard.module.scss';
 import BasicInfoUserMin from '../BasicInfoUserMin/BasicInfoUserMin';
 
-import formatShortDate from '../../../utils/formatShortDate';
-import formatAMPM from '../../../utils/formatAMPM';
-import { useEffect, useState } from 'react';
+import { formatSimpleFullDate } from '../../../utils/formatFullDate';
+
+import styles from './RequestCard.module.scss';
 
 export default function RequestCard({
   guestName,
@@ -18,41 +17,32 @@ export default function RequestCard({
 }) {
   const router = useRouter();
 
-  const dateStartInf = dateStart.split('T');
-  const dateEndInf = dateEnd.split('T');
-
-  const dateIn = formatShortDate(new Date(dateStartInf[0]));
-  const timeIn = formatAMPM(dateStartInf[1]);
-  const dateOut = formatShortDate(new Date(dateEndInf[0]));
-  const timeOut = formatAMPM(dateEndInf[1]);
-
   const handleGoToDetails = () => {
     router.push(`/host/request-details/${requestId}`);
   };
 
-  useEffect(() => {}, []);
-
   return (
-    <>
-      <div className={styles.container} onClick={handleGoToDetails}>
-        <section className={styles.infoUser}>
-          <BasicInfoUserMin name={guestName} urlImage={guestImg} />
+    <div className={styles.container} onClick={handleGoToDetails}>
+      {/* LEft: User and Vehicle info */}
 
-          <span className={styles.line}></span>
+      <section className={styles.infoUser}>
+        <BasicInfoUserMin name={guestName} urlImage={guestImg} />
+        <BasicInfoUserMin name={carName} urlImage={carImg} />
+      </section>
 
-          <BasicInfoUserMin name={carName} urlImage={carImg} />
-        </section>
-
-        <section className={styles.dateContainer}>
+      {/* RIGHT: start and end dates */}
+      <section className={styles.dateContainer}>
+        <div className={styles.start}>
           <p className={styles.date}>Fecha y hora de inicio</p>
-          <p>{`${dateIn} - ${timeIn.format.hours}:${timeIn.format.minutes} ${timeIn.format.range}`}</p>
-        </section>
+          <p>{formatSimpleFullDate(dateStart)}</p>
+        </div>
 
-        <section className={styles.dateContainer}>
+        <div>
           <p className={styles.date}>Fecha y hora de fin</p>
-          <p>{`${dateOut} - ${timeOut.format.hours} ${timeOut.format.minutes} ${timeOut.format.range} `}</p>
-        </section>
-      </div>
-    </>
+          <p>{formatSimpleFullDate(dateEnd)}</p>
+        </div>
+      </section>
+      {/* </div> */}
+    </div>
   );
 }

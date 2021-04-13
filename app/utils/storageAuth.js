@@ -6,7 +6,7 @@ const storeToken = (authToken) => {
   try {
     localStorage.setItem(key, JSON.stringify(authToken));
   } catch (error) {
-    console.log('Error storing the token', error);
+    console.error('Error storing the token', error);
   }
 };
 
@@ -15,7 +15,7 @@ const getToken = () => {
     const token = localStorage.getItem(key);
     return JSON.parse(token);
   } catch (error) {
-    console.log('Error getting the token', error);
+    console.error('Error getting the token', error);
   }
 };
 
@@ -28,7 +28,7 @@ const removeToken = () => {
   try {
     localStorage.removeItem(key);
   } catch (error) {
-    console.log('Error removing the token', error);
+    console.error('Error removing the token', error);
   }
 };
 

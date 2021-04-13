@@ -1,0 +1,53 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    position: relative;
+    margin-bottom: 4.5rem;
+    .icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        left: calc(-11px - 2rem);
+        top: 0;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: $primary;
+        border: 3px solid $background;
+        z-index: 999;
+    }
+    .body {
+        color: $gray_2;
+        .title {
+            font-size: 16px;
+            margin: 0;
+        }
+        .subtitle {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        a {
+            color: $primary;
+        }
+    }
+}
+
+.first {
+    border: 1px solid transparent;
+    .body,
+    .icon {
+        margin-top: 16px;
+    }
+}
+
+.yellow {
+    .icon {
+        background: $warning;
+    }
+}
+
+.red {
+    .icon {
+        background: $secondary;
+    }
+}

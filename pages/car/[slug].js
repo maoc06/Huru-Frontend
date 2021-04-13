@@ -56,6 +56,7 @@ function CarSlug() {
 
           <CarProfileTemplate
             username={`${owner.firstName} ${owner.lastName}`}
+            userPic={owner.profilePhoto}
             userJoinAt={owner.createdAt}
             title={`${car.name} ${car.model} ${car.year}`}
             description={car.description}

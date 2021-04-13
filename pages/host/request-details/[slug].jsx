@@ -2,15 +2,11 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-// import authStorage from '../../../app/utils/storageAuth';
 import useApi from '../../../app/hooks/useApi';
 import bookingApi from '../../../app/api/BookingAPI';
 import userApi from '../../../app/api/UserAPI';
 import carApi from '../../../app/api/VehicleApi';
 
-// import SearchForm from '../../../app/components/modules/SearchForm/SearchForm';
-
-import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
 import CarProfileTemplate from '../../../app/components/templates/CarProfile/CarProfileTempate';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import TwoBottons from '../../../app/components/modules/TwoBottons/TwoBottons';
@@ -90,6 +86,7 @@ export default function RequestDetail() {
           titleDates="Marco de tiempo"
           titleUser="Solicitante"
           username={`${applicant.firstName} ${applicant.lastName}`}
+          userPic={applicant.profilePhoto}
           userJoinAt={applicant.createdAt}
           showDescription={false}
           showSpecifications={false}

@@ -10,12 +10,12 @@ export default function GridCardRequsetLayout({ requestList }) {
       {requestList.length === 0 && <p>No tienes solicitudes</p>}
 
       <div className={style.container}>
-        {requestList.slice(0, 4).map((request) => {
+        {requestList.slice(0, 3).map((request) => {
           return (
             <RequestCard
               key={request.booking_id}
-              guestName={request.bookingBy.firstName}
-              guestImg="guestImage"
+              guestName={`${request.bookingBy.firstName} ${request.bookingBy.lastName}`}
+              guestImg={request.bookingBy.profilePhoto}
               carName={request.bookingCar.car}
               carImg={request.bookingCar.image}
               dateStart={request.check_in_date}

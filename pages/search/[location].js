@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setResults } from '../../app/redux/slices/filterSearchSlice';
+import { setDates } from '../../app/redux/slices/searchParamsSlice';
 
 import useApi from '../../app/hooks/useApi';
 import searchApi from '../../app/api/SearchApi';
@@ -13,31 +14,18 @@ import SearchResultsTemplate from '../../app/components/templates/SearchResults/
 
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
 
-import formatShortDate from '../../app/utils/formatShortDate';
-import addDays from '../../app/utils/addDays';
-import formatAMPM from '../../app/utils/formatAMPM';
+import getDefaultDates from '../../app/utils/getDefaultDates';
 
 function Cars() {
   const dispatch = useDispatch();
   const router = useRouter();
   const searchParams = useSelector((state) => state.searchParams);
+
   const searchCars = useApi(searchApi.findCarsByCity);
+
   const [cars, setCars] = useState([]);
+
   const { location } = router.query;
-
-  const today = new Date();
-  const upcoming = addDays(today, 2);
-  const time = `${today.getHours() + 1}:${today.getMinutes()}`;
-
-  const defaultDates = {
-    raw: { start: today, end: upcoming },
-    formatLocale: {
-      start: formatShortDate(today),
-      end: formatShortDate(upcoming),
-    },
-  };
-  const defaultHourStart = formatAMPM(time);
-  const defaultHourEnd = formatAMPM(time);
 
   const handleCarsQuery = async ({ checkIn, checkOut }) => {
     const res = await searchCars.request(location, checkIn, checkOut);
@@ -55,32 +43,32 @@ function Cars() {
     }
   };
 
-  const getCheckInOut = () => {
+  const checkEmptyDates = () => {
     if (
       searchParams.dates.constructor === Object &&
       Object.keys(searchParams.dates).length === 0
     ) {
-      console.log('EMPTY SEARCH PARAMS -> SET DEAFULTS');
-      searchParams.cityLabel = JSON.stringify({
-        cityLabel: 'Cali, Valle del Cauca',
-      });
-      searchParams.dates = JSON.stringify(defaultDates);
-      searchParams.startHour = JSON.stringify(defaultHourStart);
-      searchParams.endHour = JSON.stringify(defaultHourEnd);
+      return true;
     }
+    return false;
+  };
 
-    console.log(searchParams);
+  const getCheckInOut = () => {
+    let rawData = {};
+
+    if (checkEmptyDates()) {
+      const dates = getDefaultDates();
+      dispatch(setDates(JSON.stringify(dates)));
+      rawData = dates;
+    } else {
+      rawData = searchParams.dates;
+    }
 
     const {
       raw: { start, end },
-    } = JSON.parse(searchParams.dates);
-    const { raw: startHour } = JSON.parse(searchParams.startHour);
-    const { raw: endHour } = JSON.parse(searchParams.endHour);
+    } = rawData;
 
-    const checkIn = `${start.split('T')[0]} ${startHour}:00`;
-    const checkOut = `${end.split('T')[0]} ${endHour}:00`;
-
-    return { checkIn, checkOut };
+    return { checkIn: start, checkOut: end };
   };
 
   useEffect(() => {

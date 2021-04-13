@@ -1,22 +1,33 @@
 import { useEffect } from 'react';
 import { useFormikContext } from 'formik';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+
+import { setPlace } from '../../../redux/slices/searchParamsSlice';
 
 import { styles } from './styles';
 
 export default function AutoCompletePlaces({ name, placeholder, isCompact }) {
-  const search = useSelector((state) => state.searchParams);
+  const place = useSelector((state) => state.searchParams.place);
+  const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext();
 
   useEffect(() => {
-    if (search.cityLabel.label !== undefined) {
-      handleChangeCity(search.cityLabel);
+    if (!checkEmptyPlace) {
+      handleChangePlace(place);
     }
   }, []);
 
-  const handleChangeCity = (city) => {
-    setFieldValue(name, city);
+  const checkEmptyPlace = () => {
+    if (place.constructor === Object && Object.keys(place).length === 0) {
+      return true;
+    }
+    return false;
+  };
+
+  const handleChangePlace = (place) => {
+    setFieldValue(name, place);
+    dispatch(setPlace(place));
   };
 
   return (
@@ -28,7 +39,7 @@ export default function AutoCompletePlaces({ name, placeholder, isCompact }) {
       selectProps={{
         instanceId: 'search-form-by-city',
         value: values[name],
-        onChange: handleChangeCity,
+        onChange: handleChangePlace,
         placeholder,
         styles: styles({ isCompact }),
       }}

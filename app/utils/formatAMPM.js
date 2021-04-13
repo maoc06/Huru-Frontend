@@ -5,21 +5,27 @@ export default function formatAMPM(date) {
     format: { hours: arr[0], minutes: arr[1], range: 'AM' },
   };
 
-  if (arr[0] >= '12') {
+  const hour = parseInt(arr[0]);
+  const minutes = arr[1];
+
+  if (hour >= 12) {
     res.format.hours = (arr[0] % 12).toString();
     if (res.format.hours.length === 1) {
       res.format.hours = '0' + res.format.hours;
     }
     res.format.range = 'PM';
   }
-  if (arr[0] === '12') {
+  if (hour === 12) {
     res.format.hours = '12';
   }
-  if (arr[0] === '00') {
+  if (hour === 0) {
     res.format.hours = '12';
   }
-  if (arr[1].length === 1) {
+  if (minutes.length === 1) {
     res.format.minutes = '0' + res.format.minutes;
   }
-  return res;
+  return {
+    raw: date,
+    format: `${res.format.hours}:${res.format.minutes} ${res.format.range}`,
+  };
 }

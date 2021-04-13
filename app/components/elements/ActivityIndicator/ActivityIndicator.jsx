@@ -21,15 +21,8 @@ export default function ActivityIndicator({
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.overlay}>
-        <Lottie
-          options={defaultOptions}
-          height={150}
-          width={150}
-          style={{
-            alignSelf: 'center',
-          }}
-        />
+      <div>
+        <Lottie options={defaultOptions} height={150} width={150} />
       </div>
     </div>
   );

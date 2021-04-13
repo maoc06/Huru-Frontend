@@ -16,21 +16,33 @@ function PaymentMethods() {
   const router = useRouter();
 
   const getPayment = useApi(paymentUserApi.findPayment);
+  const getDefaultPayment = useApi(paymentUserApi.findDefaultPaymentByUser);
 
   const [payment, setPayment] = useState({});
+  const [defaultPayment, setDefaultPayment] = useState({});
 
   const { slug } = router.query;
 
-  const handleData = async () => {
+  const handlePaymentInfo = async () => {
     const res = await getPayment.request(slug);
-    console.log(res.data.data);
     setPayment(res.data.data);
+  };
+
+  const handleGetDefault = async (uid) => {
+    const res = await getDefaultPayment.request(uid);
+    console.log('Default', res.data.data[0]);
+    setDefaultPayment(res.data.data[0]);
+  };
+
+  const handleGetData = (uid) => {
+    handlePaymentInfo();
+    handleGetDefault(uid);
   };
 
   useEffect(() => {
     const user = authStorage.getUser();
     if (user) {
-      handleData(user.info.uid);
+      handleGetData(user.info.uid);
     } else router.push('/signin');
   }, []);
 
@@ -63,7 +75,9 @@ function PaymentMethods() {
       </Head>
 
       <>
-        <ActivityIndicator visible={getPayment.loading} />
+        <ActivityIndicator
+          visible={getPayment.loading || getDefaultPayment.loading}
+        />
 
         <AppLayout withImage={false}>
           <h3>Metodo de pago</h3>
@@ -72,7 +86,13 @@ function PaymentMethods() {
             <>
               {renderTemplate()}
 
-              <PaymentEditControlls isDefault={payment.isDefault} />
+              {!getDefaultPayment.loading && (
+                <PaymentEditControlls
+                  defaultId={defaultPayment.id}
+                  paymentId={payment.id}
+                  isDefault={payment.isDefault}
+                />
+              )}
             </>
           )}
         </AppLayout>
