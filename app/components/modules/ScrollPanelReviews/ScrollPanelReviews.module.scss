@@ -1,0 +1,15 @@
+@import '../../../styles/abstracts/colors';
+.reviews_container {
+    display: flex;
+    padding-bottom: 32px;
+}
+
+.see_details {
+    color: $gray_3;
+    text-align: right;
+    margin-top: 8px;
+}
+
+.extra_space {
+    margin-right: 32px;
+}

@@ -7,25 +7,35 @@ const TripsTemplate = ({ renderList, onSelectCard }) => {
     <>
       {renderList.length === 0 && <p>No tienes nada</p>}
 
-      {renderList.map(
-        ({ id, checkout, bookingStatus, bookingCar: { car, images } }) => {
-          const extraLabel = withExtraLabel(bookingStatus, checkout);
+      {renderList.map((item) => {
+        const {
+          id,
+          checkout,
+          bookingStatus,
+          bookingCar: { car, images },
+          alreadyReviewed,
+        } = item || {};
 
-          return (
-            <CardHorizontal
-              key={id}
-              slug={id}
-              title={car}
-              showPanelDates={true}
-              imageSrc={images[0].imagePath}
-              onSelect={() => onSelectCard(id)}
-              withExtraLabel={extraLabel.show}
-              extraLabelText={extraLabel.text}
-              extraLabelColor={extraLabel.color}
-            />
-          );
-        }
-      )}
+        const extraLabel = withExtraLabel(
+          alreadyReviewed,
+          bookingStatus,
+          checkout
+        );
+
+        return (
+          <CardHorizontal
+            key={id}
+            slug={id}
+            title={car}
+            showPanelDates={true}
+            imageSrc={images[0].imagePath}
+            onSelect={() => onSelectCard(id)}
+            withExtraLabel={extraLabel.show}
+            extraLabelText={extraLabel.text}
+            extraLabelColor={extraLabel.color}
+          />
+        );
+      })}
     </>
   );
 };

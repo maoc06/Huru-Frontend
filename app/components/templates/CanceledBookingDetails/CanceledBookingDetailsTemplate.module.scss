@@ -1,0 +1,8 @@
+@import '../../../styles/abstracts/colors';
+.title {
+    line-height: 1.5;
+    margin: 0;
+    .cancel {
+        color: $secondary;
+    }
+}

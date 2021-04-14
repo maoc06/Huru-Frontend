@@ -1,23 +1,11 @@
 import { useState } from 'react';
 import { useFormikContext } from 'formik';
-import { makeStyles } from '@material-ui/core/styles';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
-import styles from './TextArea.module.scss';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
-const useStyles = makeStyles({
-  formControl: {
-    padding: '16px 24px',
-    fontSize: '16px',
-    border: '1px solid #828282',
-    borderRadius: '4px',
-    marginTop: '8px',
-    marginBottom: 0,
-    minWidth: '100%',
-    maxWidth: '100%',
-  },
-});
+import styles from './TextArea.module.scss';
+import { materialTextAreaStyles } from '../../../styles/material/textarea';
 
 export default function TextArea({
   name,
@@ -28,7 +16,7 @@ export default function TextArea({
   marginTop,
   marginToButton,
 }) {
-  const classes = useStyles();
+  const classes = materialTextAreaStyles();
   const [count, setCount] = useState(0);
 
   const {
@@ -68,7 +56,6 @@ export default function TextArea({
         <span>/{maxLength}</span>
       </div>
 
-      {/* {touched[name] && <p className={styles.statusMsg}>{errors[name]}</p>} */}
       <ErrorMessage visible={touched[name]} message={errors[name]} />
     </div>
   );

@@ -1,11 +1,11 @@
 const PENDING_APPROVAL_BOOKING_ID = 1;
 const COMPLETED_BOOKING_ID = 4;
 const APPROVED_BOOKING_ID = 5;
+const REJECTED_BOOKING_ID = 6;
 const CANCELED_BOOKING_ID = 7;
 
-const withExtraLabel = (status, checkout) => {
+const withExtraLabel = (already, status, checkout) => {
   let extraLabel = { show: false, text: '', color: '' };
-  +console.log('Status', status);
 
   switch (status) {
     case PENDING_APPROVAL_BOOKING_ID:
@@ -22,8 +22,15 @@ const withExtraLabel = (status, checkout) => {
         color: 'green',
       };
       break;
+    case REJECTED_BOOKING_ID:
+      extraLabel = {
+        show: true,
+        text: 'Reserva rechazada por el dueño',
+        color: 'red',
+      };
+      break;
     case COMPLETED_BOOKING_ID:
-      if (isFinishedBooking(checkout)) {
+      if (isFinishedBooking(checkout) && !already) {
         extraLabel = {
           show: true,
           text: 'Cúentanos tu experiencia',

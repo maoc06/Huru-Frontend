@@ -1,0 +1,11 @@
+@import '../../../styles/abstracts/colors';
+.wrapper {
+    display: flex;
+    gap: 8px;
+    min-height: 55px;
+    background-color: $gray_5;
+}
+
+.bottomSpace {
+    margin-bottom: 16px;
+}

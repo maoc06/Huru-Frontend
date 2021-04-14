@@ -1,0 +1,9 @@
+.rating {
+    div {
+        div:last-of-type {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+    }
+}

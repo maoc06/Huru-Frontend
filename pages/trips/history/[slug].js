@@ -3,70 +3,114 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import useApi from '../../../app/hooks/useApi';
-import carApi from '../../../app/api/VehicleApi';
 import bookingApi from '../../../app/api/BookingAPI';
-
-import { getTodayDateTime } from '../../../app/utils/formatFullDate';
+import carApi from '../../../app/api/VehicleApi';
+import carReviewApi from '../../../app/api/VehicleReviewAPI';
+import authStorage from '../../../app/utils/storageAuth';
 
 import Carousel from '../../../app/components/elements/Carousel/Carousel';
-import UpcomingBookingTemplate from '../../../app/components/templates/UpcomingBooking/UpcomingBookingTemplate';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
-import Modal from '../../../app/components/modules/Modal/Modal';
-
-import { WarningIcon } from '../../../app/components/elements/Icons/Shared';
+import PastBookingTemplate from '../../../app/components/templates/PastBooking/PastBookingTemplate';
+import CanceledBookingDetailsTemplate from '../../../app/components/templates/CanceledBookingDetails/CanceledBookingDetailsTemplate';
 
 function BookingHistory() {
   const router = useRouter();
   const { slug } = router.query;
 
-  // const getBooking = useApi(bookingApi.findBooking);
-  // const getCar = useApi(carApi.findCar);
-  // const cancelBooking = useApi(bookingApi.cancelBooking);
+  const getAlreadyReviewed = useApi(carReviewApi.getAlreadyReviewed);
+  const getBooking = useApi(bookingApi.findBooking);
+  const getCar = useApi(carApi.findCar);
 
-  // const [booking, setBooking] = useState({});
-  // const [car, setCar] = useState({});
-  // const [showConfimationModal, setShowConfirmModal] = useState(false);
+  const [booking, setBooking] = useState({});
+  const [car, setCar] = useState({});
+  const [user, setUser] = useState({});
+  const [review, setReview] = useState({});
 
-  // useEffect(() => {
-  //   handleGetData();
-  // }, []);
+  useEffect(() => {
+    if (!slug) {
+      return;
+    }
 
-  // const handleGetData = async () => {
-  //   const { bookingCar } = await handleGetBooking();
-  //   handleGetCar(bookingCar);
-  // };
+    const user = authStorage.getUser();
+    if (user) {
+      setUser(user.info);
+      handleGetData();
+    }
+  }, [slug]);
 
-  // const handleGetBooking = async () => {
-  //   const res = await getBooking.request(slug);
-  //   const booking = res.data.data;
+  const handleGetData = async () => {
+    const { id, bookingCar } = await handleGetBooking();
+    handleGetAlreadyReviewed(id);
+    handleGetCar(bookingCar);
+  };
 
-  //   setBooking(booking);
+  const handleGetBooking = async () => {
+    const res = await getBooking.request(slug);
+    const booking = res.data.data;
 
-  //   return booking;
-  // };
+    setBooking(booking);
 
-  // const handleGetCar = async (carId) => {
-  //   const res = await getCar.request(carId);
-  //   setCar(res.data.data);
-  // };
+    return booking;
+  };
 
-  // const handleCancelBooking = async () => {
-  //   setShowConfirmModal(false);
+  const handleGetCar = async (carId) => {
+    const res = await getCar.request(carId);
+    setCar(res.data.data);
+  };
 
-  //   const canceled = {
-  //     bookingId: slug,
-  //     cancelDate: getTodayDateTime(),
-  //     bookingStatus: 7,
-  //     isCancel: true,
-  //   };
+  const handleGetAlreadyReviewed = async (bookingId) => {
+    const res = await getAlreadyReviewed.request(bookingId);
+    setReview(res.data.data);
+  };
 
-  //   await cancelBooking.request(canceled);
-  //   router.push('/trips');
-  // };
+  const pastBookingTemplate = () => {
+    const { uid } = user || {};
+    const { car_id: carId, name, model, year } = car || {};
+    const { id: bookingId, checkin, checkout, pricePerDay } = booking || {};
+    const { alreadyReviewed, comment, rating } = review || {};
 
-  // const handleShowConfirmModal = () => {
-  //   setShowConfirmModal(!showConfimationModal);
-  // };
+    const title = `${name || 'Vehículo'} ${model || ''} ${year || ''}`;
+
+    return (
+      <PastBookingTemplate
+        alreadyReviewed={alreadyReviewed}
+        alreadyComment={alreadyReviewed && comment}
+        alreadyRating={alreadyReviewed && rating}
+        bookingDates={{ checkin, checkout }}
+        bookingId={bookingId}
+        carId={carId}
+        carOwner="Keanu Reeves"
+        initialStatePictures={[]}
+        finishStatePictures={[]}
+        reviewBy={uid}
+        title={title}
+        pricePerDay={pricePerDay}
+      />
+    );
+  };
+
+  const canceledBookingDetailsTemplate = () => {
+    const { name, model, year } = car || {};
+    const { bookingStatus } = booking || {};
+
+    const title = `${name || 'Vehículo'} ${model || ''} ${year || ''}`;
+
+    return (
+      <CanceledBookingDetailsTemplate title={title} type={bookingStatus} />
+    );
+  };
+
+  const renderTemplate = () => {
+    switch (booking.bookingStatus) {
+      case 4:
+        return pastBookingTemplate();
+      case 6:
+      case 7:
+        return canceledBookingDetailsTemplate();
+      default:
+        break;
+    }
+  };
 
   return (
     <div>
@@ -79,38 +123,19 @@ function BookingHistory() {
         />
       </Head>
 
-      <h3>Historial</h3>
-
-      {/* <ActivityIndicator
-        visible={getBooking.loading || getCar.loading || cancelBooking.loading}
+      <ActivityIndicator
+        visible={
+          getBooking.loading || getCar.loading || getAlreadyReviewed.loading
+        }
       />
 
-      <Modal
-        title="¿Cancelar la reserva?"
-        content="Podrias no recibir reembolso de acuerdo a las políticas de cancelación"
-        icon={<WarningIcon />}
-        visible={showConfimationModal}
-        onConfirm={handleCancelBooking}
-        onReject={handleShowConfirmModal}
-        onCloseModal={handleShowConfirmModal}
-      />
-
-      {!getBooking.loading && !getCar.loading && (
+      {!getBooking.loading && !getCar.loading && !getAlreadyReviewed.loading && (
         <>
           <Carousel images={car.images} />
 
-          <UpcomingBookingTemplate
-            title={`${car.name} ${car.model} ${car.year}`}
-            carOwner="Keanu Reeves"
-            bookingDates={{
-              checkin: booking.checkin,
-              checkout: booking.checkout,
-            }}
-            pricePerDay={booking.pricePerDay}
-            onClickCancelButton={handleShowConfirmModal}
-          />
+          {renderTemplate()}
         </>
-      )} */}
+      )}
     </div>
   );
 }

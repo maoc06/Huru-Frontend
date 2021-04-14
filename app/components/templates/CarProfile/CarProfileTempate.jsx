@@ -1,12 +1,11 @@
 import Link from 'next/link';
-import ScrollContainer from 'react-indiana-drag-scroll';
 
+import Divider from '../../elements/Divider/Divider';
+import FeatureSimple from '../../elements/FeatureSimple/FeatureSimple';
 import CarSpecifications from '../../modules/CarSpecifications/CarSpecifications';
 import UserProfileBasicInfo from '../../modules/UserProfileBasicInfo/UserProfileBasicInfo';
+import ScrollPanelReviews from '../../modules/ScrollPanelReviews/ScrollPanelReviews';
 import DatesPanel from '../../modules/DatesPanel/DatesPanel';
-import CardReview from '../../elements/CardReview/CardReview';
-import FeatureSimple from '../../elements/FeatureSimple/FeatureSimple';
-import Divider from '../../elements/Divider/Divider';
 
 import styles from './CarProfileTemplate.module.scss';
 
@@ -22,6 +21,7 @@ const CarProfileTemplate = ({
   numSeats,
   typeGas,
   features = [],
+  reviews = [],
   showDescription = true,
   showSpecifications = true,
   showFeatures = true,
@@ -79,7 +79,6 @@ const CarProfileTemplate = ({
 
       <article className={styles.inner}>
         <span className={styles.title}>{titleDates}</span>
-
         <DatesPanel compact={true} />
       </article>
 
@@ -104,20 +103,7 @@ const CarProfileTemplate = ({
 
       <article className={styles.inner_left}>
         <span className={styles.title}>Reseñas</span>
-
-        <ScrollContainer vertical={false} activationDistance={5}>
-          <div className={styles.reviews_container}>
-            <CardReview />
-            <CardReview />
-            <CardReview />
-          </div>
-        </ScrollContainer>
-
-        <div className={`${styles.see_details} ${styles.extra_space}`}>
-          <Link href="">
-            <a>Ver todas</a>
-          </Link>
-        </div>
+        <ScrollPanelReviews reviews={reviews} />
       </article>
 
       <Divider />
