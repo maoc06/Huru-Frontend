@@ -22,7 +22,13 @@ const findDefaultPaymentByUser = async (uuid) => {
 };
 
 const updateDefaultPayment = async (data) => {
-  return await client.put(`${endpoint}`, data, {
+  return await client.put(`${endpoint}/default`, data, {
+    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
+  });
+};
+
+const updateDisablePayment = async (data) => {
+  return await client.patch(`${endpoint}/disable`, data, {
     headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
   });
 };
@@ -32,4 +38,5 @@ export default {
   findPaymentsByUser,
   findDefaultPaymentByUser,
   updateDefaultPayment,
+  updateDisablePayment,
 };

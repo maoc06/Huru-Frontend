@@ -88,6 +88,8 @@ function UpcomingBooking() {
         content="Podrias no recibir reembolso de acuerdo a las políticas de cancelación"
         icon={<WarningIcon />}
         visible={showConfimationModal}
+        confirmText={'Si, cancelar'}
+        rejectText={'No cancelar'}
         onConfirm={handleCancelBooking}
         onReject={handleShowConfirmModal}
         onCloseModal={handleShowConfirmModal}
