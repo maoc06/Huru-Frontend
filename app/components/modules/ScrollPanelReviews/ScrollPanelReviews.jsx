@@ -5,9 +5,9 @@ import CardReview from '../../elements/CardReview/CardReview';
 
 import styles from './ScrollPanelReviews.module.scss';
 
-const ScrollPanelReviews = ({ reviews = [] }) => {
+const ScrollPanelReviews = ({ reviews = [], domain = 'vehículo' }) => {
   if (reviews.length === 0) {
-    return <p>Este vehículo aún no tiene reseñas.</p>;
+    return <p>{`Este ${domain} aún no tiene reseñas.`}</p>;
   }
 
   return (

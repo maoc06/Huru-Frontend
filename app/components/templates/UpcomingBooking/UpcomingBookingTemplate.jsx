@@ -1,6 +1,7 @@
 // import styles from './CarProfileTemplate.module.scss';
 
 import Button from '../../elements/Button/Button';
+import Divider from '../../elements/Divider/Divider';
 import Timeline from '../../modules/Timeline/Timeline';
 import PaymentDetails from '../../modules/PaymentDetails/PaymentDetails';
 import AppLayout from '../../layouts/AppLayout/AppLayout';
@@ -34,6 +35,8 @@ const UpcomingBookingTemplate = ({
         numberOfDays={getDiffDates(bookingDates.checkin, bookingDates.checkout)}
         showTitle={false}
       />
+
+      <Divider size="mediumTop" />
 
       <Button isSecondary={true} onClick={onClickCancelButton} marginTop={true}>
         Cancelar viaje

@@ -5,12 +5,19 @@ import { materialTextAreaStyles } from '../../../styles/material/textarea';
 
 import styles from './ReviewInHistory.module.scss';
 
-export default function ReviewInHistory({ comment, rating }) {
+export default function ReviewInHistory({
+  comment,
+  rating,
+  isForCar = true,
+  guest = '',
+}) {
   const classes = materialTextAreaStyles();
 
   return (
     <main className={styles.container}>
-      <h6 className={styles.title}>Tu opinión de este vehículo</h6>
+      <h6 className={styles.title}>
+        {isForCar ? 'Tu opinión de este vehículo' : `Tu opinion de ${guest}`}
+      </h6>
 
       <p>
         {`Lo valoraste con `}
@@ -19,7 +26,7 @@ export default function ReviewInHistory({ comment, rating }) {
           <FillStartIcon height={15} width={15} />
         </span>
 
-        <span className={styles.rating}>{rating}</span>
+        <span className={styles.rating}>{rating.toFixed(1)}</span>
       </p>
 
       <TextareaAutosize

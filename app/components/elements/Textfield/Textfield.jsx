@@ -20,6 +20,7 @@ export default function Textfield({
   withContainerMargings = true,
   withSmallBottomMargin,
   readOnly = false,
+  onChangePriceAux,
   ...otherProps
 }) {
   const {
@@ -44,6 +45,10 @@ export default function Textfield({
 
   const handleTypePriceChange = (event) => {
     setFieldValue(name, formatPrice({ price: event.target.value }));
+
+    if (typeof onChangePriceAux === 'function') {
+      onChangePriceAux(event.target.value);
+    }
   };
 
   return (

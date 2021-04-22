@@ -25,11 +25,11 @@ export default function SetPricePerDay({ setStep, next }) {
 
   return (
     <div>
-      <h3>Precio</h3>
+      {/* <h3>Precio</h3>
 
       <article>
         <p>Configura el precio base por día de alquiler de tu carro.</p>
-      </article>
+      </article> */}
 
       <Form
         initialValues={initialValues}

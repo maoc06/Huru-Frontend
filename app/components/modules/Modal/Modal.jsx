@@ -57,6 +57,7 @@ export default function AppModal({
   onCloseModal,
   confirmText = 'Confirmar',
   rejectText = 'Cancelar',
+  confirmButtonIsSecondary = true,
   showCloseIcon = true,
 }) {
   return (
@@ -84,7 +85,11 @@ export default function AppModal({
             {rejectText}
           </Button>
 
-          <Button onClick={onConfirm} isSecondary={true}>
+          <Button
+            onClick={onConfirm}
+            invert={true}
+            isSecondary={confirmButtonIsSecondary}
+          >
             {confirmText}
           </Button>
         </DialogActions>

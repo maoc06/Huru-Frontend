@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 
 import useApi from '../../../hooks/useApi';
 import vehicleReviewApi from '../../../api/VehicleReviewAPI';
+import userApi from '../../../api/UserAPI';
 
 import Form from '../Forms/Form';
 import SubmitButton from '../../elements/Button/SubmitButton';
@@ -13,18 +14,49 @@ import reviewSchema from '../../../constants/validationSchema/review';
 
 import styles from './PostReview.module.scss';
 
-export default function PostReview({ ownerName, carId, uid, bookingId }) {
+export default function PostReview({
+  bookedBy,
+  bookingId,
+  carId,
+  isForCar = true,
+  ownerName,
+  reviewBy,
+}) {
   const router = useRouter();
   const initialValues = { rating: '', comment: '' };
 
-  const createReview = useApi(vehicleReviewApi.insert);
+  const createCarReview = useApi(vehicleReviewApi.insert);
+  const createUserReview = useApi(userApi.createUserReview);
 
-  const handleSubmit = async ({ comment, rating }) => {
-    const review = { carId, addedBy: uid, bookingId, comment, rating };
-    await createReview.request(review);
+  const handleSubmit = async (review) => {
+    isForCar ? submitCarReview(review) : submitUserReview(review);
+  };
 
-    if (createReview.error) {
-      console.log('ERRRRooooooRRR');
+  const submitCarReview = async (review) => {
+    await createCarReview.request({
+      ...review,
+      addedBy: reviewBy,
+      bookingId,
+      carId,
+    });
+
+    if (createCarReview.error) {
+      console.log('Error trying to post a car review');
+    } else {
+      router.reload();
+    }
+  };
+
+  const submitUserReview = async (review) => {
+    await createUserReview.request({
+      ...review,
+      addedBy: reviewBy,
+      bookingId,
+      userId: bookedBy,
+    });
+
+    if (createUserReview.error) {
+      console.log('Error trying to post a user review');
     } else {
       router.reload();
     }
@@ -32,12 +64,16 @@ export default function PostReview({ ownerName, carId, uid, bookingId }) {
 
   return (
     <>
-      <ActivityIndicator visible={createReview.loading} />
+      <ActivityIndicator
+        visible={createCarReview.loading || createUserReview.loading}
+      />
 
       <main className={styles.container}>
         <h6 className={styles.title}>Cuentanos tu opinión</h6>
         <p className={styles.subtitle}>
-          Valora tu viaje en el carro de {ownerName}:
+          {isForCar
+            ? `Valora tu viaje en el carro de ${ownerName}:`
+            : `Valora tu experiencia con ${ownerName} como invitado`}
         </p>
 
         <Form
@@ -49,7 +85,11 @@ export default function PostReview({ ownerName, carId, uid, bookingId }) {
 
           <TextArea
             name="comment"
-            placeholder={`Cuéntale al mundo como fue conducir el vehículo de ${ownerName}`}
+            placeholder={
+              isForCar
+                ? `Cuéntale al mundo como fue conducir el vehículo de ${ownerName}`
+                : `Cuéntale a otros dueños de carros como fue tener a ${ownerName} de invitado en autómovil`
+            }
             maxLength={1000}
             marginToButton={true}
             rowsMin={5}

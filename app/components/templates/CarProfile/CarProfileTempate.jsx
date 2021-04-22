@@ -22,6 +22,7 @@ const CarProfileTemplate = ({
   typeGas,
   features = [],
   reviews = [],
+  reviewsDomain,
   showDescription = true,
   showSpecifications = true,
   showFeatures = true,
@@ -62,8 +63,8 @@ const CarProfileTemplate = ({
             {features.length === 0 && <p>Este carro no ticas asignadas.</p>}
 
             {features.length > 0 &&
-              features.slice(0, 3).map((feature) => {
-                return <FeatureSimple key={feature} featureId={feature} />;
+              features.slice(0, 3).map(({ featureId }) => {
+                return <FeatureSimple key={featureId} featureId={featureId} />;
               })}
 
             <div className={styles.see_details}>
@@ -103,7 +104,7 @@ const CarProfileTemplate = ({
 
       <article className={styles.inner_left}>
         <span className={styles.title}>Reseñas</span>
-        <ScrollPanelReviews reviews={reviews} />
+        <ScrollPanelReviews domain={reviewsDomain} reviews={reviews} />
       </article>
 
       <Divider />

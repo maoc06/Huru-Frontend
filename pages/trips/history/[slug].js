@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 
 import useApi from '../../../app/hooks/useApi';
 import bookingApi from '../../../app/api/BookingAPI';
-import carApi from '../../../app/api/VehicleApi';
 import carReviewApi from '../../../app/api/VehicleReviewAPI';
+import userApi from '../../../app/api/UserAPI';
 import authStorage from '../../../app/utils/storageAuth';
 
 import Carousel from '../../../app/components/elements/Carousel/Carousel';
@@ -17,14 +17,14 @@ function BookingHistory() {
   const router = useRouter();
   const { slug } = router.query;
 
-  const getAlreadyReviewed = useApi(carReviewApi.getAlreadyReviewed);
+  const getCarAlreadyReviewed = useApi(carReviewApi.getAlreadyReviewed);
+  const getUserAlreadyReviewed = useApi(userApi.getAlreadyReviewed);
   const getBooking = useApi(bookingApi.findBooking);
-  const getCar = useApi(carApi.findCar);
 
   const [booking, setBooking] = useState({});
-  const [car, setCar] = useState({});
   const [user, setUser] = useState({});
   const [review, setReview] = useState({});
+  const [imOwner, setImOwner] = useState(false);
 
   useEffect(() => {
     if (!slug) {
@@ -34,14 +34,17 @@ function BookingHistory() {
     const user = authStorage.getUser();
     if (user) {
       setUser(user.info);
-      handleGetData();
+      handleGetData(user.info.uid);
     }
   }, [slug]);
 
-  const handleGetData = async () => {
-    const { id, bookingCar } = await handleGetBooking();
-    handleGetAlreadyReviewed(id);
-    handleGetCar(bookingCar);
+  const handleGetData = async (uid) => {
+    const { id, bookedBy } = await handleGetBooking();
+
+    const loggedWithCarOwner = uid !== bookedBy.uuid;
+    setImOwner(loggedWithCarOwner);
+
+    handleGetAlreadyReviewed(id, loggedWithCarOwner);
   };
 
   const handleGetBooking = async () => {
@@ -53,47 +56,57 @@ function BookingHistory() {
     return booking;
   };
 
-  const handleGetCar = async (carId) => {
-    const res = await getCar.request(carId);
-    setCar(res.data.data);
-  };
+  const handleGetAlreadyReviewed = async (bookingId, imCarOwner) => {
+    const res = imCarOwner
+      ? await getUserAlreadyReviewed.request(bookingId)
+      : await getCarAlreadyReviewed.request(bookingId);
 
-  const handleGetAlreadyReviewed = async (bookingId) => {
-    const res = await getAlreadyReviewed.request(bookingId);
     setReview(res.data.data);
   };
 
   const pastBookingTemplate = () => {
     const { uid } = user || {};
-    const { car_id: carId, name, model, year } = car || {};
-    const { id: bookingId, checkin, checkout, pricePerDay } = booking || {};
+    const {
+      id: bookingId,
+      checkin,
+      checkout,
+      bookedCar,
+      bookedBy,
+      pricePerDay,
+    } = booking || {};
     const { alreadyReviewed, comment, rating } = review || {};
 
-    const title = `${name || 'Vehículo'} ${model || ''} ${year || ''}`;
+    const title = `${bookedCar.maker.name || 'Vehículo'} ${
+      bookedCar.model.name || ''
+    } ${bookedCar.year || ''}`;
 
     return (
       <PastBookingTemplate
         alreadyReviewed={alreadyReviewed}
         alreadyComment={alreadyReviewed && comment}
         alreadyRating={alreadyReviewed && rating}
+        bookedBy={bookedBy.uuid}
         bookingDates={{ checkin, checkout }}
         bookingId={bookingId}
-        carId={carId}
+        carId={bookedCar.carId}
         carOwner="Keanu Reeves"
         initialStatePictures={[]}
         finishStatePictures={[]}
         reviewBy={uid}
         title={title}
         pricePerDay={pricePerDay}
+        showExtraInfoPanels={!imOwner}
+        reviewForCar={!imOwner}
       />
     );
   };
 
   const canceledBookingDetailsTemplate = () => {
-    const { name, model, year } = car || {};
-    const { bookingStatus } = booking || {};
+    const { bookingStatus, bookedCar } = booking || {};
 
-    const title = `${name || 'Vehículo'} ${model || ''} ${year || ''}`;
+    const title = `${bookedCar.maker.name || 'Vehículo'} ${
+      bookedCar.model.name || ''
+    } ${bookedCar.year || ''}`;
 
     return (
       <CanceledBookingDetailsTemplate title={title} type={bookingStatus} />
@@ -125,17 +138,22 @@ function BookingHistory() {
 
       <ActivityIndicator
         visible={
-          getBooking.loading || getCar.loading || getAlreadyReviewed.loading
+          getBooking.loading ||
+          getCarAlreadyReviewed.loading ||
+          getUserAlreadyReviewed.loading
         }
       />
 
-      {!getBooking.loading && !getCar.loading && !getAlreadyReviewed.loading && (
-        <>
-          <Carousel images={car.images} />
+      {booking.constructor === Object &&
+        Object.keys(booking).length > 0 &&
+        !getCarAlreadyReviewed.loading &&
+        !getUserAlreadyReviewed.loading && (
+          <>
+            <Carousel images={booking.bookedCar.images} />
 
-          {renderTemplate()}
-        </>
-      )}
+            {renderTemplate()}
+          </>
+        )}
     </div>
   );
 }

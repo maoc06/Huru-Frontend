@@ -12,9 +12,11 @@ export default function TextArea({
   placeholder,
   rowsMin,
   rowsMax,
+  disabled = false,
   maxLength,
   marginTop,
   marginToButton,
+  onChangeAux,
 }) {
   const classes = materialTextAreaStyles();
   const [count, setCount] = useState(0);
@@ -24,8 +26,17 @@ export default function TextArea({
     errors,
     touched,
     setFieldTouched,
-    handleChange,
+    setFieldValue,
   } = useFormikContext();
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setFieldValue(name, value);
+
+    if (typeof onChangeAux === 'function') {
+      onChangeAux(value);
+    }
+  };
 
   const handleCount = (event) => {
     setCount(event.target.value.length);
@@ -49,12 +60,15 @@ export default function TextArea({
         className={classes.formControl}
         maxLength={maxLength}
         onKeyUp={handleCount}
+        disabled={disabled}
       />
 
-      <div className={styles.count}>
-        <span>{count}</span>
-        <span>/{maxLength}</span>
-      </div>
+      {!disabled && (
+        <div className={styles.count}>
+          <span>{count}</span>
+          <span>/{maxLength}</span>
+        </div>
+      )}
 
       <ErrorMessage visible={touched[name]} message={errors[name]} />
     </div>

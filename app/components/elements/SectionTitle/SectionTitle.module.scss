@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    h5 {
+        margin: 0;
+    }
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+}

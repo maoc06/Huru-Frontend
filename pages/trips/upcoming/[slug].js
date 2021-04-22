@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import useApi from '../../../app/hooks/useApi';
-import carApi from '../../../app/api/VehicleApi';
 import bookingApi from '../../../app/api/BookingAPI';
 
 import { getTodayDateTime } from '../../../app/utils/formatFullDate';
@@ -20,21 +19,14 @@ function UpcomingBooking() {
   const { slug } = router.query;
 
   const getBooking = useApi(bookingApi.findBooking);
-  const getCar = useApi(carApi.findCar);
   const cancelBooking = useApi(bookingApi.cancelBooking);
 
   const [booking, setBooking] = useState({});
-  const [car, setCar] = useState({});
   const [showConfimationModal, setShowConfirmModal] = useState(false);
 
   useEffect(() => {
-    handleGetData();
+    handleGetBooking();
   }, []);
-
-  const handleGetData = async () => {
-    const { bookingCar } = await handleGetBooking();
-    handleGetCar(bookingCar);
-  };
 
   const handleGetBooking = async () => {
     const res = await getBooking.request(slug);
@@ -43,11 +35,6 @@ function UpcomingBooking() {
     setBooking(booking);
 
     return booking;
-  };
-
-  const handleGetCar = async (carId) => {
-    const res = await getCar.request(carId);
-    setCar(res.data.data);
   };
 
   const handleCancelBooking = async () => {
@@ -80,7 +67,7 @@ function UpcomingBooking() {
       </Head>
 
       <ActivityIndicator
-        visible={getBooking.loading || getCar.loading || cancelBooking.loading}
+        visible={getBooking.loading || cancelBooking.loading}
       />
 
       <Modal
@@ -88,19 +75,19 @@ function UpcomingBooking() {
         content="Podrias no recibir reembolso de acuerdo a las políticas de cancelación"
         icon={<WarningIcon />}
         visible={showConfimationModal}
-        confirmText={'Si, cancelar'}
-        rejectText={'No cancelar'}
+        confirmText={'Cancelar reserva'}
+        rejectText={'Mantener reserva'}
         onConfirm={handleCancelBooking}
         onReject={handleShowConfirmModal}
         onCloseModal={handleShowConfirmModal}
       />
 
-      {!getBooking.loading && !getCar.loading && (
+      {booking.constructor === Object && Object.keys(booking).length > 0 && (
         <>
-          <Carousel images={car.images} />
+          <Carousel images={booking.bookedCar.images} />
 
           <UpcomingBookingTemplate
-            title={`${car.name} ${car.model} ${car.year}`}
+            title={`${booking.bookedCar.maker.name} ${booking.bookedCar.model.name} ${booking.bookedCar.year}`}
             carOwner="Keanu Reeves"
             bookingDates={{
               checkin: booking.checkin,

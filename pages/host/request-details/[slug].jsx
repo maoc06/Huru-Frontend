@@ -5,53 +5,77 @@ import { useRouter } from 'next/router';
 import useApi from '../../../app/hooks/useApi';
 import bookingApi from '../../../app/api/BookingAPI';
 import userApi from '../../../app/api/UserAPI';
-import carApi from '../../../app/api/VehicleApi';
 
 import CarProfileTemplate from '../../../app/components/templates/CarProfile/CarProfileTempate';
-import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import TwoBottons from '../../../app/components/modules/TwoBottons/TwoBottons';
+import Modal from '../../../app/components/modules/Modal/Modal';
+import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import Carousel from '../../../app/components/elements/Carousel/Carousel';
+import StatusIndicator from '../../../app/components/elements/StatusIndicator/StatusIndicator';
+import checkAnimationData from '../../../public/animations/check.json';
+import { WarningIcon } from '../../../app/components/elements/Icons/Shared';
 
 export default function RequestDetail() {
   const router = useRouter();
 
   const getBooking = useApi(bookingApi.findBooking);
-  const getApplicant = useApi(userApi.findUser);
-  const getCarBooking = useApi(carApi.findCar);
+  const getApplicantReviews = useApi(userApi.findUserReviews);
   const confirmBooking = useApi(bookingApi.confirmBookingRequest);
 
-  const [applicant, setApplicant] = useState({});
-  const [carBooking, setCarBooking] = useState({});
+  const [booking, setBooking] = useState({});
+  const [reviews, setReviews] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [openStatusIndicator, setOpenStatusIndicator] = useState(false);
 
   const { slug } = router.query;
 
-  const handleGetData = async () => {
+  const handleGetBooking = async () => {
     const res = await getBooking.request(slug);
-    if (res.data.data) {
-      const bookingRes = res.data.data;
+    const booking = res.data.data;
 
-      const applicantRes = await getApplicant.request(bookingRes.bookingBy);
-      const carBookingRes = await getCarBooking.request(bookingRes.bookingCar);
+    setBooking(booking);
 
-      setApplicant(applicantRes.data.data);
-      setCarBooking(carBookingRes.data.data);
+    return booking;
+  };
+
+  const handleGetApplicantReviews = async (userId) => {
+    const res = await getApplicantReviews.request(userId);
+    setReviews(res.data.data);
+  };
+
+  const handleGetData = async () => {
+    const { bookedBy } = await handleGetBooking();
+    handleGetApplicantReviews(bookedBy.uuid);
+  };
+
+  const handleAcceptBooking = async () => {
+    await confirmBooking.request({
+      bookingId: slug,
+      confirm: 5,
+      email: booking.bookedBy.email,
+    });
+
+    if (!confirmBooking.error) {
+      setOpenStatusIndicator(true);
     }
   };
 
-  const handleAcceptBooking = () => {
-    confirmBooking.request({
-      bookingId: slug,
-      confirm: 5,
-      email: applicant.email,
-    });
-  };
+  const handleRejectBooking = async () => {
+    setOpenModal(false);
 
-  const handleRejectBooking = () => {
-    confirmBooking.request({
+    await confirmBooking.request({
       bookingId: slug,
       confirm: 6,
-      email: applicant.email,
+      email: booking.bookedBy.email,
     });
+
+    if (!confirmBooking.error) {
+      router.push('/');
+    }
+  };
+
+  const handleButtonPopUp = () => {
+    router.push(`/trips/upcoming/${encodeURIComponent(slug)}`);
   };
 
   useEffect(() => {
@@ -70,37 +94,56 @@ export default function RequestDetail() {
       </Head>
 
       <ActivityIndicator
-        visible={
-          getBooking.loading ||
-          getApplicant.loading ||
-          getCarBooking.loading ||
-          confirmBooking.loading
-        }
+        visible={getBooking.loading || confirmBooking.loading}
       />
 
-      <>
-        <Carousel images={carBooking.images} />
+      {booking.constructor === Object && Object.keys(booking).length > 0 && (
+        <>
+          <StatusIndicator
+            animationData={checkAnimationData}
+            visible={openStatusIndicator}
+            title={'Reserva aceptada'}
+            message={`Preparate para recibir a ${booking.bookedBy.firstName} ${booking.bookedBy.lastName}`}
+            buttonMsg={'Entendido'}
+            onClickButton={handleButtonPopUp}
+          />
 
-        <CarProfileTemplate
-          title={`${carBooking.name} ${carBooking.model} ${carBooking.year}`}
-          titleDates="Marco de tiempo"
-          titleUser="Solicitante"
-          username={`${applicant.firstName} ${applicant.lastName}`}
-          userPic={applicant.profilePhoto}
-          userJoinAt={applicant.createdAt}
-          showDescription={false}
-          showSpecifications={false}
-          showFeatures={false}
-          showPolicies={false}
-        />
+          <Modal
+            title={`¿Rechazar la solicitud de ${booking.bookedBy.firstName}?`}
+            content="Está acción es permanente y no se puede deshacer"
+            icon={<WarningIcon />}
+            visible={openModal}
+            confirmText="Rechazar"
+            onConfirm={handleRejectBooking}
+            onReject={() => setOpenModal(false)}
+            onCloseModal={() => setOpenModal(false)}
+          />
 
-        <TwoBottons
-          affirmativeText="Aceptar"
-          declinedText="Rechazar"
-          onSelectAffirmative={handleAcceptBooking}
-          onSelectDelcined={handleRejectBooking}
-        />
-      </>
+          <Carousel images={booking.bookedCar.images} />
+
+          <CarProfileTemplate
+            title={`${booking.bookedCar.maker.name} ${booking.bookedCar.model.name} ${booking.bookedCar.year}`}
+            titleDates="Marco de tiempo"
+            titleUser="Solicitante"
+            username={`${booking.bookedBy.firstName} ${booking.bookedBy.lastName}`}
+            userPic={booking.bookedBy.profilePhoto}
+            userJoinAt={booking.bookedBy.createdAt}
+            showDescription={false}
+            showSpecifications={false}
+            showFeatures={false}
+            showPolicies={false}
+            reviews={reviews}
+            reviewsDomain="usuario"
+          />
+
+          <TwoBottons
+            affirmativeText="Aceptar"
+            declinedText="Rechazar"
+            onSelectAffirmative={handleAcceptBooking}
+            onSelectDelcined={() => setOpenModal(true)}
+          />
+        </>
+      )}
     </div>
   );
 }

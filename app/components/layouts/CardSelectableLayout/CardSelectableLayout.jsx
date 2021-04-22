@@ -10,19 +10,31 @@ export default function CardSelectableLayout({
   propValue,
   propSelect,
   onSelect,
+  selectFull = false,
   withIconEnum = false,
   iconEnum = {},
+  initialSelected = [],
 }) {
-  const [selectedIndex, setSelectedIndex] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(initialSelected);
 
   const handleClick = (index, value) => {
+    let selected = [];
+
     if (selectedIndex.includes(index)) {
-      setSelectedIndex(selectedIndex.filter((selected) => selected !== index));
+      selected = selectedIndex.filter((selected) => selected !== index);
+      // setSelectedIndex(selected);
     } else {
-      setSelectedIndex([...selectedIndex, index]);
+      selected = [...selectedIndex, index];
+      // setSelectedIndex([...selectedIndex, index]);
     }
 
-    onSelect(value);
+    setSelectedIndex(selected);
+
+    if (selectFull) {
+      onSelect(selected);
+    } else {
+      onSelect(value);
+    }
   };
 
   return (

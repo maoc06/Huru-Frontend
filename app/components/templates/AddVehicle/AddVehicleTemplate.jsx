@@ -67,6 +67,19 @@ const AddVehcileTemplate = () => {
       case 7:
         return (
           <AppLayout>
+            <h3>Exhibe tu carro</h3>
+
+            <section>
+              <p>Toma fotos de alta calidad de tu carro.</p>
+
+              <br />
+
+              <p>
+                Recuerda que unas buenas fotos pueden aumentar tus ingresos
+                potenciales atrayendo a más clientes.
+              </p>
+            </section>
+
             <AddPhotos setStep={setStep} next={8} />
           </AppLayout>
         );

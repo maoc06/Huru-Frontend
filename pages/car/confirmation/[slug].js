@@ -41,10 +41,10 @@ function ConfirmationBooking() {
   };
 
   const handleCreateBooking = async (booking) => {
-    try {
-      await postBooking.request(booking);
-      setShowConfirm(true);
-    } catch (error) {
+    await postBooking.request(booking);
+    setShowConfirm(true);
+
+    if (postBooking.error) {
       setShowFail(true);
     }
   };
@@ -107,24 +107,26 @@ function ConfirmationBooking() {
       <AppLayout withImage={false}>
         <h3>Confirmación</h3>
 
-        <CarConfirmationTemplate
-          uid={user.uid}
-          carId={slug}
-          carName={`${car.name} ${car.model} ${car.year}`}
-          pricePerDay={car.price}
-          paymentId={defaultPayment.id}
-          brand={
-            defaultPayment.type === 'CARD'
-              ? defaultPayment.brand
-              : defaultPayment.type
-          }
-          number={
-            defaultPayment.type === 'CARD'
-              ? defaultPayment.lastFour
-              : defaultPayment.phone
-          }
-          onSubmit={handleCreateBooking}
-        />
+        {car.constructor === Object && Object.keys(car).length > 0 && (
+          <CarConfirmationTemplate
+            uid={user.uid}
+            carId={slug}
+            carName={`${car.maker.name} ${car.model.name} ${car.year}`}
+            pricePerDay={car.price}
+            paymentId={defaultPayment.id}
+            brand={
+              defaultPayment.type === 'CARD'
+                ? defaultPayment.brand
+                : defaultPayment.type
+            }
+            number={
+              defaultPayment.type === 'CARD'
+                ? defaultPayment.lastFour
+                : defaultPayment.phone
+            }
+            onSubmit={handleCreateBooking}
+          />
+        )}
       </AppLayout>
     </div>
   );

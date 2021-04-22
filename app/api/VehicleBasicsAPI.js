@@ -4,51 +4,35 @@ import storageAuth from '../utils/storageAuth';
 const endpoint = '/car-basics';
 
 const getVehicleModels = async () => {
-  return await client.get(`${endpoint}/car-models`, {
-    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
-  });
+  return await client.get(`${endpoint}/car-models`);
 };
 
 const getVehicleCategory = async () => {
-  return await client.get(`${endpoint}/car-category`, {
-    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
-  });
+  return await client.get(`${endpoint}/car-category`);
 };
 
 const getTransmissions = async () => {
-  return await client.get(`${endpoint}/transmissions`, {
-    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
-  });
+  return await client.get(`${endpoint}/transmissions`);
 };
 
 const getOdometerRanges = async () => {
-  return await client.get(`${endpoint}/odometer-range`, {
-    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
-  });
+  return await client.get(`${endpoint}/odometer-range`);
 };
 
 const getFeaturesOptions = async () => {
-  return await client.get(`${endpoint}/features-opts`, {
-    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
-  });
+  return await client.get(`${endpoint}/features-opts`);
 };
 
 const getAdvanceNotices = async () => {
-  return await client.get(`${endpoint}/advance-notice`, {
-    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
-  });
+  return await client.get(`${endpoint}/advance-notice`);
 };
 
 const getMinTrip = async () => {
-  return await client.get(`${endpoint}/min-trip`, {
-    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
-  });
+  return await client.get(`${endpoint}/min-trip`);
 };
 
 const getMaxTrip = async () => {
-  return await client.get(`${endpoint}/max-trip`, {
-    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
-  });
+  return await client.get(`${endpoint}/max-trip`);
 };
 
 const insertCarFeatures = async (data) => {
@@ -74,6 +58,14 @@ const updateOwnerCarImage = async (data) => {
   });
 };
 
+const removeCarImage = async (carImageId) => {
+  return await client.delete(`${endpoint}/car-image/${carImageId}`, {
+    headers: {
+      Authorization: `Bearer ${storageAuth.getToken()}`,
+    },
+  });
+};
+
 export default {
   getVehicleModels,
   getVehicleCategory,
@@ -86,4 +78,5 @@ export default {
   insertCarFeatures,
   insertCarImage,
   updateOwnerCarImage,
+  removeCarImage,
 };

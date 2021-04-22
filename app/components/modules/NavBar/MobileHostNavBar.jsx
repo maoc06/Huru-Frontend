@@ -22,7 +22,7 @@ export default function MobileHostNavBar({}) {
         </a>
       </Link>
 
-      <Link href="/">
+      <Link href="/host/vehicles">
         <a className={styles.item}>
           <CarIcon />
           <p>Vehículos</p>

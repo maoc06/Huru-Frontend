@@ -7,6 +7,7 @@ const nextConfig = {
     domains: [
       'localhost',
       'huru-bucket-maja.s3-sa-east-1.amazonaws.com',
+      'huru-bucket-maja.s3.amazonaws.com',
       'amazonaws.com',
     ],
   },

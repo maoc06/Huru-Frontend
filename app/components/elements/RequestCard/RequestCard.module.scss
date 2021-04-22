@@ -1,37 +1,98 @@
 @import '../../../styles/abstracts/colors';
-.container {
+.card {
+    position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: $white;
+    flex-direction: column;
     border-radius: 10px;
+    margin-bottom: 16px;
     box-shadow: 0px 0px 16px #9999999c;
-    padding: 8px;
-    .infoUser,
-    .dateContainer {
-        flex: 1;
-    }
-    .infoUser {
-        width: 100%;
+    .inner {
+        position: relative;
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        border-right: 1px solid $gray_3;
-        margin-right: 8px;
-        padding-right: 8px;
+        align-items: center;
+        justify-content: center;
+        background-color: $white;
+        border-radius: inherit;
+        padding: 8px;
+        z-index: 99;
+        .infoUser,
+        .dateContainer {
+            flex: 1;
+        }
+        .infoUser {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 1px solid $gray_3;
+            margin-right: 8px;
+            padding-right: 8px;
+        }
+        .dateContainer {
+            .date {
+                font-size: 12px;
+                color: $gray_3;
+            }
+            .start {
+                margin-bottom: 8px;
+            }
+            p {
+                font-size: 12px;
+                color: $gray_2;
+                line-height: 1.5;
+            }
+        }
     }
-    .dateContainer {
-        .date {
-            font-size: 12px;
-            color: $gray_3;
-        }
-        .start {
-            margin-bottom: 8px;
-        }
-        p {
-            font-size: 12px;
-            color: $gray_2;
-            line-height: 1.5;
-        }
+}
+
+.extraMargin {
+    margin-bottom: 32px;
+}
+
+.extraLabel {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: calc(100% + 24px);
+    width: 100%;
+    color: $white;
+    background-color: $primary;
+    border-radius: inherit;
+    p {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        padding: 0 4px;
     }
+}
+
+.extraSpacing {
+    border: 0.11rem solid $primary;
+}
+
+.labelBorderRed {
+    border-color: $secondary;
+}
+
+.labelBackgroundRed {
+    background-color: $secondary;
+}
+
+.labelBorderGreen {
+    border-color: $success;
+}
+
+.labelBackgroundGreen {
+    background-color: $success;
+}
+
+.labelBorderYellow {
+    border-color: $warning;
+}
+
+.labelBackgroundYellow {
+    background-color: $warning;
 }

@@ -6,11 +6,20 @@
     border-radius: 10px;
     margin-bottom: 16px;
     .inner {
+        position: relative;
         min-width: 100%;
         background-color: $gray_6;
         z-index: 99;
         border-radius: inherit;
         overflow: hidden;
+        .overlay {
+            position: absolute;
+            background-color: $background;
+            opacity: 0.5;
+            width: 100%;
+            height: 100%;
+            z-index: 99;
+        }
         .image {
             flex: 1;
             position: relative;
@@ -101,4 +110,12 @@
 
 .labelBackgroundGreen {
     background-color: $success;
+}
+
+.labelBorderYellow {
+    border-color: $warning;
+}
+
+.labelBackgroundYellow {
+    background-color: $warning;
 }

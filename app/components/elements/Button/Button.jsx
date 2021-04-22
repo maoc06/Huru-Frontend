@@ -17,9 +17,11 @@ export default function Button({
         onClick={onClick}
         className={`${styles.baseButton} ${
           isSecondary ? styles.sencondaryButton : styles.primaryButton
-        } ${invert && styles.invertButton} ${marginTop && styles.margin_top} ${
-          marginBottom && styles.margin_bottom
-        } ${isRejectAction && styles.rejectButton}`}
+        } ${invert && !isSecondary && styles.invertButton} ${
+          marginTop && styles.margin_top
+        } ${marginBottom && styles.margin_bottom} ${
+          isRejectAction && styles.rejectButton
+        }`}
       >
         {children}
       </button>

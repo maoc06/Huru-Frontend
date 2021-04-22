@@ -39,7 +39,7 @@ const CarConfirmationTemplate = ({
       checkout: dates.raw.end,
       pricePerDay,
       siteFees: serviceFee,
-      amountPaid: priceDays + serviceFee,
+      // amountPaid: priceDays + serviceFee,
     };
 
     onSubmit(booking);

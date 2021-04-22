@@ -17,12 +17,15 @@ const PastBookingTemplate = ({
   title = '',
   carId,
   carOwner,
+  bookedBy,
   bookingId,
   bookingDates,
   reviewBy,
+  reviewForCar,
   pricePerDay,
   initialStatePictures,
   finishStatePictures,
+  showExtraInfoPanels = true,
 }) => {
   const serviceFeePercentage = 0.17;
 
@@ -54,25 +57,38 @@ const PastBookingTemplate = ({
       <Divider size="mediumTop" />
 
       {alreadyReviewed ? (
-        <ReviewInHistory comment={alreadyComment} rating={alreadyRating} />
+        <ReviewInHistory
+          comment={alreadyComment}
+          rating={alreadyRating}
+          isForCar={reviewForCar}
+          guest={'Keanu Reeves'}
+        />
       ) : (
         <PostReview
+          bookedBy={bookedBy}
           bookingId={bookingId}
           carId={carId}
+          isForCar={reviewForCar}
           ownerName={'Keanu Reeves'}
-          uid={reviewBy}
+          reviewBy={reviewBy}
         />
       )}
 
-      <Divider size="mediumTop" />
+      {showExtraInfoPanels && (
+        <>
+          <Divider size="mediumTop" />
 
-      <h6>¿Olvidaste alguna pertenencia en el vehículo?</h6>
-      <p className={styles.more}>Conoce más información</p>
+          <h6>¿Olvidaste alguna pertenencia en el vehículo?</h6>
+          <p className={styles.more}>Conoce más información</p>
 
-      <Divider size="mediumTop" />
+          <Divider size="mediumTop" />
 
-      <h6>¿Has tenido algún problema durante el tiempo con este vehículo?</h6>
-      <p className={styles.more}>Conoce más información</p>
+          <h6>
+            ¿Has tenido algún problema durante el tiempo con este vehículo?
+          </h6>
+          <p className={styles.more}>Conoce más información</p>
+        </>
+      )}
     </AppLayout>
   );
 };

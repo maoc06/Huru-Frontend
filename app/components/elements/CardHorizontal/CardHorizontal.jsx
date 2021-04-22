@@ -10,6 +10,9 @@ export default function CardHorizontal({
   price,
   imageSrc,
   showPanelDates = false,
+  showPanelPrice = true,
+  showFavoriteIcon = true,
+  withOpacity = false,
   withExtraLabel = false,
   extraLabelText = '',
   extraLabelColor = 'blue',
@@ -23,17 +26,23 @@ export default function CardHorizontal({
       <div
         className={`${styles.inner} ${withExtraLabel && styles.extraSpacing} ${
           extraLabelColor === 'red' && styles.labelBorderRed
-        } ${extraLabelColor === 'green' && styles.labelBorderGreen}`}
+        } ${extraLabelColor === 'green' && styles.labelBorderGreen} ${
+          extraLabelColor === 'yellow' && styles.labelBorderYellow
+        }`}
       >
+        {withOpacity && <div className={styles.overlay}></div>}
+
         <div className={styles.image}>
-          <div className={styles.fav}>
-            <FavoriteIcon
-              flat={false}
-              width={50}
-              height={50}
-              borderColor={'#fff'}
-            />
-          </div>
+          {showFavoriteIcon && (
+            <div className={styles.fav}>
+              <FavoriteIcon
+                flat={false}
+                width={50}
+                height={50}
+                borderColor={'#fff'}
+              />
+            </div>
+          )}
           <Image
             src={imageSrc}
             alt={imageSrc}
@@ -45,7 +54,7 @@ export default function CardHorizontal({
         <div className={styles.info}>
           <h6>{title}</h6>
 
-          {!showPanelDates && (
+          {!showPanelDates && showPanelPrice && (
             <div className={styles.bottom}>
               <div className={styles.stats}>
                 <FillStartIcon height={16} width={16} />
@@ -70,7 +79,9 @@ export default function CardHorizontal({
         <div
           className={`${styles.extraLabel} ${
             extraLabelColor === 'red' && styles.labelBackgroundRed
-          } ${extraLabelColor === 'green' && styles.labelBackgroundGreen}`}
+          } ${extraLabelColor === 'green' && styles.labelBackgroundGreen} ${
+            extraLabelColor === 'yellow' && styles.labelBackgroundYellow
+          }`}
         >
           <p>{extraLabelText}</p>
         </div>

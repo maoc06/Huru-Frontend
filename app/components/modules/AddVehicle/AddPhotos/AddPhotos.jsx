@@ -12,7 +12,7 @@ import ErrorMessage from '../../../elements/ErrorMessage/ErrorMessage';
 
 import { setPhotos } from '../../../../redux/slices/vehicleRegisterSlice';
 
-export default function AddPhotos({ setStep, next }) {
+export default function AddPhotos({ setStep, next, showButton = true }) {
   const dispatch = useDispatch();
   const vehicleImageApi = useApi(vehicleApi.insertCarImage);
   const [photoUris, setPhotoUris] = useState([]);
@@ -49,8 +49,8 @@ export default function AddPhotos({ setStep, next }) {
   };
 
   return (
-    <div>
-      <h3>Exhibe tu carro</h3>
+    <>
+      {/* <h3>Exhibe tu carro</h3>
 
       <section>
         <p>Toma fotos de alta calidad de tu carro.</p>
@@ -61,7 +61,7 @@ export default function AddPhotos({ setStep, next }) {
           Recuerda que unas buenas fotos pueden aumentar tus ingresos
           potenciales atrayendo a más clientes.
         </p>
-      </section>
+      </section> */}
 
       <GridPhotosLayout>
         {photoUris.map((uri, index) => (
@@ -83,9 +83,11 @@ export default function AddPhotos({ setStep, next }) {
         message={'Espera a que las imagenes se cargen para continuar'}
       />
 
-      <Button onClick={handleSubmit} marginTop>
-        Continuar
-      </Button>
-    </div>
+      {showButton && (
+        <Button onClick={handleSubmit} marginTop>
+          Continuar
+        </Button>
+      )}
+    </>
   );
 }

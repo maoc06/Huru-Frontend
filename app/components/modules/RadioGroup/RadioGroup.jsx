@@ -6,7 +6,12 @@ import FormControl from '@material-ui/core/FormControl';
 
 import RadioButton from '../../elements/RadioButton/RadioButton';
 
-export default function AppRadioGroup({ name, list, defaultSelected }) {
+export default function AppRadioGroup({
+  name,
+  list,
+  defaultSelected,
+  onChangeAux,
+}) {
   const keys = Object.keys(list[0]);
   const propKey = keys[0];
   const propName = keys[1];
@@ -28,6 +33,10 @@ export default function AppRadioGroup({ name, list, defaultSelected }) {
     const selectedItem = event.target.value;
     setValue(selectedItem);
     setFieldValue(name, getObjectByPropName(selectedItem));
+
+    if (typeof onChangeAux === 'function') {
+      onChangeAux(getObjectByPropName(selectedItem));
+    }
   };
 
   return (

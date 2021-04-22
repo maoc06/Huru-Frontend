@@ -7,14 +7,15 @@ export default function TwoBottons({
   declinedText,
   onSelectAffirmative,
   onSelectDelcined,
-  withPadding = true,
   withBackground = true,
+  withPadding = true,
+  withMarginTop = false,
 }) {
   return (
     <div
       className={`${styles.container} ${withPadding && styles.withPadding} ${
         withBackground && styles.withBackground
-      }`}
+      } ${withMarginTop && styles.withMarginTop}`}
     >
       <Button onClick={onSelectAffirmative}>{affirmativeText}</Button>
 

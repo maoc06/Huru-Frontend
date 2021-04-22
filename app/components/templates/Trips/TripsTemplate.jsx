@@ -1,4 +1,4 @@
-import { withExtraLabel } from '../../../utils/extraLabelText';
+import { withExtraLabelGuests } from '../../../utils/extraLabelText';
 
 import CardHorizontal from '../../elements/CardHorizontal/CardHorizontal';
 
@@ -12,21 +12,21 @@ const TripsTemplate = ({ renderList, onSelectCard }) => {
           id,
           checkout,
           bookingStatus,
-          bookingCar: { car, images },
+          bookedCar: { maker, model, year, images },
           alreadyReviewed,
         } = item || {};
 
-        const extraLabel = withExtraLabel(
-          alreadyReviewed,
-          bookingStatus,
-          checkout
-        );
+        const extraLabel = withExtraLabelGuests({
+          already: alreadyReviewed,
+          status: bookingStatus,
+          checkout,
+        });
 
         return (
           <CardHorizontal
             key={id}
             slug={id}
-            title={car}
+            title={`${maker.name} ${model.name} ${year}`}
             showPanelDates={true}
             imageSrc={images[0].imagePath}
             onSelect={() => onSelectCard(id)}

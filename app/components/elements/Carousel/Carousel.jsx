@@ -25,9 +25,9 @@ export default function AppCarousel({ images }) {
       className={styles.carousel}
     >
       {imagesSrc.map((item) => {
-        const { carImageId, imagePath } = item;
+        const { imagePath } = item;
         return (
-          <div key={carImageId}>
+          <div key={imagePath}>
             <img src={imagePath} />
           </div>
         );
