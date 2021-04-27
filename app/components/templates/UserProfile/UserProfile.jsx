@@ -56,6 +56,7 @@ const UserProfile = ({ user, isHostMood, onLogOut }) => {
             <ListItem
               text="Información personal"
               icon={<PersonOutlineOutlined />}
+              href="/profile/personal-data"
             />
 
             <Divider />

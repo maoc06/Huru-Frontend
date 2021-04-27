@@ -1,0 +1,17 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    display: flex;
+    align-items: center;
+    .check {
+        margin-right: 16px;
+    }
+    .checkEmpty {
+        border-radius: 50%;
+        height: 16px;
+        width: 16px;
+        border: 2px solid $primary;
+    }
+    .notVerified {
+        color: $error;
+    }
+}

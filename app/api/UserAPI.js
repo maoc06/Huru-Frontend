@@ -26,9 +26,36 @@ const createUserReview = async (data) => {
   });
 };
 
+const updateData = async (data) => {
+  return await client.put(`${endpoint}/`, data, {
+    headers: {
+      Authorization: `Bearer ${storageAuth.getToken()}`,
+    },
+  });
+};
+
+const updatePassword = async (data) => {
+  return await client.patch(`${endpoint}/password`, data, {
+    headers: {
+      Authorization: `Bearer ${storageAuth.getToken()}`,
+    },
+  });
+};
+
+const updatePhone = async (data) => {
+  return await client.patch(`${endpoint}/phone`, data, {
+    headers: {
+      Authorization: `Bearer ${storageAuth.getToken()}`,
+    },
+  });
+};
+
 export default {
   findUser,
   findUserReviews,
   getAlreadyReviewed,
   createUserReview,
+  updateData,
+  updatePassword,
+  updatePhone,
 };

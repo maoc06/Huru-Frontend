@@ -5,6 +5,7 @@ import SectionTitle from '../../elements/SectionTitle/SectionTitle';
 import TextArea from '../../elements/TextArea/TextArea';
 import Textfield from '../../elements/Textfield/Textfield';
 import Form from '../Forms/Form';
+import PhoneFiled from '../../elements/PhoneField/PhoneField';
 import RadioGroup from '../RadioGroup/RadioGroup';
 import Modal from '../Modal/Modal';
 
@@ -21,6 +22,11 @@ const SectionEditable = ({
   options = [],
   showInfoTip = false,
   toolTip = '',
+  isLink = false,
+  href = '',
+  isEditable = true,
+  countryCode,
+  onSelectPhoneCountry,
 }) => {
   const node = useRef();
   const [editable, setEditable] = useState(false);
@@ -131,6 +137,38 @@ const SectionEditable = ({
     );
   };
 
+  const phonefieldComponent = () => {
+    const formatPhone = values[name].slice(0, 3) + '-' + values[name].slice(3);
+
+    if (!editable) {
+      return (
+        <p>
+          <span>{`${countryCode} `}</span>
+          {formatPhone}
+        </p>
+      );
+    }
+
+    return (
+      <PhoneFiled
+        name="phone"
+        placeholder="¿Cúal es tu numero de teléfono?"
+        label="Teléfono"
+        countryCode={countryCode}
+        setCountryCode={onSelectPhoneCountry}
+        showLabel={false}
+        initialCode={countryCode.replace(/\D/g, '')}
+        initialPhone={formatPhone}
+      />
+    );
+  };
+
+  const textfieldComponent = () => {
+    if (!editable) {
+      return <p>{values[name]}</p>;
+    }
+  };
+
   const renderForm = () => {
     switch (type) {
       case 'textarea':
@@ -139,8 +177,10 @@ const SectionEditable = ({
         return optionsComponent();
       case 'price':
         return priceComponent();
+      case 'phone':
+        return phonefieldComponent();
       default:
-        break;
+        return textfieldComponent();
     }
   };
 
@@ -172,10 +212,17 @@ const SectionEditable = ({
               toolTip={toolTip}
             />
 
-            <SubmitEditFieldButton editable={editable} onEdit={handleEdit} />
+            {isEditable && (
+              <SubmitEditFieldButton
+                editable={editable}
+                onEdit={handleEdit}
+                isLink={isLink}
+                href={href}
+              />
+            )}
           </div>
 
-          {renderForm()}
+          {!isLink && renderForm()}
         </Form>
       </section>
     </>

@@ -16,6 +16,9 @@ export default function PhoneField({
   setCountryCode,
   readOnly = false,
   withMarginBottom = true,
+  showLabel = true,
+  initialCode = '57',
+  initialPhone,
 }) {
   const {
     values,
@@ -25,6 +28,12 @@ export default function PhoneField({
     setFieldValue,
     setErrors,
   } = useFormikContext();
+
+  useEffect(() => {
+    if (initialPhone !== undefined) {
+      setFieldValue(name, initialPhone);
+    }
+  }, []);
 
   useEffect(() => {
     if (apiError) {
@@ -51,14 +60,19 @@ export default function PhoneField({
     <section
       className={`${styles.wrapper} ${withMarginBottom && styles.marginBottom}`}
     >
-      <label>{label}</label>
+      {showLabel && <label>{label}</label>}
 
       <div className={styles.container}>
-        {withCountryCode && <CountryPicker setCountryCode={setCountryCode} />}
+        {withCountryCode && (
+          <CountryPicker
+            setCountryCode={setCountryCode}
+            initialCode={initialCode}
+          />
+        )}
 
         <div
           className={`${styles.wrap_phone_field} ${
-            withCountryCode && style.wrap_margin
+            withCountryCode && styles.wrap_margin
           }`}
         >
           {withCountryCode && <span>{`+${countryCode}`}</span>}
@@ -68,7 +82,9 @@ export default function PhoneField({
             onChange={handleChange}
             value={values[name]}
             name={name}
-            className={`${styles.input} ${withCountryCode && style.input_bold}`}
+            className={`${styles.input} ${
+              withCountryCode && styles.input_bold
+            }`}
             placeholder={placeholder}
             type="tel"
             pattern="[0-9]{3}-[0-9]{7}"

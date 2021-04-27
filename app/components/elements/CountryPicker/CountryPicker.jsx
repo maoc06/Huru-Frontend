@@ -42,14 +42,19 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-export default function CountryPicker({ setCountryCode }) {
+export default function CountryPicker({ setCountryCode, initialCode = '57' }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [countrySelected, setCountrySelected] = useState(
     countryPhonesFormat[0]
   );
 
   useEffect(() => {
-    setCountryCode(countrySelected.code);
+    const country = countryPhonesFormat.find(
+      (country) => country.code === initialCode
+    );
+
+    setCountrySelected(country);
+    setCountryCode(country.code);
   }, []);
 
   const handleClick = (event) => {
