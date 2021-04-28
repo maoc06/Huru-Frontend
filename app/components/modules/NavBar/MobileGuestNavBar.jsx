@@ -28,7 +28,7 @@ export default function MobileGuestNavBar({ isAuth }) {
         </Link>
       )}
 
-      <Link href="/">
+      <Link href="/favorites">
         <a className={styles.item}>
           <FavoriteIcon />
           <p>Favoritos</p>

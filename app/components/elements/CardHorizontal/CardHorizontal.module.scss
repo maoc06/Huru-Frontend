@@ -5,6 +5,12 @@
     flex-direction: column;
     border-radius: 10px;
     margin-bottom: 16px;
+    .fav {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 998;
+    }
     .inner {
         position: relative;
         min-width: 100%;
@@ -25,12 +31,6 @@
             position: relative;
             min-height: 150px;
             background-color: $gray_5;
-            .fav {
-                position: absolute;
-                top: 0;
-                right: 0;
-                z-index: 998;
-            }
         }
         .info {
             flex: 1;

@@ -2,14 +2,25 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
+import authStorage from '../../../utils/storageAuth';
+
 import CardHorizontal from '../../elements/CardHorizontal/CardHorizontal';
 import SearchForm from '../../modules/SearchForm/SearchForm';
 import FiletersPanel from '../../modules/FiltersPanel/FiltersPanel';
 
 const SearchResultsTemplate = () => {
   const router = useRouter();
+
   const filterStore = useSelector((state) => state.filterSearch);
+  const [user, setUser] = useState({});
   const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const user = authStorage.getUser();
+    if (user) {
+      setUser(user.info);
+    }
+  }, []);
 
   useEffect(() => {
     if (filterStore.filterRes.length > 0) {
@@ -34,6 +45,8 @@ const SearchResultsTemplate = () => {
       {items.map(({ car_id: slug, name, model, year, price, image }) => {
         return (
           <CardHorizontal
+            userId={user.uid ? user.uid : null}
+            carId={slug}
             key={slug}
             title={`${name} ${model} ${year}`}
             price={price}

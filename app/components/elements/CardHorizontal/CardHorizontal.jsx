@@ -1,11 +1,17 @@
 import Image from 'next/image';
 
+import useApi from '../../../hooks/useApi';
+import favoriteApi from '../../../api/FavoriteAPI';
+
 import { FavoriteIcon, FillStartIcon } from '../Icons/Shared';
 import DatesPanel from '../../modules/DatesPanel/DatesPanel';
 
 import styles from './CardHorizontal.module.scss';
+import { useState } from 'react';
 
 export default function CardHorizontal({
+  carId,
+  userId,
   title,
   price,
   imageSrc,
@@ -17,13 +23,53 @@ export default function CardHorizontal({
   extraLabelText = '',
   extraLabelColor = 'blue',
   onSelect,
+  favorite = false,
+  onRemoveFavorite,
 }) {
+  const addFavorite = useApi(favoriteApi.createFavorite);
+  const deleteFavorite = useApi(favoriteApi.removeFavorite);
+  const [isFavorite, setIsFavorite] = useState(favorite);
+
+  const handleAddToFavorite = () => {
+    setIsFavorite(true);
+    addFavorite.request({
+      addedBy: userId,
+      carId,
+    });
+  };
+
+  const handleRemoveFavorite = () => {
+    setIsFavorite(false);
+    deleteFavorite.request({
+      addedBy: userId,
+      carId,
+    });
+
+    if (typeof onRemoveFavorite === 'function') {
+      onRemoveFavorite(carId);
+    }
+  };
+
   return (
-    <div
-      className={`${styles.card} ${withExtraLabel && styles.extraMargin}`}
-      onClick={onSelect}
-    >
+    <div className={`${styles.card} ${withExtraLabel && styles.extraMargin}`}>
+      {showFavoriteIcon && userId && (
+        <div
+          className={styles.fav}
+          onClick={isFavorite ? handleRemoveFavorite : handleAddToFavorite}
+        >
+          <FavoriteIcon
+            flat={false}
+            width={50}
+            height={50}
+            borderColor={'#fff'}
+            fillColor={isFavorite ? '#ff3333' : '#333'}
+            fillOpacity={isFavorite ? 1.0 : 0.25}
+          />
+        </div>
+      )}
+
       <div
+        onClick={onSelect}
         className={`${styles.inner} ${withExtraLabel && styles.extraSpacing} ${
           extraLabelColor === 'red' && styles.labelBorderRed
         } ${extraLabelColor === 'green' && styles.labelBorderGreen} ${
@@ -33,16 +79,6 @@ export default function CardHorizontal({
         {withOpacity && <div className={styles.overlay}></div>}
 
         <div className={styles.image}>
-          {showFavoriteIcon && (
-            <div className={styles.fav}>
-              <FavoriteIcon
-                flat={false}
-                width={50}
-                height={50}
-                borderColor={'#fff'}
-              />
-            </div>
-          )}
           <Image
             src={imageSrc}
             alt={imageSrc}
