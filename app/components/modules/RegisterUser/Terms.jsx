@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
@@ -22,22 +23,22 @@ export default function Terms() {
   const signIn = useApi(authApi.signIn);
   const user = useSelector((state) => state.userRegister);
 
+  const [popUpOpen, setPopUpOpen] = useState(false);
+
   const initialValues = {
     checkTerms: false,
   };
-  
+
   const handleButtonPopUp = () => {
-    router.push('/profile')
-  }
+    router.push('/profile');
+  };
 
   const handleSubmit = async (checkTerms) => {
     if (checkTerms) {
-      let res;
-      res = await singUp.request(user);
+      const res = await singUp.request(user);
 
-      const credentials = { email: user.email, password: user.password };
-      res = await signIn.request(credentials);
-      auth.logIn(res.data.token);
+      auth.logIn(res.data.accessToken);
+      setPopUpOpen(true);
     }
   };
 
@@ -47,14 +48,7 @@ export default function Terms() {
 
       <StatusIndicator
         animationData={emailAnimationData}
-        visible={
-          !singUp.error &&
-          !singUp.loading &&
-          singUp.data.constructor === Object &&
-          !signIn.error &&
-          !signIn.loading &&
-          signIn.data.constructor === Object
-        }
+        visible={popUpOpen}
         title={`¡Bienvenido, ${user.firstName}!`}
         message={
           'Para finalizar, enviamos un correo de verificación. Mientras puedes ir explorando el universo Huru.'

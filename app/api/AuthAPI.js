@@ -6,6 +6,10 @@ const signUp = (user) => client.post(`${endpoint}/signup`, user);
 
 const signIn = (user) => client.post(`${endpoint}/signin`, user);
 
+const signUpGoogle = (token) => client.post(`${endpoint}/signup-google`, token);
+
+const signInGoogle = (token) => client.post(`${endpoint}/signin-google`, token);
+
 const checkEmail = (email) => client.get(`${endpoint}/check-email/${email}`);
 
 const checkDocument = (document) =>
@@ -24,6 +28,8 @@ const verifyEmail = (token) =>
 export default {
   signUp,
   signIn,
+  signUpGoogle,
+  signInGoogle,
   checkEmail,
   checkDocument,
   checkPhone,

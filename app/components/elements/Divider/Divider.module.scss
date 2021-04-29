@@ -1,0 +1,25 @@
+@import '../../../styles/abstracts/colors';
+.text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 40%;
+        height: 1px;
+        border-top: 1px solid $gray_3;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 40%;
+        height: 1px;
+        border-top: 1px solid $gray_3;
+    }
+}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { setPersonalData } from '../../../redux/slices/userRegisterSlice';
 
@@ -19,13 +19,19 @@ import personalDataUserSchema from '../../../constants/validationSchema/personal
 
 export default function RegisterUserPersonalData({ setStep }) {
   const dispatch = useDispatch();
+  const userStoreData = useSelector((state) => state.userRegister);
 
   const checkCCApi = useApi(authApi.checkDocument);
 
   const [dateError, setDateError] = useState(false);
   const [apiError, setApiError] = useState(false);
 
-  const initialValues = { name: '', lastname: '', birth: '', cc: '' };
+  const initialValues = {
+    name: userStoreData.firstName,
+    lastname: userStoreData.lastName,
+    birth: '',
+    cc: '',
+  };
 
   const handleSubmit = async ({ name, lastname, birth, cc }) => {
     if (!validateMinimumAge(birth)) {

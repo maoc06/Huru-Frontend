@@ -9,17 +9,23 @@ import Form from './Form';
 import Textfield from '../../elements/Textfield/Textfield';
 import AuxiliarLabel from '../../elements/AuxiliarLabel/AuxiliarLabel';
 import SubmitButton from '../../elements/Button/SubmitButton';
-
+import AuthFacebookButton from '../../elements/Button/AuthFacebookButton';
+import AuthGoogleButton from '../../elements/Button/AuthGoogleButton';
+import StatusIndicator from '../../elements/StatusIndicator/StatusIndicator';
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';
+import checkAnimationData from '../../../../public/animations/error-cone.json';
 
 import credentialsSchema from '../../../constants/validationSchema/credentials';
 import { errorHandlerLogin } from '../../../utils/errorHandler';
+
+import styles from './LoginForm.module.scss';
 
 export default function LoginForm() {
   const auth = useAuth();
   const router = useRouter();
 
   const validateCredentials = useApi(authApi.signIn);
+  const authGoogleApi = useApi(authApi.signInGoogle);
 
   const [emailError, setEmailError] = useState(false);
   const [emailErrorMsg, setEmailErrorMsg] = useState('');
@@ -27,20 +33,24 @@ export default function LoginForm() {
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMsg, setPasswordErrorMsg] = useState('');
 
+  const [popUpOpen, setPopUpOpen] = useState(false);
+
   const initialValues = { email: '', password: '' };
 
-  const handleSubmit = async (user) => {
-    const res = await validateCredentials.request(user);
-
-    const errors = errorHandlerLogin(res.data.token);
+  const handleAuth = ({ accessToken, showErrorOnPopUp = false }) => {
+    const errors = errorHandlerLogin(accessToken);
 
     if (errors === 0) {
       router.push('/profile');
-      auth.logIn(res.data.token);
+      auth.logIn(accessToken);
     } else {
       if (errors.index === 0) {
-        setEmailErrorMsg(errors.msg);
-        setEmailError(true);
+        if (showErrorOnPopUp) {
+          setPopUpOpen(true);
+        } else {
+          setEmailErrorMsg(errors.msg);
+          setEmailError(true);
+        }
       } else if (errors.index === 1) {
         setPasswordErrorMsg(errors.msg);
         setPasswordError(true);
@@ -48,9 +58,34 @@ export default function LoginForm() {
     }
   };
 
+  const handleSubmit = async (user) => {
+    const res = await validateCredentials.request(user);
+    handleAuth({ accessToken: res.data.token });
+  };
+
+  const handleAuthFacebook = (facebookData) => {
+    console.log(facebookData);
+  };
+
+  const handleAuthGoogle = async (googleData) => {
+    const res = await authGoogleApi.request({ token: googleData.tokenId });
+    handleAuth({ accessToken: res.data.accessToken, showErrorOnPopUp: true });
+  };
+
   return (
     <>
       <ActivityIndicator visible={validateCredentials.loading} />
+
+      <StatusIndicator
+        animationData={checkAnimationData}
+        visible={popUpOpen}
+        title={'Usuario no registrado'}
+        message={
+          'Parece que la cuenta no esta registrada, fue borrada o esta deshabilitada.'
+        }
+        buttonMsg={'Aceptar'}
+        onClickButton={() => setPopUpOpen(false)}
+      />
 
       <div>
         <h2>Bienvenido a Huru</h2>
@@ -83,6 +118,18 @@ export default function LoginForm() {
 
           <SubmitButton marginTop>Iniciar sesión</SubmitButton>
         </Form>
+
+        <p className={styles.alternative}>o entrar usando</p>
+
+        <section className={styles.media}>
+          <AuthFacebookButton onCallback={handleAuthFacebook} text="Facebook" />
+
+          <AuthGoogleButton
+            onFailure={handleAuthGoogle}
+            onSuccess={handleAuthGoogle}
+            text="Google"
+          />
+        </section>
       </div>
     </>
   );
