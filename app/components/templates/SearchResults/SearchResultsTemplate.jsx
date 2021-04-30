@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
+import useApi from '../../../hooks/useApi';
+import favoriteApi from '../../../api/FavoriteAPI';
 import authStorage from '../../../utils/storageAuth';
 
 import CardHorizontal from '../../elements/CardHorizontal/CardHorizontal';
@@ -12,13 +14,26 @@ const SearchResultsTemplate = () => {
   const router = useRouter();
 
   const filterStore = useSelector((state) => state.filterSearch);
+  const getFavorites = useApi(favoriteApi.findByUser);
+
   const [user, setUser] = useState({});
   const [items, setItems] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+
+  const handleGetFavorites = async (userId) => {
+    const res = await getFavorites.request(userId);
+    setFavorites(res.data);
+  };
+
+  const handleCheckIsFavorite = (carId) => {
+    return favorites.data.some((favorite) => favorite.car.carId === carId);
+  };
 
   useEffect(() => {
     const user = authStorage.getUser();
     if (user) {
       setUser(user.info);
+      handleGetFavorites(user.info.uid);
     }
   }, []);
 
@@ -42,19 +57,22 @@ const SearchResultsTemplate = () => {
         style={{ marginTop: '32px' }}
       >{`${items.length} resultados de busquedas`}</h6>
 
-      {items.map(({ car_id: slug, name, model, year, price, image }) => {
-        return (
-          <CardHorizontal
-            userId={user.uid ? user.uid : null}
-            carId={slug}
-            key={slug}
-            title={`${name} ${model} ${year}`}
-            price={price}
-            imageSrc={image}
-            onSelect={() => handleClick(slug)}
-          />
-        );
-      })}
+      {favorites.constructor === Object &&
+        Object.keys(favorites).length > 0 &&
+        items.map(({ car_id: slug, name, model, year, price, image }) => {
+          return (
+            <CardHorizontal
+              userId={user.uid ? user.uid : null}
+              carId={slug}
+              key={slug}
+              title={`${name} ${model} ${year}`}
+              price={price}
+              imageSrc={image}
+              onSelect={() => handleClick(slug)}
+              favorite={() => handleCheckIsFavorite(slug)}
+            />
+          );
+        })}
     </>
   );
 };

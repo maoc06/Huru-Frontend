@@ -5,6 +5,7 @@ import AppTerms from '../../elements/Terms/Terms';
 import Divider from '../../elements/Divider/Divider';
 import Form from '../../modules/Forms/Form';
 import SubmitButton from '../../elements/Button/SubmitButton';
+import ErrorMessage from '../../elements/ErrorMessage/ErrorMessage';
 import PaymentDetails from '../../modules/PaymentDetails/PaymentDetails';
 import PaymentMethod from '../../modules/PaymentMethods/PaymentMethod';
 import DatesPanel from '../../modules/DatesPanel/DatesPanel';
@@ -18,28 +19,27 @@ const CarConfirmationTemplate = ({
   carId,
   carName = '',
   pricePerDay = 0,
-  paymentId,
-  brand,
-  number,
+  paymentMethod,
   onSubmit,
 }) => {
   const dates = useSelector((state) => state.searchParams.dates);
   const initialValues = { checkTerms: false };
   const serviceFeePercentage = 0.17;
 
+  console.log('payment', paymentMethod);
+
   const handleSubmit = () => {
     const priceDays = pricePerDay * 2;
     const serviceFee = priceDays * serviceFeePercentage;
 
     const booking = {
-      paymentId,
+      paymentId: paymentMethod.paymentId,
       bookingCar: carId,
       bookingBy: uid,
       checkin: dates.raw.start,
       checkout: dates.raw.end,
       pricePerDay,
       siteFees: serviceFee,
-      // amountPaid: priceDays + serviceFee,
     };
 
     onSubmit(booking);
@@ -78,7 +78,26 @@ const CarConfirmationTemplate = ({
           <a>Editar</a>
         </Link>
       </div>
-      <PaymentMethod brand={brand} number={number} isCompact={true} />
+      {paymentMethod ? (
+        <PaymentMethod
+          brand={
+            paymentMethod.type === 'CARD'
+              ? paymentMethod.brand
+              : paymentMethod.type
+          }
+          number={
+            paymentMethod.type === 'CARD'
+              ? paymentMethod.lastFour
+              : paymentMethod.phone
+          }
+          isCompact={true}
+        />
+      ) : (
+        <ErrorMessage
+          message="Aún no tienes un metodo de pago vinculado."
+          visible={true}
+        />
+      )}
 
       <Form
         initialValues={initialValues}
@@ -87,7 +106,9 @@ const CarConfirmationTemplate = ({
       >
         <AppTerms name="checkTerms" />
 
-        <SubmitButton>Confirmar y pagar</SubmitButton>
+        <SubmitButton isDisabled={paymentMethod === undefined}>
+          Confirmar y pagar
+        </SubmitButton>
       </Form>
     </>
   );

@@ -2,7 +2,13 @@ import { useFormikContext } from 'formik';
 
 import Button from './Button';
 
-export default function SubmitButton({ children, marginTop, invert = false }) {
+export default function SubmitButton({
+  children,
+  marginTop,
+  invert = false,
+  isDisabled = false,
+  ...otherProps
+}) {
   const { handleSubmit } = useFormikContext();
 
   return (
@@ -11,6 +17,8 @@ export default function SubmitButton({ children, marginTop, invert = false }) {
       onClick={handleSubmit}
       marginTop={marginTop}
       invert={invert}
+      isDisabled={isDisabled}
+      {...otherProps}
     >
       {children}
     </Button>

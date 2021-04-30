@@ -125,7 +125,7 @@ export default function LoginForm() {
           <AuthFacebookButton onCallback={handleAuthFacebook} text="Facebook" />
 
           <AuthGoogleButton
-            onFailure={handleAuthGoogle}
+            onFailure={(event) => console.log('Failure auth google', event)}
             onSuccess={handleAuthGoogle}
             text="Google"
           />

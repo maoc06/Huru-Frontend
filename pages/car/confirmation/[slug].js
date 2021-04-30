@@ -59,12 +59,14 @@ function ConfirmationBooking() {
   };
 
   useEffect(() => {
-    const user = storageAuth.getUser();
-    if (user) {
-      setUser(user.info);
-      handleDate(user.info.uid);
+    if (slug) {
+      const user = storageAuth.getUser();
+      if (user) {
+        setUser(user.info);
+        handleDate(user.info.uid);
+      }
     }
-  }, []);
+  }, [slug]);
 
   return (
     <div>
@@ -113,17 +115,7 @@ function ConfirmationBooking() {
             carId={slug}
             carName={`${car.maker.name} ${car.model.name} ${car.year}`}
             pricePerDay={car.price}
-            paymentId={defaultPayment.id}
-            brand={
-              defaultPayment.type === 'CARD'
-                ? defaultPayment.brand
-                : defaultPayment.type
-            }
-            number={
-              defaultPayment.type === 'CARD'
-                ? defaultPayment.lastFour
-                : defaultPayment.phone
-            }
+            paymentMethod={defaultPayment}
             onSubmit={handleCreateBooking}
           />
         )}

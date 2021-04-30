@@ -13,6 +13,7 @@ import {
 } from '@material-ui/icons';
 
 import useMood from '../../../hooks/useMood';
+import useAuth from '../../../hooks/useAuth';
 
 import Avatar from '../../elements/Avatar/Avatar';
 import ListItem from '../../elements/List/ListItem';
@@ -21,12 +22,18 @@ import SwitchIndicator from '../../elements/SwitchIndicator/SwitchIndicator';
 
 import styles from './UserProfile.module.scss';
 
-const UserProfile = ({ user, isHostMood, onLogOut }) => {
+const UserProfile = ({ user, isHostMood }) => {
   const app = useMood();
+  const auth = useAuth();
   const router = useRouter();
   const [showIndicator, setShowIndicator] = useState(false);
 
   const { firstName, lastName, profilePicture } = user;
+
+  const handleLogOut = () => {
+    auth.logOut();
+    router.push('/');
+  };
 
   const handleSwitchMood = () => {
     app.setMood();
@@ -98,11 +105,12 @@ const UserProfile = ({ user, isHostMood, onLogOut }) => {
           </List>
         </section>
 
-        <section>
+        <section onClick={handleLogOut}>
           <ListItem
             text="Cerrar sesión"
+            isLink={false}
             icon={<ExitToAppOutlined />}
-            onSelect={onLogOut}
+            onSelectNotLink={handleLogOut}
           />
         </section>
       </main>

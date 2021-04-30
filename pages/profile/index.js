@@ -6,11 +6,10 @@ import useMood from '../../app/hooks/useMood';
 
 import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
 import UserProfileTemplate from '../../app/components/templates/UserProfile/UserProfile';
-import useAuth from '../../app/hooks/useAuth';
+
 import authStorage from '../../app/utils/storageAuth';
 
 function Profile() {
-  const auth = useAuth();
   const app = useMood();
   const router = useRouter();
   const [user, setUser] = useState({});
@@ -20,11 +19,6 @@ function Profile() {
     if (user) setUser(user.info);
     else router.push('/signin');
   }, []);
-
-  const handleLogOut = () => {
-    auth.logOut();
-    router.push('/');
-  };
 
   return (
     <div>
@@ -38,11 +32,7 @@ function Profile() {
       </Head>
 
       <AppLayout withImage={false}>
-        <UserProfileTemplate
-          user={user}
-          isHostMood={app.getMood}
-          onLogOut={handleLogOut}
-        />
+        <UserProfileTemplate user={user} isHostMood={app.getMood} />
       </AppLayout>
     </div>
   );

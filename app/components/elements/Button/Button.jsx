@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import SnackBar from '../SnackBar/SnackBar';
+
 import styles from './Button.module.scss';
 
 export default function Button({
@@ -13,13 +16,20 @@ export default function Button({
   withIcon = false,
   isRejectAction = false,
   tinyBorder = false,
+  isDisabled = false,
   ...otherProps
 }) {
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+
+  const handleClickDisabled = () => {
+    setOpenSnackBar(true);
+  };
+
   return (
     <>
       <button
         type={type}
-        onClick={onClick}
+        onClick={isDisabled ? handleClickDisabled : onClick}
         {...otherProps}
         className={`${styles.baseButton} ${
           isSecondary ? styles.sencondaryButton : styles.primaryButton
@@ -29,11 +39,17 @@ export default function Button({
           isRejectAction && styles.rejectButton
         } ${tinyBorder && styles.tinyBorder} ${
           withTinyMarginBottom && styles.withTinyMarginBottom
-        }`}
+        } ${isDisabled && styles.customDisabled}`}
       >
         {withIcon && icon}
         {children}
       </button>
+
+      <SnackBar
+        onClose={() => setOpenSnackBar(false)}
+        message="Debes tener un metodo de pago seleccionado para confirmar la reserva"
+        visible={openSnackBar}
+      />
     </>
   );
 }
