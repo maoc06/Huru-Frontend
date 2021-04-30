@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 
 import useApi from '../../app/hooks/useApi';
 import carApi from '../../app/api/VehicleApi';
+import userApi from '../../app/api/UserAPI';
+import authStorage from '../../app/utils/storageAuth';
 
 import Carousel from '../../app/components/elements/Carousel/Carousel';
 import PriceBottomBar from '../../app/components/modules/PriceBottomBar/PriceBottomBar';
@@ -17,17 +19,58 @@ function CarSlug() {
   const { slug } = router.query;
 
   const getCar = useApi(carApi.findCar);
+  const getUser = useApi(userApi.findUser);
 
   const [car, setCar] = useState({});
+  const [user, setUser] = useState({
+    enabled: false,
+    message: 'Inicia sesión para continuar con la reserva.',
+  });
 
-  const handleGetData = async () => {
+  const handleGetCarData = async () => {
     const resCar = await getCar.request(slug);
     setCar(resCar.data.data);
   };
 
+  const handleUserData = async (userId) => {
+    const resUser = await getUser.request(userId);
+    if (resUser.data !== undefined) {
+      const { isEmailVerified, isPhoneVerified } = resUser.data.data;
+
+      if (!isEmailVerified) {
+        setUser({
+          ...user,
+          message:
+            'Para continuar con la reserva, primero debes verificar tu email.',
+        });
+      } else if (!isPhoneVerified) {
+        setUser({
+          ...user,
+          message:
+            'Para continuar con la reserva, primero debes verificar tu número telefonico.',
+        });
+      } else if (!isEmailVerified && !isPhoneVerified) {
+        setUser({
+          ...user,
+          message:
+            'Para continuar con la reserva, primero debes verificar tu email y número telefonico.',
+        });
+      } else {
+        setUser({
+          ...user,
+          enabled: true,
+        });
+      }
+    }
+  };
+
   useEffect(() => {
-    handleGetData();
-  }, []);
+    if (slug) {
+      const user = authStorage.getUser();
+      if (user) handleUserData(user.info.uid);
+      handleGetCarData();
+    }
+  }, [slug]);
 
   return (
     <div>
@@ -59,7 +102,12 @@ function CarSlug() {
             reviews={car.reviews}
           />
 
-          <PriceBottomBar pricePerDay={car.price} slug={slug} />
+          <PriceBottomBar
+            disableBooking={!user.enabled}
+            disabledMessage={user.message}
+            pricePerDay={car.price}
+            slug={slug}
+          />
         </>
       )}
     </div>

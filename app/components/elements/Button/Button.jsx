@@ -17,6 +17,7 @@ export default function Button({
   isRejectAction = false,
   tinyBorder = false,
   isDisabled = false,
+  disabledMessage = '',
   ...otherProps
 }) {
   const [openSnackBar, setOpenSnackBar] = useState(false);
@@ -47,7 +48,7 @@ export default function Button({
 
       <SnackBar
         onClose={() => setOpenSnackBar(false)}
-        message="Debes tener un metodo de pago seleccionado para confirmar la reserva"
+        message={disabledMessage}
         visible={openSnackBar}
       />
     </>

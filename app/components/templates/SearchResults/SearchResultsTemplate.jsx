@@ -57,6 +57,23 @@ const SearchResultsTemplate = () => {
         style={{ marginTop: '32px' }}
       >{`${items.length} resultados de busquedas`}</h6>
 
+      {/* If not logged  */}
+      {user.constructor === Object &&
+        Object.keys(user).length === 0 &&
+        items.map(({ car_id: slug, name, model, year, price, image }) => {
+          return (
+            <CardHorizontal
+              carId={slug}
+              key={slug}
+              title={`${name} ${model} ${year}`}
+              price={price}
+              imageSrc={image}
+              onSelect={() => handleClick(slug)}
+            />
+          );
+        })}
+
+      {/* If logged */}
       {favorites.constructor === Object &&
         Object.keys(favorites).length > 0 &&
         items.map(({ car_id: slug, name, model, year, price, image }) => {

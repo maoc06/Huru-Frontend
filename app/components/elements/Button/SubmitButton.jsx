@@ -7,6 +7,7 @@ export default function SubmitButton({
   marginTop,
   invert = false,
   isDisabled = false,
+  disabledMessage = '',
   ...otherProps
 }) {
   const { handleSubmit } = useFormikContext();
@@ -18,6 +19,7 @@ export default function SubmitButton({
       marginTop={marginTop}
       invert={invert}
       isDisabled={isDisabled}
+      disabledMessage={disabledMessage}
       {...otherProps}
     >
       {children}

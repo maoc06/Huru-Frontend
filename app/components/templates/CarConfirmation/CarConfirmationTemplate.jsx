@@ -26,8 +26,6 @@ const CarConfirmationTemplate = ({
   const initialValues = { checkTerms: false };
   const serviceFeePercentage = 0.17;
 
-  console.log('payment', paymentMethod);
-
   const handleSubmit = () => {
     const priceDays = pricePerDay * 2;
     const serviceFee = priceDays * serviceFeePercentage;
@@ -106,7 +104,10 @@ const CarConfirmationTemplate = ({
       >
         <AppTerms name="checkTerms" />
 
-        <SubmitButton isDisabled={paymentMethod === undefined}>
+        <SubmitButton
+          isDisabled={paymentMethod === undefined}
+          disabledMessage="Debes tener un metodo de pago seleccionado para confirmar la reserva"
+        >
           Confirmar y pagar
         </SubmitButton>
       </Form>

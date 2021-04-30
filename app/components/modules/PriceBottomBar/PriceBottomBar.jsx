@@ -9,7 +9,12 @@ import { getDiffDates } from '../../../utils/formatFullDate';
 
 import styles from './PriceBottomBar.module.scss';
 
-export default function PriceBottomBar({ pricePerDay, slug }) {
+export default function PriceBottomBar({
+  pricePerDay,
+  slug,
+  disableBooking = true,
+  disabledMessage = '',
+}) {
   const router = useRouter();
   const travel = useTravelDates();
 
@@ -44,7 +49,13 @@ export default function PriceBottomBar({ pricePerDay, slug }) {
       </div>
 
       <div className={styles.button}>
-        <Button onClick={handleContinue}>Continuar</Button>
+        <Button
+          onClick={handleContinue}
+          isDisabled={disableBooking}
+          disabledMessage={disabledMessage}
+        >
+          Continuar
+        </Button>
       </div>
     </main>
   );
