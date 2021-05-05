@@ -5,30 +5,30 @@ import { setDates } from '../../../redux/slices/searchParamsSlice';
 
 import AppDateRangePicker from '../../elements/DateRangePicker/DateRangePicker';
 
-import getDefaultDates from '../../../utils/getDefaultDates';
-import formatShortDate from '../../../utils/formatShortDate';
-import formatAMPM from '../../../utils/formatAMPM';
-import { changeSelectedRawHour } from '../../../utils/formatFullDate';
+import {
+  changeSelectedRawHour,
+  defaultDates,
+  formatDate,
+  formatTime,
+} from '../../../utils/formatDates';
 
 import styles from './DatesPanel.module.scss';
 import useTravelDates from '../../../hooks/useTravelDates';
 
-// Diferencial del dia de la fecha
-const DELTA_DATE = 1;
-
 export default function DatesPanel({
   compact = false,
-  showTopLabels = true,
   clickleable = true,
+  showTopLabels = true,
+  paramDates,
 }) {
   const dispatch = useDispatch();
   const travel = useTravelDates();
 
-  const [selectionDates, setSelectionDates] = useState(getDefaultDates());
+  const [selectionDates, setSelectionDates] = useState(defaultDates());
   const [showDates, setShowDates] = useState(false);
 
   useEffect(() => {
-    setGlobaltDates(travel.getDates());
+    setGlobaltDates(paramDates ? paramDates : travel.getDates());
   }, []);
 
   const handleShowDates = () => {
@@ -46,8 +46,8 @@ export default function DatesPanel({
       raw: { start: startDate, end: endDate },
       format: {
         ...selectionDates.format,
-        startDate: formatShortDate(startDate, DELTA_DATE),
-        endDate: formatShortDate(endDate, DELTA_DATE),
+        startDate: formatDate({ date: startDate, type: 'JS' }),
+        endDate: formatDate({ date: endDate, type: 'JS' }),
       },
     };
 
@@ -58,8 +58,8 @@ export default function DatesPanel({
     const value = event.target.value;
     let rawStartDate = selectionDates.raw.start;
 
-    rawStartDate = changeSelectedRawHour(JSON.stringify(rawStartDate), value);
-    const startHour = formatAMPM(value).format;
+    rawStartDate = changeSelectedRawHour(rawStartDate, value);
+    const startHour = formatTime({ date: rawStartDate, type: 'JS' });
 
     const selectedDates = {
       raw: { ...selectionDates.raw, start: rawStartDate },
@@ -76,8 +76,8 @@ export default function DatesPanel({
     const value = event.target.value;
     let rawEndDate = selectionDates.raw.end;
 
-    rawEndDate = changeSelectedRawHour(JSON.stringify(rawEndDate), value);
-    const endHour = formatAMPM(value).format;
+    rawEndDate = changeSelectedRawHour(rawEndDate, value);
+    const endHour = formatTime({ date: rawEndDate, type: 'JS' });
 
     const selectedDates = {
       raw: { ...selectionDates.raw, end: rawEndDate },

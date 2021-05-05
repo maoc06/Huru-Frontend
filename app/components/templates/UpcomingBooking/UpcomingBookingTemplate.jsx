@@ -6,7 +6,7 @@ import Timeline from '../../modules/Timeline/Timeline';
 import PaymentDetails from '../../modules/PaymentDetails/PaymentDetails';
 import AppLayout from '../../layouts/AppLayout/AppLayout';
 
-import { getDiffDates } from '../../../utils/formatFullDate';
+import { diffDays } from '../../../utils/formatDates';
 
 const UpcomingBookingTemplate = ({
   title,
@@ -32,7 +32,11 @@ const UpcomingBookingTemplate = ({
       <PaymentDetails
         pricePerDay={pricePerDay}
         serviceFeePercentage={serviceFeePercentage}
-        numberOfDays={getDiffDates(bookingDates.checkin, bookingDates.checkout)}
+        numberOfDays={diffDays({
+          dateOne: bookingDates.checkin,
+          dateTwo: bookingDates.checkout,
+          type: 'ISO',
+        })}
         showTitle={false}
       />
 

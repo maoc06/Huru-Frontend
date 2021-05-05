@@ -5,7 +5,7 @@ import useTravelDates from '../../../hooks/useTravelDates';
 
 import Button from '../../elements/Button/Button';
 
-import { getDiffDates } from '../../../utils/formatFullDate';
+import { diffDays } from '../../../utils/formatDates';
 
 import styles from './PriceBottomBar.module.scss';
 
@@ -29,7 +29,7 @@ export default function PriceBottomBar({
       raw: { start, end },
     } = travel.getDates();
 
-    const days = getDiffDates(start, end);
+    const days = diffDays({ dateOne: start, dateTwo: end, type: 'ISO' });
     const calc = pricePerDay * days;
 
     setTotal(calc);

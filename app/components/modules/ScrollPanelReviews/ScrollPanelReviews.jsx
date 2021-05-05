@@ -17,6 +17,7 @@ const ScrollPanelReviews = ({ reviews = [], domain = 'vehículo' }) => {
           {reviews.map(
             ({
               id,
+              createdAt,
               comment,
               rating,
               reviewBy: { firstName, lastName, profilePhoto },
@@ -26,6 +27,7 @@ const ScrollPanelReviews = ({ reviews = [], domain = 'vehículo' }) => {
                   key={id}
                   username={`${firstName} ${lastName}`}
                   photoUrl={profilePhoto}
+                  publishedAt={createdAt}
                   rating={rating}
                   review={comment}
                 />

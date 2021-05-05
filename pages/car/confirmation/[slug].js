@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import storageAuth from '../../../app/utils/storageAuth';
+import useTravelDates from '../../../app/hooks/useTravelDates';
 
 import useApi from '../../../app/hooks/useApi';
 import vehicleApi from '../../../app/api/VehicleApi';
@@ -13,12 +14,14 @@ import ActivityIndicator from '../../../app/components/elements/ActivityIndicato
 import StatusIndicator from '../../../app/components/elements/StatusIndicator/StatusIndicator';
 import checkAnimationData from '../../../public/animations/check.json';
 import errorAnimationData from '../../../public/animations/error-cone.json';
-
 import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
 import CarConfirmationTemplate from '../../../app/components/templates/CarConfirmation/CarConfirmationTemplate';
 
+import { diffDays } from '../../../app/utils/formatDates';
+
 function ConfirmationBooking() {
   const router = useRouter();
+  const travel = useTravelDates();
 
   const getCar = useApi(vehicleApi.findCar);
   const getDefaultPayment = useApi(paymentUserApi.findDefaultPaymentByUser);
@@ -26,6 +29,7 @@ function ConfirmationBooking() {
 
   const [car, setCar] = useState({});
   const [user, setUser] = useState({});
+  const [dates, setDates] = useState({});
   const [defaultPayment, setDefaultPayment] = useState({});
   const [showConfirm, setShowConfirm] = useState(false);
   const [showFail, setShowFail] = useState(false);
@@ -61,6 +65,7 @@ function ConfirmationBooking() {
   useEffect(() => {
     if (slug) {
       const user = storageAuth.getUser();
+      setDates(travel.getDates());
       if (user) {
         setUser(user.info);
         handleDate(user.info.uid);
@@ -114,6 +119,11 @@ function ConfirmationBooking() {
             uid={user.uid}
             carId={slug}
             carName={`${car.maker.name} ${car.model.name} ${car.year}`}
+            countDays={diffDays({
+              dateOne: dates.raw.start,
+              dateTwo: dates.raw.end,
+              type: 'ISO',
+            })}
             pricePerDay={car.price}
             paymentMethod={defaultPayment}
             onSubmit={handleCreateBooking}

@@ -10,11 +10,12 @@ import styles from './CardHorizontal.module.scss';
 import { useState } from 'react';
 
 export default function CardHorizontal({
+  dates,
   carId,
   userId,
   title,
   price,
-  imageSrc,
+  imageSrc = '/images/default-car.png',
   showPanelDates = false,
   showPanelPrice = true,
   showFavoriteIcon = true,
@@ -107,7 +108,9 @@ export default function CardHorizontal({
             </div>
           )}
 
-          {showPanelDates && <DatesPanel clickleable={false} />}
+          {showPanelDates && (
+            <DatesPanel paramDates={dates} clickleable={false} />
+          )}
         </div>
       </div>
 

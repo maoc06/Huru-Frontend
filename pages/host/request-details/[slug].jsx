@@ -15,6 +15,8 @@ import StatusIndicator from '../../../app/components/elements/StatusIndicator/St
 import checkAnimationData from '../../../public/animations/check.json';
 import { WarningIcon } from '../../../app/components/elements/Icons/Shared';
 
+import { convertToCompound } from '../../../app/utils/formatDates';
+
 export default function RequestDetail() {
   const router = useRouter();
 
@@ -32,6 +34,8 @@ export default function RequestDetail() {
   const handleGetBooking = async () => {
     const res = await getBooking.request(slug);
     const booking = res.data.data;
+
+    console.log(booking);
 
     setBooking(booking);
 
@@ -79,8 +83,10 @@ export default function RequestDetail() {
   };
 
   useEffect(() => {
-    handleGetData();
-  }, []);
+    if (slug) {
+      handleGetData();
+    }
+  }, [slug]);
 
   return (
     <div>
@@ -122,6 +128,10 @@ export default function RequestDetail() {
           <Carousel images={booking.bookedCar.images} />
 
           <CarProfileTemplate
+            dates={convertToCompound({
+              dateOne: booking.checkin,
+              dateTwo: booking.checkout,
+            })}
             title={`${booking.bookedCar.maker.name} ${booking.bookedCar.model.name} ${booking.bookedCar.year}`}
             titleDates="Marco de tiempo"
             titleUser="Solicitante"

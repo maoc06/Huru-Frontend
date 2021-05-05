@@ -7,6 +7,7 @@ import bookingApi from '../../../app/api/BookingAPI';
 import carReviewApi from '../../../app/api/VehicleReviewAPI';
 import userApi from '../../../app/api/UserAPI';
 import authStorage from '../../../app/utils/storageAuth';
+import { convertToCompound } from '../../../app/utils/formatDates';
 
 import Carousel from '../../../app/components/elements/Carousel/Carousel';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
@@ -86,7 +87,11 @@ function BookingHistory() {
         alreadyComment={alreadyReviewed && comment}
         alreadyRating={alreadyReviewed && rating}
         bookedBy={bookedBy.uuid}
-        bookingDates={{ checkin, checkout }}
+        bookingDates={convertToCompound({
+          dateOne: checkin,
+          dateTwo: checkout,
+          type: 'ISO',
+        })}
         bookingId={bookingId}
         carId={bookedCar.carId}
         carOwner="Keanu Reeves"

@@ -13,16 +13,18 @@ export default function AutoCompletePlaces({ name, placeholder, isCompact }) {
   const { values, setFieldValue } = useFormikContext();
 
   useEffect(() => {
-    if (!checkEmptyPlace) {
+    if (!checkEmptyPlace()) {
       handleChangePlace(place);
     }
-  }, []);
+  }, [place]);
 
   const checkEmptyPlace = () => {
-    if (place.constructor === Object && Object.keys(place).length === 0) {
-      return true;
+    if (place.constructor === Object) {
+      if (Object.keys(place).length === 0) return true;
+      else return false;
+    } else {
+      return false;
     }
-    return false;
   };
 
   const handleChangePlace = (place) => {

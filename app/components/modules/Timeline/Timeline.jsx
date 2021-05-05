@@ -4,10 +4,7 @@ import {
   RefundIcon,
   ReturnIcon,
 } from '../../elements/Icons/Shared';
-import {
-  getDayBefore,
-  formatSimpleFullDate,
-} from '../../../utils/formatFullDate';
+import { formatFullDate, lastDay } from '../../../utils/formatDates';
 import TimelineElement from '../../elements/TimelineElement/TimelineElement';
 
 import styles from './Timeline.module.scss';
@@ -23,7 +20,7 @@ function Timeline({ checkin, checkout }) {
         />
 
         <TimelineElement
-          title={getDayBefore(checkin)}
+          title={lastDay({ date: checkin, type: 'ISO' })}
           subtitle={[
             'Reembolso total.',
             '24 horas antes del inicio del viaje.',
@@ -36,14 +33,14 @@ function Timeline({ checkin, checkout }) {
         />
 
         <TimelineElement
-          title={formatSimpleFullDate(checkin)}
+          title={formatFullDate({ date: checkin, type: 'ISO' })}
           subtitle={['Recibir el vehículo e iniciar el viaje.']}
           backgroundColor="red"
           icon={<CarIcon width={15} height={15} color="#E7ECF3" />}
         />
 
         <TimelineElement
-          title={formatSimpleFullDate(checkout)}
+          title={formatFullDate({ date: checkout, type: 'ISO' })}
           subtitle={['Devolver el vehículo al dueño.']}
           backgroundColor="red"
           icon={<ReturnIcon width={15} height={15} />}

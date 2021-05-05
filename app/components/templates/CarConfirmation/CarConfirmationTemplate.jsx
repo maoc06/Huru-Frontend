@@ -18,6 +18,7 @@ const CarConfirmationTemplate = ({
   uid,
   carId,
   carName = '',
+  countDays = 2,
   pricePerDay = 0,
   paymentMethod,
   onSubmit,
@@ -27,11 +28,11 @@ const CarConfirmationTemplate = ({
   const serviceFeePercentage = 0.17;
 
   const handleSubmit = () => {
-    const priceDays = pricePerDay * 2;
+    const priceDays = pricePerDay * countDays;
     const serviceFee = priceDays * serviceFeePercentage;
 
     const booking = {
-      paymentId: paymentMethod.paymentId,
+      paymentId: paymentMethod.id,
       bookingCar: carId,
       bookingBy: uid,
       checkin: dates.raw.start,
@@ -65,6 +66,7 @@ const CarConfirmationTemplate = ({
 
       <PaymentDetails
         pricePerDay={pricePerDay}
+        numberOfDays={countDays ? countDays : 2}
         serviceFeePercentage={serviceFeePercentage}
       />
 

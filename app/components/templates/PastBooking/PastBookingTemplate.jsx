@@ -6,7 +6,7 @@ import ReviewInHistory from '../../modules/ReviewInHistory/ReviewInHistory';
 import StatePictures from '../../modules/StatePictures/StatePictures';
 import AppLayout from '../../layouts/AppLayout/AppLayout';
 
-import { getDiffDates } from '../../../utils/formatFullDate';
+import { diffDays } from '../../../utils/formatDates';
 
 import styles from './PastBookingTemplate.module.scss';
 
@@ -34,7 +34,7 @@ const PastBookingTemplate = ({
       <h5>{title}</h5>
 
       <h6>Marco de tiempo</h6>
-      <DatesPanel clickleable={false} />
+      <DatesPanel paramDates={bookingDates} clickleable={false} />
 
       <Divider size="mediumTop" />
 
@@ -50,7 +50,10 @@ const PastBookingTemplate = ({
       <PaymentDetails
         pricePerDay={pricePerDay}
         serviceFeePercentage={serviceFeePercentage}
-        numberOfDays={getDiffDates(bookingDates.checkin, bookingDates.checkout)}
+        numberOfDays={diffDays({
+          dateOne: bookingDates.raw.start,
+          dateTwo: bookingDates.raw.end,
+        })}
         showTitle={false}
       />
 

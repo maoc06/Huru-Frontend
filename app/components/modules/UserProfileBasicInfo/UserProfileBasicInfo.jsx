@@ -2,6 +2,7 @@ import formatJoinDate from '../../../utils/formatJoinDate';
 
 import Avatar from '../../elements/Avatar/Avatar';
 import { FillStartIcon } from '../../elements/Icons/Shared';
+import { formatMonthYear } from '../../../utils/formatDates';
 
 import styles from './UserProfileBasicInfo.module.scss';
 
@@ -25,7 +26,7 @@ export default function UserProfileBasicInfo({
 
       <div className={styles.info}>
         <p className={styles.name}>{name}</p>
-        <p>{`${domain} ${formatJoinDate(createdAt)}`}</p>
+        <p>{`${domain} ${formatMonthYear(createdAt)}`}</p>
 
         {showExtra && (
           <div className={styles.extra}>

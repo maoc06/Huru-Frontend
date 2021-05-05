@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 
-import getDefaultDates from '../utils/getDefaultDates';
+import { defaultDates } from '../utils/formatDates';
 
 const useTravelDates = () => {
   const searchParams = useSelector((state) => state.searchParams);
 
   const getDates = () => {
     if (searchParamsEmpty()) {
-      return getDefaultDates();
+      return defaultDates();
     } else {
       return searchParams.dates;
     }

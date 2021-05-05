@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import useApi from '../../../app/hooks/useApi';
 import bookingApi from '../../../app/api/BookingAPI';
 
-import { getTodayDateTime } from '../../../app/utils/formatFullDate';
+import { todayDate } from '../../../app/utils/formatDates';
 
 import Carousel from '../../../app/components/elements/Carousel/Carousel';
 import UpcomingBookingTemplate from '../../../app/components/templates/UpcomingBooking/UpcomingBookingTemplate';
@@ -42,7 +42,7 @@ function UpcomingBooking() {
 
     const canceled = {
       bookingId: slug,
-      cancelDate: getTodayDateTime(),
+      cancelDate: todayDate(),
       bookingStatus: 7,
       isCancel: true,
     };

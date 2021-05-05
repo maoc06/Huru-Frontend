@@ -10,6 +10,7 @@ import DatesPanel from '../../modules/DatesPanel/DatesPanel';
 import styles from './CarProfileTemplate.module.scss';
 
 const CarProfileTemplate = ({
+  dates,
   username = '',
   userPic = '',
   userJoinAt = '',
@@ -80,7 +81,7 @@ const CarProfileTemplate = ({
 
       <article className={styles.inner}>
         <span className={styles.title}>{titleDates}</span>
-        <DatesPanel compact={true} />
+        <DatesPanel paramDates={dates} compact={true} />
       </article>
 
       <Divider />

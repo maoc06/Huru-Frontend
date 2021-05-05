@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import BasicInfoUserMin from '../BasicInfoUserMin/BasicInfoUserMin';
 
-import { formatSimpleFullDate } from '../../../utils/formatFullDate';
+import { formatFullDate } from '../../../utils/formatDates';
 
 import styles from './RequestCard.module.scss';
 
@@ -47,12 +47,12 @@ export default function RequestCard({
         <section className={styles.dateContainer}>
           <div className={styles.start}>
             <p className={styles.date}>Fecha y hora de inicio</p>
-            <p>{formatSimpleFullDate(dateStart)}</p>
+            <p>{formatFullDate({ date: dateStart, type: 'ISO' })}</p>
           </div>
 
           <div>
             <p className={styles.date}>Fecha y hora de fin</p>
-            <p>{formatSimpleFullDate(dateEnd)}</p>
+            <p>{formatFullDate({ date: dateEnd, type: 'ISO' })}</p>
           </div>
         </section>
       </div>

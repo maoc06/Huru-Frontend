@@ -1,3 +1,4 @@
+import { convertToCompound } from '../../../utils/formatDates';
 import { withExtraLabelGuests } from '../../../utils/extraLabelText';
 
 import CardHorizontal from '../../elements/CardHorizontal/CardHorizontal';
@@ -10,6 +11,7 @@ const TripsTemplate = ({ renderList, onSelectCard }) => {
       {renderList.map((item) => {
         const {
           id,
+          checkin,
           checkout,
           bookingStatus,
           bookedCar: { maker, model, year, images },
@@ -24,6 +26,7 @@ const TripsTemplate = ({ renderList, onSelectCard }) => {
 
         return (
           <CardHorizontal
+            dates={convertToCompound({ dateOne: checkin, dateTwo: checkout })}
             key={id}
             slug={id}
             title={`${maker.name} ${model.name} ${year}`}

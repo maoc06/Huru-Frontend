@@ -67,7 +67,7 @@ const SearchResultsTemplate = () => {
               key={slug}
               title={`${name} ${model} ${year}`}
               price={price}
-              imageSrc={image}
+              imageSrc={image ? image : '../../'}
               onSelect={() => handleClick(slug)}
             />
           );
@@ -84,7 +84,7 @@ const SearchResultsTemplate = () => {
               key={slug}
               title={`${name} ${model} ${year}`}
               price={price}
-              imageSrc={image}
+              imageSrc={image.length === 0 ? '/images/default-car.png' : image}
               onSelect={() => handleClick(slug)}
               favorite={() => handleCheckIsFavorite(slug)}
             />
