@@ -1,16 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import useApi from '../../../hooks/useApi';
 import carApi from '../../../api/VehicleApi';
 
 import Button from '../../elements/Button/Button';
-import MainCarImage from '../../elements/MainCarImage/MainCarImage';
 import Divider from '../../elements/Divider/Divider';
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';
 import Modal from '../../modules/Modal/Modal';
 import CarFeatures from '../../modules/CarFeatures/CarFeatures';
-import AddPhotoButton from '../../elements/AddPhotoButton/AddPhotoButton';
 import CarImagesOwner from '../../modules/CarImagesOwner/CarImagesOwner';
 import SectionEditable from '../../modules/SectionEditable/SectionEditable';
 import { WarningIcon } from '../../elements/Icons/Shared';

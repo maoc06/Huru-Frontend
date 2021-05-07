@@ -4,8 +4,8 @@ import useApi from '../../../hooks/useApi';
 import vehicleApi from '../../../api/VehicleBasicsAPI';
 import storageAuth from '../../../utils/storageAuth';
 
-import MainCarImage from '../../elements/MainCarImage/MainCarImage';
 import AddPhotoButton from '../../elements/AddPhotoButton/AddPhotoButton';
+import MainCarImage from '../../elements/MainCarImage/MainCarImage';
 import GridPhotosLayout from '../../layouts/GridPhotos/GridPhotos';
 
 export default function CarImagesOwner({ carId, images = [] }) {
@@ -20,12 +20,6 @@ export default function CarImagesOwner({ carId, images = [] }) {
     getMainImage();
   }, [images]);
 
-  useEffect(() => {
-    console.group('Photos URIs');
-    console.log(photoUris);
-    console.groupEnd();
-  }, [photoUris]);
-
   const handleAdd = (uri) => {
     setPhotoUris([...photoUris, uri]);
   };
@@ -35,8 +29,17 @@ export default function CarImagesOwner({ carId, images = [] }) {
     form.set('uid', user.info.uid);
     form.set('carId', carId);
 
-    const pic = await vehicleImageApi.request(form);
-    setPhotoUploaded([...photosUploaded, pic.data.data]);
+    const {
+      data: { data },
+    } = await vehicleImageApi.request(form);
+    const objPic = {
+      carImageId: data.carImageId,
+      imagePath: data.imagePath,
+      isMain: data.isMain,
+    };
+
+    setPhotoUris([...photoUris, objPic]);
+    setPhotoUploaded([...photosUploaded, data]);
   };
 
   const handleRemove = (uri) => {

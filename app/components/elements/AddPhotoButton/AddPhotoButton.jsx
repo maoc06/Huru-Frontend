@@ -24,9 +24,10 @@ export default function AddPhotoButton({
 
         const formData = new FormData();
         formData.append('file', file);
-        onAddSelect(formData);
 
-        setUri(URL.createObjectURL(file));
+        const objectUrl = URL.createObjectURL(file);
+        setUri(objectUrl);
+        onAddSelect(formData);
       }
     }
   };

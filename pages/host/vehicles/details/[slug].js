@@ -11,6 +11,7 @@ import CarProfileOwnerTemplate from '../../../../app/components/templates/CarPro
 import CarBookingTermsOwnerTemplate from '../../../../app/components/templates/CarBookingTermsOwner/CarBookingTermsOwnerTemplate';
 import ActivityIndicator from '../../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import TabsLayout from '../../../../app/components/layouts/TabsLayout/TabsLayout';
+import TitlePage from '../../../../app/components/elements/TitlePage/TitlePage';
 
 function CarOwnerSlug() {
   const router = useRouter();
@@ -123,7 +124,7 @@ function CarOwnerSlug() {
 
       <AppLayout withImage={false}>
         {car.constructor === Object && Object.keys(car).length > 0 && (
-          <h4>{`${car.maker.name} ${car.model.name} ${car.year}`}</h4>
+          <TitlePage>{`${car.maker.name} ${car.model.name} ${car.year}`}</TitlePage>
         )}
 
         <TabsLayout tabs={tabs} />
