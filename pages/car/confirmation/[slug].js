@@ -12,6 +12,7 @@ import bookingApi from '../../../app/api/BookingAPI';
 
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import StatusIndicator from '../../../app/components/elements/StatusIndicator/StatusIndicator';
+import TitlePage from '../../../app/components/elements/TitlePage/TitlePage';
 import checkAnimationData from '../../../public/animations/check.json';
 import errorAnimationData from '../../../public/animations/error-cone.json';
 import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
@@ -112,7 +113,7 @@ function ConfirmationBooking() {
       />
 
       <AppLayout withImage={false}>
-        <h3>Confirmación</h3>
+        <TitlePage>Confirmación</TitlePage>
 
         {car.constructor === Object && Object.keys(car).length > 0 && (
           <CarConfirmationTemplate

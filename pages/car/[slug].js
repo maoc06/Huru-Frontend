@@ -90,6 +90,8 @@ function CarSlug() {
           <Carousel images={car.images} />
 
           <CarProfileTemplate
+            carId={car.carId}
+            userId={car.userOwner.uuid}
             username={car.userOwner.firstName}
             userPic={car.userOwner.profilePhoto}
             userJoinAt={car.userOwner.createdAt}

@@ -10,7 +10,7 @@ import { withExtraLabelHosts } from '../../../app/utils/extraLabelText';
 
 import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
 import TitlePage from '../../../app/components/elements/TitlePage/TitlePage';
-import CardHorizontal from '../../../app/components/elements/CardHorizontal/CardHorizontal';
+import CardHorizontal from '../../../app/components/modules/CardHorizontal/CardHorizontal';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 
 export default function HostVehicles() {

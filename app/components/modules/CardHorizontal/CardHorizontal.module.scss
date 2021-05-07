@@ -5,6 +5,8 @@
     flex-direction: column;
     border-radius: 10px;
     margin-bottom: 16px;
+    min-width: 90%;
+    max-width: 400px;
     .fav {
         position: absolute;
         top: 0;

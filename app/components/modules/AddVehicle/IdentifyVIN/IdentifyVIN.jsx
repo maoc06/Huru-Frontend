@@ -9,7 +9,7 @@ import vehicleApi from '../../../../api/VehicleApi';
 import Form from '../../Forms/Form';
 import Textfield from '../../../elements/Textfield/Textfield';
 import AuxiliarLabel from '../../../elements/AuxiliarLabel/AuxiliarLabel';
-import DialogSlide from '../../../elements/DialogSlide/DialogSlide';
+import DialogSlide from '../../../modules/DialogSlide/DialogSlide';
 import SubmitButton from '../../../elements/Button/SubmitButton';
 
 import vinSchema from '../../../../constants/validationSchema/vin';

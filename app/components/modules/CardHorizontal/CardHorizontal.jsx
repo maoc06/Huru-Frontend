@@ -3,8 +3,8 @@ import Image from 'next/image';
 import useApi from '../../../hooks/useApi';
 import favoriteApi from '../../../api/FavoriteAPI';
 
-import { FavoriteIcon, FillStartIcon } from '../Icons/Shared';
-import DatesPanel from '../../modules/DatesPanel/DatesPanel';
+import { FavoriteIcon, FillStartIcon } from '../../elements/Icons/Shared';
+import DatesPanel from '../DatesPanel/DatesPanel';
 
 import styles from './CardHorizontal.module.scss';
 import { useState } from 'react';

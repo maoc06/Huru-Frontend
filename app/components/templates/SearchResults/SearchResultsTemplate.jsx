@@ -6,7 +6,7 @@ import useApi from '../../../hooks/useApi';
 import favoriteApi from '../../../api/FavoriteAPI';
 import authStorage from '../../../utils/storageAuth';
 
-import CardHorizontal from '../../elements/CardHorizontal/CardHorizontal';
+import CardHorizontal from '../../modules/CardHorizontal/CardHorizontal';
 import SearchForm from '../../modules/SearchForm/SearchForm';
 import FiletersPanel from '../../modules/FiltersPanel/FiltersPanel';
 

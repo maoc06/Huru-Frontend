@@ -1,16 +1,17 @@
-import Link from 'next/link';
-
 import Divider from '../../elements/Divider/Divider';
-import FeatureSimple from '../../elements/FeatureSimple/FeatureSimple';
 import CarSpecifications from '../../modules/CarSpecifications/CarSpecifications';
 import UserProfileBasicInfo from '../../modules/UserProfileBasicInfo/UserProfileBasicInfo';
 import ScrollPanelReviews from '../../modules/ScrollPanelReviews/ScrollPanelReviews';
 import DatesPanel from '../../modules/DatesPanel/DatesPanel';
+import PolicyCancellationSection from '../../modules/PolicyCancellation/PolicyCancellationSection';
 
 import styles from './CarProfileTemplate.module.scss';
+import FeatureSimpleCompound from '../../modules/FeatureSimpleCompound/FeatureSimpleCompound';
 
 const CarProfileTemplate = ({
+  carId,
   dates,
+  userId = '',
   username = '',
   userPic = '',
   userJoinAt = '',
@@ -43,9 +44,8 @@ const CarProfileTemplate = ({
       {showSpecifications && (
         <>
           <article className={styles.inner}>
-            <span className={styles.title}>Especificaciones</span>
-
             <CarSpecifications
+              title="Especificaciones"
               typeTransmission={typeTransmission}
               numSeats={numSeats}
               typeGas={typeGas}
@@ -59,20 +59,11 @@ const CarProfileTemplate = ({
       {showFeatures && (
         <>
           <article className={styles.inner}>
-            <span className={styles.title}>Caracteristicas</span>
-
-            {features.length === 0 && <p>Este carro no ticas asignadas.</p>}
-
-            {features.length > 0 &&
-              features.slice(0, 3).map(({ featureId }) => {
-                return <FeatureSimple key={featureId} featureId={featureId} />;
-              })}
-
-            <div className={styles.see_details}>
-              <Link href={`/car/details/features`}>
-                <a>Ver todas</a>
-              </Link>
-            </div>
+            <FeatureSimpleCompound
+              carId={carId}
+              title="Caracteristicas"
+              features={features}
+            />
           </article>
 
           <Divider />
@@ -80,8 +71,7 @@ const CarProfileTemplate = ({
       )}
 
       <article className={styles.inner}>
-        <span className={styles.title}>{titleDates}</span>
-        <DatesPanel paramDates={dates} compact={true} />
+        <DatesPanel compact={true} paramDates={dates} title={titleDates} />
       </article>
 
       <Divider />
@@ -89,14 +79,15 @@ const CarProfileTemplate = ({
       {showUser && (
         <>
           <article className={styles.inner}>
-            <span className={styles.title}>{titleUser}</span>
-
             <UserProfileBasicInfo
+              userId={userId}
               name={username}
+              title={titleUser}
               profilePicture={userPic}
               createdAt={userJoinAt}
+              href={`/user-profile/${encodeURIComponent(userId)}`}
+              withLink={true}
             />
-            <div></div>
           </article>
 
           <Divider />
@@ -104,26 +95,19 @@ const CarProfileTemplate = ({
       )}
 
       <article className={styles.inner_left}>
-        <span className={styles.title}>Reseñas</span>
-        <ScrollPanelReviews domain={reviewsDomain} reviews={reviews} />
+        <ScrollPanelReviews
+          domain={reviewsDomain}
+          title="Reseñas"
+          reviews={reviews}
+          href={`/car/details/reviews/${encodeURIComponent(carId)}`}
+        />
       </article>
 
       <Divider />
 
       {showPolicies && (
         <article className={styles.inner}>
-          <span className={styles.title}>Políticas de cancelación</span>
-
-          <p className={styles.long_text}>
-            Si cancelas antes de las 9:00 AM del 1 Abril, recibiras un reembolso
-            comp...
-          </p>
-
-          <div className={styles.see_details}>
-            <Link href="">
-              <a>Conocer más detalles</a>
-            </Link>
-          </div>
+          <PolicyCancellationSection />
         </article>
       )}
     </main>

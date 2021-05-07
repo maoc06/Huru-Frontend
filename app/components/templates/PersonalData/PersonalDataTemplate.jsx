@@ -85,6 +85,7 @@ const PersonalDataTemplate = ({
       <TitlePage>Información personal</TitlePage>
 
       <UserProfileBasicInfo
+        userId={userId}
         createdAt={userJoinAt}
         domain="Me uní"
         name={username}

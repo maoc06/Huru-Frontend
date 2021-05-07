@@ -1,0 +1,85 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 240px;
+    max-width: 250px;
+    height: 225px;
+    border-radius: 8px;
+    background-color: $gray_6;
+    box-shadow: 10px 10px 20px #9999996b;
+    padding: 16px;
+    margin-right: 32px;
+    .head {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    .shortRating {
+        margin: 8px 0;
+        width: 100%;
+        div {
+            justify-content: center;
+            div:last-of-type {
+                display: flex;
+                justify-content: space-between;
+                width: 60%;
+            }
+        }
+    }
+    .text,
+    .content {
+        font-size: 12px;
+        line-height: 1.6;
+        text-align: center;
+    }
+    .content {
+        display: -webkit-box;
+        max-width: 100%;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-top: 8px;
+    }
+    .info {
+        display: flex;
+        .text {
+            &:first-child {
+                font-weight: bold;
+                border-right: 1px solid $gray_3;
+                padding-right: 8px;
+                margin-right: 8px;
+            }
+        }
+    }
+}
+
+.full {
+    align-items: unset;
+    min-width: 100%;
+    margin-bottom: 32px;
+    height: fit-content;
+    .headRow {
+        flex-direction: row;
+        justify-content: flex-start;
+        margin-bottom: 8px;
+    }
+    .fullRating {
+        margin-left: 16px;
+        width: 100%;
+        div {
+            div:last-of-type {
+                display: flex;
+                justify-content: space-between;
+                width: 50%;
+            }
+        }
+    }
+    .content {
+        text-align: left;
+    }
+}

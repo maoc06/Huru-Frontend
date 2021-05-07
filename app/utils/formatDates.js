@@ -131,21 +131,28 @@ const formatMonthDayYear = ({ date, type = 'SQL' }) => {
   return `${format}`;
 };
 
-const formatFullDate = ({ date, type = 'SQL' }) => {
+const formatFullDate = ({ date, type = 'SQL', outputFormat = 'simple' }) => {
   const formattedDate = formatDate({ date, type });
   const formattedTime = formatTime({ date, type });
 
-  return `${formattedDate} - ${formattedTime}`;
+  switch (outputFormat) {
+    case 'simple':
+      return `${formattedDate} - ${formattedTime}`;
+    case 'compound':
+      return { date: formattedDate, time: formattedTime };
+    default:
+      return `${formattedDate} - ${formattedTime}`;
+  }
 };
 
 const todayDate = () => DateTime.now().toSQL(options);
 
-const lastDay = ({ days = 1, date, type = 'SQL' }) => {
+const lastDay = ({ days = 1, date, type = 'SQL', outputFormat = 'simple' }) => {
   const rawDate = convertTo({ date, type });
 
   const lastDate = rawDate.minus({ days }).toISO();
 
-  return formatFullDate({ date: lastDate, type: 'ISO' });
+  return formatFullDate({ date: lastDate, type: 'ISO', outputFormat });
 };
 
 export {

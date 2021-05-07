@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+
+import useTravelDates from '../../../hooks/useTravelDates';
 import {
   CarIcon,
   CheckedIcon,
@@ -10,6 +13,25 @@ import TimelineElement from '../../elements/TimelineElement/TimelineElement';
 import styles from './Timeline.module.scss';
 
 function Timeline({ checkin, checkout }) {
+  const travel = useTravelDates();
+  const [dates, setDates] = useState({
+    start: checkin,
+    end: checkout,
+    type: 'ISO',
+  });
+
+  useEffect(() => {
+    if (!checkin || !checkout) {
+      const defaultDates = travel.getDates();
+      setDates({
+        ...dates,
+        start: defaultDates.raw.start,
+        end: defaultDates.raw.end,
+        type: 'SQL',
+      });
+    }
+  }, []);
+
   return (
     <main className={styles.wrapper}>
       <ul>
@@ -20,7 +42,7 @@ function Timeline({ checkin, checkout }) {
         />
 
         <TimelineElement
-          title={lastDay({ date: checkin, type: 'ISO' })}
+          title={lastDay({ date: dates.start, type: dates.type })}
           subtitle={[
             'Reembolso total.',
             '24 horas antes del inicio del viaje.',
@@ -33,14 +55,14 @@ function Timeline({ checkin, checkout }) {
         />
 
         <TimelineElement
-          title={formatFullDate({ date: checkin, type: 'ISO' })}
+          title={formatFullDate({ date: dates.start, type: dates.type })}
           subtitle={['Recibir el vehículo e iniciar el viaje.']}
           backgroundColor="red"
           icon={<CarIcon width={15} height={15} color="#E7ECF3" />}
         />
 
         <TimelineElement
-          title={formatFullDate({ date: checkout, type: 'ISO' })}
+          title={formatFullDate({ date: dates.end, type: dates.type })}
           subtitle={['Devolver el vehículo al dueño.']}
           backgroundColor="red"
           icon={<ReturnIcon width={15} height={15} />}

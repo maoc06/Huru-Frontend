@@ -13,11 +13,7 @@ const findCar = async (carId) => {
   return await client.get(`${endpoint}/${carId}`);
 };
 
-const findByOwner = async (uid) => {
-  return await client.get(`${endpoint}/by-user/${uid}`, {
-    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
-  });
-};
+const findByOwner = async (uid) => client.get(`${endpoint}/by-user/${uid}`);
 
 const findByVin = async (vin) => {
   return await client.get(`${endpoint}/by-vin/${vin}`, {
@@ -30,6 +26,8 @@ const findByLicensePlate = async (licensePlate) => {
     headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
   });
 };
+
+const findFeatures = (carId) => client.get(`${endpoint}/features/${carId}`);
 
 const updateBookingTerms = async (data) => {
   return await client.patch(`${endpoint}/booking-terms`, data, {
@@ -61,6 +59,7 @@ export default {
   findByOwner,
   findByVin,
   findByLicensePlate,
+  findFeatures,
   updateBookingTerms,
   updateDisable,
   updateFeatures,

@@ -1,5 +1,5 @@
 import { withExtraLabelRequests } from '../../../utils/extraLabelText';
-import RequestCard from '../../elements/RequestCard/RequestCard';
+import RequestCard from '../../modules/RequestCard/RequestCard';
 import SeeAll from '../../elements/SeeAll/SeeAll';
 
 import style from './GridCardRequestLayout.module.scss';

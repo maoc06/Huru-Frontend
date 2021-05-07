@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
+import useTravelDates from '../../../hooks/useTravelDates';
 import { setDates } from '../../../redux/slices/searchParamsSlice';
 
 import AppDateRangePicker from '../../elements/DateRangePicker/DateRangePicker';
+import SectionTitle from '../../elements/SectionTitle/SectionTitle';
 
 import {
   changeSelectedRawHour,
@@ -13,13 +15,13 @@ import {
 } from '../../../utils/formatDates';
 
 import styles from './DatesPanel.module.scss';
-import useTravelDates from '../../../hooks/useTravelDates';
 
 export default function DatesPanel({
   compact = false,
   clickleable = true,
   showTopLabels = true,
   paramDates,
+  title,
 }) {
   const dispatch = useDispatch();
   const travel = useTravelDates();
@@ -104,32 +106,36 @@ export default function DatesPanel({
   };
 
   return (
-    <section
-      className={`${styles.container} ${
-        compact ? styles.compact : styles.not_compact
-      }`}
-    >
-      {renderSection({
-        title: 'Fecha y hora de inicio',
-        date: selectionDates.format.startDate,
-        hour: selectionDates.format.startHour,
-      })}
+    <>
+      {title && <SectionTitle title={title} />}
 
-      {renderSection({
-        title: 'Fecha y hora de fin',
-        date: selectionDates.format.endDate,
-        hour: selectionDates.format.endHour,
-        isEnd: true,
-      })}
+      <section
+        className={`${styles.container} ${
+          compact ? styles.compact : styles.not_compact
+        }`}
+      >
+        {renderSection({
+          title: 'Fecha y hora de inicio',
+          date: selectionDates.format.startDate,
+          hour: selectionDates.format.startHour,
+        })}
 
-      <AppDateRangePicker
-        name={'dateRange'}
-        onSelectDates={handleChangeDates}
-        onSelectStartHour={handleChangeStartHour}
-        onSelectEndHour={handleChangeEndHour}
-        setShow={setShowDates}
-        show={showDates}
-      />
-    </section>
+        {renderSection({
+          title: 'Fecha y hora de fin',
+          date: selectionDates.format.endDate,
+          hour: selectionDates.format.endHour,
+          isEnd: true,
+        })}
+
+        <AppDateRangePicker
+          name={'dateRange'}
+          onSelectDates={handleChangeDates}
+          onSelectStartHour={handleChangeStartHour}
+          onSelectEndHour={handleChangeEndHour}
+          setShow={setShowDates}
+          show={showDates}
+        />
+      </section>
+    </>
   );
 }

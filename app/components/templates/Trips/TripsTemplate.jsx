@@ -1,7 +1,7 @@
 import { convertToCompound } from '../../../utils/formatDates';
 import { withExtraLabelGuests } from '../../../utils/extraLabelText';
 
-import CardHorizontal from '../../elements/CardHorizontal/CardHorizontal';
+import CardHorizontal from '../../modules/CardHorizontal/CardHorizontal';
 
 const TripsTemplate = ({ renderList, onSelectCard }) => {
   return (

@@ -1,17 +1,25 @@
-import Link from 'next/link';
 import ScrollContainer from 'react-indiana-drag-scroll';
 
-import CardReview from '../../elements/CardReview/CardReview';
+import CardReview from '../../modules/CardReview/CardReview';
+import SectionTitle from '../../elements/SectionTitle/SectionTitle';
+import SeeAll from '../../elements/SeeAll/SeeAll';
 
 import styles from './ScrollPanelReviews.module.scss';
 
-const ScrollPanelReviews = ({ reviews = [], domain = 'vehículo' }) => {
+const ScrollPanelReviews = ({
+  reviews = [],
+  domain = 'vehículo',
+  href = '/',
+  title,
+}) => {
   if (reviews.length === 0) {
     return <p>{`Este ${domain} aún no tiene reseñas.`}</p>;
   }
 
   return (
     <>
+      {title && <SectionTitle title={title} />}
+
       <ScrollContainer vertical={false} activationDistance={5}>
         <div className={styles.reviews_container}>
           {reviews.map(
@@ -38,11 +46,7 @@ const ScrollPanelReviews = ({ reviews = [], domain = 'vehículo' }) => {
         </div>
       </ScrollContainer>
 
-      <div className={`${styles.see_details} ${styles.extra_space}`}>
-        <Link href="">
-          <a>Ver todas</a>
-        </Link>
-      </div>
+      <SeeAll href={href} />
     </>
   );
 };

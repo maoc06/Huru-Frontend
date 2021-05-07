@@ -8,7 +8,7 @@ import authStorage from '../../app/utils/storageAuth';
 
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
-import CardHorizontal from '../../app/components/elements/CardHorizontal/CardHorizontal';
+import CardHorizontal from '../../app/components/modules/CardHorizontal/CardHorizontal';
 import TitlePage from '../../app/components/elements/TitlePage/TitlePage';
 
 export default function Favorites() {

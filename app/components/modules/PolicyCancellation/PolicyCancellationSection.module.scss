@@ -1,0 +1,12 @@
+.content {
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+.limit {
+    display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

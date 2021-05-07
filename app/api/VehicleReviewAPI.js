@@ -15,6 +15,9 @@ const getAlreadyReviewed = async (bookingId) => {
   });
 };
 
+const getAllReviewsByUser = (userId) =>
+  client.get(`${endpoint}/all-by-user/${userId}`);
+
 const insert = async (data) => {
   return await client.post(endpoint, data, {
     headers: {
@@ -26,5 +29,6 @@ const insert = async (data) => {
 export default {
   getReviews,
   getAlreadyReviewed,
+  getAllReviewsByUser,
   insert,
 };
