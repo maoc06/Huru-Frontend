@@ -6,6 +6,7 @@ import useApi from '../../../../app/hooks/useApi';
 import paymentUserApi from '../../../../app/api/PaymentUserAPI';
 import authStorage from '../../../../app/utils/storageAuth';
 
+import TitlePage from '../../../../app/components/elements/TitlePage/TitlePage';
 import AppLayout from '../../../../app/components/layouts/AppLayout/AppLayout';
 import CardTemplate from '../../../../app/components/templates/PaymentMethods/CardTemplate';
 import NequiTemplate from '../../../../app/components/templates/PaymentMethods/NequiTemplate';
@@ -30,7 +31,6 @@ function PaymentMethods() {
 
   const handleGetDefault = async (uid) => {
     const res = await getDefaultPayment.request(uid);
-    console.log('Default', res.data.data[0]);
     setDefaultPayment(res.data.data[0]);
   };
 
@@ -80,7 +80,7 @@ function PaymentMethods() {
         />
 
         <AppLayout withImage={false}>
-          <h3>Metodo de pago</h3>
+          <TitlePage>Metodo de pago</TitlePage>
 
           {Object.keys(payment).length > 0 && payment.constructor === Object && (
             <>

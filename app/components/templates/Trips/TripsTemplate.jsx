@@ -3,7 +3,7 @@ import { withExtraLabelGuests } from '../../../utils/extraLabelText';
 
 import CardHorizontal from '../../modules/CardHorizontal/CardHorizontal';
 
-const TripsTemplate = ({ renderList, onSelectCard }) => {
+const TripsTemplate = ({ renderList, domain }) => {
   return (
     <>
       {renderList.length === 0 && <p>No tienes nada</p>}
@@ -32,7 +32,7 @@ const TripsTemplate = ({ renderList, onSelectCard }) => {
             title={`${maker.name} ${model.name} ${year}`}
             showPanelDates={true}
             imageSrc={images[0].imagePath}
-            onSelect={() => onSelectCard(id)}
+            href={`/trips/${domain}/${encodeURIComponent(id)}`}
             withExtraLabel={extraLabel.show}
             extraLabelText={extraLabel.text}
             extraLabelColor={extraLabel.color}

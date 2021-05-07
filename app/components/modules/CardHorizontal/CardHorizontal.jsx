@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import useApi from '../../../hooks/useApi';
 import favoriteApi from '../../../api/FavoriteAPI';
@@ -23,7 +24,7 @@ export default function CardHorizontal({
   withExtraLabel = false,
   extraLabelText = '',
   extraLabelColor = 'blue',
-  onSelect,
+  href = '/',
   favorite = false,
   onRemoveFavorite,
 }) {
@@ -69,50 +70,52 @@ export default function CardHorizontal({
         </div>
       )}
 
-      <div
-        onClick={onSelect}
-        className={`${styles.inner} ${withExtraLabel && styles.extraSpacing} ${
-          extraLabelColor === 'red' && styles.labelBorderRed
-        } ${extraLabelColor === 'green' && styles.labelBorderGreen} ${
-          extraLabelColor === 'yellow' && styles.labelBorderYellow
-        }`}
-      >
-        {withOpacity && <div className={styles.overlay}></div>}
+      <Link href={href}>
+        <a
+          target="_blank"
+          className={`${styles.inner} ${
+            withExtraLabel && styles.extraSpacing
+          } ${extraLabelColor === 'red' && styles.labelBorderRed} ${
+            extraLabelColor === 'green' && styles.labelBorderGreen
+          } ${extraLabelColor === 'yellow' && styles.labelBorderYellow}`}
+        >
+          {withOpacity && <div className={styles.overlay}></div>}
 
-        <div className={styles.image}>
-          <Image
-            src={imageSrc}
-            alt={imageSrc}
-            layout="fill"
-            objectFit="cover"
-          />
-        </div>
+          <div className={styles.image}>
+            <Image
+              src={imageSrc}
+              alt={imageSrc}
+              layout="fill"
+              objectFit="cover"
+            />
+          </div>
 
-        <div className={styles.info}>
-          <h6>{title}</h6>
+          <div className={styles.info}>
+            <h6>{title}</h6>
 
-          {!showPanelDates && showPanelPrice && (
-            <div className={styles.bottom}>
-              <div className={styles.stats}>
-                <FillStartIcon height={16} width={16} />
+            {!showPanelDates && showPanelPrice && (
+              <div className={styles.bottom}>
+                <div className={styles.stats}>
+                  <FillStartIcon height={16} width={16} />
 
-                <p className={styles.counts}>
-                  4,2 <span>(8 viajes)</span>
+                  <p className={styles.counts}>
+                    4,2 <span>(8 viajes)</span>
+                  </p>
+                </div>
+
+                <p className={styles.price}>
+                  {`$${Number(price).toLocaleString('en')} COP/`}
+                  <span>día</span>
                 </p>
               </div>
+            )}
 
-              <p className={styles.price}>
-                {`$${Number(price).toLocaleString('en')} COP/`}
-                <span>día</span>
-              </p>
-            </div>
-          )}
-
-          {showPanelDates && (
-            <DatesPanel paramDates={dates} clickleable={false} />
-          )}
-        </div>
-      </div>
+            {showPanelDates && (
+              <DatesPanel paramDates={dates} clickleable={false} />
+            )}
+          </div>
+        </a>
+      </Link>
 
       {withExtraLabel && (
         <div

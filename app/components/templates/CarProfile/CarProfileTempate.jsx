@@ -1,4 +1,5 @@
 import Divider from '../../elements/Divider/Divider';
+import ShowMoreText from '../../elements/ShowMoreText/ShowMoreText';
 import CarSpecifications from '../../modules/CarSpecifications/CarSpecifications';
 import UserProfileBasicInfo from '../../modules/UserProfileBasicInfo/UserProfileBasicInfo';
 import ScrollPanelReviews from '../../modules/ScrollPanelReviews/ScrollPanelReviews';
@@ -36,7 +37,11 @@ const CarProfileTemplate = ({
       <article className={styles.inner}>
         <h5>{title}</h5>
 
-        {showDescription && <p className={styles.long_text}>{description}</p>}
+        {showDescription && (
+          <ShowMoreText>
+            <p className={styles.long_text}>{description}</p>
+          </ShowMoreText>
+        )}
       </article>
 
       <Divider />

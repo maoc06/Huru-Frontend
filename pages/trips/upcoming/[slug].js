@@ -25,8 +25,8 @@ function UpcomingBooking() {
   const [showConfimationModal, setShowConfirmModal] = useState(false);
 
   useEffect(() => {
-    handleGetBooking();
-  }, []);
+    if (slug) handleGetBooking();
+  }, [slug]);
 
   const handleGetBooking = async () => {
     const res = await getBooking.request(slug);

@@ -42,7 +42,6 @@ const ScrollPanelReviews = ({
               );
             }
           )}
-          ;
         </div>
       </ScrollContainer>
 

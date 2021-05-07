@@ -17,7 +17,7 @@ const ScrollPanelCars = ({ cars = [] }) => {
               key={carId}
               title={`${maker.name} ${model.name} ${year}`}
               imageSrc={images[0].imagePath}
-              onSelect={() => router.push(`/car/${encodeURIComponent(carId)}`)}
+              href={`/car/${encodeURIComponent(carId)}`}
               showPanelDates={false}
               showPanelPrice={false}
             />

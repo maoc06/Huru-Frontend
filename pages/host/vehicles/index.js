@@ -64,7 +64,7 @@ export default function HostVehicles() {
               imageSrc={image.imagePath}
               showPanelPrice={false}
               showFavoriteIcon={false}
-              onSelect={() => goToDetails(carId)}
+              href={`/host/vehicles/details/${encodeURIComponent(carId)}`}
               withOpacity={extraLabel.show}
               withExtraLabel={extraLabel.show}
               extraLabelText={extraLabel.text}

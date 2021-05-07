@@ -8,6 +8,7 @@ import userApi from '../../app/api/UserAPI';
 
 import Divider from '../../app/components/elements/Divider/Divider';
 import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
+import ShowMoreText from '../../app/components/elements/ShowMoreText/ShowMoreText';
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import Button from '../../app/components/elements/Button/Button';
 import SectionTitle from '../../app/components/elements/SectionTitle/SectionTitle';
@@ -88,7 +89,9 @@ function ThridUserProfile() {
             <Divider size="mediumTop" />
 
             <SectionTitle title={`Sobre ${user.firstName}`} />
-            <p>{user.about}</p>
+            <ShowMoreText>
+              <p>{user.about}</p>
+            </ShowMoreText>
 
             <Divider size="mediumTop" />
 

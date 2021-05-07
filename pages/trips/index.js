@@ -9,6 +9,7 @@ import authStorage from '../../app/utils/storageAuth';
 import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
 import TabsLayout from '../../app/components/layouts/TabsLayout/TabsLayout';
 import TripsTemplate from '../../app/components/templates/Trips/TripsTemplate';
+import TitlePage from '../../app/components/elements/TitlePage/TitlePage';
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
 
 export default function Trips() {
@@ -43,31 +44,23 @@ export default function Trips() {
   };
 
   const handleClickUpcoming = (slug) => {
-    router.push(`/trips/upcoming/${encodeURIComponent(slug)}`);
+    return `/trips/upcoming/${encodeURIComponent(slug)}`;
   };
 
   const handleClickHistory = (slug) => {
-    router.push(`/trips/history/${encodeURIComponent(slug)}`);
+    return `/trips/history/${encodeURIComponent(slug)}`;
   };
 
   const tabs = [
     {
       title: 'Reservas',
       component: (
-        <TripsTemplate
-          renderList={upcomingBooking}
-          onSelectCard={handleClickUpcoming}
-        />
+        <TripsTemplate renderList={upcomingBooking} domain="upcoming" />
       ),
     },
     {
       title: 'Historial',
-      component: (
-        <TripsTemplate
-          renderList={bookingHistory}
-          onSelectCard={handleClickHistory}
-        />
-      ),
+      component: <TripsTemplate renderList={bookingHistory} domain="history" />,
     },
   ];
 
@@ -87,7 +80,7 @@ export default function Trips() {
       />
 
       <AppLayout withImage={false}>
-        <h3>Viajes</h3>
+        <TitlePage>Viajes</TitlePage>
 
         <TabsLayout tabs={tabs} />
       </AppLayout>

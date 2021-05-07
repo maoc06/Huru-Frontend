@@ -8,6 +8,7 @@ import Form from '../Forms/Form';
 import PhoneFiled from '../../elements/PhoneField/PhoneField';
 import RadioGroup from '../RadioGroup/RadioGroup';
 import Modal from '../Modal/Modal';
+import ShowMoreText from '../../elements/ShowMoreText/ShowMoreText';
 
 import styles from './SectionEditable.module.scss';
 import { WarningIcon } from '../../elements/Icons/Shared';
@@ -87,7 +88,11 @@ const SectionEditable = ({
 
   const textAreaComponent = () => {
     if (!editable) {
-      return <p>{values[name]}</p>;
+      return (
+        <ShowMoreText>
+          <p>{values[name]}</p>
+        </ShowMoreText>
+      );
     }
 
     return (

@@ -44,7 +44,7 @@ const SearchResultsTemplate = () => {
   }, [filterStore.filterRes]);
 
   const handleClick = (slug) => {
-    router.push(`/car/${encodeURIComponent(slug)}`);
+    router.push();
   };
 
   return (
@@ -68,7 +68,7 @@ const SearchResultsTemplate = () => {
               title={`${name} ${model} ${year}`}
               price={price}
               imageSrc={image ? image : '../../'}
-              onSelect={() => handleClick(slug)}
+              href={`/car/${encodeURIComponent(slug)}`}
             />
           );
         })}
@@ -85,7 +85,7 @@ const SearchResultsTemplate = () => {
               title={`${name} ${model} ${year}`}
               price={price}
               imageSrc={image.length === 0 ? '/images/default-car.png' : image}
-              onSelect={() => handleClick(slug)}
+              href={`/car/${encodeURIComponent(slug)}`}
               favorite={() => handleCheckIsFavorite(slug)}
             />
           );

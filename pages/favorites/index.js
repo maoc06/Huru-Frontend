@@ -67,9 +67,7 @@ export default function Favorites() {
                 userId={user.uid}
                 key={car.carId}
                 imageSrc={car.images[0].imagePath}
-                onSelect={() =>
-                  router.push(`/car/${encodeURIComponent(car.carId)}`)
-                }
+                href={`/car/${encodeURIComponent(car.carId)}`}
                 showPanelPrice={false}
                 title={`${car.maker.name} ${car.model.name} ${car.year}`}
                 favorite={true}
