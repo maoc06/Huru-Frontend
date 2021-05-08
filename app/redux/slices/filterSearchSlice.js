@@ -126,10 +126,6 @@ export const filterSearchSlice = createSlice({
       filter.category_id = applyFilter;
       state.listFilters = filter;
 
-      console.group('Filter');
-      console.log(filter);
-      console.groupEnd();
-
       const query = buildFilter(JSON.stringify(filter));
       const result = filterData(state.originalRes, query);
 

@@ -1,10 +1,7 @@
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import useApi from '../../../../app/hooks/useApi';
-import carApi from '../../../../app/api/VehicleApi';
-import carBasicsApi from '../../../../app/api/VehicleBasicsAPI';
+import { capitalize } from '../../../../app/utils/capitalize';
 
 import AppLayout from '../../../../app/components/layouts/AppLayout/AppLayout';
 import CarProfileOwnerTemplate from '../../../../app/components/templates/CarProfileOwner/CarProfileOwnerTemplate';
@@ -13,52 +10,14 @@ import ActivityIndicator from '../../../../app/components/elements/ActivityIndic
 import TabsLayout from '../../../../app/components/layouts/TabsLayout/TabsLayout';
 import TitlePage from '../../../../app/components/elements/TitlePage/TitlePage';
 
-function CarOwnerSlug() {
+function CarOwnerSlug({
+  car,
+  advanceNoticeOptions,
+  minTripOptions,
+  maxTripOptions,
+  metaTitle,
+}) {
   const router = useRouter();
-  const { slug } = router.query;
-
-  const getCar = useApi(carApi.findCar);
-  const getAdvanceNoticesOptions = useApi(carBasicsApi.getAdvanceNotices);
-  const getMinTripOptions = useApi(carBasicsApi.getMinTrip);
-  const getMaxTripOptions = useApi(carBasicsApi.getMaxTrip);
-
-  const [car, setCar] = useState({});
-  const [advanceNoticeOptions, setAdvanceNoticeOptions] = useState({});
-  const [minTripOptions, setMinTripOptions] = useState({});
-  const [maxTripOptions, setMaxTripOptions] = useState({});
-
-  useEffect(() => {
-    if (slug) {
-      handleGetData();
-    }
-  }, [slug]);
-
-  const handleGetData = () => {
-    handleGetCar();
-    handleAdvanceNoticeOptions();
-    handleMinTripOptions();
-    handleMaxTripOptions();
-  };
-
-  const handleGetCar = async () => {
-    const res = await getCar.request(slug);
-    setCar(res.data.data);
-  };
-
-  const handleAdvanceNoticeOptions = async () => {
-    const res = await getAdvanceNoticesOptions.request();
-    setAdvanceNoticeOptions(res.data.data);
-  };
-
-  const handleMinTripOptions = async () => {
-    const res = await getMinTripOptions.request();
-    setMinTripOptions(res.data.data);
-  };
-
-  const handleMaxTripOptions = async () => {
-    const res = await getMaxTripOptions.request();
-    setMaxTripOptions(res.data.data);
-  };
 
   const renderVehicleTemplate = () => {
     const { carId, maker, model, year, description, images, features } = car;
@@ -112,7 +71,7 @@ function CarOwnerSlug() {
   return (
     <div>
       <Head>
-        <title>Huru | Renta carros</title>
+        <title>{metaTitle}</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"
@@ -120,17 +79,59 @@ function CarOwnerSlug() {
         />
       </Head>
 
-      <ActivityIndicator visible={getCar.loading} />
+      <ActivityIndicator visible={router.isFallback} />
 
       <AppLayout withImage={false}>
         {car.constructor === Object && Object.keys(car).length > 0 && (
-          <TitlePage>{`${car.maker.name} ${car.model.name} ${car.year}`}</TitlePage>
+          <>
+            <TitlePage>{`${car.maker.name} ${car.model.name} ${car.year}`}</TitlePage>
+            <TabsLayout tabs={tabs} />
+          </>
         )}
-
-        <TabsLayout tabs={tabs} />
       </AppLayout>
     </div>
   );
+}
+
+export async function getServerSideProps({ params }) {
+  const resCar = await fetch(`${process.env.BASE_API_URL}/car/${params.slug}`);
+  const resAdvance = await fetch(
+    `${process.env.BASE_API_URL}/car-basics/advance-notice`
+  );
+  const resMinTrip = await fetch(
+    `${process.env.BASE_API_URL}/car-basics/min-trip`
+  );
+  const resMaxTrip = await fetch(
+    `${process.env.BASE_API_URL}/car-basics/max-trip`
+  );
+
+  let car = await resCar.json();
+  let advanceNoticeOptions = await resAdvance.json();
+  let minTripOptions = await resMinTrip.json();
+  let maxTripOptions = await resMaxTrip.json();
+
+  if (car.data) car = car.data;
+  if (advanceNoticeOptions.data)
+    advanceNoticeOptions = advanceNoticeOptions.data;
+  if (minTripOptions.data) minTripOptions = minTripOptions.data;
+  if (maxTripOptions.data) maxTripOptions = maxTripOptions.data;
+
+  const {
+    maker: { name: carMaker },
+    model: { name: carModel },
+    year,
+  } = car;
+  const metaTitle = `${capitalize(carMaker)} ${capitalize(carModel)} ${year}`;
+
+  return {
+    props: {
+      advanceNoticeOptions,
+      car,
+      minTripOptions,
+      maxTripOptions,
+      metaTitle,
+    },
+  };
 }
 
 export default CarOwnerSlug;

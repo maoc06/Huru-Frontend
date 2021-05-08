@@ -46,7 +46,7 @@ function ThridUserProfile() {
   return (
     <div>
       <Head>
-        <title>Huru | Renta carros</title>
+        <title>Usuario Huru</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

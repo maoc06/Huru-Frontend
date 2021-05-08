@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import useApi from '../../../hooks/useApi';
@@ -8,6 +9,9 @@ import SectionEditable from '../../modules/SectionEditable/SectionEditable';
 
 import radioGroupSchema from '../../../constants/validationSchema/radioGroup';
 import setPircePerDaySchema from '../../../constants/validationSchema/setPricePerDay';
+import Calendar from '../../elements/Calendar/Calendar';
+import SectionTitle from '../../elements/SectionTitle/SectionTitle';
+import DateRangePicker from '../../elements/DateRangePicker/DateRangePicker';
 
 const CarBookingTermsOwnerTemplate = ({
   carId,
@@ -18,6 +22,7 @@ const CarBookingTermsOwnerTemplate = ({
 }) => {
   const router = useRouter();
   const updateBookingTerms = useApi(carApi.updateBookingTerms);
+  const [disabledDays, setDisabledDays] = useState([]);
 
   const handleUpdateprice = ({ price }) => {
     price = price.replace(/[\D\s\._\-]+/g, '');
@@ -52,6 +57,10 @@ const CarBookingTermsOwnerTemplate = ({
     }
   };
 
+  const handleDisableDay = (selection) => {
+    setDisabledDays([...disabledDays, selection]);
+  };
+
   return (
     <>
       <SectionEditable
@@ -65,7 +74,8 @@ const CarBookingTermsOwnerTemplate = ({
 
       <Divider size="mediumTop" />
 
-      <h5>Disponibilidad</h5>
+      <SectionTitle title="Disponibilidad" />
+      <Calendar disabledDays={disabledDays} onSelectDay={handleDisableDay} />
 
       <Divider size="mediumTop" />
 

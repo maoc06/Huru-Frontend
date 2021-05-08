@@ -18,7 +18,6 @@ function VerifyEmail() {
   const handleVerifyEmail = async () => {
     const res = await verifyEmailApi.request(token);
     if (res === undefined) setIsValid(false);
-    console.log(res);
   };
 
   useEffect(() => {
@@ -30,7 +29,7 @@ function VerifyEmail() {
   return (
     <div>
       <Head>
-        <title>Huru | Validar el correo</title>
+        <title>Huru | Validar el correo electrónico</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

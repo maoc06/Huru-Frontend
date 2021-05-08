@@ -23,7 +23,7 @@ function Profile() {
   return (
     <div>
       <Head>
-        <title>Huru | Renta carros</title>
+        <title>Huru | Perfil de usuario</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

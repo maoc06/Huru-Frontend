@@ -29,7 +29,7 @@ function PersonalData() {
   return (
     <div>
       <Head>
-        <title>Huru | Renta carros</title>
+        <title>Huru | Información personal</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

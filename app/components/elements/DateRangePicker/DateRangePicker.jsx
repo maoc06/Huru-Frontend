@@ -13,12 +13,14 @@ export default function AppDateRangePicker({
   onSelectDates,
   onSelectStartHour,
   onSelectEndHour,
+  showTimes = true,
+  showInline = false,
 }) {
   const ref = useRef();
   const [state, setState] = useState([
     {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      startDate: addDays(new Date(), 2),
+      endDate: addDays(new Date(), 4),
       key: 'selection',
     },
   ]);
@@ -34,7 +36,7 @@ export default function AppDateRangePicker({
 
   const handleClick = (e) => {
     if (!ref.current.contains(e.target)) {
-      setShow(false);
+      if (typeof setShow === 'function') setShow(false);
       return;
     }
   };
@@ -46,7 +48,9 @@ export default function AppDateRangePicker({
 
   return (
     <div
-      className={`${styles.container} ${show ? styles.show : styles.hide}`}
+      className={`${styles.container} ${show ? styles.show : styles.hide} ${
+        showInline && styles.inline
+      }`}
       ref={ref}
     >
       <DateRange
@@ -62,26 +66,28 @@ export default function AppDateRangePicker({
         className={styles.date_range_calendar}
       />
 
-      <div className={styles.times}>
-        <div>
-          <label>Hora inicial</label>
-          <input
-            type="time"
-            step="1800"
-            onChange={onSelectStartHour}
-            name="startTime"
-          />
+      {showTimes && (
+        <div className={styles.times}>
+          <div>
+            <label>Hora inicial</label>
+            <input
+              type="time"
+              step="1800"
+              onChange={onSelectStartHour}
+              name="startTime"
+            />
+          </div>
+          <div>
+            <label>Hora final</label>
+            <input
+              type="time"
+              step="1800"
+              onChange={onSelectEndHour}
+              name="endTime"
+            />
+          </div>
         </div>
-        <div>
-          <label>Hora final</label>
-          <input
-            type="time"
-            step="1800"
-            onChange={onSelectEndHour}
-            name="endTime"
-          />
-        </div>
-      </div>
+      )}
     </div>
   );
 }

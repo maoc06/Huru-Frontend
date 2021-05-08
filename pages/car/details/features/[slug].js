@@ -31,7 +31,7 @@ function CarDetailsFeatures() {
   return (
     <div>
       <Head>
-        <title>Huru | Renta carros</title>
+        <title>Huru | Caracteristicas de vehículos</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

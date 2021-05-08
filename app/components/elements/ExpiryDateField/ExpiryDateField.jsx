@@ -1,6 +1,6 @@
 import { useFormikContext } from 'formik';
 
-import formatExpiryDate from '../../../utils/formatExpiryDate';
+import { formatExpiryDate } from '../../../utils/formatDates';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 import styles from './ExpiryDateField.module.scss';

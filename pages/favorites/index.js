@@ -41,7 +41,7 @@ export default function Favorites() {
   return (
     <div>
       <Head>
-        <title>Huru | Login</title>
+        <title>Huru | Favoritos</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

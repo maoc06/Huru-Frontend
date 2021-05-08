@@ -1,0 +1,10 @@
+@import '../../../styles/abstracts/colors';
+.calendar {
+    background-color: transparent;
+    box-shadow: none;
+    color: $gray_1;
+    padding-top: 0;
+    abbr {
+        color: $gray_2;
+    }
+}

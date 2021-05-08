@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import useApi from '../../app/hooks/useApi';
-import carApi from '../../app/api/VehicleApi';
+// import carApi from '../../app/api/VehicleApi';
 import userApi from '../../app/api/UserAPI';
 import authStorage from '../../app/utils/storageAuth';
+import { capitalize } from '../../app/utils/capitalize';
 
 import Carousel from '../../app/components/elements/Carousel/Carousel';
 import PriceBottomBar from '../../app/components/modules/PriceBottomBar/PriceBottomBar';
@@ -14,23 +15,14 @@ import ActivityIndicator from '../../app/components/elements/ActivityIndicator/A
 
 import { typeTransmissionEnum } from '../../app/utils/enums';
 
-function CarSlug() {
+function CarSlug({ car, metaTitle }) {
   const router = useRouter();
-  const { slug } = router.query;
-
-  const getCar = useApi(carApi.findCar);
   const getUser = useApi(userApi.findUser);
 
-  const [car, setCar] = useState({});
   const [user, setUser] = useState({
     enabled: false,
     message: 'Inicia sesión para continuar con la reserva.',
   });
-
-  const handleGetCarData = async () => {
-    const resCar = await getCar.request(slug);
-    setCar(resCar.data.data);
-  };
 
   const handleUserData = async (userId) => {
     const resUser = await getUser.request(userId);
@@ -65,17 +57,14 @@ function CarSlug() {
   };
 
   useEffect(() => {
-    if (slug) {
-      const user = authStorage.getUser();
-      if (user) handleUserData(user.info.uid);
-      handleGetCarData();
-    }
-  }, [slug]);
+    const user = authStorage.getUser();
+    if (user) handleUserData(user.info.uid);
+  }, []);
 
   return (
     <div>
       <Head>
-        <title>Huru | Renta carros</title>
+        <title>{metaTitle} | Huru</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"
@@ -83,7 +72,7 @@ function CarSlug() {
         />
       </Head>
 
-      <ActivityIndicator visible={getCar.loading} />
+      <ActivityIndicator visible={router.isFallback} />
 
       {car.constructor === Object && Object.keys(car).length > 0 && (
         <>
@@ -108,12 +97,33 @@ function CarSlug() {
             disableBooking={!user.enabled}
             disabledMessage={user.message}
             pricePerDay={car.price}
-            slug={slug}
+            slug={car.carId}
           />
         </>
       )}
     </div>
   );
+}
+
+export async function getServerSideProps({ params }) {
+  const res = await fetch(`${process.env.BASE_API_URL}/car/${params.slug}`);
+  let car = await res.json();
+
+  if (car.data) car = car.data;
+
+  const {
+    maker: { name: carMaker },
+    model: { name: carModel },
+    year,
+  } = car;
+  const metaTitle = `${capitalize(carMaker)} ${capitalize(carModel)} ${year}`;
+
+  return {
+    props: {
+      car,
+      metaTitle,
+    },
+  };
 }
 
 export default CarSlug;

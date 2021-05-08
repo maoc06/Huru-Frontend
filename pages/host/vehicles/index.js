@@ -33,14 +33,10 @@ export default function HostVehicles() {
     setCars(res.data.data);
   };
 
-  const goToDetails = (slug) => {
-    router.push(`/host/vehicles/details/${encodeURIComponent(slug)}`);
-  };
-
   return (
     <div>
       <Head>
-        <title>Huru | Renta carros</title>
+        <title>Huru | Mis vehículos</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

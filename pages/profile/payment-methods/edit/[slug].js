@@ -66,7 +66,7 @@ function PaymentMethods() {
   return (
     <div>
       <Head>
-        <title>Huru | Metodos de pago</title>
+        <title>Huru | Editar metodo de pago</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

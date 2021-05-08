@@ -68,7 +68,7 @@ const EditCarFeatures = ({}) => {
   return (
     <div>
       <Head>
-        <title>Huru | Renta carros</title>
+        <title>Huru | Editar caracteristicas de mi vehículo</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

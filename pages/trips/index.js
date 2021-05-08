@@ -67,7 +67,7 @@ export default function Trips() {
   return (
     <div>
       <Head>
-        <title>Huru | Renta carros</title>
+        <title>Huru | Historial de viajes</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

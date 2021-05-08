@@ -91,7 +91,7 @@ export default function RequestDetail() {
   return (
     <div>
       <Head>
-        <title>Huru | Renta carros</title>
+        <title>Huru | Detalles de solicitud de reserva</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

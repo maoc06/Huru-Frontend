@@ -72,7 +72,7 @@ export default function AddVehicle() {
   return (
     <div>
       <Head>
-        <title>Huru | Renta carros</title>
+        <title>Huru | Agregar nuevo vehículo</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

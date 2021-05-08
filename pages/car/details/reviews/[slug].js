@@ -29,7 +29,7 @@ function AllCarReviews() {
   return (
     <div>
       <Head>
-        <title>Huru | Renta carros</title>
+        <title>Huru | Reseñas del vehículo</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

@@ -68,8 +68,8 @@ const changeSelectedRawHour = (raw, selected) => {
 };
 
 const defaultDates = () => {
-  const today = DateTime.now().toSQL(options);
-  const upcoming = DateTime.now().plus({ days: 2 }).toSQL(options);
+  const today = DateTime.now().plus({ days: 2 }).toSQL(options);
+  const upcoming = DateTime.now().plus({ days: 4 }).toSQL(options);
 
   const res = {
     raw: { start: today, end: upcoming },
@@ -145,6 +145,25 @@ const formatFullDate = ({ date, type = 'SQL', outputFormat = 'simple' }) => {
   }
 };
 
+const formatExpiryDate = (valueInput) => {
+  let formatter = valueInput;
+
+  // remove all non digit characters
+  let value = valueInput.replace(/\D/g, '');
+
+  if (/^[2-9]$/.test(value)) {
+    formatter = `0${value}`;
+  }
+
+  if (value.length === 2) {
+    formatter = `${value}/`;
+  } else if (formatter.length === 2) {
+    formatter = `${formatter}/`;
+  }
+
+  return formatter;
+};
+
 const todayDate = () => DateTime.now().toSQL(options);
 
 const lastDay = ({ days = 1, date, type = 'SQL', outputFormat = 'simple' }) => {
@@ -165,6 +184,7 @@ export {
   formatTime,
   formatMonthYear,
   formatMonthDayYear,
+  formatExpiryDate,
   todayDate,
   lastDay,
 };

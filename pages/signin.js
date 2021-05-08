@@ -7,7 +7,7 @@ export default function Signin() {
   return (
     <div>
       <Head>
-        <title>Huru | Login</title>
+        <title>Huru | Ingresar</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

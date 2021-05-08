@@ -17,7 +17,7 @@ function CancellationPolicyPage() {
   return (
     <div>
       <Head>
-        <title>Huru | Renta carros</title>
+        <title>Huru | Políticas de cancelación</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"

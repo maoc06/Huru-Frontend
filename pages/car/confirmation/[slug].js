@@ -77,7 +77,7 @@ function ConfirmationBooking() {
   return (
     <div>
       <Head>
-        <title>Huru | Renta carros</title>
+        <title>Huru | Confirmar y pagar reserva</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"
