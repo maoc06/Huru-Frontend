@@ -175,6 +175,7 @@ const lastDay = ({ days = 1, date, type = 'SQL', outputFormat = 'simple' }) => {
 };
 
 export {
+  convertTo,
   convertToCompound,
   changeSelectedRawHour,
   defaultDates,

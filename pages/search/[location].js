@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
+import { DateTime } from 'luxon';
 
 import { setResults } from '../../app/redux/slices/filterSearchSlice';
 import { setDates } from '../../app/redux/slices/searchParamsSlice';
@@ -14,7 +15,8 @@ import SearchResultsTemplate from '../../app/components/templates/SearchResults/
 
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
 
-import getDefaultDates from '../../app/utils/getDefaultDates';
+import { defaultDates } from '../../app/utils/formatDates';
+import applyAllSettings from '../../app/utils/applySearchCarSettings';
 
 function Cars() {
   const dispatch = useDispatch();
@@ -38,8 +40,11 @@ function Cars() {
       const {
         data: { data },
       } = res;
-      setCars(data);
-      dispatch(setResults(JSON.stringify(data)));
+
+      const resultsData = applyAllSettings({ data, checkIn, checkOut });
+
+      setCars(resultsData);
+      dispatch(setResults(JSON.stringify(resultsData)));
     }
   };
 
@@ -57,7 +62,7 @@ function Cars() {
     let rawData = {};
 
     if (checkEmptyDates()) {
-      const dates = getDefaultDates();
+      const dates = defaultDates();
       dispatch(setDates(JSON.stringify(dates)));
       rawData = dates;
     } else {

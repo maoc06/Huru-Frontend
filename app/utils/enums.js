@@ -1,3 +1,5 @@
+import { addHours, addDays, addWeeks, addMonths } from 'date-fns';
+
 // Car features icon
 import Wheelchair from '../components/elements/Icons/Features/Wheelchair';
 import AllWheelDrive from '../components/elements/Icons/Features/AllWheelDrive';
@@ -39,6 +41,33 @@ import NequiIcon from '../components/elements/Icons/PaymentMethods/NequiIcon';
 
 // type Transmissions
 const typeTransmissionEnum = Object.freeze({ 1: 'Manual', 2: 'Automático' });
+
+// Advance notice
+const advanceNotice = Object.freeze({
+  1: new Date(),
+  2: addHours(new Date(), 6),
+  3: addHours(new Date(), 12),
+  4: addDays(new Date(), 1),
+});
+
+// Max trip duration
+const maxTripDuration = Object.freeze({
+  1: addDays(new Date(), 5),
+  2: addWeeks(new Date(), 1),
+  3: addWeeks(new Date(), 2),
+  4: addMonths(new Date(), 1),
+  5: addMonths(new Date(), 3),
+  6: new Date(),
+});
+
+// Min trip duration
+const minTripDuration = Object.freeze({
+  1: addDays(new Date(), 1),
+  2: addDays(new Date(), 2),
+  3: addDays(new Date(), 3),
+  4: addDays(new Date(), 4),
+  5: addDays(new Date(), 5),
+});
 
 // Car brands logo
 const carBrandLogos = Object.freeze({
@@ -109,10 +138,13 @@ const paymentMethodsIcons = Object.freeze({
 });
 
 export {
+  advanceNotice,
   typeTransmissionEnum,
   carBrandLogos,
   carFeaturesIcons,
   carFeaturesNames,
   carTypesIcons,
   paymentMethodsIcons,
+  maxTripDuration,
+  minTripDuration,
 };
