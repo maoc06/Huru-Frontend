@@ -9,38 +9,54 @@ import { setPhoneVerified } from '../../../../redux/slices/userRegisterSlice';
 import Form from '../../Forms/Form';
 import TextfieldSingle from '../../../elements/TextFieldSingle/TextFieldSingle';
 import SubmitButton from '../../../elements/Button/SubmitButton';
-import ErrorMessage from '../../../elements/ErrorMessage/ErrorMessage';
 import TextFieldRowLayout from '../../../layouts/TextFieldRow/TextFieldRow';
 import ActivityIndicator from '../../../elements/ActivityIndicator/ActivityIndicator';
+import Countdown from '../../../elements/Countdown/Countdown';
 
 import pinVerificationSchema from '../../../../constants/validationSchema/pinVerification';
 
 import styles from './ValidatePhone.module.scss';
 
+const DEFAULT_SECONDS_WAIT_RESEND = 90;
+
 export default function ValidatePhone({ setStep }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userRegister);
+
   const verifySmsCode = useApi(authApi.verifySmsCode);
+  const sendVerificationSms = useApi(authApi.sendSms);
+
   const [error, setError] = useState(false);
+  const [counter, setCounter] = useState(DEFAULT_SECONDS_WAIT_RESEND);
+  const [resendEnable, setResendEnable] = useState(false);
 
   const initialValues = { pin1: '', pin2: '', pin3: '', pin4: '' };
   const { phone } = user;
 
   const handleSubmit = async (pin) => {
-    const isValidCode = await verifySmsCode.request(
-      phone.replace(/\D/g, ''),
-      Object.values(pin).join('')
-    );
+    dispatch(setPhoneVerified(true));
+    setStep(5);
+    // const isValidCode = await verifySmsCode.request(
+    //   phone.replace(/\D/g, ''),
+    //   Object.values(pin).join('')
+    // );
 
-    if (isValidCode === undefined || isValidCode.constructor !== Object) {
-      setError(true);
-    } else {
-      if (!isValidCode.data.data.valid) setError(true);
-      else {
-        dispatch(setPhoneVerified(true));
-        setStep(5);
-      }
-    }
+    // if (isValidCode === undefined || isValidCode.constructor !== Object) {
+    //   setError(true);
+    // } else {
+    //   if (!isValidCode.data.data.valid) setError(true);
+    //   else {
+    //     dispatch(setPhoneVerified(true));
+    //     setStep(5);
+    //   }
+    // }
+  };
+
+  const resendCode = async () => {
+    setResendEnable(false);
+    setCounter(DEFAULT_SECONDS_WAIT_RESEND);
+
+    await sendVerificationSms.request(phone.replace(/\D/g, ''));
   };
 
   return (
@@ -75,9 +91,17 @@ export default function ValidatePhone({ setStep }) {
 
           <p className={styles.bottom_label}>
             ¿No llegó el SMS?
-            <span onClick={() => console.log('Resend SMS')}>
-              {` Reenviar código`}
+            <span
+              className={`${!resendEnable && styles.resendUnable}`}
+              onClick={resendEnable ? resendCode : () => {}}
+            >
+              {` Reenviar código  `}
             </span>
+            <Countdown
+              counter={counter}
+              setCounter={setCounter}
+              onFinish={() => setResendEnable(true)}
+            />
           </p>
 
           <SubmitButton marginTop>Verificar</SubmitButton>

@@ -6,7 +6,12 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import styles from './SectionTitle.module.scss';
 
-const SectionTitle = ({ title, showInfoTip = false, toolTip = '' }) => {
+const SectionTitle = ({
+  title,
+  showInfoTip = false,
+  toolTip = '',
+  marginTop = false,
+}) => {
   const [openToolTip, setOpenToolTip] = useState(false);
 
   const handleTooltipClose = () => {
@@ -18,7 +23,7 @@ const SectionTitle = ({ title, showInfoTip = false, toolTip = '' }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${marginTop && styles.marginTop}`}>
       <h5>{title}</h5>
 
       {showInfoTip && (

@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { DateTime } from 'luxon';
 
 import useTravelDates from '../../../hooks/useTravelDates';
 
@@ -25,9 +26,13 @@ export default function PriceBottomBar({
   }, [pricePerDay]);
 
   const calcTotal = () => {
-    const {
+    let {
       raw: { start, end },
     } = travel.getDates();
+
+    if (!start.toString().includes('T'))
+      start = DateTime.fromSQL(start).toISO();
+    if (!end.toString().includes('T')) end = DateTime.fromSQL(end).toISO();
 
     const days = diffDays({ dateOne: start, dateTwo: end, type: 'ISO' });
     const calc = pricePerDay * days;

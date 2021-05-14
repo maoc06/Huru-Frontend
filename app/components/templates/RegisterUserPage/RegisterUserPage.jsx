@@ -6,10 +6,11 @@ import RegisterUserCredentials from '../../modules/RegisterUser/RegisterUserForm
 import RegisterUserPersonalData from '../../modules/RegisterUser/RegisterUserPersonalDataForm';
 import RegisterUserPhone from '../../modules/RegisterUser/RegisterUserPhoneForm';
 import ValidatePhone from '../../modules/RegisterUser/ValidatePhone/ValidatePhone';
+import SelfieTime from '../../modules/RegisterUser/SelfieTime';
 import Terms from '../../modules/RegisterUser/Terms';
 
 const RegisterUserPage = () => {
-  const numOfSteps = 5;
+  const numOfSteps = 6;
   const [step, setSetp] = useState(1);
 
   const renderStep = () => {
@@ -23,6 +24,8 @@ const RegisterUserPage = () => {
       case 4:
         return <ValidatePhone setStep={setSetp} />;
       case 5:
+        return <SelfieTime setStep={setSetp} />;
+      case 6:
         return <Terms />;
       default:
         return null;

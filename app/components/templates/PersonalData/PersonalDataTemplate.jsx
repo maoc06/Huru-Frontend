@@ -1,10 +1,18 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+
+import {
+  setAbout,
+  setEmail,
+  setIdentityDocument,
+} from '../../../redux/slices/userRegisterSlice';
 
 import useApi from '../../../hooks/useApi';
 import userApi from '../../../api/UserAPI';
 
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';
+import Divider from '../../elements/Divider/Divider';
 import Button from '../../elements/Button/Button';
 import { WarningIcon } from '../../elements/Icons/Shared';
 import SectionTitle from '../../elements/SectionTitle/SectionTitle';
@@ -12,39 +20,60 @@ import TitlePage from '../../elements/TitlePage/TitlePage';
 import Modal from '../../modules/Modal/Modal';
 import SectionEditable from '../../modules/SectionEditable/SectionEditable';
 import UserProfileBasicInfo from '../../modules/UserProfileBasicInfo/UserProfileBasicInfo';
+import IndentityBadge from '../../modules/IndentityBadge/IndentityBadge';
 
+import emailSchema from '../../../constants/validationSchema/email';
 import userPhoneSchema from '../../../constants/validationSchema/userPhone';
 import aboutUserSchema from '../../../constants/validationSchema/aboutUser';
-import Divider from '../../elements/Divider/Divider';
-import IndentityBadge from '../../modules/IndentityBadge/IndentityBadge';
+import identityDocumentSchema from '../../../constants/validationSchema/identityDocument';
 
 const PersonalDataTemplate = ({
   biography = '',
+  birthday,
+  indentityDocument = '1111111',
   userJoinAt,
   email = 'user@email.com',
+  emailEditable = false,
   emailVerified = false,
+  editablePicture = false,
   picture,
   phone = '+00 000-0000000',
   phoneCountryCode,
   phoneVerified = false,
   username = '',
   userId,
+  editablePhone = true,
+  editBiographyLocal = false,
+  showDeleteBotton = true,
+  showTitlePage = true,
+  showBirthday = false,
+  showIndentityDocument = false,
+  showPassword = true,
 }) => {
   const router = useRouter();
-  const [openModal, setOpenModal] = useState(false);
+  const dispatch = useDispatch();
 
   const updateBiography = useApi(userApi.updateData);
   const updatePhone = useApi(userApi.updatePhone);
 
+  const [openModal, setOpenModal] = useState(false);
+  const [aboutValue, setAboutValue] = useState(biography);
   const [countryCode, setCountryCode] = useState(phoneCountryCode);
+  const [idDocument, setIdDocument] = useState(indentityDocument);
+  const [emailValue, setEmailValue] = useState(email);
 
   const handleEditBiography = async ({ biography }) => {
-    await updateBiography.request({ uuid: userId, about: biography });
-
-    if (updateBiography.error) {
-      console.log('Ocurrio un error actualizando la biografia');
+    if (editBiographyLocal) {
+      setAboutValue(biography);
+      dispatch(setAbout(biography));
     } else {
-      router.reload();
+      await updateBiography.request({ uuid: userId, about: biography });
+
+      if (updateBiography.error) {
+        console.log('Ocurrio un error actualizando la biografia');
+      } else {
+        router.reload();
+      }
     }
   };
 
@@ -59,6 +88,16 @@ const PersonalDataTemplate = ({
     } else {
       router.reload();
     }
+  };
+
+  const handleEditIdentityDocument = ({ indentityDocument }) => {
+    setIdDocument(indentityDocument);
+    dispatch(setIdentityDocument(indentityDocument));
+  };
+
+  const handleEditEmail = ({ email }) => {
+    setEmailValue(email);
+    dispatch(setEmail(email));
   };
 
   const handleDeleteAccount = () => {
@@ -82,9 +121,10 @@ const PersonalDataTemplate = ({
         onCloseModal={() => setOpenModal(false)}
       />
 
-      <TitlePage>Información personal</TitlePage>
+      {showTitlePage && <TitlePage>Información personal</TitlePage>}
 
       <UserProfileBasicInfo
+        birthday={birthday}
         userId={userId}
         createdAt={userJoinAt}
         domain="Me uní"
@@ -93,6 +133,8 @@ const PersonalDataTemplate = ({
         showExtra={false}
         avatarSize="xl"
         withTopMargin={true}
+        showBirthday={showBirthday}
+        editablePicture={editablePicture}
       />
 
       <Divider size="mediumTop" />
@@ -121,49 +163,82 @@ const PersonalDataTemplate = ({
         name="biography"
         onSave={handleEditBiography}
         schema={aboutUserSchema}
-        title="Biografía"
-        values={{ biography }}
+        title="Sobre ti"
+        values={{ biography: aboutValue }}
       />
 
       <Divider size="mediumTop" />
 
       <SectionEditable
         name="email"
+        type="email"
         title="Email"
-        values={{ email }}
-        isEditable={false}
+        onSave={handleEditEmail}
+        schema={emailSchema}
+        values={{ email: emailValue }}
+        isEditable={emailEditable}
       />
+
+      {showPassword && (
+        <>
+          <Divider size="mediumTop" />
+
+          <SectionEditable
+            title="Contraseña"
+            isLink={true}
+            href={'/profile/personal-data/password'}
+          />
+        </>
+      )}
 
       <Divider size="mediumTop" />
 
-      <SectionEditable
-        title="Contraseña"
-        isLink={true}
-        href={'/profile/personal-data/password'}
-      />
+      {editablePhone ? (
+        <SectionEditable
+          name="phone"
+          onSave={handleEditPhone}
+          schema={userPhoneSchema}
+          title="Télefono"
+          type="phone"
+          values={{ phone }}
+          countryCode={countryCode}
+          onSelectPhoneCountry={setCountryCode}
+        />
+      ) : (
+        <>
+          <SectionTitle title="Télefono" />
+          <p>{`${countryCode} ${phone}`}</p>
+        </>
+      )}
 
-      <Divider size="mediumTop" />
+      {showIndentityDocument && (
+        <>
+          <Divider size="mediumTop" />
 
-      <SectionEditable
-        name="phone"
-        onSave={handleEditPhone}
-        schema={userPhoneSchema}
-        title="Télefono"
-        type="phone"
-        values={{ phone }}
-        countryCode={countryCode}
-        onSelectPhoneCountry={setCountryCode}
-      />
+          <SectionEditable
+            name="indentityDocument"
+            onSave={handleEditIdentityDocument}
+            schema={identityDocumentSchema}
+            title="Documento de identidad"
+            type="number"
+            values={{ indentityDocument: idDocument }}
+          />
+        </>
+      )}
 
-      <Divider size="mediumTop" />
+      {showDeleteBotton && (
+        <>
+          <Divider size="mediumTop" />
 
-      <Button
-        isSecondary={true}
-        onClick={() => setOpenModal(true)}
-        marginTop={true}
-      >
-        Eliminar cuenta
-      </Button>
+          <Button
+            isSecondary={true}
+            onClick={() => setOpenModal(true)}
+            marginTop={true}
+          >
+            Eliminar cuenta
+          </Button>
+        </>
+      )}
     </>
   );
 };

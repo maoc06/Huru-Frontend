@@ -19,6 +19,7 @@ export default function PhoneField({
   showLabel = true,
   initialCode = '57',
   initialPhone,
+  errorMsg,
 }) {
   const {
     values,

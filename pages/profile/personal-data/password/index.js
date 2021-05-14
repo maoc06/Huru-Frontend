@@ -27,15 +27,13 @@ function EditPasswordPage() {
 
   const handleUpdatePassword = async (password) => {
     setWrongPassword(false);
-
-    await updatePassword.request(password);
-
-    if (updatePassword.error) {
-      setWrongPassword(true);
-    } else {
-      router.push('/profile/personal-data');
-    }
+    const res = await updatePassword.request(password);
+    if (res !== undefined) router.push('/profile/personal-data');
   };
+
+  useEffect(() => {
+    if (updatePassword.error) setWrongPassword(true);
+  }, [updatePassword.error]);
 
   return (
     <div>

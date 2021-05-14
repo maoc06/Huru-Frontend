@@ -36,6 +36,7 @@ const SectionEditable = ({
   const [radioOption, setRadioOption] = useState({});
   const [changePrice, setChangePrice] = useState(0);
   const [textArea, setTextArea] = useState('');
+  const [field, setField] = useState(values[name]);
 
   useEffect(() => {
     if (editable) {
@@ -142,6 +143,36 @@ const SectionEditable = ({
     );
   };
 
+  const numberfieldComponent = () => {
+    if (!editable) {
+      return <p>{field}</p>;
+    }
+
+    return (
+      <Textfield
+        name={name}
+        type="tel"
+        placeholder="Digita el número de tu cédula"
+        onChangeAux={(number) => setField(number)}
+      />
+    );
+  };
+
+  const emailfieldComponent = () => {
+    if (!editable) {
+      return <p>{field}</p>;
+    }
+
+    return (
+      <Textfield
+        name={name}
+        type="email"
+        placeholder="ejemplo@correo.com"
+        onChangeAux={(email) => setField(email)}
+      />
+    );
+  };
+
   const phonefieldComponent = () => {
     const formatPhone = values[name].slice(0, 3) + '-' + values[name].slice(3);
 
@@ -184,6 +215,10 @@ const SectionEditable = ({
         return priceComponent();
       case 'phone':
         return phonefieldComponent();
+      case 'number':
+        return numberfieldComponent();
+      case 'email':
+        return emailfieldComponent();
       default:
         return textfieldComponent();
     }

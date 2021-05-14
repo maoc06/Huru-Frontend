@@ -56,6 +56,7 @@ function PersonalData() {
             picture={user.profilePhoto}
             username={`${user.firstName} ${user.lastName}`}
             userId={user.uuid}
+            editablePicture={true}
           />
         )}
       </AppLayout>

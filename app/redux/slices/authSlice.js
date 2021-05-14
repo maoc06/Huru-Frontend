@@ -15,7 +15,6 @@ export const authSlice = createSlice({
       state.exp = exp;
       state.iat = iat;
       state.info = info;
-      console.log('User save in store');
     },
   },
 });

@@ -50,6 +50,17 @@ const updatePhone = async (data) => {
   });
 };
 
+const updateProfilePic = async (data) => {
+  return await client.patch(`${endpoint}/pic`, data, {
+    headers: {
+      Authorization: `Bearer ${storageAuth.getToken()}`,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+const uploadProfilePic = (data) => client.post(`${endpoint}/profile-pic`, data);
+
 export default {
   findUser,
   findUserReviews,
@@ -58,4 +69,6 @@ export default {
   updateData,
   updatePassword,
   updatePhone,
+  updateProfilePic,
+  uploadProfilePic,
 };

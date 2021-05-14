@@ -11,7 +11,7 @@ import radioGroupSchema from '../../../constants/validationSchema/radioGroup';
 import setPircePerDaySchema from '../../../constants/validationSchema/setPricePerDay';
 import Calendar from '../../elements/Calendar/Calendar';
 import SectionTitle from '../../elements/SectionTitle/SectionTitle';
-import DateRangePicker from '../../elements/DateRangePicker/DateRangePicker';
+// import DateRangePicker from '../../elements/DateRangePicker/DateRangePicker';
 
 const CarBookingTermsOwnerTemplate = ({
   carId,

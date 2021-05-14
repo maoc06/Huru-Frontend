@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import List from '@material-ui/core/List';
@@ -28,7 +28,8 @@ const UserProfile = ({ user, isHostMood }) => {
   const router = useRouter();
   const [showIndicator, setShowIndicator] = useState(false);
 
-  const { firstName, lastName, profilePicture } = user;
+  const [nameUser, setNameUser] = useState({ firstName: '', lastName: '' });
+  const [picture, setPicture] = useState(null);
 
   const handleLogOut = () => {
     auth.logOut();
@@ -44,15 +45,21 @@ const UserProfile = ({ user, isHostMood }) => {
     }, 2000);
   };
 
+  useEffect(() => {
+    const { firstName, lastName, profilePicture } = user;
+    setNameUser({ firstName, lastName });
+    setPicture(profilePicture);
+  }, [user]);
+
   return (
     <>
       <SwitchIndicator visible={showIndicator} />
 
       <main className={styles.wrapper}>
         <header>
-          <Avatar src={profilePicture} />
+          <Avatar src={picture} />
           <h5>
-            {firstName} {lastName}
+            {nameUser.firstName} {nameUser.lastName}
           </h5>
         </header>
 

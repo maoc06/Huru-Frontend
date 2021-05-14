@@ -9,6 +9,7 @@ import authApi from '../../../api/AuthAPI';
 import Form from '../Forms/Form';
 import AppTerms from '../../elements/Terms/Terms';
 import SubmitButton from '../../elements/Button/SubmitButton';
+import SeePreview from '../../elements/SeePreview/SeePreview';
 
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';
 import StatusIndicator from '../../elements/StatusIndicator/StatusIndicator';
@@ -21,7 +22,7 @@ export default function Terms() {
   const auth = useAuth();
   const singUp = useApi(authApi.signUp);
   const signIn = useApi(authApi.signIn);
-  const user = useSelector((state) => state.userRegister);
+  let user = useSelector((state) => state.userRegister);
 
   const [popUpOpen, setPopUpOpen] = useState(false);
 
@@ -68,6 +69,8 @@ export default function Terms() {
             entonces no podras realizar ninguna reserva.
           </p>
         </article>
+
+        <SeePreview dialogTitle="Vista previa de usuario" />
 
         <Form
           initialValues={initialValues}

@@ -17,6 +17,14 @@ Date.shortMonths = [
 
 const options = { includeOffset: false, includeZone: false };
 
+const calcYearsOld = ({ birthday }) => {
+  const date = DateTime.fromJSDate(new Date(birthday));
+
+  const yearsOld = date.diffNow('years').toObject();
+
+  return Math.floor(Math.abs(yearsOld.years));
+};
+
 const convertTo = ({ date, type = 'ISO' }) => {
   let rawDate = '';
 
@@ -175,6 +183,7 @@ const lastDay = ({ days = 1, date, type = 'SQL', outputFormat = 'simple' }) => {
 };
 
 export {
+  calcYearsOld,
   convertTo,
   convertToCompound,
   changeSelectedRawHour,

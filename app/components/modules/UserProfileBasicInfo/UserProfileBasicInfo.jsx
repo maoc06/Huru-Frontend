@@ -8,17 +8,24 @@ import bookingApi from '../../../api/BookingAPI';
 import Avatar from '../../elements/Avatar/Avatar';
 import SectionTitle from '../../elements/SectionTitle/SectionTitle';
 import { FillStartIcon } from '../../elements/Icons/Shared';
-import { formatMonthYear } from '../../../utils/formatDates';
+import {
+  calcYearsOld,
+  formatMonthDayYear,
+  formatMonthYear,
+} from '../../../utils/formatDates';
 
 import styles from './UserProfileBasicInfo.module.scss';
 
 export default function UserProfileBasicInfo({
+  birthday,
   userId,
   domain = 'Se unio',
   name,
   profilePicture,
   createdAt,
+  editablePicture = false,
   showExtra = true,
+  showBirthday = false,
   avatarSize = 'large',
   withTopMargin = false,
   withBottomMargin = false,
@@ -71,10 +78,22 @@ export default function UserProfileBasicInfo({
           withBottomMargin && styles.bottomMargin
         }`}
       >
-        <Avatar src={profilePicture} size={avatarSize} />
+        <Avatar
+          clickeable={editablePicture}
+          src={profilePicture}
+          size={avatarSize}
+          userId={userId}
+        />
 
         <div className={styles.info}>
           <p className={styles.name}>{name}</p>
+
+          {showBirthday && (
+            <p>{`${calcYearsOld({ birthday })} años (${formatMonthDayYear({
+              date: new Date(birthday),
+              type: 'JS',
+            })})`}</p>
+          )}
 
           <p>{`${domain} ${formatMonthYear(createdAt)}`}</p>
 

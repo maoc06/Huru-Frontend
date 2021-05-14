@@ -5,11 +5,16 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import themeMaterialUI from '../../../styles/material/theme';
 import ErrorMessage from '../../elements/ErrorMessage/ErrorMessage';
+import ResponsiveDialog from '../../modules/ResponsiveDialog/ResponsiveDialog';
+import { privacy, terms } from '../../../constants/strings/values';
 
 import styles from './Terms.module.scss';
 
 export default function AppTerms({ name }) {
   const [state, setState] = useState(false);
+  const [openServiceTerms, setOpenServiceTerms] = useState(false);
+  const [openPolicy, setOpenPolicy] = useState(false);
+
   const { errors, setFieldValue, touched } = useFormikContext();
 
   const handleChange = () => {
@@ -20,6 +25,20 @@ export default function AppTerms({ name }) {
 
   return (
     <>
+      <ResponsiveDialog
+        title={terms.title}
+        type="terms"
+        onClose={() => setOpenServiceTerms(false)}
+        visible={openServiceTerms}
+      />
+
+      <ResponsiveDialog
+        title={privacy.title}
+        type="privacy"
+        onClose={() => setOpenPolicy(false)}
+        visible={openPolicy}
+      />
+
       <div className={styles.container}>
         <ThemeProvider theme={themeMaterialUI}>
           <Checkbox
@@ -30,8 +49,16 @@ export default function AppTerms({ name }) {
             className={styles.checkbox}
           />
           <p>
-            Acepto los <span>Términos del servicio</span> y la
-            <span> Política de privacidad</span> de Huru.
+            Acepto los{' '}
+            <span onClick={() => setOpenServiceTerms(true)}>
+              Términos del servicio
+            </span>{' '}
+            y la
+            <span onClick={() => setOpenPolicy(true)}>
+              {' '}
+              Política de privacidad
+            </span>{' '}
+            de Huru.
           </p>
         </ThemeProvider>
       </div>

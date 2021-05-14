@@ -11,6 +11,11 @@ export default function SubmitEditFieldButton({
 }) {
   const { handleSubmit } = useFormikContext();
 
+  const handleSave = (event) => {
+    handleSubmit(event);
+    onEdit();
+  };
+
   if (isLink) {
     return (
       <Link href={href}>
@@ -22,7 +27,7 @@ export default function SubmitEditFieldButton({
   return (
     <span
       className={`${editable && styles.saveButton}`}
-      onClick={editable ? handleSubmit : onEdit}
+      onClick={editable ? handleSave : onEdit}
     >
       {editable ? 'Guardar' : 'Editar'}
     </span>

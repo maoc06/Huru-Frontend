@@ -30,6 +30,14 @@ function Cars() {
   const { location } = router.query;
 
   const handleCarsQuery = async ({ checkIn, checkOut }) => {
+    if (!checkIn.toString().includes('T')) {
+      checkIn = DateTime.fromSQL(checkIn).toISO();
+    }
+
+    if (!checkOut.toString().includes('T')) {
+      checkOut = DateTime.fromSQL(checkOut).toISO();
+    }
+
     const res = await searchCars.request(location, checkIn, checkOut);
 
     if (

@@ -29,7 +29,7 @@ export default function RegisterUserPhone({ setStep }) {
     if (res.data.data.phone !== undefined) setApiError(true);
     else {
       dispatch(setPhone({ phoneNumber }));
-      await sendVerificationSms.request(phoneNumber.replace(/\D/g, ''));
+      // await sendVerificationSms.request(phoneNumber.replace(/\D/g, ''));
       setStep(4);
     }
   };

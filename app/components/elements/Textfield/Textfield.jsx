@@ -20,6 +20,7 @@ export default function Textfield({
   withContainerMargings = true,
   withSmallBottomMargin,
   readOnly = false,
+  onChangeAux,
   onChangePriceAux,
   ...otherProps
 }) {
@@ -29,7 +30,7 @@ export default function Textfield({
     touched,
     setFieldTouched,
     setFieldValue,
-    handleChange,
+    // handleChange,
     setErrors,
   } = useFormikContext();
 
@@ -42,6 +43,15 @@ export default function Textfield({
       setErrors(errorObj);
     }
   }, [apiError]);
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setFieldValue(name, value);
+
+    if (typeof onChangeAux === 'function') {
+      onChangeAux(value);
+    }
+  };
 
   const handleTypePriceChange = (event) => {
     setFieldValue(name, formatPrice({ price: event.target.value }));
