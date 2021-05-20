@@ -8,6 +8,7 @@ import {
 
 import useApi from '../../../hooks/useApi';
 import authApi from '../../../api/AuthAPI';
+import FBGraphApi from '../../../api/FBGraphAPI';
 
 import Form from '../Forms/Form';
 import Textfield from '../../elements/Textfield/Textfield';
@@ -25,6 +26,7 @@ export default function RegisterUserCredentials({ setStep }) {
 
   const checkEmailApi = useApi(authApi.checkEmail);
   const authGoogleApi = useApi(authApi.signUpGoogle);
+  const getFBUserApi = useApi(FBGraphApi.getUserInfo);
 
   const [apiError, setApiError] = useState(false);
 
@@ -46,33 +48,43 @@ export default function RegisterUserCredentials({ setStep }) {
       token: googleData.tokenId,
     });
 
-    if (authGoogleApi.error) {
-      console.log('Error auth google');
-      return;
-    }
+    if (authGoogleApi.error) return;
+    if (googleRes.data === undefined) return;
 
-    if (googleRes.data !== undefined && googleRes.data.data !== undefined) {
-      const googleAccount = googleRes.data.data;
-
-      dispatch(
-        setEmailPassword({ email: googleAccount.email, password: null })
-      );
-
-      dispatch(
-        setPersonalData({
-          name: googleAccount.firstName,
-          lastname: googleAccount.lastName,
-          birth: null,
-          cc: null,
-        })
-      );
-
-      setStep(2);
-    }
+    const googleAccount = googleRes.data.data;
+    handleDispatchInfo({
+      email: googleAccount.email,
+      firstName: googleAccount.firstName,
+      lastName: googleAccount.lastName,
+    });
   };
 
-  const handleAuthFacebook = (facebookData) => {
-    console.log(facebookData);
+  const handleAuthFacebook = async ({ accessToken, userID }) => {
+    const facebookRes = await getFBUserApi.request({ accessToken, userID });
+
+    if (facebookRes.data === undefined) return;
+
+    const facebookAccount = facebookRes.data;
+    handleDispatchInfo({
+      email: facebookAccount.email,
+      firstName: facebookAccount.first_name,
+      lastName: facebookAccount.last_name,
+    });
+  };
+
+  const handleDispatchInfo = ({ email, firstName, lastName }) => {
+    dispatch(setEmailPassword({ email, password: null }));
+
+    dispatch(
+      setPersonalData({
+        name: firstName,
+        lastname: lastName,
+        birth: null,
+        cc: null,
+      })
+    );
+
+    setStep(2);
   };
 
   return (
@@ -112,7 +124,9 @@ export default function RegisterUserCredentials({ setStep }) {
         <AuthGoogleButton
           text="Continuar con Google"
           onSuccess={handleAuthGoogle}
-          onFailure={handleAuthGoogle}
+          onFailure={() => {
+            console.error('error authenticating with google');
+          }}
           marginBottom={true}
           marginTop={true}
           withTinyMarginBottom={true}
@@ -121,6 +135,9 @@ export default function RegisterUserCredentials({ setStep }) {
         <AuthFacebookButton
           text="Continuar con Facebook"
           onCallback={handleAuthFacebook}
+          onFailure={() => {
+            console.error('error authenticating with facebook');
+          }}
           marginBottom={true}
         />
       </div>

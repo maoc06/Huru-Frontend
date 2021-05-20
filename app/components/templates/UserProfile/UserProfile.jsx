@@ -33,6 +33,7 @@ const UserProfile = ({ user, isHostMood }) => {
 
   const handleLogOut = () => {
     auth.logOut();
+    if (window.FB) window.FB.logout();
     router.push('/');
   };
 

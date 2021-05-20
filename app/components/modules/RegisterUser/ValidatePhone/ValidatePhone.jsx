@@ -34,22 +34,20 @@ export default function ValidatePhone({ setStep }) {
   const { phone } = user;
 
   const handleSubmit = async (pin) => {
-    dispatch(setPhoneVerified(true));
-    setStep(5);
-    // const isValidCode = await verifySmsCode.request(
-    //   phone.replace(/\D/g, ''),
-    //   Object.values(pin).join('')
-    // );
+    const isValidCode = await verifySmsCode.request(
+      phone.replace(/\D/g, ''),
+      Object.values(pin).join('')
+    );
 
-    // if (isValidCode === undefined || isValidCode.constructor !== Object) {
-    //   setError(true);
-    // } else {
-    //   if (!isValidCode.data.data.valid) setError(true);
-    //   else {
-    //     dispatch(setPhoneVerified(true));
-    //     setStep(5);
-    //   }
-    // }
+    if (isValidCode === undefined || isValidCode.constructor !== Object) {
+      setError(true);
+    } else {
+      if (!isValidCode.data.data.valid) setError(true);
+      else {
+        dispatch(setPhoneVerified(true));
+        setStep(5);
+      }
+    }
   };
 
   const resendCode = async () => {

@@ -6,14 +6,14 @@ import FacebookIcon from '../Icons/SocialMedia/FacebookIcon';
 export default function AuthFacebookButton({
   text,
   onCallback,
+  onFailure = () => {},
   ...otherProps
 }) {
   return (
     <FacebookLogin
       appId={process.env.FACEBOOK_CLIENT_ID}
-      fields="name,email,picture"
-      scope="public_profile"
       callback={onCallback}
+      onFailure={onFailure}
       render={(renderProps) => (
         <Button
           onClick={renderProps.onClick}

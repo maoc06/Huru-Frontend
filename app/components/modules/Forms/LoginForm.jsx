@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import useApi from '../../../hooks/useApi';
 import useAuth from '../../../hooks/useAuth';
 import authApi from '../../../api/AuthAPI';
+import FBGraphApi from '../../../api/FBGraphAPI';
 
 import Form from './Form';
 import Textfield from '../../elements/Textfield/Textfield';
@@ -26,6 +27,8 @@ export default function LoginForm() {
 
   const validateCredentials = useApi(authApi.signIn);
   const authGoogleApi = useApi(authApi.signInGoogle);
+  const authFacebookApi = useApi(authApi.signInFacebook);
+  const getFBUserApi = useApi(FBGraphApi.getUserInfo);
 
   const [emailError, setEmailError] = useState(false);
   const [emailErrorMsg, setEmailErrorMsg] = useState('');
@@ -63,8 +66,13 @@ export default function LoginForm() {
     handleAuth({ accessToken: res.data.token });
   };
 
-  const handleAuthFacebook = (facebookData) => {
-    console.log(facebookData);
+  const handleAuthFacebook = async ({ accessToken, userID }) => {
+    const facebookRes = await getFBUserApi.request({ accessToken, userID });
+    if (facebookRes.data === undefined) return;
+    const facebookAccount = facebookRes.data;
+
+    const res = await authFacebookApi.request({ email: facebookAccount.email });
+    handleAuth({ accessToken: res.data.accessToken, showErrorOnPopUp: true });
   };
 
   const handleAuthGoogle = async (googleData) => {
@@ -122,10 +130,14 @@ export default function LoginForm() {
         <p className={styles.alternative}>o entrar usando</p>
 
         <section className={styles.media}>
-          <AuthFacebookButton onCallback={handleAuthFacebook} text="Facebook" />
+          <AuthFacebookButton
+            onCallback={handleAuthFacebook}
+            onFailure={() => console.error('Failure auth facebook')}
+            text="Facebook"
+          />
 
           <AuthGoogleButton
-            onFailure={(event) => console.log('Failure auth google', event)}
+            onFailure={() => console.error('Failure auth google')}
             onSuccess={handleAuthGoogle}
             text="Google"
           />
