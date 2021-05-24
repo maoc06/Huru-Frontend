@@ -68,3 +68,9 @@
 .customDisabled {
     opacity: 0.6;
 }
+
+.warning {
+    background-color: transparent !important;
+    border: 3px solid $warning !important;
+    color: $warning;
+}

@@ -19,6 +19,7 @@ import styles from './CarProfileOwnerTemplate.module.scss';
 
 const CarProfileOwnerTemplate = ({
   carId,
+  carEnable = true,
   title = '',
   description,
   features = [],
@@ -31,6 +32,7 @@ const CarProfileOwnerTemplate = ({
   const showHideCar = useApi(carApi.updateVisibility);
 
   const [showConfimationModal, setShowConfirmModal] = useState(false);
+  const [enable, setEnable] = useState(carEnable);
 
   const handleDisable = async () => {
     setShowConfirmModal(false);
@@ -43,6 +45,7 @@ const CarProfileOwnerTemplate = ({
 
   const handleShowHide = () => {
     showHideCar.request({ carId });
+    setEnable(!enable);
   };
 
   const handleUpdateDescription = async ({ description }) => {
@@ -102,8 +105,8 @@ const CarProfileOwnerTemplate = ({
 
         <Divider size="mediumTop" />
 
-        <Button invert={true} onClick={handleShowHide}>
-          Ocultar vehículo
+        <Button invert={true} onClick={handleShowHide} isWarning={enable}>
+          {enable ? 'Ocultar vehículo' : 'Hacer visible'}
         </Button>
 
         <Button

@@ -18,6 +18,7 @@ export default function Button({
   tinyBorder = false,
   isDisabled = false,
   disabledMessage = '',
+  isWarning = false,
   ...otherProps
 }) {
   const [openSnackBar, setOpenSnackBar] = useState(false);
@@ -40,7 +41,9 @@ export default function Button({
           isRejectAction && styles.rejectButton
         } ${tinyBorder && styles.tinyBorder} ${
           withTinyMarginBottom && styles.withTinyMarginBottom
-        } ${isDisabled && styles.customDisabled}`}
+        } ${isDisabled && styles.customDisabled} ${
+          isWarning && styles.warning
+        }`}
       >
         {withIcon && icon}
         {children}

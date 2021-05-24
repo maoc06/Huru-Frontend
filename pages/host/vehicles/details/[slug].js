@@ -21,12 +21,12 @@ function CarOwnerSlug({
 
   const renderVehicleTemplate = () => {
     const { carId, maker, model, year, description, images, features } = car;
-
     return (
       car.constructor === Object &&
       Object.keys(car).length > 0 && (
         <CarProfileOwnerTemplate
           carId={carId}
+          carEnable={car.status === 1 ? true : false}
           title={`${maker.name || ''} ${model.name || ''} ${year || ''}`}
           description={description}
           images={images}
