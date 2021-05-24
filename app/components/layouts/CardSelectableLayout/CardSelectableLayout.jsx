@@ -19,6 +19,7 @@ export default function CardSelectableLayout({
   selectables = true,
   isAllActives = false,
   cardSizes = 'small',
+  ...otherProps
 }) {
   const [selectedIndex, setSelectedIndex] = useState(initialSelected);
 
@@ -67,6 +68,7 @@ export default function CardSelectableLayout({
               selected={
                 isAllActives ? true : selectedIndex.includes(item[propKey])
               }
+              {...otherProps}
             />
           </div>
         );

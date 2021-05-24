@@ -2,12 +2,21 @@ import Link from 'next/link';
 
 import styles from './SeeAll.module.scss';
 
-const SeeAll = ({ href = '/', text = 'Ver todas' }) => {
+const SeeAll = ({
+  href = '/',
+  text = 'Ver todas',
+  simulate = false,
+  onSimulate = () => {},
+}) => {
   return (
     <div className={styles.container}>
-      <Link href={href}>
-        <a>{text}</a>
-      </Link>
+      {!simulate ? (
+        <Link href={href}>
+          <a>{text}</a>
+        </Link>
+      ) : (
+        <a onClick={onSimulate}>{text}</a>
+      )}
     </div>
   );
 };

@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormikContext } from 'formik';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 import formatPrice from '../../../utils/formatPrice';
 
@@ -22,6 +23,7 @@ export default function Textfield({
   readOnly = false,
   onChangeAux,
   onChangePriceAux,
+  type,
   ...otherProps
 }) {
   const {
@@ -33,6 +35,9 @@ export default function Textfield({
     // handleChange,
     setErrors,
   } = useFormikContext();
+
+  const [visibility, setVisibility] = useState(false);
+  const [typePassword, setTypePassword] = useState(type);
 
   useEffect(() => {
     if (apiError) {
@@ -61,6 +66,29 @@ export default function Textfield({
     }
   };
 
+  const handleVisibility = () => {
+    typePassword === 'password'
+      ? setTypePassword('text')
+      : setTypePassword('password');
+
+    setVisibility(!visibility);
+  };
+
+  const renderVisibility = () => {
+    if (!visibility) {
+      return (
+        <VisibilityOff
+          onClick={handleVisibility}
+          style={{ color: '#828282' }}
+        />
+      );
+    } else {
+      return (
+        <Visibility onClick={handleVisibility} style={{ color: '#828282' }} />
+      );
+    }
+  };
+
   return (
     <div
       className={`${styles.container} ${
@@ -81,6 +109,7 @@ export default function Textfield({
           onChange={isTypePrice ? handleTypePriceChange : handleChange}
           value={values[name]}
           name={name}
+          type={type === 'password' ? typePassword : type}
           className={`${styles.input} ${
             touched[name] && errors[name] && styles.inputError
           } ${upperCase && styles.upperCase} `}
@@ -88,6 +117,10 @@ export default function Textfield({
           disabled={readOnly}
           {...otherProps}
         />
+
+        {type === 'password' && (
+          <div className={styles.visibility}>{renderVisibility()}</div>
+        )}
       </div>
 
       <ErrorMessage

@@ -9,12 +9,12 @@ import vehicleApi from '../../../../api/VehicleApi';
 import Form from '../../Forms/Form';
 import Textfield from '../../../elements/Textfield/Textfield';
 import AuxiliarLabel from '../../../elements/AuxiliarLabel/AuxiliarLabel';
-import DialogSlide from '../../../modules/DialogSlide/DialogSlide';
 import SubmitButton from '../../../elements/Button/SubmitButton';
+import ResponsiveDialog from '../../ResponsiveDialog/ResponsiveDialog';
+import ActivityIndicator from '../../../elements/ActivityIndicator/ActivityIndicator';
 
 import vinSchema from '../../../../constants/validationSchema/vin';
 
-import ActivityIndicator from '../../../elements/ActivityIndicator/ActivityIndicator';
 import styles from './IdentifyVIN.module.scss';
 
 export default function IdentifyVIN({ setStep, next }) {
@@ -74,13 +74,11 @@ export default function IdentifyVIN({ setStep, next }) {
               withIcon={true}
             />
 
-            <DialogSlide
-              title={'¿Donde encontrar el VIN de mi carro?'}
-              content={
-                'Usamos el Número de Identificación del Vehículo (VIN) como identificador unico dentro de Huru. El VIN usualmente consiste en una cadena alfanumerica de 17 caracteres. Lo puedes encontrar en el borde de la puerta, en el tablero del lado del conductor o en los documentos de registo del vehículo.'
-              }
-              openDialog={openDialog}
-              setOpenDialog={setOpenDialog}
+            <ResponsiveDialog
+              title="¿Dónde encontrar el VIN?"
+              type="where-find-vin"
+              onClose={() => setOpenDialog(false)}
+              visible={openDialog}
             />
           </div>
 

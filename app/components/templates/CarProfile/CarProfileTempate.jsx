@@ -24,6 +24,7 @@ const CarProfileTemplate = ({
   numSeats,
   typeGas,
   features = [],
+  featuresInline = false,
   reviews = [],
   reviewsDomain,
   showDescription = true,
@@ -31,6 +32,7 @@ const CarProfileTemplate = ({
   showFeatures = true,
   showUser = true,
   showPolicies = true,
+  withLinkToOwner = true,
 }) => {
   return (
     <main className={styles.wrapper}>
@@ -68,6 +70,7 @@ const CarProfileTemplate = ({
               carId={carId}
               title="Caracteristicas"
               features={features}
+              seeAllInline={featuresInline}
             />
           </article>
 
@@ -91,7 +94,7 @@ const CarProfileTemplate = ({
               profilePicture={userPic}
               createdAt={userJoinAt}
               href={`/user-profile/${encodeURIComponent(userId)}`}
-              withLink={true}
+              withLink={withLinkToOwner}
             />
           </article>
 

@@ -182,6 +182,31 @@ const lastDay = ({ days = 1, date, type = 'SQL', outputFormat = 'simple' }) => {
   return formatFullDate({ date: lastDate, type: 'ISO', outputFormat });
 };
 
+const formatDisableDays = ({ days = [] }) => {
+  let formatDays = [];
+
+  days.map(({ disableDay }) => {
+    const date = DateTime.fromISO(disableDay);
+    const formatDay = { year: date.year, month: date.month, day: date.day };
+    formatDays.push(formatDay);
+  });
+
+  return formatDays;
+};
+
+const isObjEqual = ({ dateStored, dateSelected }) => {
+  const keysStored = Object.keys(dateStored);
+  const keysSelected = Object.keys(dateSelected);
+
+  if (keysStored.length !== keysSelected.length) return false;
+
+  for (let key of keysStored) {
+    if (dateStored[key] !== dateSelected[key]) return false;
+  }
+
+  return true;
+};
+
 export {
   calcYearsOld,
   convertTo,
@@ -195,6 +220,8 @@ export {
   formatMonthYear,
   formatMonthDayYear,
   formatExpiryDate,
+  formatDisableDays,
   todayDate,
   lastDay,
+  isObjEqual,
 };

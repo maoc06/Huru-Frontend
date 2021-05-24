@@ -27,6 +27,12 @@ export default function AddPhotos({ setStep, next, showButton = true }) {
     const user = storageAuth.getUser();
     form.set('uid', user.info.uid);
 
+    if (photosUploaded.length === 0) {
+      form.set('isMain', true);
+    } else {
+      form.set('isMain', false);
+    }
+
     const pic = await vehicleImageApi.request(form);
     setPhotoUploaded([...photosUploaded, pic.data.data]);
   };

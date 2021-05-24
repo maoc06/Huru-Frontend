@@ -14,6 +14,10 @@ import {
   PrivacyPolicy,
   TermsOfService,
   UserPreview,
+  CarPrivacyPolicy,
+  CarTermsOfService,
+  CarPreview,
+  WhereFindVIN,
 } from '../../templates/BasicsDialogs';
 
 const styles = (theme) => ({
@@ -63,6 +67,7 @@ const DialogActions = withStyles((theme) => ({
 
 export default function ResponsiveDialog({
   onClose = () => {},
+  contentWithPadding = true,
   title,
   type = 'terms',
   showActions = true,
@@ -73,14 +78,20 @@ export default function ResponsiveDialog({
 
   const renderContent = () => {
     switch (type) {
-      case 'terms':
+      case 'user-terms':
         return <TermsOfService />;
-      case 'privacy':
+      case 'user-privacy':
         return <PrivacyPolicy />;
       case 'user-preview':
         return <UserPreview />;
+      case 'where-find-vin':
+        return <WhereFindVIN />;
+      case 'car-terms':
+        return <CarPrivacyPolicy />;
+      case 'car-privacy':
+        return <CarTermsOfService />;
       case 'car-preview':
-        break;
+        return <CarPreview />;
       default:
         break;
     }
@@ -101,7 +112,13 @@ export default function ResponsiveDialog({
           {title}
         </DialogTitle>
 
-        <DialogContent dividers>{renderContent()}</DialogContent>
+        {!contentWithPadding ? (
+          <DialogContent dividers style={{ padding: 0 }}>
+            {renderContent()}
+          </DialogContent>
+        ) : (
+          <DialogContent dividers>{renderContent()}</DialogContent>
+        )}
 
         {showActions && (
           <DialogActions>

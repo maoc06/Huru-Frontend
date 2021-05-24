@@ -7,6 +7,7 @@ export default function AppCalendar({
   defaultValue = null,
   disabledDays,
   onSelectDay,
+  onSelectDisableDay = () => {},
 }) {
   return (
     <Calendar
@@ -15,6 +16,7 @@ export default function AppCalendar({
       colorPrimary="#070d9a"
       colorPrimaryLight="#3f45e0"
       onChange={onSelectDay}
+      onDisabledDayError={onSelectDisableDay}
       disabledDays={disabledDays} // here we pass them
     />
   );

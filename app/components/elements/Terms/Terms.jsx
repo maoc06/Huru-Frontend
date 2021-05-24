@@ -10,7 +10,12 @@ import { privacy, terms } from '../../../constants/strings/values';
 
 import styles from './Terms.module.scss';
 
-export default function AppTerms({ name }) {
+export default function AppTerms({
+  name,
+  typeTerms = 'user-terms',
+  typePolicy = 'user-privacy',
+  extraText = '',
+}) {
   const [state, setState] = useState(false);
   const [openServiceTerms, setOpenServiceTerms] = useState(false);
   const [openPolicy, setOpenPolicy] = useState(false);
@@ -27,14 +32,14 @@ export default function AppTerms({ name }) {
     <>
       <ResponsiveDialog
         title={terms.title}
-        type="terms"
+        type={typeTerms}
         onClose={() => setOpenServiceTerms(false)}
         visible={openServiceTerms}
       />
 
       <ResponsiveDialog
         title={privacy.title}
-        type="privacy"
+        type={typePolicy}
         onClose={() => setOpenPolicy(false)}
         visible={openPolicy}
       />
@@ -49,16 +54,15 @@ export default function AppTerms({ name }) {
             className={styles.checkbox}
           />
           <p>
-            Acepto los{' '}
+            Acepto los
             <span onClick={() => setOpenServiceTerms(true)}>
-              Términos del servicio
-            </span>{' '}
+              {` Términos del servicio `}
+            </span>
             y la
             <span onClick={() => setOpenPolicy(true)}>
-              {' '}
-              Política de privacidad
-            </span>{' '}
-            de Huru.
+              {` Política de privacidad `}
+            </span>
+            de Huru{extraText}.
           </p>
         </ThemeProvider>
       </div>

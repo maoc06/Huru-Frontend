@@ -2,6 +2,7 @@ import jwtDecode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 
 import authStorage from '../utils/storageAuth';
+import modeStorage from '../utils/storageMode';
 import { setUserAuth } from '../redux/slices/authSlice';
 
 const useAuth = () => {
@@ -15,6 +16,9 @@ const useAuth = () => {
 
   const logOut = () => {
     authStorage.removeToken();
+    if (modeStorage.getMode()) {
+      modeStorage.removeMode();
+    }
   };
 
   return { logIn, logOut };

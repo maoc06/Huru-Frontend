@@ -7,6 +7,7 @@ const SeePreview = ({
   text = 'Ver vista previa',
   type = 'user-preview',
   dialogTitle = 'Vista previa',
+  ...otherProps
 }) => {
   const [openPreview, setOpenPreview] = useState(false);
 
@@ -18,6 +19,7 @@ const SeePreview = ({
         showActions={false}
         onClose={() => setOpenPreview(false)}
         visible={openPreview}
+        {...otherProps}
       />
 
       <span className={styles.text} onClick={() => setOpenPreview(true)}>

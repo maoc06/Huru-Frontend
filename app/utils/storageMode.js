@@ -18,4 +18,12 @@ const getMode = () => {
   }
 };
 
-export default { storeMode, getMode };
+const removeMode = () => {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.error('Error removing the mode', error);
+  }
+};
+
+export default { storeMode, getMode, removeMode };

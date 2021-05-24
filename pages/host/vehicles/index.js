@@ -12,6 +12,7 @@ import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
 import TitlePage from '../../../app/components/elements/TitlePage/TitlePage';
 import CardHorizontal from '../../../app/components/modules/CardHorizontal/CardHorizontal';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
+import AddVehicleCard from '../../../app/components/modules/AddVehicleCard/AddVehicleCard';
 
 export default function HostVehicles() {
   const router = useRouter();
@@ -48,6 +49,8 @@ export default function HostVehicles() {
 
       <AppLayout withImage={false}>
         <TitlePage>Mis vehículos</TitlePage>
+
+        <AddVehicleCard />
 
         {cars.map(({ carId, status, maker, model, year, images: [image] }) => {
           const title = `${maker.name} ${model.name} ${year}`;

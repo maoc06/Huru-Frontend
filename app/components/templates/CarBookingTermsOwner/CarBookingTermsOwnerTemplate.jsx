@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import useApi from '../../../hooks/useApi';
 import carApi from '../../../api/VehicleApi';
+import disableDayApi from '../../../api/DisableDayAPI';
 
 import Divider from '../../elements/Divider/Divider';
 import SectionEditable from '../../modules/SectionEditable/SectionEditable';
@@ -13,6 +14,8 @@ import Calendar from '../../elements/Calendar/Calendar';
 import SectionTitle from '../../elements/SectionTitle/SectionTitle';
 // import DateRangePicker from '../../elements/DateRangePicker/DateRangePicker';
 
+import { formatDisableDays, isObjEqual } from '../../../utils/formatDates';
+
 const CarBookingTermsOwnerTemplate = ({
   carId,
   bookingTerms = {},
@@ -21,7 +24,12 @@ const CarBookingTermsOwnerTemplate = ({
   maxTripOptions = [],
 }) => {
   const router = useRouter();
+
   const updateBookingTerms = useApi(carApi.updateBookingTerms);
+  const postDisableDay = useApi(disableDayApi.addDisableDay);
+  const deleteDisableDay = useApi(disableDayApi.removeDisableDay);
+  const getDisableDays = useApi(disableDayApi.listByCar);
+
   const [disabledDays, setDisabledDays] = useState([]);
 
   const handleUpdateprice = ({ price }) => {
@@ -57,9 +65,40 @@ const CarBookingTermsOwnerTemplate = ({
     }
   };
 
+  const handleRequestDisableDay = ({ date, onRequest = () => {} }) => {
+    const { day, month, year } = date;
+    const disableDay = `${year}-${month}-${day}`;
+
+    const disable = { carId, disableDay };
+
+    onRequest.request(disable);
+  };
+
   const handleDisableDay = (selection) => {
+    handleRequestDisableDay({ date: selection, onRequest: postDisableDay });
     setDisabledDays([...disabledDays, selection]);
   };
+
+  const handleEnableDay = (selection) => {
+    handleRequestDisableDay({ date: selection, onRequest: deleteDisableDay });
+    setDisabledDays(
+      disabledDays.filter((day) => {
+        const equal = isObjEqual({ dateStored: day, dateSelected: selection });
+        return !equal;
+      })
+    );
+  };
+
+  const handleGetDisableDays = async () => {
+    const days = await getDisableDays.request(carId);
+
+    const formatDays = formatDisableDays({ days: days.data.data });
+    setDisabledDays(formatDays);
+  };
+
+  useEffect(() => {
+    handleGetDisableDays();
+  }, []);
 
   return (
     <>
@@ -75,7 +114,11 @@ const CarBookingTermsOwnerTemplate = ({
       <Divider size="mediumTop" />
 
       <SectionTitle title="Disponibilidad" />
-      <Calendar disabledDays={disabledDays} onSelectDay={handleDisableDay} />
+      <Calendar
+        disabledDays={disabledDays}
+        onSelectDay={handleDisableDay}
+        onSelectDisableDay={handleEnableDay}
+      />
 
       <Divider size="mediumTop" />
 

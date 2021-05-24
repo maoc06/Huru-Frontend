@@ -8,9 +8,9 @@ import vehicleBasicsApi from '../../../../api/VehicleBasicsAPI';
 import authStorage from '../../../../utils/storageAuth';
 
 import Form from '../../Forms/Form';
-import Checkbox from '../../../elements/Checkbox/Checkbox';
+import AppTerms from '../../../elements/Terms/Terms';
 import SubmitButton from '../../../elements/Button/SubmitButton';
-
+import SeePreview from '../../../elements/SeePreview/SeePreview';
 import ActivityIndicator from '../../../elements/ActivityIndicator/ActivityIndicator';
 import StatusIndicator from '../../../elements/StatusIndicator/StatusIndicator';
 import checkAnimationData from '../../../../../public/animations/check.json';
@@ -36,8 +36,8 @@ export default function Terms() {
   };
 
   const handleButtonPopUp = () => {
-    router.push('/profile')
-  }
+    router.push('/host/vehicles');
+  };
 
   const handleSubmit = async (checkTerms) => {
     if (checkTerms && uid) {
@@ -51,12 +51,13 @@ export default function Terms() {
         description: store.description,
         licensePlate: store.licensePlate,
         cityId: 1,
-        ownerUUID: uid,
+        owner: uid,
         price: parseInt(store.price),
         advanceNoticeId: parseInt(store.advanceNotice.id),
         minTripDurationId: parseInt(store.minTripDuration.id),
         maxTripDurationId: parseInt(store.maxTripDuration.id),
       };
+
       const res = await createVehicle.request(vehicle);
 
       const { features, photos } = store;
@@ -111,7 +112,9 @@ export default function Terms() {
           !updateOwnerCarImage.loading
         }
         title={'Listo!'}
-        message={'En ese momento tu solicitud está siendo revisada.'}
+        message={
+          'En ese momento tu solicitud está siendo revisada por el equipo de soporte para validar la información que proporcionaste.'
+        }
         buttonMsg={'Entendido'}
         onClickButton={handleButtonPopUp}
       />
@@ -135,16 +138,22 @@ export default function Terms() {
           </p>
         </article>
 
+        <SeePreview
+          dialogTitle="Vista previa del vehículo"
+          type="car-preview"
+          contentWithPadding={false}
+        />
+
         <Form
           initialValues={initialValues}
           validationSchema={acceptTermsSchema}
           onSubmit={handleSubmit}
         >
-          <Checkbox
+          <AppTerms
             name="checkTerms"
-            label={
-              'Acepto los Términos del servicio y la Política de privacidad de Huru.'
-            }
+            typePolicy="car-privacy"
+            typeTerms="car-terms"
+            extraText=" para publicar mi vehículo"
           />
 
           <SubmitButton>Continuar</SubmitButton>
