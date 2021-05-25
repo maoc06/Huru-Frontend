@@ -1,14 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 import useApi from '../../../hooks/useApi';
 import favoriteApi from '../../../api/FavoriteAPI';
+import bookingApi from '../../../api/BookingAPI';
+import carReviewApi from '../../../api/VehicleReviewAPI';
 
 import { FavoriteIcon, FillStartIcon } from '../../elements/Icons/Shared';
 import DatesPanel from '../DatesPanel/DatesPanel';
 
 import styles from './CardHorizontal.module.scss';
-import { useState } from 'react';
 
 export default function CardHorizontal({
   dates,
@@ -30,7 +32,13 @@ export default function CardHorizontal({
 }) {
   const addFavorite = useApi(favoriteApi.createFavorite);
   const deleteFavorite = useApi(favoriteApi.removeFavorite);
+
+  const countTrips = useApi(bookingApi.countCompletedTripsByCar);
+  const reviews = useApi(carReviewApi.getReviews);
+
   const [isFavorite, setIsFavorite] = useState(favorite);
+  const [countCompletedTrips, setCountTrips] = useState(0);
+  const [averageRating, setAverageRating] = useState('1.0');
 
   const handleAddToFavorite = () => {
     setIsFavorite(true);
@@ -51,6 +59,31 @@ export default function CardHorizontal({
       onRemoveFavorite(carId);
     }
   };
+
+  const handleCountTrips = async () => {
+    const res = await countTrips.request(carId);
+    setCountTrips(res.data.count);
+  };
+
+  const handleAvg = async () => {
+    const res = await reviews.request(carId);
+
+    if (res.data && res.data.data && res.data.data.length > 0) {
+      const reducer = (accumulator, currentValue) => {
+        return accumulator + currentValue.rating;
+      };
+      const sum = res.data.data.reduce(reducer, 0);
+
+      setAverageRating((sum / res.data.data.length).toFixed(1));
+    }
+  };
+
+  useEffect(() => {
+    if (carId) {
+      handleCountTrips();
+      handleAvg();
+    }
+  }, []);
 
   return (
     <div className={`${styles.card} ${withExtraLabel && styles.extraMargin}`}>
@@ -99,7 +132,7 @@ export default function CardHorizontal({
                   <FillStartIcon height={16} width={16} />
 
                   <p className={styles.counts}>
-                    4,2 <span>(8 viajes)</span>
+                    {averageRating} <span>({countCompletedTrips} viajes)</span>
                   </p>
                 </div>
 

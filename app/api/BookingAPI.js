@@ -30,6 +30,9 @@ const findBookingRequests = async (uuid) => {
 const countCompletedTrips = async (userId) =>
   client.get(`${endpoint}/count-completed-trips/${userId}`);
 
+const countCompletedTripsByCar = async (carId) =>
+  client.get(`${endpoint}/count-completed-trips-by-car/${carId}`);
+
 const createBookingRequest = async (booking) => {
   return await client.post(endpoint, booking, {
     headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
@@ -55,6 +58,7 @@ export default {
   findBookingsHistory,
   findBookingRequests,
   countCompletedTrips,
+  countCompletedTripsByCar,
   confirmBookingRequest,
   cancelBooking,
 };

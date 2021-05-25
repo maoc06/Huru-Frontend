@@ -53,6 +53,7 @@ function Cars() {
 
       setCars(resultsData);
       dispatch(setResults(JSON.stringify(resultsData)));
+      console.log(resultsData);
     }
   };
 

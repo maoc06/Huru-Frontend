@@ -43,10 +43,6 @@ const SearchResultsTemplate = () => {
     }
   }, [filterStore.filterRes]);
 
-  const handleClick = (slug) => {
-    router.push();
-  };
-
   return (
     <>
       <SearchForm isCompact={true} showTopLabels={false} showBorder={true} />
