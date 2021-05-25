@@ -9,9 +9,10 @@ export default function SubmitEditFieldButton({
   isLink = false,
   href = '',
 }) {
-  const { handleSubmit } = useFormikContext();
+  const { handleSubmit, errors } = useFormikContext();
 
   const handleSave = (event) => {
+    console.log(errors);
     handleSubmit(event);
     onEdit();
   };

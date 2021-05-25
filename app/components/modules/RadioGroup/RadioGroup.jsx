@@ -34,6 +34,8 @@ export default function AppRadioGroup({
     setValue(selectedItem);
     setFieldValue(name, getObjectByPropName(selectedItem));
 
+    console.log('selected ->', getObjectByPropName(selectedItem));
+
     if (typeof onChangeAux === 'function') {
       onChangeAux(getObjectByPropName(selectedItem));
     }

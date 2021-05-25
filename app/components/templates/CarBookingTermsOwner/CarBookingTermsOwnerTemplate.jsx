@@ -8,11 +8,13 @@ import disableDayApi from '../../../api/DisableDayAPI';
 import Divider from '../../elements/Divider/Divider';
 import SectionEditable from '../../modules/SectionEditable/SectionEditable';
 
-import radioGroupSchema from '../../../constants/validationSchema/radioGroup';
+import advanceNoticeGroupSchema from '../../../constants/validationSchema/advanceNoticeGroup';
+import maxTripGroupSchema from '../../../constants/validationSchema/maxTripGroup';
+import minTripGroupSchema from '../../../constants/validationSchema/minTripGroup';
+
 import setPircePerDaySchema from '../../../constants/validationSchema/setPricePerDay';
 import Calendar from '../../elements/Calendar/Calendar';
 import SectionTitle from '../../elements/SectionTitle/SectionTitle';
-// import DateRangePicker from '../../elements/DateRangePicker/DateRangePicker';
 
 import { formatDisableDays, isObjEqual } from '../../../utils/formatDates';
 
@@ -41,6 +43,7 @@ const CarBookingTermsOwnerTemplate = ({
   };
 
   const handleUpdateAdvanceNotice = ({ advance: { id } }) => {
+    console.log('Update advance notice');
     const advanceNotice = { carId, advanceNoticeId: id };
     handleUpdateBookingTerms(advanceNotice);
   };
@@ -59,7 +62,7 @@ const CarBookingTermsOwnerTemplate = ({
     await updateBookingTerms.request(updateData);
 
     if (updateBookingTerms.error) {
-      console.log('Error updating booking terms...');
+      console.error('Error updating booking terms');
     } else {
       router.reload();
     }
@@ -127,7 +130,7 @@ const CarBookingTermsOwnerTemplate = ({
         name="advance"
         type="options"
         onSave={handleUpdateAdvanceNotice}
-        schema={radioGroupSchema}
+        schema={advanceNoticeGroupSchema}
         values={{ advance: bookingTerms['advanceNotice'].name }}
         options={advanceNoticeOptions}
         showInfoTip={true}
@@ -141,7 +144,7 @@ const CarBookingTermsOwnerTemplate = ({
         name="minTrip"
         type="options"
         onSave={handleUpdateMinTrip}
-        schema={radioGroupSchema}
+        schema={minTripGroupSchema}
         values={{ minTrip: bookingTerms['minTrip'].name }}
         options={minTripOptions}
         showInfoTip={true}
@@ -155,7 +158,7 @@ const CarBookingTermsOwnerTemplate = ({
         name="maxTrip"
         type="options"
         onSave={handleUpdateMaxTrip}
-        schema={radioGroupSchema}
+        schema={maxTripGroupSchema}
         values={{ maxTrip: bookingTerms['maxTrip'].name }}
         options={maxTripOptions}
         showInfoTip={true}
