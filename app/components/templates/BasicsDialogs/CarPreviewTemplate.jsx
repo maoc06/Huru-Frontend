@@ -44,7 +44,7 @@ const CarPreviewTemplate = () => {
         description={car.description}
         numSeats={car.model.numOfSeats}
         typeTransmission={typeTransmissionEnum[car.model.transmissionId]}
-        typeGas="extra"
+        typeGas={car.fuel.name}
         features={features}
         featuresInline={true}
         reviews={[]}

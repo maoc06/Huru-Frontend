@@ -35,6 +35,10 @@ const getMaxTrip = async () => {
   return await client.get(`${endpoint}/max-trip`);
 };
 
+const getFuelOptions = async () => {
+  return await client.get(`${endpoint}/fuel`);
+};
+
 const insertCarFeatures = async (data) => {
   return await client.post(`${endpoint}/set-car-features`, data, {
     headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
@@ -75,6 +79,7 @@ export default {
   getAdvanceNotices,
   getMinTrip,
   getMaxTrip,
+  getFuelOptions,
   insertCarFeatures,
   insertCarImage,
   updateOwnerCarImage,

@@ -13,7 +13,7 @@ import PriceBottomBar from '../../app/components/modules/PriceBottomBar/PriceBot
 import CarProfileTemplate from '../../app/components/templates/CarProfile/CarProfileTempate';
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
 
-import { typeTransmissionEnum } from '../../app/utils/enums';
+import { typeTransmissionEnum, typeFuelEnum } from '../../app/utils/enums';
 
 function CarSlug({ car, metaTitle }) {
   const router = useRouter();
@@ -88,7 +88,7 @@ function CarSlug({ car, metaTitle }) {
             description={car.description}
             numSeats={car.model.numOfSeats}
             typeTransmission={typeTransmissionEnum[car.model.transmissionId]}
-            typeGas="extra"
+            typeGas={typeFuelEnum[car.fuelId]}
             features={car.features}
             reviews={car.reviews}
           />

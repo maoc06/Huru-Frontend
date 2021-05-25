@@ -38,7 +38,7 @@ export default function MaxTripDuration({ setStep, next }) {
           defaultSelected="1 mes"
         />
 
-        <SubmitButton>Continuar</SubmitButton>
+        <SubmitButton marginTop={true}>Continuar</SubmitButton>
       </Form>
     </div>
   );

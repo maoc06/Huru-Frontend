@@ -38,7 +38,7 @@ export default function MinTripDuration({ setStep, next }) {
           defaultSelected="1 día"
         />
 
-        <SubmitButton>Continuar</SubmitButton>
+        <SubmitButton marginTop={true}>Continuar</SubmitButton>
       </Form>
     </div>
   );

@@ -56,6 +56,7 @@ export default function Terms() {
         advanceNoticeId: parseInt(store.advanceNotice.id),
         minTripDurationId: parseInt(store.minTripDuration.id),
         maxTripDurationId: parseInt(store.maxTripDuration.id),
+        fuelId: parseInt(store.fuel.fuelId),
       };
 
       const res = await createVehicle.request(vehicle);

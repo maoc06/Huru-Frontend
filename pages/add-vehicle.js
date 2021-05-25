@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { setVehicleOptions } from '../app/redux/slices/vehicleRegisterObjectsSlice';
@@ -15,6 +15,8 @@ import ActivityIndicator from '../app/components/elements/ActivityIndicator/Acti
 export default function AddVehicle() {
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(false);
+
   const makersApi = useApi(makerApi.getMakers);
   const modelsApi = useApi(vehicleBasicsApi.getVehicleModels);
   const transmissionsApi = useApi(vehicleBasicsApi.getTransmissions);
@@ -23,9 +25,11 @@ export default function AddVehicle() {
   const advanceNoticesApi = useApi(vehicleBasicsApi.getAdvanceNotices);
   const minTripOptionsApi = useApi(vehicleBasicsApi.getMinTrip);
   const maxTripOptionsApi = useApi(vehicleBasicsApi.getMaxTrip);
+  const fuelOptionsApi = useApi(vehicleBasicsApi.getFuelOptions);
 
   const handleData = async () => {
     let res;
+    setLoading(true);
 
     res = await makersApi.request();
     const makers = res.data.data;
@@ -51,6 +55,9 @@ export default function AddVehicle() {
     res = await maxTripOptionsApi.request();
     const maxTripOptions = res.data.data;
 
+    res = await fuelOptionsApi.request();
+    const fuelOptions = res.data.data;
+
     dispatch(
       setVehicleOptions({
         makers,
@@ -61,8 +68,11 @@ export default function AddVehicle() {
         advanceNotices,
         minTripOptions,
         maxTripOptions,
+        fuelOptions,
       })
     );
+
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -81,18 +91,7 @@ export default function AddVehicle() {
       </Head>
 
       <>
-        <ActivityIndicator
-          visible={
-            makersApi.loading ||
-            modelsApi.loading ||
-            transmissionsApi.loading ||
-            odometerApi.loading ||
-            featuresApi.loading ||
-            advanceNoticesApi.loading ||
-            minTripOptionsApi.loading ||
-            maxTripOptionsApi.loading
-          }
-        />
+        <ActivityIndicator visible={loading} />
 
         <AddVehicleTemplate />
       </>

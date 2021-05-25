@@ -38,7 +38,7 @@ export default function AdvanceNotice({ setStep, next }) {
           defaultSelected="12 horas"
         />
 
-        <SubmitButton>Continuar</SubmitButton>
+        <SubmitButton marginTop={true}>Continuar</SubmitButton>
       </Form>
     </div>
   );

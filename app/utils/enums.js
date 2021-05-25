@@ -42,6 +42,14 @@ import NequiIcon from '../components/elements/Icons/PaymentMethods/NequiIcon';
 // type Transmissions
 const typeTransmissionEnum = Object.freeze({ 1: 'Manual', 2: 'Automático' });
 
+// type Fuel
+const typeFuelEnum = Object.freeze({
+  1: 'Corriente',
+  2: 'Extra',
+  3: 'ACPM',
+  4: 'Gas Natural',
+});
+
 // Advance notice
 const advanceNotice = Object.freeze({
   1: new Date(),
@@ -140,6 +148,7 @@ const paymentMethodsIcons = Object.freeze({
 export {
   advanceNotice,
   typeTransmissionEnum,
+  typeFuelEnum,
   carBrandLogos,
   carFeaturesIcons,
   carFeaturesNames,
