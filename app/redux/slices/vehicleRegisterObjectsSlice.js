@@ -10,6 +10,7 @@ const initialState = {
   minTripOptions: [],
   maxTripOptions: [],
   fuelOptions: [],
+  citiesOptions: [],
 };
 
 export const vehicleRegisterObjectsSlice = createSlice({
@@ -27,6 +28,7 @@ export const vehicleRegisterObjectsSlice = createSlice({
         minTripOptions,
         maxTripOptions,
         fuelOptions,
+        citiesOptions,
       } = action.payload;
 
       state.makers = makers;
@@ -38,6 +40,7 @@ export const vehicleRegisterObjectsSlice = createSlice({
       state.minTripOptions = minTripOptions;
       state.maxTripOptions = maxTripOptions;
       state.fuelOptions = fuelOptions;
+      state.citiesOptions = citiesOptions;
     },
   },
 });

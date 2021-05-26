@@ -7,6 +7,7 @@ import { setVehicleOptions } from '../app/redux/slices/vehicleRegisterObjectsSli
 import useApi from '../app/hooks/useApi';
 import makerApi from '../app/api/MakerAPI';
 import vehicleBasicsApi from '../app/api/VehicleBasicsAPI';
+import cityApi from '../app/api/CityAPI';
 
 import AddVehicleTemplate from '../app/components/templates/AddVehicle/AddVehicleTemplate';
 
@@ -26,6 +27,7 @@ export default function AddVehicle() {
   const minTripOptionsApi = useApi(vehicleBasicsApi.getMinTrip);
   const maxTripOptionsApi = useApi(vehicleBasicsApi.getMaxTrip);
   const fuelOptionsApi = useApi(vehicleBasicsApi.getFuelOptions);
+  const citiesOptionsApi = useApi(cityApi.findCities);
 
   const handleData = async () => {
     let res;
@@ -58,6 +60,9 @@ export default function AddVehicle() {
     res = await fuelOptionsApi.request();
     const fuelOptions = res.data.data;
 
+    res = await citiesOptionsApi.request();
+    const citiesOptions = res.data.data;
+
     dispatch(
       setVehicleOptions({
         makers,
@@ -69,6 +74,7 @@ export default function AddVehicle() {
         minTripOptions,
         maxTripOptions,
         fuelOptions,
+        citiesOptions,
       })
     );
 

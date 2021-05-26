@@ -18,6 +18,7 @@ import {
   CarTermsOfService,
   CarPreview,
   WhereFindVIN,
+  NotFindCity,
 } from '../../templates/BasicsDialogs';
 
 const styles = (theme) => ({
@@ -92,6 +93,8 @@ export default function ResponsiveDialog({
         return <CarTermsOfService />;
       case 'car-preview':
         return <CarPreview />;
+      case 'not-find-city':
+        return <NotFindCity />;
       default:
         break;
     }

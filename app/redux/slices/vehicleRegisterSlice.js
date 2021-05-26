@@ -16,6 +16,7 @@ const initialState = {
   minTripDuration: {},
   maxTripDuration: {},
   fuel: {},
+  city: {},
 };
 
 export const vehicleRegisterSlice = createSlice({
@@ -38,8 +39,10 @@ export const vehicleRegisterSlice = createSlice({
       state.features = action.payload;
     },
     setFuel: (state, action) => {
-      console.log('fuel selected', action.payload);
       state.fuel = action.payload;
+    },
+    setCity: (state, action) => {
+      state.city = action.payload;
     },
     setDescription: (state, action) => {
       const { description } = action.payload;
@@ -73,6 +76,7 @@ export const {
   setBasicData,
   setFeatures,
   setFuel,
+  setCity,
   setDescription,
   setLicensePlate,
   setPhotos,

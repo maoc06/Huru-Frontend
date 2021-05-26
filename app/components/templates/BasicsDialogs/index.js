@@ -5,6 +5,7 @@ import CarTermOfServiceTemplate from './CarTermsOfServiceTemplate';
 import CarPrivacyPolicyTemplate from './CarPrivacyPolicyTemplate';
 import CarPreviewTemplate from './CarPreviewTemplate';
 import WhereFindVINTemplate from './WhereFindVIN';
+import NotFindCityTemplate from './NotFindCity';
 
 export {
   PrivacyPolicyTemplate as PrivacyPolicy,
@@ -14,4 +15,5 @@ export {
   CarPrivacyPolicyTemplate as CarPrivacyPolicy,
   CarPreviewTemplate as CarPreview,
   WhereFindVINTemplate as WhereFindVIN,
+  NotFindCityTemplate as NotFindCity,
 };

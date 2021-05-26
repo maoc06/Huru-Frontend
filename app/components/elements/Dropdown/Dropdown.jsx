@@ -51,6 +51,7 @@ export default function Dropdown({
     setFieldValue(name, selectObject);
 
     if (typeof setSelectItem === 'function') {
+      console.log(selectObject);
       setSelectItem(selectObject);
     }
 
