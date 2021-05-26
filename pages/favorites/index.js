@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
 import useApi from '../../app/hooks/useApi';
 import favoriteApi from '../../app/api/FavoriteAPI';
@@ -10,10 +9,9 @@ import ActivityIndicator from '../../app/components/elements/ActivityIndicator/A
 import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
 import CardHorizontal from '../../app/components/modules/CardHorizontal/CardHorizontal';
 import TitlePage from '../../app/components/elements/TitlePage/TitlePage';
+import NotFound from '../../app/components/modules/NotFound/NotFound';
 
 export default function Favorites() {
-  const router = useRouter();
-
   const getFavorites = useApi(favoriteApi.findByUser);
   const [user, setUser] = useState({});
   const [favorites, setFavorites] = useState([]);
@@ -55,7 +53,10 @@ export default function Favorites() {
         <TitlePage>Favoritos</TitlePage>
 
         {favorites.constructor === Array && favorites.length === 0 && (
-          <p>Aún no tienes favoritos agregados.</p>
+          <NotFound
+            text="Sin Favoritos"
+            subtitle="Aún no tienes favoritos. Busca y guarda tus carros favoritos, y podrás encontrarlos fácilmente aquí."
+          />
         )}
 
         {favorites.constructor === Array &&

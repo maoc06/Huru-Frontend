@@ -11,6 +11,9 @@ import useApi from '../../app/hooks/useApi';
 import searchApi from '../../app/api/SearchApi';
 
 import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
+import SearchForm from '../../app/components/modules/SearchForm/SearchForm';
+import FiletersPanel from '../../app/components/modules/FiltersPanel/FiltersPanel';
+import NotFound from '../../app/components/modules/NotFound/NotFound';
 import SearchResultsTemplate from '../../app/components/templates/SearchResults/SearchResultsTemplate';
 
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
@@ -53,7 +56,6 @@ function Cars() {
 
       setCars(resultsData);
       dispatch(setResults(JSON.stringify(resultsData)));
-      console.log(resultsData);
     }
   };
 
@@ -92,7 +94,7 @@ function Cars() {
   return (
     <div>
       <Head>
-        <title>Huru | Encuentra el carro perfecto</title>
+        <title>{`Huru | Encuentra el carro perfecto en ${location}`}</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"
@@ -103,10 +105,13 @@ function Cars() {
       <ActivityIndicator visible={searchCars.loading} />
 
       <AppLayout withImage={false}>
+        <SearchForm isCompact={true} showTopLabels={false} showBorder={true} />
+        <FiletersPanel />
+
         {searchCars.error && <p>Ocurrio un error</p>}
 
         {!searchCars.loading && cars.length === 0 && (
-          <p>No se encontraron resultados</p>
+          <NotFound text="No se encontraron resultados para su búsqueda." />
         )}
 
         {!searchCars.loading && cars.length > 0 && <SearchResultsTemplate />}

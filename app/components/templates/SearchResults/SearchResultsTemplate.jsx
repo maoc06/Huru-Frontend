@@ -1,18 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 
 import useApi from '../../../hooks/useApi';
 import favoriteApi from '../../../api/FavoriteAPI';
 import authStorage from '../../../utils/storageAuth';
 
 import CardHorizontal from '../../modules/CardHorizontal/CardHorizontal';
-import SearchForm from '../../modules/SearchForm/SearchForm';
-import FiletersPanel from '../../modules/FiltersPanel/FiltersPanel';
+import NotFound from '../../modules/NotFound/NotFound';
 
 const SearchResultsTemplate = () => {
-  const router = useRouter();
-
   const filterStore = useSelector((state) => state.filterSearch);
   const getFavorites = useApi(favoriteApi.findByUser);
 
@@ -45,10 +41,6 @@ const SearchResultsTemplate = () => {
 
   return (
     <>
-      <SearchForm isCompact={true} showTopLabels={false} showBorder={true} />
-
-      <FiletersPanel />
-
       <h6
         style={{ marginTop: '32px' }}
       >{`${items.length} resultados de busquedas`}</h6>
@@ -86,6 +78,10 @@ const SearchResultsTemplate = () => {
             />
           );
         })}
+
+      {items.length === 0 && (
+        <NotFound text="No se encontraron resultados para su búsqueda." />
+      )}
     </>
   );
 };

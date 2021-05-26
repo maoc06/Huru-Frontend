@@ -1,0 +1,19 @@
+@import '../../../styles/abstracts/colors';
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    .bold {
+        font-weight: bold;
+    }
+    p,
+    span {
+        margin-top: 16px;
+        max-width: 275px;
+        text-align: center;
+        color: $gray_3;
+    }
+}
