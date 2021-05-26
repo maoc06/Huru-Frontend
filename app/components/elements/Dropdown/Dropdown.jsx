@@ -22,6 +22,7 @@ export default function Dropdown({
   marginBottom,
   marginToButton,
   setSelectItem,
+  defaultValue,
 }) {
   const classes = materialStyles();
   const [selected, setSelect] = useState(list[0][propName]);
@@ -36,6 +37,7 @@ export default function Dropdown({
 
   useEffect(() => {
     setFieldValue(name, getObjectByPropName(selected));
+    if (defaultValue) setSelect(defaultValue);
   }, []);
 
   useEffect(() => {
@@ -51,7 +53,6 @@ export default function Dropdown({
     setFieldValue(name, selectObject);
 
     if (typeof setSelectItem === 'function') {
-      console.log(selectObject);
       setSelectItem(selectObject);
     }
 
@@ -73,7 +74,7 @@ export default function Dropdown({
           onChange={handleChange}
           displayEmpty
           disableUnderline
-          defaultValue=""
+          defaultValue={defaultValue ? defaultValue : ''}
           inputProps={{ 'aria-label': 'Without label' }}
           classes={{ root: classes.root }}
         >

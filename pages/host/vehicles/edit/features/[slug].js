@@ -52,10 +52,8 @@ const EditCarFeatures = ({}) => {
     const bulkFeatures = { carId: slug, features: updateFeatures };
     await updateCarFeatures.request(bulkFeatures);
 
-    console.log('Save changes', bulkFeatures);
-
     if (updateCarFeatures.error) {
-      console.log('ERROR UPDATING FEATURES');
+      console.error('ERROR UPDATING FEATURES');
     } else {
       handleGoToCarDetails();
     }

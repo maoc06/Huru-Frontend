@@ -9,6 +9,7 @@ import PhoneFiled from '../../elements/PhoneField/PhoneField';
 import RadioGroup from '../RadioGroup/RadioGroup';
 import Modal from '../Modal/Modal';
 import ShowMoreText from '../../elements/ShowMoreText/ShowMoreText';
+import Dropdown from '../../elements/Dropdown/Dropdown';
 
 import styles from './SectionEditable.module.scss';
 import { WarningIcon } from '../../elements/Icons/Shared';
@@ -21,6 +22,7 @@ const SectionEditable = ({
   values = {},
   schema = {},
   options = [],
+  propKey = 'id',
   showInfoTip = false,
   toolTip = '',
   isLink = false,
@@ -39,7 +41,7 @@ const SectionEditable = ({
   const [field, setField] = useState(values[name]);
 
   useEffect(() => {
-    if (editable) {
+    if (editable && type !== 'dropdown') {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -121,6 +123,22 @@ const SectionEditable = ({
         onChangeAux={(selected) => {
           setRadioOption(selected);
         }}
+      />
+    );
+  };
+
+  const dropdownComponent = () => {
+    if (!editable) {
+      return <p>{values[name]}</p>;
+    }
+
+    return (
+      <Dropdown
+        name={name}
+        list={options}
+        defaultValue={values[name]}
+        setSelectItem={(e) => console.log(e)}
+        propKey={propKey}
       />
     );
   };
@@ -219,6 +237,8 @@ const SectionEditable = ({
         return numberfieldComponent();
       case 'email':
         return emailfieldComponent();
+      case 'dropdown':
+        return dropdownComponent();
       default:
         return textfieldComponent();
     }

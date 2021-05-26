@@ -16,6 +16,8 @@ function CarOwnerSlug({
   minTripOptions,
   maxTripOptions,
   metaTitle,
+  fuelOptions,
+  cityOptions,
 }) {
   const router = useRouter();
 
@@ -37,13 +39,15 @@ function CarOwnerSlug({
   };
 
   const renderBookingTermsTemplate = () => {
-    const { carId, advanceNotice, maxTrip, minTrip, price } = car;
+    const { carId, advanceNotice, maxTrip, minTrip, fuel, city, price } = car;
 
     const bookingTerms = {
       advanceNotice,
       maxTrip,
       minTrip,
       price,
+      fuel,
+      city,
     };
 
     return (
@@ -53,6 +57,8 @@ function CarOwnerSlug({
         bookingTerms={bookingTerms}
         maxTripOptions={maxTripOptions}
         minTripOptions={minTripOptions}
+        fuelOptions={fuelOptions}
+        cityOptions={cityOptions}
       />
     );
   };
@@ -104,17 +110,23 @@ export async function getServerSideProps({ params }) {
   const resMaxTrip = await fetch(
     `${process.env.BASE_API_URL}/car-basics/max-trip`
   );
+  const resFuel = await fetch(`${process.env.BASE_API_URL}/car-basics/fuel`);
+  const resCity = await fetch(`${process.env.BASE_API_URL}/city`);
 
   let car = await resCar.json();
   let advanceNoticeOptions = await resAdvance.json();
   let minTripOptions = await resMinTrip.json();
   let maxTripOptions = await resMaxTrip.json();
+  let fuelOptions = await resFuel.json();
+  let cityOptions = await resCity.json();
 
   if (car.data) car = car.data;
   if (advanceNoticeOptions.data)
     advanceNoticeOptions = advanceNoticeOptions.data;
   if (minTripOptions.data) minTripOptions = minTripOptions.data;
   if (maxTripOptions.data) maxTripOptions = maxTripOptions.data;
+  if (fuelOptions.data) fuelOptions = fuelOptions.data;
+  if (cityOptions.data) cityOptions = cityOptions.data;
 
   const {
     maker: { name: carMaker },
@@ -129,6 +141,8 @@ export async function getServerSideProps({ params }) {
       car,
       minTripOptions,
       maxTripOptions,
+      fuelOptions,
+      cityOptions,
       metaTitle,
     },
   };

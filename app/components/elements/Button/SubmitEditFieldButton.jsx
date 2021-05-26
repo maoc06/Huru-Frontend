@@ -12,7 +12,6 @@ export default function SubmitEditFieldButton({
   const { handleSubmit, errors } = useFormikContext();
 
   const handleSave = (event) => {
-    console.log(errors);
     handleSubmit(event);
     onEdit();
   };

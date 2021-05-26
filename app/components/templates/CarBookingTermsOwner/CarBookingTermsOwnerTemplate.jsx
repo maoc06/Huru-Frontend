@@ -11,6 +11,8 @@ import SectionEditable from '../../modules/SectionEditable/SectionEditable';
 import advanceNoticeGroupSchema from '../../../constants/validationSchema/advanceNoticeGroup';
 import maxTripGroupSchema from '../../../constants/validationSchema/maxTripGroup';
 import minTripGroupSchema from '../../../constants/validationSchema/minTripGroup';
+import fuelSchema from '../../../constants/validationSchema/fuelType';
+import citySchema from '../../../constants/validationSchema/citySelect';
 
 import setPircePerDaySchema from '../../../constants/validationSchema/setPricePerDay';
 import Calendar from '../../elements/Calendar/Calendar';
@@ -24,6 +26,8 @@ const CarBookingTermsOwnerTemplate = ({
   advanceNoticeOptions = [],
   minTripOptions = [],
   maxTripOptions = [],
+  fuelOptions = [],
+  cityOptions = [],
 }) => {
   const router = useRouter();
 
@@ -43,7 +47,6 @@ const CarBookingTermsOwnerTemplate = ({
   };
 
   const handleUpdateAdvanceNotice = ({ advance: { id } }) => {
-    console.log('Update advance notice');
     const advanceNotice = { carId, advanceNoticeId: id };
     handleUpdateBookingTerms(advanceNotice);
   };
@@ -56,6 +59,16 @@ const CarBookingTermsOwnerTemplate = ({
   const handleUpdateMaxTrip = ({ maxTrip: { id } }) => {
     const maxTrip = { carId, maxTripDurationId: id };
     handleUpdateBookingTerms(maxTrip);
+  };
+
+  const handleUpdateFuel = ({ fuelType: { fuelId } }) => {
+    const fuel = { carId, fuelId };
+    handleUpdateBookingTerms(fuel);
+  };
+
+  const handleUpdateCity = ({ city: { cityId } }) => {
+    const city = { carId, cityId };
+    handleUpdateBookingTerms(city);
   };
 
   const handleUpdateBookingTerms = async (updateData) => {
@@ -163,6 +176,36 @@ const CarBookingTermsOwnerTemplate = ({
         options={maxTripOptions}
         showInfoTip={true}
         toolTip="¿Cuanto tiempo sera el viaje más largo que aceptaras por reservar este vehículo?"
+      />
+
+      <Divider size="mediumTop" />
+
+      <SectionEditable
+        title="Tipo de combustible"
+        name="fuelType"
+        type="dropdown"
+        onSave={handleUpdateFuel}
+        schema={fuelSchema}
+        values={{ fuelType: bookingTerms['fuel'].name }}
+        options={fuelOptions}
+        propKey="fuelId"
+        showInfoTip={true}
+        toolTip="¿Con qué tipo de combustible cargas tu vehículo?"
+      />
+
+      <Divider size="mediumTop" />
+
+      <SectionEditable
+        title="Ciudad"
+        name="city"
+        type="dropdown"
+        onSave={handleUpdateCity}
+        schema={citySchema}
+        values={{ city: bookingTerms['city'].name }}
+        options={cityOptions}
+        propKey="cityId"
+        showInfoTip={true}
+        toolTip="¿Dónde está ubicado tu vehículo?"
       />
     </>
   );

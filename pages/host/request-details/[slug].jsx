@@ -35,8 +35,6 @@ export default function RequestDetail() {
     const res = await getBooking.request(slug);
     const booking = res.data.data;
 
-    console.log(booking);
-
     setBooking(booking);
 
     return booking;

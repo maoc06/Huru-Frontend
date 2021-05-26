@@ -41,7 +41,7 @@ export default function PostReview({
     });
 
     if (createCarReview.error) {
-      console.log('Error trying to post a car review');
+      console.error('Error trying to post a car review');
     } else {
       router.reload();
     }
@@ -56,7 +56,7 @@ export default function PostReview({
     });
 
     if (createUserReview.error) {
-      console.log('Error trying to post a user review');
+      console.error('Error trying to post a user review');
     } else {
       router.reload();
     }

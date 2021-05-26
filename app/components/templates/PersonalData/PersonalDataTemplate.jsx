@@ -70,7 +70,7 @@ const PersonalDataTemplate = ({
       await updateBiography.request({ uuid: userId, about: biography });
 
       if (updateBiography.error) {
-        console.log('Ocurrio un error actualizando la biografia');
+        console.error('Ocurrio un error actualizando la biografia');
       } else {
         router.reload();
       }
@@ -84,7 +84,7 @@ const PersonalDataTemplate = ({
     });
 
     if (updatePhone.error) {
-      console.log('Ocurrio un error actualizando el telefono');
+      console.error('Ocurrio un error actualizando el telefono');
     } else {
       router.reload();
     }

@@ -4,9 +4,7 @@ import storageAuth from '../utils/storageAuth';
 const endpoint = '/city';
 
 const findCities = async () => {
-  return await client.get(endpoint, {
-    headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
-  });
+  return await client.get(endpoint);
 };
 
 export default {
