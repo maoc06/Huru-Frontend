@@ -21,8 +21,8 @@ const findBookingsHistory = async (uuid) => {
   });
 };
 
-const findBookingRequests = async (uuid) => {
-  return await client.get(`${endpoint}/by-owner/${uuid}`, {
+const findBookingRequests = async ({ uuid, limit }) => {
+  return await client.get(`${endpoint}/by-owner/${uuid}/${limit}`, {
     headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
   });
 };

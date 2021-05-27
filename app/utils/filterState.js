@@ -29,19 +29,23 @@ const filterData = (data, query) => {
           }
         } else if (query[key].constructor === Array) {
           const features = query[key];
-          for (let idx in features) {
-            const feature = features[idx];
-            if (
-              typeof item[key] === 'object' ||
-              typeof item[key] === 'string'
-            ) {
-              if (!item[key].includes(feature)) {
-                return false;
-              }
-            } else if (typeof item[key] === 'number') {
-              if (item[key] !== feature) {
-                return false;
-              }
+          let already = false;
+
+          if (item[key].constructor === Array) {
+            already = true;
+            if (!features.some((feature) => item[key].indexOf(feature) >= 0)) {
+              return false;
+            }
+          }
+
+          if (
+            (typeof item[key] === 'object' ||
+              typeof item[key] === 'string' ||
+              typeof item[key] === 'number') &&
+            !already
+          ) {
+            if (!features.some((feature) => feature === item[key])) {
+              return false;
             }
           }
         } else if (query[key].constructor === Number) {

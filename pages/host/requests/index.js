@@ -17,7 +17,7 @@ export default function RequestDetail() {
   const [requests, setRequests] = useState({});
 
   const handleGetData = async (uuid) => {
-    const res = await getRequests.request(uuid);
+    const res = await getRequests.request({ uuid, limit: false });
     setRequests(res.data.data);
   };
 

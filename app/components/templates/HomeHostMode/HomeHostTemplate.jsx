@@ -12,8 +12,8 @@ export default function HomeHostTemplate() {
   const getBookingRequests = useApi(bookingApi.findBookingRequests);
   const [bookingRequests, setBookingRequest] = useState([]);
 
-  const handleGetData = async (uid) => {
-    const res = await getBookingRequests.request(uid);
+  const handleGetData = async (uuid) => {
+    const res = await getBookingRequests.request({ uuid, limit: true });
     setBookingRequest(res.data.data);
   };
 

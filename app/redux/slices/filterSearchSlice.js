@@ -20,8 +20,18 @@ export const filterSearchSlice = createSlice({
   initialState,
   reducers: {
     setResults: (state, action) => {
-      state.originalRes = action.payload;
-      state.filterRes = action.payload;
+      let data = JSON.parse(action.payload);
+
+      data = data.map((item) => {
+        let { features } = item;
+        features = features.map(({ featureId }) => featureId);
+        return { ...item, features };
+      });
+
+      data = JSON.stringify(data);
+
+      state.originalRes = data;
+      state.filterRes = data;
     },
     filterByMaker: (state, action) => {
       const filter = { ...state.listFilters };
