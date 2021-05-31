@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import useApi from '../../../app/hooks/useApi';
 import bookingApi from '../../../app/api/BookingAPI';
+import withAuth from '../../../app/HOC/withAuth';
 
 import { todayDate } from '../../../app/utils/formatDates';
 
@@ -14,7 +15,7 @@ import Modal from '../../../app/components/modules/Modal/Modal';
 
 import { WarningIcon } from '../../../app/components/elements/Icons/Shared';
 
-function UpcomingBooking() {
+const UpcomingBooking = () => {
   const router = useRouter();
   const { slug } = router.query;
 
@@ -100,6 +101,6 @@ function UpcomingBooking() {
       )}
     </div>
   );
-}
+};
 
-export default UpcomingBooking;
+export default withAuth(UpcomingBooking);

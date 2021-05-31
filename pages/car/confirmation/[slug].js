@@ -10,6 +10,8 @@ import vehicleApi from '../../../app/api/VehicleApi';
 import paymentUserApi from '../../../app/api/PaymentUserAPI';
 import bookingApi from '../../../app/api/BookingAPI';
 
+import withAuth from '../../../app/HOC/withAuth';
+
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import StatusIndicator from '../../../app/components/elements/StatusIndicator/StatusIndicator';
 import TitlePage from '../../../app/components/elements/TitlePage/TitlePage';
@@ -20,7 +22,7 @@ import CarConfirmationTemplate from '../../../app/components/templates/CarConfir
 
 import { diffDays } from '../../../app/utils/formatDates';
 
-function ConfirmationBooking() {
+const ConfirmationBooking = () => {
   const router = useRouter();
   const travel = useTravelDates();
 
@@ -133,6 +135,6 @@ function ConfirmationBooking() {
       </AppLayout>
     </div>
   );
-}
+};
 
-export default ConfirmationBooking;
+export default withAuth(ConfirmationBooking);

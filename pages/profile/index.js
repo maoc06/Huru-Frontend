@@ -1,23 +1,21 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
 import useMood from '../../app/hooks/useMood';
+import withAuth from '../../app/HOC/withAuth';
 
 import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
 import UserProfileTemplate from '../../app/components/templates/UserProfile/UserProfile';
 
 import authStorage from '../../app/utils/storageAuth';
 
-function Profile() {
+const Profile = () => {
   const app = useMood();
-  const router = useRouter();
   const [user, setUser] = useState({});
 
   useEffect(() => {
     const user = authStorage.getUser();
     if (user) setUser(user.info);
-    else router.push('/signin');
   }, []);
 
   return (
@@ -36,6 +34,6 @@ function Profile() {
       </AppLayout>
     </div>
   );
-}
+};
 
-export default Profile;
+export default withAuth(Profile);

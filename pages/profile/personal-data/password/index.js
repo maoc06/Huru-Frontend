@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import useApi from '../../../../app/hooks/useApi';
 import userApi from '../../../../app/api/UserAPI';
+import withAuth from '../../../../app/HOC/withAuth';
 
 import ActivityIndicator from '../../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import StatusIndicator from '../../../../app/components/elements/StatusIndicator/StatusIndicator';
@@ -13,7 +14,7 @@ import EditPasswordTemplate from '../../../../app/components/templates/EditPassw
 import TitlePage from '../../../../app/components/elements/TitlePage/TitlePage';
 import storageAuth from '../../../../app/utils/storageAuth';
 
-function EditPasswordPage() {
+const EditPasswordPage = () => {
   const router = useRouter();
   const [user, setUser] = useState({});
   const [wrongPassword, setWrongPassword] = useState(false);
@@ -22,7 +23,6 @@ function EditPasswordPage() {
   useEffect(() => {
     const user = storageAuth.getUser();
     if (user) setUser(user.info);
-    else router.push('/signin');
   }, []);
 
   const handleUpdatePassword = async (password) => {
@@ -72,6 +72,6 @@ function EditPasswordPage() {
       </AppLayout>
     </div>
   );
-}
+};
 
-export default EditPasswordPage;
+export default withAuth(EditPasswordPage);

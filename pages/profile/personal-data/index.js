@@ -1,24 +1,22 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
 import useApi from '../../../app/hooks/useApi';
 import userApi from '../../../app/api/UserAPI';
+import withAuth from '../../../app/HOC/withAuth';
 
 import authStorage from '../../../app/utils/storageAuth';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
 import PersonalDataTemplate from '../../../app/components/templates/PersonalData/PersonalDataTemplate';
 
-function PersonalData() {
-  const router = useRouter();
+const PersonalData = () => {
   const [user, setUser] = useState({});
   const getUser = useApi(userApi.findUser);
 
   useEffect(() => {
     const user = authStorage.getUser();
     if (user) handleUserData(user.info.uid);
-    else router.push('/signin');
   }, []);
 
   const handleUserData = async (userId) => {
@@ -62,6 +60,6 @@ function PersonalData() {
       </AppLayout>
     </div>
   );
-}
+};
 
-export default PersonalData;
+export default withAuth(PersonalData);

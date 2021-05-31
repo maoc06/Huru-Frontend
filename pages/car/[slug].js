@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import useApi from '../../app/hooks/useApi';
-// import carApi from '../../app/api/VehicleApi';
 import userApi from '../../app/api/UserAPI';
 import authStorage from '../../app/utils/storageAuth';
 import { capitalize } from '../../app/utils/capitalize';

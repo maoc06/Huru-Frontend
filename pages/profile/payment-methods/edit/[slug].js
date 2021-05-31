@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import useApi from '../../../../app/hooks/useApi';
 import paymentUserApi from '../../../../app/api/PaymentUserAPI';
 import authStorage from '../../../../app/utils/storageAuth';
+import withAuth from '../../../../app/HOC/withAuth';
 
 import TitlePage from '../../../../app/components/elements/TitlePage/TitlePage';
 import AppLayout from '../../../../app/components/layouts/AppLayout/AppLayout';
@@ -41,9 +42,7 @@ function PaymentMethods() {
 
   useEffect(() => {
     const user = authStorage.getUser();
-    if (user) {
-      handleGetData(user.info.uid);
-    } else router.push('/signin');
+    if (user) handleGetData(user.info.uid);
   }, []);
 
   const renderTemplate = () => {
@@ -101,4 +100,4 @@ function PaymentMethods() {
   );
 }
 
-export default PaymentMethods;
+export default withAuth(PaymentMethods);

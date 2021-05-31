@@ -9,11 +9,11 @@ import makerApi from '../app/api/MakerAPI';
 import vehicleBasicsApi from '../app/api/VehicleBasicsAPI';
 import cityApi from '../app/api/CityAPI';
 
+import withAuth from '../app/HOC/withAuth';
 import AddVehicleTemplate from '../app/components/templates/AddVehicle/AddVehicleTemplate';
-
 import ActivityIndicator from '../app/components/elements/ActivityIndicator/ActivityIndicator';
 
-export default function AddVehicle() {
+const AddVehicle = () => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
@@ -103,4 +103,6 @@ export default function AddVehicle() {
       </>
     </div>
   );
-}
+};
+
+export default withAuth(AddVehicle);

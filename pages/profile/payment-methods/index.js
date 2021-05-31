@@ -1,15 +1,16 @@
-import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import { useState, useEffect } from 'react';
 
 import useApi from '../../../app/hooks/useApi';
 import authStorage from '../../../app/utils/storageAuth';
 import paymentUserApi from '../../../app/api/PaymentUserAPI';
+import withAuth from '../../../app/HOC/withAuth';
 
 import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
 import PaymentMethodsTemplate from '../../../app/components/templates/PaymentMethods/PaymentMethodsTemplate';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 
-function PaymentMethods() {
+const PaymentMethods = () => {
   const [paymentMethods, setPaymentMethods] = useState([]);
   const paymentMethodsByUser = useApi(paymentUserApi.findPaymentsByUser);
 
@@ -20,9 +21,7 @@ function PaymentMethods() {
 
   useEffect(() => {
     const user = authStorage.getUser();
-    if (user) {
-      handleData(user.info.uid);
-    } else router.push('/signin');
+    if (user) handleData(user.info.uid);
   }, []);
 
   return (
@@ -50,6 +49,6 @@ function PaymentMethods() {
       </>
     </div>
   );
-}
+};
 
-export default PaymentMethods;
+export default withAuth(PaymentMethods);

@@ -5,13 +5,15 @@ import useApi from '../../app/hooks/useApi';
 import favoriteApi from '../../app/api/FavoriteAPI';
 import authStorage from '../../app/utils/storageAuth';
 
+import withAuth from '../../app/HOC/withAuth';
+
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
 import CardHorizontal from '../../app/components/modules/CardHorizontal/CardHorizontal';
 import TitlePage from '../../app/components/elements/TitlePage/TitlePage';
 import NotFound from '../../app/components/modules/NotFound/NotFound';
 
-export default function Favorites() {
+const Favorites = () => {
   const getFavorites = useApi(favoriteApi.findByUser);
   const [user, setUser] = useState({});
   const [favorites, setFavorites] = useState([]);
@@ -79,4 +81,6 @@ export default function Favorites() {
       </AppLayout>
     </div>
   );
-}
+};
+
+export default withAuth(Favorites);

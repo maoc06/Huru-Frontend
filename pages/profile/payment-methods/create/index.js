@@ -2,18 +2,17 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
 import authStorage from '../../../../app/utils/storageAuth';
+import withAuth from '../../../../app/HOC/withAuth';
 
 import AppLayout from '../../../../app/components/layouts/AppLayout/AppLayout';
 import AddPaymentMethodLayout from '../../../../app/components/layouts/AddPaymentMethod/AddPaymentMethodLayout';
 
-function CreatePaymentMethod() {
+const CreatePaymentMethod = () => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
     const userLogged = authStorage.getUser();
-    if (userLogged) {
-      setUser(userLogged.info);
-    } else router.push('/signin');
+    if (userLogged) setUser(userLogged.info);
   }, []);
 
   return (
@@ -34,6 +33,6 @@ function CreatePaymentMethod() {
       </AppLayout>
     </div>
   );
-}
+};
 
-export default CreatePaymentMethod;
+export default withAuth(CreatePaymentMethod);

@@ -7,6 +7,7 @@ import bookingApi from '../../../app/api/BookingAPI';
 import carReviewApi from '../../../app/api/VehicleReviewAPI';
 import userApi from '../../../app/api/UserAPI';
 import authStorage from '../../../app/utils/storageAuth';
+import withAuth from '../../../app/HOC/withAuth';
 import { convertToCompound } from '../../../app/utils/formatDates';
 
 import Carousel from '../../../app/components/elements/Carousel/Carousel';
@@ -14,7 +15,7 @@ import ActivityIndicator from '../../../app/components/elements/ActivityIndicato
 import PastBookingTemplate from '../../../app/components/templates/PastBooking/PastBookingTemplate';
 import CanceledBookingDetailsTemplate from '../../../app/components/templates/CanceledBookingDetails/CanceledBookingDetailsTemplate';
 
-function BookingHistory() {
+const BookingHistory = () => {
   const router = useRouter();
   const { slug } = router.query;
 
@@ -161,6 +162,6 @@ function BookingHistory() {
         )}
     </div>
   );
-}
+};
 
-export default BookingHistory;
+export default withAuth(BookingHistory);

@@ -1,10 +1,10 @@
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import useApi from '../../app/hooks/useApi';
 import bookingApi from '../../app/api/BookingAPI';
 import authStorage from '../../app/utils/storageAuth';
+import withAuth from '../../app/HOC/withAuth';
 
 import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
 import TabsLayout from '../../app/components/layouts/TabsLayout/TabsLayout';
@@ -12,9 +12,7 @@ import TripsTemplate from '../../app/components/templates/Trips/TripsTemplate';
 import TitlePage from '../../app/components/elements/TitlePage/TitlePage';
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
 
-export default function Trips() {
-  const router = useRouter();
-
+const Trips = () => {
   const getUpcomingBookings = useApi(bookingApi.findUpcomingBookings);
   const getBookingsHistory = useApi(bookingApi.findBookingsHistory);
 
@@ -27,8 +25,6 @@ export default function Trips() {
       const uuid = user.info.uid;
       handleUpcomingBookings(uuid);
       handleBookingsHistory(uuid);
-    } else {
-      router.push('/signin');
     }
   }, []);
 
@@ -41,14 +37,6 @@ export default function Trips() {
     const res = await getBookingsHistory.request(uuid);
 
     setBookingHistory(res.data.data);
-  };
-
-  const handleClickUpcoming = (slug) => {
-    return `/trips/upcoming/${encodeURIComponent(slug)}`;
-  };
-
-  const handleClickHistory = (slug) => {
-    return `/trips/history/${encodeURIComponent(slug)}`;
   };
 
   const tabs = [
@@ -86,4 +74,6 @@ export default function Trips() {
       </AppLayout>
     </div>
   );
-}
+};
+
+export default withAuth(Trips);
