@@ -7,10 +7,16 @@ import favoriteApi from '../../../api/FavoriteAPI';
 import bookingApi from '../../../api/BookingAPI';
 import carReviewApi from '../../../api/VehicleReviewAPI';
 
-import { FavoriteIcon, FillStartIcon } from '../../elements/Icons/Shared';
+import {
+  FavoriteIcon,
+  FillStartIcon,
+  EcoIcon,
+} from '../../elements/Icons/Shared';
 import DatesPanel from '../DatesPanel/DatesPanel';
 
 import styles from './CardHorizontal.module.scss';
+
+const DISCOUNT_ECO_FRIENDLY = 0.15;
 
 export default function CardHorizontal({
   dates,
@@ -29,6 +35,7 @@ export default function CardHorizontal({
   href = '/',
   favorite = false,
   onRemoveFavorite,
+  isEco = false,
 }) {
   const addFavorite = useApi(favoriteApi.createFavorite);
   const deleteFavorite = useApi(favoriteApi.removeFavorite);
@@ -39,6 +46,7 @@ export default function CardHorizontal({
   const [isFavorite, setIsFavorite] = useState(favorite);
   const [countCompletedTrips, setCountTrips] = useState(0);
   const [averageRating, setAverageRating] = useState('1.0');
+  const [pricePerDay, setPricePerDay] = useState(price);
 
   const handleAddToFavorite = () => {
     setIsFavorite(true);
@@ -83,6 +91,11 @@ export default function CardHorizontal({
       handleCountTrips();
       handleAvg();
     }
+
+    if (isEco) {
+      const discount = price * DISCOUNT_ECO_FRIENDLY;
+      setPricePerDay(price - discount);
+    }
   }, []);
 
   return (
@@ -124,23 +137,38 @@ export default function CardHorizontal({
           </div>
 
           <div className={styles.info}>
-            <h6>{title}</h6>
+            <div className={styles.title}>
+              <h6>{title}</h6>
+              {isEco && <EcoIcon height={24} width={24} />}
+            </div>
 
             {!showPanelDates && showPanelPrice && (
-              <div className={styles.bottom}>
-                <div className={styles.stats}>
-                  <FillStartIcon height={16} width={16} />
+              <>
+                <div className={styles.bottom}>
+                  <div className={styles.stats}>
+                    <FillStartIcon height={16} width={16} />
 
-                  <p className={styles.counts}>
-                    {averageRating} <span>({countCompletedTrips} viajes)</span>
+                    <p className={styles.counts}>
+                      {averageRating}{' '}
+                      <span>({countCompletedTrips} viajes)</span>
+                    </p>
+                  </div>
+
+                  <p className={`${styles.price}`}>
+                    {`$${Number(pricePerDay).toLocaleString('en')} COP/`}
+                    <span>día</span>
                   </p>
                 </div>
 
-                <p className={styles.price}>
-                  {`$${Number(price).toLocaleString('en')} COP/`}
-                  <span>día</span>
-                </p>
-              </div>
+                {isEco && (
+                  <div className={styles.discount}>
+                    <span>Dcto. eco-friendly</span>
+                    <p className={styles.basePrice}>
+                      {`$${Number(price).toLocaleString('en')}`}
+                    </p>
+                  </div>
+                )}
+              </>
             )}
 
             {showPanelDates && (

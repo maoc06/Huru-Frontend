@@ -28,7 +28,7 @@ const AddVehcileTemplate = () => {
       case 1:
         return (
           <FullTopImageLayout
-            image={'/images/intro-add-vehicle.png'}
+            image={'/images/intro-add-vehicle.jpg'}
             alt={'Ganar dinero con mi carro'}
           >
             <AppLayout isFullHeigh={false}>

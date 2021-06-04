@@ -24,6 +24,8 @@ export default function HomeHostTemplate() {
 
   return (
     <AppLayout withImage={false}>
+      <h6>Solicitudes recientes</h6>
+      {bookingRequests.length === 0 && <p>No tienes solicitudes</p>}
       {bookingRequests.length > 0 && (
         <GridCardRequestLayout requestList={bookingRequests} />
       )}

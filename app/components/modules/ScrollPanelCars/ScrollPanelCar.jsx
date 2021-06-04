@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import ScrollContainer from 'react-indiana-drag-scroll';
 
 import CardHorizontal from '../../modules/CardHorizontal/CardHorizontal';
@@ -6,8 +5,6 @@ import CardHorizontal from '../../modules/CardHorizontal/CardHorizontal';
 import styles from './ScrollPanelCar.module.scss';
 
 const ScrollPanelCars = ({ cars = [] }) => {
-  const router = useRouter();
-
   return (
     <ScrollContainer vertical={false} activationDistance={5}>
       <div className={styles.cars_container}>
@@ -23,7 +20,6 @@ const ScrollPanelCars = ({ cars = [] }) => {
             />
           );
         })}
-        ;
       </div>
     </ScrollContainer>
   );

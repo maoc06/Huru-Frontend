@@ -50,7 +50,6 @@ export default function Terms() {
         odometerRangeId: parseInt(store.odometer.odometerRangeId),
         description: store.description,
         licensePlate: store.licensePlate,
-        cityId: 1,
         owner: uid,
         price: parseInt(store.price),
         advanceNoticeId: parseInt(store.advanceNotice.id),

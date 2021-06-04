@@ -16,7 +16,7 @@ const vechicleSchema = Yup.object().shape({
       modelId: Yup.string().required(),
       makerId: Yup.string().required(),
       name: Yup.string().required(),
-      categoryId: Yup.string().required(),
+      // categoryId: Yup.string().required(),
       transmissionId: Yup.string().required(),
     })
     .required('El modelo del vehículo es requerido')

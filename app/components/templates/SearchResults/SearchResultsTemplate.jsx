@@ -48,36 +48,44 @@ const SearchResultsTemplate = () => {
       {/* If not logged  */}
       {user.constructor === Object &&
         Object.keys(user).length === 0 &&
-        items.map(({ car_id: slug, name, model, year, price, image }) => {
-          return (
-            <CardHorizontal
-              carId={slug}
-              key={slug}
-              title={`${name} ${model} ${year}`}
-              price={price}
-              imageSrc={image ? image : '../../'}
-              href={`/car/${encodeURIComponent(slug)}`}
-            />
-          );
-        })}
+        items.map(
+          ({ car_id: slug, name, model, year, price, image, categories }) => {
+            return (
+              <CardHorizontal
+                carId={slug}
+                key={slug}
+                title={`${name} ${model} ${year}`}
+                price={price}
+                imageSrc={image ? image : '../../'}
+                href={`/car/${encodeURIComponent(slug)}`}
+                isEco={categories.includes(8)}
+              />
+            );
+          }
+        )}
 
       {/* If logged */}
       {favorites.constructor === Object &&
         Object.keys(favorites).length > 0 &&
-        items.map(({ car_id: slug, name, model, year, price, image }) => {
-          return (
-            <CardHorizontal
-              userId={user.uid ? user.uid : null}
-              carId={slug}
-              key={slug}
-              title={`${name} ${model} ${year}`}
-              price={price}
-              imageSrc={image.length === 0 ? '/images/default-car.png' : image}
-              href={`/car/${encodeURIComponent(slug)}`}
-              favorite={() => handleCheckIsFavorite(slug)}
-            />
-          );
-        })}
+        items.map(
+          ({ car_id: slug, name, model, year, price, image, categories }) => {
+            return (
+              <CardHorizontal
+                userId={user.uid ? user.uid : null}
+                carId={slug}
+                key={slug}
+                title={`${name} ${model} ${year}`}
+                price={price}
+                imageSrc={
+                  image.length === 0 ? '/images/default-car.png' : image
+                }
+                href={`/car/${encodeURIComponent(slug)}`}
+                favorite={() => handleCheckIsFavorite(slug)}
+                isEco={categories.includes(8)}
+              />
+            );
+          }
+        )}
 
       {items.length === 0 && (
         <NotFound text="No se encontraron resultados para su búsqueda." />

@@ -18,11 +18,20 @@ import UsbChanger from '../components/elements/Icons/Features/UsbChanger';
 import UsbInput from '../components/elements/Icons/Features/UsbInput';
 
 // Car brands logo
+import AudiLogo from '../components/elements/Icons/CarLogos/AudiLogo';
+import BMWLogo from '../components/elements/Icons/CarLogos/BMWLogo';
 import ChevroletLogo from '../components/elements/Icons/CarLogos/ChevroletLogo';
+import DodgeLogo from '../components/elements/Icons/CarLogos/DodgeLogo';
 import FordLogo from '../components/elements/Icons/CarLogos/FordLogo';
+import JeepLogo from '../components/elements/Icons/CarLogos/JeepLogo';
+import KiaLogo from '../components/elements/Icons/CarLogos/KiaLogo';
 import MazdaLogo from '../components/elements/Icons/CarLogos/MazdaLogo';
+import MercedesBenzLogo from '../components/elements/Icons/CarLogos/MercedesBenzLogo';
+import MiniLogo from '../components/elements/Icons/CarLogos/MiniLogo';
 import NissanLogo from '../components/elements/Icons/CarLogos/NissanLogo';
 import RenaultLogo from '../components/elements/Icons/CarLogos/RenaultLogo';
+import ToyotaLogo from '../components/elements/Icons/CarLogos/ToyotaLogo';
+import VolkswagenLogo from '../components/elements/Icons/CarLogos/VolkswagenLogo';
 
 // Car type icons
 import CarType from '../components/elements/Icons/CarTypes/CarType';
@@ -32,6 +41,7 @@ import MiniVanType from '../components/elements/Icons/CarTypes/MiniVanType';
 import SportsType from '../components/elements/Icons/CarTypes/SportsType';
 import SuvType from '../components/elements/Icons/CarTypes/SuvType';
 import VanType from '../components/elements/Icons/CarTypes/VanType';
+import ElectricType from '../components/elements/Icons/CarTypes/ElectricType';
 
 // Payment methods icons
 import VisaIcon from '../components/elements/Icons/PaymentMethods/VisaIcon';
@@ -42,13 +52,14 @@ import NequiIcon from '../components/elements/Icons/PaymentMethods/NequiIcon';
 // type Transmissions
 const typeTransmissionEnum = Object.freeze({ 1: 'Manual', 2: 'Automático' });
 
-// type Fuel
-const typeFuelEnum = Object.freeze({
-  1: 'Corriente',
-  2: 'Extra',
-  3: 'ACPM',
-  4: 'Gas Natural',
-});
+// // type Fuel
+// const typeFuelEnum = Object.freeze({
+//   1: 'Corriente',
+//   2: 'Extra',
+//   3: 'ACPM',
+//   4: 'Gas Natural',
+//   5: 'Eléctrico',
+// });
 
 // Advance notice
 const advanceNotice = Object.freeze({
@@ -79,11 +90,20 @@ const minTripDuration = Object.freeze({
 
 // Car brands logo
 const carBrandLogos = Object.freeze({
-  1: <RenaultLogo />,
-  2: <ChevroletLogo />,
-  3: <MazdaLogo />,
-  4: <FordLogo />,
-  5: <NissanLogo />,
+  1: <AudiLogo />,
+  2: <BMWLogo />,
+  3: <ChevroletLogo />,
+  4: <DodgeLogo />,
+  5: <FordLogo />,
+  6: <JeepLogo />,
+  7: <KiaLogo />,
+  8: <MazdaLogo />,
+  9: <MercedesBenzLogo />,
+  10: <MiniLogo />,
+  11: <NissanLogo />,
+  12: <RenaultLogo />,
+  13: <ToyotaLogo />,
+  14: <VolkswagenLogo />,
 });
 
 // Car features icon
@@ -135,6 +155,7 @@ const carTypesIcons = Object.freeze({
   5: <MiniVanType />,
   6: <LuxuryType />,
   7: <VanType />,
+  8: <ElectricType />,
 });
 
 // Payment methods icons
@@ -148,7 +169,6 @@ const paymentMethodsIcons = Object.freeze({
 export {
   advanceNotice,
   typeTransmissionEnum,
-  typeFuelEnum,
   carBrandLogos,
   carFeaturesIcons,
   carFeaturesNames,

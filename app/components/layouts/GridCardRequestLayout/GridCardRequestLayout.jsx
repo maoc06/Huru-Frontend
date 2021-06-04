@@ -11,10 +11,6 @@ export default function GridCardRequestLayout({
 }) {
   return (
     <>
-      <h6>Solicitudes recientes</h6>
-
-      {requestList.length === 0 && <p>No tienes solicitudes</p>}
-
       <div className={style.container}>
         {requestList.slice(0, sliceTo).map((request) => {
           const { firstName, lastName } = request.bookedBy;

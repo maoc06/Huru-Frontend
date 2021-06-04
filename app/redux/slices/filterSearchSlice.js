@@ -6,7 +6,7 @@ const initialState = {
   listFilters: {
     price: { min: 50000, max: 1000000 },
     features: [],
-    category_id: [],
+    categories: [],
     name: [],
     year: { min: 2010, max: 2021 },
     number_of_seats: { min: 1, max: 20 },
@@ -23,11 +23,13 @@ export const filterSearchSlice = createSlice({
       let data = JSON.parse(action.payload);
 
       data = data.map((item) => {
-        let { features } = item;
-        features = features.map(({ featureId }) => featureId);
-        return { ...item, features };
-      });
+        let { categories, features } = item;
 
+        features = features.map(({ featureId }) => featureId);
+        categories = categories.map(({ categoryId }) => categoryId);
+
+        return { ...item, categories, features };
+      });
       data = JSON.stringify(data);
 
       state.originalRes = data;
@@ -122,18 +124,18 @@ export const filterSearchSlice = createSlice({
     },
     filterByCategory: (state, action) => {
       const filter = { ...state.listFilters };
-      const isAlreadyExists = filter.category_id.includes(action.payload);
+      const isAlreadyExists = filter.categories.includes(action.payload);
       let applyFilter = [];
 
       if (isAlreadyExists) {
-        applyFilter = state.listFilters.category_id.filter(
+        applyFilter = state.listFilters.categories.filter(
           (category) => category !== action.payload
         );
       } else {
-        applyFilter = [...filter.category_id, action.payload];
+        applyFilter = [...filter.categories, action.payload];
       }
 
-      filter.category_id = applyFilter;
+      filter.categories = applyFilter;
       state.listFilters = filter;
 
       const query = buildFilter(JSON.stringify(filter));

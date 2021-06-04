@@ -12,7 +12,7 @@ import PriceBottomBar from '../../app/components/modules/PriceBottomBar/PriceBot
 import CarProfileTemplate from '../../app/components/templates/CarProfile/CarProfileTempate';
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
 
-import { typeTransmissionEnum, typeFuelEnum } from '../../app/utils/enums';
+import { typeTransmissionEnum } from '../../app/utils/enums';
 
 function CarSlug({ car, metaTitle }) {
   const router = useRouter();
@@ -87,7 +87,7 @@ function CarSlug({ car, metaTitle }) {
             description={car.description}
             numSeats={car.model.numOfSeats}
             typeTransmission={typeTransmissionEnum[car.model.transmissionId]}
-            typeGas={typeFuelEnum[car.fuelId]}
+            typeGas={car.fuel.name}
             features={car.features}
             reviews={car.reviews}
           />
@@ -114,8 +114,11 @@ export async function getServerSideProps({ params }) {
     maker: { name: carMaker },
     model: { name: carModel },
     year,
+    city: { name: location },
   } = car;
-  const metaTitle = `${capitalize(carMaker)} ${capitalize(carModel)} ${year}`;
+  const metaTitle = `${capitalize(carMaker)} ${capitalize(
+    carModel
+  )} ${year} en ${capitalize(location)}`;
 
   return {
     props: {

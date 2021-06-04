@@ -53,7 +53,7 @@ const CarProfileOwnerTemplate = ({
     await updateDescription.request(descriptionUpdate);
 
     if (updateDescription.error) {
-      console.log('Error updating description...');
+      console.error('Error updating description...');
     } else {
       router.reload();
     }

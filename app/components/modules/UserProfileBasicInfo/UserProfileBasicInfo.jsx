@@ -53,12 +53,14 @@ export default function UserProfileBasicInfo({
     const res = await getAllReviews.request(userId);
     const reviews = res.data.data;
 
-    const reducer = (accumulator, currentValue) => {
-      return accumulator + currentValue.rating;
-    };
-    const sum = reviews.reduce(reducer, 0);
+    if (reviews.length > 0) {
+      const reducer = (accumulator, currentValue) => {
+        return accumulator + currentValue.rating;
+      };
+      const sum = reviews.reduce(reducer, 0);
 
-    setAverageRating((sum / reviews.length).toFixed(1));
+      setAverageRating((sum / reviews.length).toFixed(1));
+    }
   };
 
   useEffect(() => {
@@ -106,7 +108,7 @@ export default function UserProfileBasicInfo({
                 <span>
                   <FillStartIcon width={15} height={15} />
                 </span>
-                {averageRating}
+                {averageRating.toFixed(1)}
               </p>
             </div>
           )}

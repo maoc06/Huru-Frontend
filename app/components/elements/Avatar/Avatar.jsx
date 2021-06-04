@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 
 export default function AppAvatar({
   clickeable = false,
-  src = '/images/default-profile-picture.png',
+  src = '/images/default-profile-picture.jpg',
   size = 'large',
   alt = 'Avatar',
   userId,

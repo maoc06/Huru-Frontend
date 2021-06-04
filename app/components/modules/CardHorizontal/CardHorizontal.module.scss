@@ -11,7 +11,7 @@
         position: absolute;
         top: 0;
         right: 0;
-        z-index: 998;
+        z-index: 100;
     }
     .inner {
         position: relative;
@@ -38,12 +38,21 @@
             flex: 1;
             max-width: 100%;
             padding: 16px;
-            h6 {
-                text-transform: capitalize;
-                font-size: 16px;
+            .title {
+                display: flex;
+                align-items: center;
+                margin-bottom: 16px;
+                h6 {
+                    margin: 0;
+                    margin-right: 8px;
+                    text-transform: capitalize;
+                    font-size: 16px;
+                }
             }
             .bottom {
                 display: flex;
+                align-items: center;
+                justify-content: space-between;
                 font-size: 1rem;
                 .stats {
                     flex: 0.6;
@@ -57,14 +66,32 @@
                         }
                     }
                 }
+                .price,
+                .basePrice {
+                    text-align: right;
+                }
                 .price {
                     flex: 1;
-                    text-align: right;
                     font-weight: bold;
                     span {
                         font-weight: normal;
                         font-size: 12px;
                     }
+                }
+            }
+            .discount {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                span {
+                    color: $gray_3;
+                    margin-right: 8px;
+                    font-size: 0.9rem;
+                }
+                .basePrice {
+                    color: $gray_3;
+                    font-size: 0.9rem;
+                    text-decoration: line-through;
                 }
             }
         }

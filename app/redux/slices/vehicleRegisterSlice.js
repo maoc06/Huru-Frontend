@@ -56,7 +56,6 @@ export const vehicleRegisterSlice = createSlice({
       state.photos = action.payload;
     },
     setPrice: (state, action) => {
-      // const { price } = action.payload;
       state.price = action.payload;
     },
     setAdvanceNotice: (state, action) => {
