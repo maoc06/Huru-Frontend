@@ -125,7 +125,7 @@ const ConfirmationBooking = () => {
             countDays={diffDays({
               dateOne: dates.raw.start,
               dateTwo: dates.raw.end,
-              type: 'ISO',
+              type: 'SQL',
             })}
             pricePerDay={car.price}
             paymentMethod={defaultPayment}
