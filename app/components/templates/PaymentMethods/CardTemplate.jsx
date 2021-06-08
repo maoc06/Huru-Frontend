@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 import Form from '../../modules/Forms/Form';
 import CardNumberField from '../../elements/CardNumberField/CardNumberField';
@@ -19,6 +20,7 @@ import cardSchema from '../../../constants/validationSchema/card';
 import style from './CardTemplate.module.scss';
 
 const CardTemplate = ({ uid, email, number = '', readOnly = false }) => {
+  const router = useRouter();
   const initialValues = { card_holder: '', number, expiry: '', cvc: '' };
 
   const saveCard = useApi(paymentGatewayApi.savePaymentSourceCard);
@@ -27,6 +29,7 @@ const CardTemplate = ({ uid, email, number = '', readOnly = false }) => {
 
   const handleButtonPopUpConfirm = () => {
     setShowConfirm(false);
+    router.push('/profile/payment-methods');
   };
 
   const handleButtonPopUpFail = () => {
