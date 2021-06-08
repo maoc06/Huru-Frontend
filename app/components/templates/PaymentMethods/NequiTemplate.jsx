@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 import Form from '../../modules/Forms/Form';
 import PhoneFiled from '../../elements/PhoneField/PhoneField';
@@ -16,7 +16,7 @@ import paymentGatewayApi from '../../../api/PaymentGatewayAPI';
 import nequiSchema from '../../../constants/validationSchema/nequi';
 
 const NequiTemplate = ({ uid, email, phone = '', readOnly = false }) => {
-  const router = useRouter()
+  const router = useRouter();
   const initialValues = { phone };
 
   const saveNequi = useApi(paymentGatewayApi.savePaymentSourceNequi);
@@ -25,7 +25,7 @@ const NequiTemplate = ({ uid, email, phone = '', readOnly = false }) => {
 
   const handleButtonPopUpConfirm = () => {
     setShowConfirm(false);
-    outer.push('/profile/payment-methods');
+    router.push('/profile/payment-methods');
   };
 
   const handleButtonPopUpFail = () => {
