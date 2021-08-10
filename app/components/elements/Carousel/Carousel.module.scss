@@ -1,5 +1,15 @@
 @import '../../../styles/abstracts/colors';
 .carousel {
     min-height: 200px;
+    max-height: 100vw;
     background-color: $gray_6;
+    @media (min-width: 720px) {
+        .slide {
+            max-height: 100vh;
+            .image {
+                width: auto;
+                height: 100%;
+            }
+        }
+    }
 }

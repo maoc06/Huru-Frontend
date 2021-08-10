@@ -3,4 +3,10 @@
     gap: 8px;
     justify-content: space-between;
     margin-bottom: 32px;
+    @media (min-width: 720px) {
+        min-width: 400px;
+        max-width: 550px;
+        margin: 0 auto;
+        margin-bottom: 32px;
+    }
 }

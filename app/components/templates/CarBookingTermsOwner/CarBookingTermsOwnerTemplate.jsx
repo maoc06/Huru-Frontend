@@ -17,8 +17,8 @@ import citySchema from '../../../constants/validationSchema/citySelect';
 import setPircePerDaySchema from '../../../constants/validationSchema/setPricePerDay';
 import Calendar from '../../elements/Calendar/Calendar';
 import SectionTitle from '../../elements/SectionTitle/SectionTitle';
-
 import { formatDisableDays, isObjEqual } from '../../../utils/formatDates';
+import styles from './CarBookingTermOwner.module.scss';
 
 const CarBookingTermsOwnerTemplate = ({
   carId,
@@ -117,7 +117,7 @@ const CarBookingTermsOwnerTemplate = ({
   }, []);
 
   return (
-    <>
+    <section className={styles.wrapper}>
       <SectionEditable
         title="Precio"
         name="price"
@@ -207,7 +207,7 @@ const CarBookingTermsOwnerTemplate = ({
         showInfoTip={true}
         toolTip="¿Dónde está ubicado tu vehículo?"
       />
-    </>
+    </section>
   );
 };
 

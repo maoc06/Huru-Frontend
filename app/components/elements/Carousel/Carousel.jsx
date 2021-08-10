@@ -27,8 +27,8 @@ export default function AppCarousel({ images }) {
       {imagesSrc.map((item) => {
         const { imagePath } = item;
         return (
-          <div key={imagePath}>
-            <img src={imagePath} />
+          <div key={imagePath} className={styles.slide}>
+            <img src={imagePath} className={styles.image} />
           </div>
         );
       })}

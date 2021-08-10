@@ -39,9 +39,6 @@ const PaymentMethods = () => {
         <ActivityIndicator visible={paymentMethodsByUser.loading} />
 
         <AppLayout>
-          <h3>Metodos de pago</h3>
-          <p>Selecciona tu metodo de pago de preferencia.</p>
-
           {!paymentMethodsByUser.loading && (
             <PaymentMethodsTemplate list={paymentMethods} />
           )}

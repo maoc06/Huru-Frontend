@@ -12,10 +12,9 @@ import Form from '../Forms/Form';
 import Textfield from '../../elements/Textfield/Textfield';
 import DatePickerInline from '../../elements/DatePicker/DatePickerInline';
 import SubmitButton from '../../elements/Button/SubmitButton';
-
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';
-
 import personalDataUserSchema from '../../../constants/validationSchema/personalDataUser';
+import styles from './Register.module.scss';
 
 export default function RegisterUserPersonalData({ setStep }) {
   const dispatch = useDispatch();
@@ -50,7 +49,7 @@ export default function RegisterUserPersonalData({ setStep }) {
     <>
       <ActivityIndicator visible={checkCCApi.loading} />
 
-      <div>
+      <div className={styles.container}>
         <h3>¡Empecemos el viaje!</h3>
 
         <p>Para la seguridad de la comunidad, necesitamos estos datos</p>

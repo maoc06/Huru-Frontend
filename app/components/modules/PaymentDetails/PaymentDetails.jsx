@@ -7,12 +7,13 @@ export default function PaymentDetails({
   serviceFeePercentage,
   numberOfDays = 2,
   showTitle = true,
+  withMargin = false,
 }) {
   const priceDays = pricePerDay * numberOfDays;
   const serviceFee = Math.round(priceDays * serviceFeePercentage);
 
   return (
-    <section className={styles.container}>
+    <section className={`${styles.container} ${withMargin && styles.margin}`}>
       {showTitle && <h5>Detalle del pago</h5>}
 
       <div>

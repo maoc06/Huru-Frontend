@@ -45,8 +45,8 @@ const CarConfirmationTemplate = ({
   };
 
   return (
-    <>
-      <p className={styles.description}>
+    <div className={styles.container}>
+      <p>
         Estas a un paso de reservar el {carName}. Revisa y confirma la
         información presentada a continuación.
       </p>
@@ -113,7 +113,7 @@ const CarConfirmationTemplate = ({
           Confirmar y pagar
         </SubmitButton>
       </Form>
-    </>
+    </div>
   );
 };
 

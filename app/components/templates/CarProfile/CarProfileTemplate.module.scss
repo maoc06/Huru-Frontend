@@ -2,9 +2,17 @@
 .wrapper {
     padding: 32px 0;
     background-color: $background;
+    @media (min-width: 720px) {
+        padding: 32px 64px;
+    }
     .inner {
         margin: 0 32px;
         // margin-bottom: 64px;
+    }
+    .dates {
+        @media (min-width: 720px) {
+            display: none;
+        }
     }
     .inner_left {
         margin-left: 32px;

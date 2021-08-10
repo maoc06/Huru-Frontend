@@ -31,6 +31,7 @@ export default function HostVehicles() {
 
   const handleGetData = async (uuid) => {
     const res = await getCarsByOwner.request(uuid);
+    console.log(res.data.data);
     setCars(res.data.data);
   };
 

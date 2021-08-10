@@ -1,18 +1,10 @@
 import styles from './HeroImageLayout.module.scss';
 
-export default function HeroImageLayout({ children, heroSrc }) {
+export default function HeroImageLayout({ children }) {
   return (
-    <>
-      <main
-        className={`${styles.container}`}
-        style={{
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat',
-          backgroundImage: `url(${heroSrc})`,
-        }}
-      >
-        {children}
-      </main>
-    </>
+    <main className={`${styles.container}`}>
+      <div className={styles.hero} />
+      {children}
+    </main>
   );
 }

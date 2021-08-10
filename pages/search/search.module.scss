@@ -1,0 +1,62 @@
+.inner {
+    display: flex;
+    flex-direction: column;
+    @media (min-width: 720px) {
+        flex-direction: row;
+    }
+    .result {
+        width: 100%;
+    }
+}
+
+.header {
+    width: 100%;
+    margin-bottom: 16px;
+    @media (min-width: 720px) {
+        display: flex;
+        justify-content: space-between;
+        gap: 32px;
+    }
+    .logo,
+    .avatar {
+        display: none;
+        @media (min-width: 720px) {
+            position: relative;
+            cursor: pointer;
+            display: block;
+        }
+        .menuDesktop {
+            display: none;
+            @media (min-width: 720px) {
+                position: absolute;
+                top: 72px;
+                right: 0;
+                display: block;
+                background-color: #fff;
+                border-radius: 10px;
+                min-width: 200px;
+                box-shadow: 10px 10px 20px #9999996b;
+                z-index: 9999;
+                &::after {
+                    border-top: 16px solid transparent;
+                    border-right: 16px solid transparent;
+                    border-bottom: 16px solid #fff;
+                    border-left: 16px solid transparent;
+                    overflow: hidden;
+                    content: '';
+                    right: 10px;
+                    position: absolute;
+                    top: 0;
+                    transform: translateY(-100%);
+                }
+            }
+        }
+    }
+    .searchBar {
+        width: 100%;
+        // overflow: hidden;
+        @media (min-width: 720px) {
+            width: 60%;
+        }
+    }
+}

@@ -20,6 +20,7 @@ export default function DatesPanel({
   compact = false,
   clickleable = true,
   showTopLabels = true,
+  startDateBorder = false,
   paramDates,
   title,
 }) {
@@ -95,7 +96,9 @@ export default function DatesPanel({
   const renderSection = ({ title, date, hour, isEnd = false }) => {
     return (
       <div
-        className={`${isEnd && styles.end_date}`}
+        className={`${isEnd && styles.end_date} ${
+          startDateBorder && styles.start_date
+        }`}
         onClick={clickleable ? handleShowDates : () => {}}
       >
         {showTopLabels && <p className={styles.top_label}>{title}</p>}

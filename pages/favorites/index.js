@@ -30,6 +30,7 @@ const Favorites = () => {
     const res = await getFavorites.request(userId);
     if (res !== undefined && res.data !== undefined) {
       setFavorites(res.data.data);
+      console.log(res.data.data);
     }
   };
 

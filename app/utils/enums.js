@@ -52,14 +52,14 @@ import NequiIcon from '../components/elements/Icons/PaymentMethods/NequiIcon';
 // type Transmissions
 const typeTransmissionEnum = Object.freeze({ 1: 'Manual', 2: 'Automático' });
 
-// // type Fuel
-// const typeFuelEnum = Object.freeze({
-//   1: 'Corriente',
-//   2: 'Extra',
-//   3: 'ACPM',
-//   4: 'Gas Natural',
-//   5: 'Eléctrico',
-// });
+// type Fuel
+const typeFuelEnum = Object.freeze({
+  1: 'Corriente',
+  2: 'Extra',
+  3: 'ACPM',
+  4: 'Gas Natural',
+  5: 'Eléctrico',
+});
 
 // Advance notice
 const advanceNotice = Object.freeze({
@@ -166,6 +166,13 @@ const paymentMethodsIcons = Object.freeze({
   NEQUI: <NequiIcon />,
 });
 
+const odometerRange = Object.freeze({
+  1: '0-50k Km',
+  2: '50k-100k Km',
+  3: '100k-130k Km',
+  4: '130k+ Km',
+});
+
 export {
   advanceNotice,
   typeTransmissionEnum,
@@ -176,4 +183,6 @@ export {
   paymentMethodsIcons,
   maxTripDuration,
   minTripDuration,
+  odometerRange,
+  typeFuelEnum,
 };

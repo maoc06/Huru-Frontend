@@ -1,5 +1,21 @@
 @import '../../../styles/abstracts/colors';
-.more {
-    font-size: 16px;
-    color: $gray_3;
+.container {
+    @media (min-width: 720px) {
+        display: flex;
+        gap: 64px;
+        .info {
+            padding-right: 64px;
+            border-right: 1px solid $gray_5;
+        }
+        section {
+            flex: 1;
+        }
+    }
+    .title {
+        text-transform: capitalize;
+    }
+    .more {
+        font-size: 16px;
+        color: $gray_3;
+    }
 }

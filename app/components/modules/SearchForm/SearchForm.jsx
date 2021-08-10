@@ -14,6 +14,7 @@ export default function SearchForm({
   isCompact = false,
   showBorder = false,
   showTopLabels = true,
+  startDateBorder = false,
   withMarginBottom = true,
 }) {
   const router = useRouter();
@@ -45,9 +46,12 @@ export default function SearchForm({
           compact={isCompact}
           showTopLabels={showTopLabels}
           clickleable={clickleable}
+          startDateBorder={startDateBorder}
         />
 
-        {!isCompact && <SubmitButton>Buscar</SubmitButton>}
+        <div clas={styles.action}>
+          {!isCompact && <SubmitButton>Buscar</SubmitButton>}
+        </div>
       </Form>
     </div>
   );

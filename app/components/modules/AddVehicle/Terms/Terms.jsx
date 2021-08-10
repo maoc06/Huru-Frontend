@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -14,12 +15,12 @@ import SeePreview from '../../../elements/SeePreview/SeePreview';
 import ActivityIndicator from '../../../elements/ActivityIndicator/ActivityIndicator';
 import StatusIndicator from '../../../elements/StatusIndicator/StatusIndicator';
 import checkAnimationData from '../../../../../public/animations/check.json';
-
 import acceptTermsSchema from '../../../../constants/validationSchema/acceptTerms';
+import { odometerRange } from '../../../../utils/enums';
 
 export default function Terms() {
   const router = useRouter();
-  const [uid, setUid] = useState('');
+  const [user, setUser] = useState('');
   const store = useSelector((state) => state.vehicleRegister);
 
   const createVehicle = useApi(vehicleApi.create);
@@ -28,7 +29,7 @@ export default function Terms() {
 
   useEffect(() => {
     const user = authStorage.getUser();
-    if (user) setUid(user.info.uid);
+    if (user) setUser(user.info);
   }, []);
 
   const initialValues = {
@@ -40,7 +41,7 @@ export default function Terms() {
   };
 
   const handleSubmit = async (checkTerms) => {
-    if (checkTerms && uid) {
+    if (checkTerms && user.uid) {
       // make vehicle object
       const vehicle = {
         makerId: parseInt(store.maker.makerId),
@@ -50,7 +51,7 @@ export default function Terms() {
         odometerRangeId: parseInt(store.odometer.odometerRangeId),
         description: store.description,
         licensePlate: store.licensePlate,
-        owner: uid,
+        owner: user.uid,
         price: parseInt(store.price),
         advanceNoticeId: parseInt(store.advanceNotice.id),
         minTripDurationId: parseInt(store.minTripDuration.id),
@@ -87,6 +88,23 @@ export default function Terms() {
       });
 
       updateOwnerCarImage.request(arrImages);
+
+      await axios.post('/api/verifyRequest/car', {
+        uid: user.user,
+        email: user.email,
+        name: user.firstName,
+        last_name: user.lastName,
+        picture: user.profilePicture,
+        id: carId,
+        maker: store.maker.name,
+        model: store.model.name,
+        odometer: odometerRange[parseInt(store.odometer.odometerRangeId)],
+        vin: store.vin,
+        plate: store.licensePlate,
+        plate_city: store.licensePlateCity,
+        year: parseInt(store.year.year),
+        images: arrImages,
+      });
     }
   };
 
@@ -114,7 +132,7 @@ export default function Terms() {
         }
         title={'Listo!'}
         message={
-          'En ese momento tu solicitud está siendo revisada por el equipo de soporte para validar la información que proporcionaste.'
+          'En ese momento tu solicitud está siendo revisada por el equipo de soporte para validar la información que proporcionaste. Por tal motivo, de momento este vehículo no saldra listado dentro de las sección "Mis Vehículos" hasta ser validada la información.'
         }
         buttonMsg={'Entendido'}
         onClickButton={handleButtonPopUp}

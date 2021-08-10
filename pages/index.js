@@ -31,7 +31,7 @@ export default function Home() {
         {hostMode ? (
           <HomeHostTemplate />
         ) : (
-          <HeroImageLayout heroSrc="/images/home-hero.png">
+          <HeroImageLayout>
             <HomeTemplate />
           </HeroImageLayout>
         )}

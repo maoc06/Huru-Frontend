@@ -44,7 +44,7 @@ export default function LoginForm() {
     const errors = errorHandlerLogin(accessToken);
 
     if (errors === 0) {
-      router.push('/profile');
+      router.push('/');
       auth.logIn(accessToken);
     } else {
       if (errors.index === 0) {
@@ -95,7 +95,7 @@ export default function LoginForm() {
         onClickButton={() => setPopUpOpen(false)}
       />
 
-      <div>
+      <div className={styles.container}>
         <h2>Bienvenido a Huru</h2>
 
         <Form

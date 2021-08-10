@@ -10,6 +10,7 @@ const initialState = {
   features: [],
   description: '',
   licensePlate: '',
+  licensePlateCity: '',
   photos: [],
   price: 0,
   advanceNotice: {},
@@ -49,8 +50,12 @@ export const vehicleRegisterSlice = createSlice({
       state.description = description;
     },
     setLicensePlate: (state, action) => {
-      const { licensePlate } = action.payload;
+      const licensePlate = action.payload;
       state.licensePlate = licensePlate;
+    },
+    setLicensePlateCity: (state, action) => {
+      const city = action.payload;
+      state.licensePlateCity = city;
     },
     setPhotos: (state, action) => {
       state.photos = action.payload;
@@ -78,6 +83,7 @@ export const {
   setCity,
   setDescription,
   setLicensePlate,
+  setLicensePlateCity,
   setPhotos,
   setPrice,
   setAdvanceNotice,

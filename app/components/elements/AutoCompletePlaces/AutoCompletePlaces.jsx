@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormikContext } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
@@ -11,12 +11,27 @@ export default function AutoCompletePlaces({ name, placeholder, isCompact }) {
   const place = useSelector((state) => state.searchParams.place);
   const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext();
+  const [isMobile, setIsMobile] = useState(true);
+
+  const handleWindow = () => {
+    if (window.innerWidth > 720) setIsMobile(false);
+    else setIsMobile(true);
+  };
 
   useEffect(() => {
     if (!checkEmptyPlace()) {
       handleChangePlace(place);
     }
   }, [place]);
+
+  useEffect(() => {
+    handleWindow();
+    // listen window resize
+    window.addEventListener('resize', () => {
+      // responsive
+      handleWindow();
+    });
+  }, []);
 
   const checkEmptyPlace = () => {
     if (place.constructor === Object) {
@@ -43,7 +58,10 @@ export default function AutoCompletePlaces({ name, placeholder, isCompact }) {
         value: values[name],
         onChange: handleChangePlace,
         placeholder,
-        styles: styles({ isCompact }),
+        styles: styles({
+          isCompact,
+          isMobile,
+        }),
       }}
     />
   );

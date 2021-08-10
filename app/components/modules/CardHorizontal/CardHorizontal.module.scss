@@ -7,6 +7,10 @@
     margin-bottom: 16px;
     min-width: 90%;
     max-width: 400px;
+    @media (min-width: 720px) {
+        max-height: 165px;
+        min-width: 100%;
+    }
     .fav {
         position: absolute;
         top: 0;
@@ -14,12 +18,17 @@
         z-index: 100;
     }
     .inner {
+        display: flex;
+        flex-direction: column;
         position: relative;
         min-width: 100%;
         background-color: $gray_6;
         z-index: 99;
         border-radius: inherit;
         overflow: hidden;
+        @media (min-width: 720px) {
+            flex-direction: row;
+        }
         .overlay {
             position: absolute;
             background-color: $background;
@@ -33,15 +42,24 @@
             position: relative;
             min-height: 150px;
             background-color: $gray_5;
+            @media (min-width: 720px) {
+                flex: 0.4;
+            }
         }
         .info {
             flex: 1;
             max-width: 100%;
             padding: 16px;
+            @media (min-width: 720px) {
+                flex: 0.6;
+            }
             .title {
                 display: flex;
                 align-items: center;
                 margin-bottom: 16px;
+                @media (min-width: 720px) {
+                    margin-bottom: 8px;
+                }
                 h6 {
                     margin: 0;
                     margin-right: 8px;
@@ -54,6 +72,10 @@
                 align-items: center;
                 justify-content: space-between;
                 font-size: 1rem;
+                @media (min-width: 720px) {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
                 .stats {
                     flex: 0.6;
                     display: flex;
@@ -61,10 +83,21 @@
                     .counts {
                         font-size: 1rem;
                         margin-left: 4px;
+                        display: inline-block;
                         span {
                             font-size: 0.8rem;
                         }
                     }
+                }
+                .description {
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin: 4px 0 8px;
+                    font-size: 0.9rem;
+                    line-height: 1.2;
                 }
                 .price,
                 .basePrice {
@@ -76,6 +109,33 @@
                     span {
                         font-weight: normal;
                         font-size: 12px;
+                    }
+                }
+                .extraInfo {
+                    display: flex;
+                    @media (min-width: 720px) {
+                        justify-content: space-between;
+                        width: 100%;
+                    }
+                    section {
+                        display: flex;
+                        gap: 8px;
+                        p {
+                            font-size: 0.9rem;
+                            margin-left: 6px;
+                        }
+                        .mid {
+                            border-left: 1px solid $gray_4;
+                            border-right: 1px solid $gray_4;
+                        }
+                        div {
+                            display: flex;
+                            align-items: center;
+                            padding: 0 16px;
+                        }
+                        .firstFeat {
+                            padding-left: 0;
+                        }
                     }
                 }
             }

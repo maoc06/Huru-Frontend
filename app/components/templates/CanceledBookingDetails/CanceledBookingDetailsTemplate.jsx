@@ -26,19 +26,21 @@ const CanceledBookingDetailsTemplate = ({ title = '', type = 7 }) => {
 
   return (
     <AppLayout withImage={false} isFullHeigh={false}>
-      <h4 className={styles.title}>
-        {`La reserva del ${title} fue `}
-        <span className={styles.cancel}>{typeText}</span>
-      </h4>
+      <div className={styles.container}>
+        <h4 className={styles.title}>
+          {`La reserva del ${title} fue `}
+          <span className={styles.cancel}>{typeText}</span>
+        </h4>
 
-      <Divider size="mediumTop" />
+        <Divider size="mediumTop" />
 
-      <h6>Marco de tiempo</h6>
-      <DatesPanel clickleable={false} />
+        <h6>Marco de tiempo</h6>
+        <DatesPanel clickleable={false} />
 
-      <Divider size="mediumTop" />
+        <Divider size="mediumTop" />
 
-      <h6>Reembolso</h6>
+        <h6>Reembolso</h6>
+      </div>
     </AppLayout>
   );
 };

@@ -11,7 +11,7 @@ import Terms from '../../modules/RegisterUser/Terms';
 
 const RegisterUserPage = () => {
   const numOfSteps = 6;
-  const [step, setSetp] = useState(1);
+  const [step, setSetp] = useState(4);
 
   const renderStep = () => {
     switch (step) {

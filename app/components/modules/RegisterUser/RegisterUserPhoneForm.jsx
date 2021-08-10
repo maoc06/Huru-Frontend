@@ -13,6 +13,7 @@ import SubmitButton from '../../elements/Button/SubmitButton';
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';
 
 import userPhoneSchema from '../../../constants/validationSchema/userPhone';
+import styles from './Register.module.scss';
 
 export default function RegisterUserPhone({ setStep }) {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ export default function RegisterUserPhone({ setStep }) {
         visible={checkPhoneApi.loading || sendVerificationSms.loading}
       />
 
-      <div>
+      <div className={styles.container}>
         <h3>¡Empecemos el viaje!</h3>
 
         <p>Escribe tu número de teléfono y nosotros te enviaremos un SMS</p>

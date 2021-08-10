@@ -78,7 +78,7 @@ const CarProfileTemplate = ({
         </>
       )}
 
-      <article className={styles.inner}>
+      <article className={`${styles.inner} ${styles.dates}`}>
         <DatesPanel compact={true} paramDates={dates} title={titleDates} />
       </article>
 

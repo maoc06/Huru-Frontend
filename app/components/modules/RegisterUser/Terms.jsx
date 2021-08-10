@@ -14,6 +14,7 @@ import SeePreview from '../../elements/SeePreview/SeePreview';
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';
 import StatusIndicator from '../../elements/StatusIndicator/StatusIndicator';
 import emailAnimationData from '../../../../public/animations/sent-email.json';
+import styles from './Register.module.scss';
 
 import acceptTermsSchema from '../../../constants/validationSchema/acceptTerms';
 
@@ -31,7 +32,7 @@ export default function Terms() {
   };
 
   const handleButtonPopUp = () => {
-    router.push('/profile');
+    router.push('/');
   };
 
   const handleSubmit = async (checkTerms) => {
@@ -58,7 +59,7 @@ export default function Terms() {
         onClickButton={handleButtonPopUp}
       />
 
-      <div>
+      <div className={styles.container}>
         <h3>Terminamos</h3>
 
         <article>

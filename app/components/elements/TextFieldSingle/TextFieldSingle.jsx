@@ -1,10 +1,14 @@
 import { useFormikContext } from 'formik';
-import { useEffect } from 'react';
-
 import styles from './TextFieldSingle.module.scss';
 
-export default function SingleTextField({ name, placeholder, ...otherProps }) {
-  const { values, errors, setFieldTouched, setFieldValue } = useFormikContext();
+export default function SingleTextField({
+  name,
+  placeholder,
+  currRef = null,
+  nextRef = null,
+  ...otherProps
+}) {
+  const { values, setFieldTouched, setFieldValue } = useFormikContext();
 
   const handleChange = (event) => {
     let value = event.target.value;
@@ -12,6 +16,13 @@ export default function SingleTextField({ name, placeholder, ...otherProps }) {
       value = value.toString().charAt(value.toString().length - 1);
     }
     setFieldValue(name, value);
+    handleFocusNextInput(value.toString().length);
+  };
+
+  const handleFocusNextInput = (valueLength) => {
+    if (valueLength === 1 && nextRef) {
+      nextRef.current.focus();
+    }
   };
 
   return (
@@ -22,6 +33,7 @@ export default function SingleTextField({ name, placeholder, ...otherProps }) {
         value={values[name]}
         name={name}
         placeholder={placeholder}
+        ref={currRef}
         {...otherProps}
       />
     </div>

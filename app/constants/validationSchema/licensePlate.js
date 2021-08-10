@@ -13,13 +13,13 @@ const licensePlateSchema = Yup.object().shape({
     )
     .required('La matrícula es un campo obligatorio')
     .label('Matrícula'),
-  // location: Yup.object()
-  //   .shape({
-  //     id: Yup.string().required(),
-  //     municipality: Yup.string().required(),
-  //   })
-  //   .required('El municipio es un campo obligatorio')
-  //   .label('municipio'),
+  location: Yup.object()
+    .shape({
+      id: Yup.string().required(),
+      municipality: Yup.string().required(),
+    })
+    .required('El municipio es un campo obligatorio')
+    .label('municipio'),
 });
 
 export default licensePlateSchema;

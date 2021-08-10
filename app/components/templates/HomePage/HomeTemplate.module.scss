@@ -1,12 +1,122 @@
+@import '../../../styles/abstracts/colors';
 .top {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 50%;
     transform: translate(-50%);
-    padding: 32px;
     padding-top: 50px;
     max-width: 100vw;
+    @media (min-width: 720px) {
+        padding-top: 0px;
+    }
     h3 {
         margin-bottom: 35%;
+        @media (min-width: 720px) {
+            margin-bottom: 24%;
+            margin-left: 18%;
+        }
+    }
+    .header {
+        margin: 0 64px;
+        margin-bottom: 32px;
+        display: none;
+        @media (min-width: 720px) {
+            display: flex;
+            justify-content: space-between;
+            gap: 32px;
+        }
+        .logo,
+        .avatar {
+            display: none;
+            @media (min-width: 720px) {
+                position: relative;
+                cursor: pointer;
+                display: block;
+            }
+            .menuDesktop {
+                display: none;
+                @media (min-width: 720px) {
+                    position: absolute;
+                    top: 72px;
+                    right: 0;
+                    display: block;
+                    background-color: #fff;
+                    border-radius: 10px;
+                    min-width: 200px;
+                    box-shadow: 10px 10px 20px #9999996b;
+                    z-index: 9999;
+                    &::after {
+                        border-top: 16px solid transparent;
+                        border-right: 16px solid transparent;
+                        border-bottom: 16px solid #fff;
+                        border-left: 16px solid transparent;
+                        overflow: hidden;
+                        content: '';
+                        right: 10px;
+                        position: absolute;
+                        top: 0;
+                        transform: translateY(-100%);
+                    }
+                }
+            }
+        }
+    }
+    .subtitle {
+        text-align: center;
+        margin-top: 64px;
+        @media (min-width: 720px) {
+            margin-top: 128px;
+        }
+        span {
+            color: $primary;
+        }
+    }
+    .moments {
+        height: 300px;
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        .card {
+            height: 100%;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            &:hover {
+                transform: translate(3px, -8px);
+                transition: all 0.3s ease;
+            }
+        }
+    }
+    .promotion {
+        display: flex;
+        height: 210px;
+        width: 100%;
+        max-width: 500px;
+        margin: auto;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 120px;
+        color: $white;
+        background-image: linear-gradient( to right, #385787 65%, rgba(56, 87, 135, 0));
+        .info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 16px;
+            flex: 0.6;
+            h6 {
+                margin: 0;
+            }
+            p {
+                font-size: 0.8rem;
+                line-height: 1.2;
+            }
+        }
+        .image {
+            flex: 0.4;
+            position: relative;
+            z-index: -1;
+        }
     }
 }

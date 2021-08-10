@@ -8,14 +8,14 @@ import styles from './MobileNavBar.module.scss';
 export default function MobileHostNavBar({}) {
   return (
     <nav className={styles.mobileNav}>
-      <Link href="/">
+      <Link href="/host/performance">
         <a className={styles.item}>
           <EqualizerOutlined />
           <p>Desempeño</p>
         </a>
       </Link>
 
-      <Link href="/">
+      <Link href="/host/calendar">
         <a className={styles.item}>
           <CalendarTodayOutlined />
           <p>Calendario</p>

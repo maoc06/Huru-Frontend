@@ -8,6 +8,7 @@ import userApi from '../../../api/UserAPI';
 import UploadImageButton from '../../elements/Button/UploadImageButton';
 import TitlePage from '../../elements/TitlePage/TitlePage';
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';
+import styles from './Register.module.scss';
 
 export default function SelfieTime({ setStep }) {
   const dispatch = useDispatch();
@@ -26,14 +27,16 @@ export default function SelfieTime({ setStep }) {
     <>
       <ActivityIndicator visible={uploadProfilePic.loading} />
 
-      <TitlePage>Selfie de seguridad</TitlePage>
+      <div className={styles.container}>
+        <TitlePage>Selfie de seguridad</TitlePage>
 
-      <p>
-        Para mantener la comunidad segura, es necesario que todos muestren sus
-        rostro. Toma una foto donde se vea claramente tu cara.
-      </p>
+        <p>
+          Para mantener la comunidad segura, es necesario que todos muestren sus
+          rostro. Toma una foto donde se vea claramente tu cara.
+        </p>
 
-      <UploadImageButton onSelect={handleSelfie} />
+        <UploadImageButton onSelect={handleSelfie} />
+      </div>
     </>
   );
 }

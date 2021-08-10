@@ -5,7 +5,7 @@ import Divider from '../../elements/Divider/Divider';
 import Timeline from '../../modules/Timeline/Timeline';
 import PaymentDetails from '../../modules/PaymentDetails/PaymentDetails';
 import AppLayout from '../../layouts/AppLayout/AppLayout';
-
+import styles from './UpcomingBookingTemplate.module.scss';
 import { diffDays } from '../../../utils/formatDates';
 
 const UpcomingBookingTemplate = ({
@@ -19,32 +19,42 @@ const UpcomingBookingTemplate = ({
 
   return (
     <AppLayout withImage={false} isFullHeigh={false}>
-      <h5>{title}</h5>
+      <h5 className={styles.car}>{title}</h5>
       {/* <p>De {carOwner}</p> */}
 
-      <h6>Itinerario de la reserva</h6>
-      <Timeline
-        checkin={bookingDates.checkin}
-        checkout={bookingDates.checkout}
-      />
+      <div className={styles.container}>
+        <section className={styles.info}>
+          <h6>Itinerario de la reserva</h6>
+          <Timeline
+            checkin={bookingDates.checkin}
+            checkout={bookingDates.checkout}
+          />
+        </section>
 
-      <h6>Pago de la reserva</h6>
-      <PaymentDetails
-        pricePerDay={pricePerDay}
-        serviceFeePercentage={serviceFeePercentage}
-        numberOfDays={diffDays({
-          dateOne: bookingDates.checkin,
-          dateTwo: bookingDates.checkout,
-          type: 'ISO',
-        })}
-        showTitle={false}
-      />
+        <section>
+          <h6>Pago de la reserva</h6>
+          <PaymentDetails
+            pricePerDay={pricePerDay}
+            serviceFeePercentage={serviceFeePercentage}
+            numberOfDays={diffDays({
+              dateOne: bookingDates.checkin,
+              dateTwo: bookingDates.checkout,
+              type: 'ISO',
+            })}
+            showTitle={false}
+          />
 
-      <Divider size="mediumTop" />
+          <Divider size="mediumTop" />
 
-      <Button isSecondary={true} onClick={onClickCancelButton} marginTop={true}>
-        Cancelar viaje
-      </Button>
+          <Button
+            isSecondary={true}
+            onClick={onClickCancelButton}
+            marginTop={true}
+          >
+            Cancelar viaje
+          </Button>
+        </section>
+      </div>
     </AppLayout>
   );
 };

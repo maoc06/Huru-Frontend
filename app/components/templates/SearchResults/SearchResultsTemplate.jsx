@@ -7,6 +7,8 @@ import authStorage from '../../../utils/storageAuth';
 
 import CardHorizontal from '../../modules/CardHorizontal/CardHorizontal';
 import NotFound from '../../modules/NotFound/NotFound';
+import styles from './SearchResultsTemplate.module.scss';
+import { typeTransmissionEnum, typeFuelEnum } from '../../../utils/enums';
 
 const SearchResultsTemplate = () => {
   const filterStore = useSelector((state) => state.filterSearch);
@@ -42,14 +44,26 @@ const SearchResultsTemplate = () => {
   return (
     <>
       <h6
-        style={{ marginTop: '32px' }}
+        className={styles.numResults}
       >{`${items.length} resultados de busquedas`}</h6>
 
       {/* If not logged  */}
       {user.constructor === Object &&
         Object.keys(user).length === 0 &&
         items.map(
-          ({ car_id: slug, name, model, year, price, image, categories }) => {
+          ({
+            car_id: slug,
+            name,
+            model,
+            year,
+            price,
+            image,
+            categories,
+            description,
+            transmission_id,
+            number_of_seats,
+            fuel_id,
+          }) => {
             return (
               <CardHorizontal
                 carId={slug}
@@ -59,6 +73,10 @@ const SearchResultsTemplate = () => {
                 imageSrc={image ? image : '../../'}
                 href={`/car/${encodeURIComponent(slug)}`}
                 isEco={categories.includes(8)}
+                description={description}
+                seats={number_of_seats}
+                transmission={typeTransmissionEnum[transmission_id]}
+                fuel={typeFuelEnum[fuel_id]}
               />
             );
           }
@@ -68,7 +86,19 @@ const SearchResultsTemplate = () => {
       {favorites.constructor === Object &&
         Object.keys(favorites).length > 0 &&
         items.map(
-          ({ car_id: slug, name, model, year, price, image, categories }) => {
+          ({
+            car_id: slug,
+            name,
+            model,
+            year,
+            price,
+            image,
+            categories,
+            description,
+            transmission_id,
+            number_of_seats,
+            fuel_id,
+          }) => {
             return (
               <CardHorizontal
                 userId={user.uid ? user.uid : null}
@@ -82,6 +112,10 @@ const SearchResultsTemplate = () => {
                 href={`/car/${encodeURIComponent(slug)}`}
                 favorite={() => handleCheckIsFavorite(slug)}
                 isEco={categories.includes(8)}
+                description={description}
+                seats={number_of_seats}
+                transmission={typeTransmissionEnum[transmission_id]}
+                fuel={typeFuelEnum[fuel_id]}
               />
             );
           }

@@ -1,0 +1,19 @@
+@import '../../../styles/abstracts/colors';
+.car {
+    text-transform: capitalize;
+}
+
+.container {
+    @media (min-width: 720px) {
+        display: flex;
+        gap: 128px;
+        justify-content: space-between;
+        section {
+            flex: 1;
+        }
+        .info {
+            padding-right: 64px;
+            border-right: 1px solid $gray_3;
+        }
+    }
+}

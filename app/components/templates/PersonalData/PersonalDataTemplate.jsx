@@ -123,122 +123,124 @@ const PersonalDataTemplate = ({
 
       {showTitlePage && <TitlePage>Información personal</TitlePage>}
 
-      <UserProfileBasicInfo
-        birthday={birthday}
-        userId={userId}
-        createdAt={userJoinAt}
-        domain="Me uní"
-        name={username}
-        profilePicture={picture}
-        showExtra={false}
-        avatarSize="xl"
-        withTopMargin={true}
-        showBirthday={showBirthday}
-        editablePicture={editablePicture}
-      />
-
-      <Divider size="mediumTop" />
-
-      <SectionTitle title="Verificación de identidad" />
-      <IndentityBadge
-        checked={emailVerified}
-        title={
-          emailVerified
-            ? 'Correo electrónico verificado'
-            : 'Correo electrónico sin verificar'
-        }
-      />
-      <IndentityBadge
-        checked={phoneVerified}
-        title={
-          phoneVerified
-            ? 'Número de teléfono verificado'
-            : 'Número de teléfono sin verificar'
-        }
-      />
-
-      <Divider size="mediumTop" />
-
-      <SectionEditable
-        name="biography"
-        onSave={handleEditBiography}
-        schema={aboutUserSchema}
-        title="Sobre ti"
-        values={{ biography: aboutValue }}
-      />
-
-      <Divider size="mediumTop" />
-
-      <SectionEditable
-        name="email"
-        type="email"
-        title="Email"
-        onSave={handleEditEmail}
-        schema={emailSchema}
-        values={{ email: emailValue }}
-        isEditable={emailEditable}
-      />
-
-      {showPassword && (
-        <>
-          <Divider size="mediumTop" />
-
-          <SectionEditable
-            title="Contraseña"
-            isLink={true}
-            href={'/profile/personal-data/password'}
-          />
-        </>
-      )}
-
-      <Divider size="mediumTop" />
-
-      {editablePhone ? (
-        <SectionEditable
-          name="phone"
-          onSave={handleEditPhone}
-          schema={userPhoneSchema}
-          title="Télefono"
-          type="phone"
-          values={{ phone }}
-          countryCode={countryCode}
-          onSelectPhoneCountry={setCountryCode}
+      <section style={{ maxWidth: 650, margin: 'auto' }}>
+        <UserProfileBasicInfo
+          birthday={birthday}
+          userId={userId}
+          createdAt={userJoinAt}
+          domain="Me uní"
+          name={username}
+          profilePicture={picture}
+          showExtra={false}
+          avatarSize="xl"
+          withTopMargin={true}
+          showBirthday={showBirthday}
+          editablePicture={editablePicture}
         />
-      ) : (
-        <>
-          <SectionTitle title="Télefono" />
-          <p>{`${countryCode} ${phone}`}</p>
-        </>
-      )}
 
-      {showIndentityDocument && (
-        <>
-          <Divider size="mediumTop" />
+        <Divider size="mediumTop" />
 
+        <SectionTitle title="Verificación de identidad" />
+        <IndentityBadge
+          checked={emailVerified}
+          title={
+            emailVerified
+              ? 'Correo electrónico verificado'
+              : 'Correo electrónico sin verificar'
+          }
+        />
+        <IndentityBadge
+          checked={phoneVerified}
+          title={
+            phoneVerified
+              ? 'Número de teléfono verificado'
+              : 'Número de teléfono sin verificar'
+          }
+        />
+
+        <Divider size="mediumTop" />
+
+        <SectionEditable
+          name="biography"
+          onSave={handleEditBiography}
+          schema={aboutUserSchema}
+          title="Sobre ti"
+          values={{ biography: aboutValue }}
+        />
+
+        <Divider size="mediumTop" />
+
+        <SectionEditable
+          name="email"
+          type="email"
+          title="Email"
+          onSave={handleEditEmail}
+          schema={emailSchema}
+          values={{ email: emailValue }}
+          isEditable={emailEditable}
+        />
+
+        {showPassword && (
+          <>
+            <Divider size="mediumTop" />
+
+            <SectionEditable
+              title="Contraseña"
+              isLink={true}
+              href={'/profile/personal-data/password'}
+            />
+          </>
+        )}
+
+        <Divider size="mediumTop" />
+
+        {editablePhone ? (
           <SectionEditable
-            name="indentityDocument"
-            onSave={handleEditIdentityDocument}
-            schema={identityDocumentSchema}
-            title="Documento de identidad"
-            type="number"
-            values={{ indentityDocument: idDocument }}
+            name="phone"
+            onSave={handleEditPhone}
+            schema={userPhoneSchema}
+            title="Télefono"
+            type="phone"
+            values={{ phone }}
+            countryCode={countryCode}
+            onSelectPhoneCountry={setCountryCode}
           />
-        </>
-      )}
+        ) : (
+          <>
+            <SectionTitle title="Télefono" />
+            <p>{`${countryCode} ${phone}`}</p>
+          </>
+        )}
 
-      {showDeleteBotton && (
-        <>
-          <Divider size="mediumTop" />
+        {showIndentityDocument && (
+          <>
+            <Divider size="mediumTop" />
 
-          <Button
-            isSecondary={true}
-            onClick={() => setOpenModal(true)}
-            marginTop={true}
-          >
-            Eliminar cuenta
-          </Button>
-        </>
-      )}
+            <SectionEditable
+              name="indentityDocument"
+              onSave={handleEditIdentityDocument}
+              schema={identityDocumentSchema}
+              title="Documento de identidad"
+              type="number"
+              values={{ indentityDocument: idDocument }}
+            />
+          </>
+        )}
+
+        {showDeleteBotton && (
+          <>
+            <Divider size="mediumTop" />
+
+            <Button
+              isSecondary={true}
+              onClick={() => setOpenModal(true)}
+              marginTop={true}
+            >
+              Eliminar cuenta
+            </Button>
+          </>
+        )}
+      </section>
     </>
   );
 };

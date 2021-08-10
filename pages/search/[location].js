@@ -15,11 +15,15 @@ import SearchForm from '../../app/components/modules/SearchForm/SearchForm';
 import FiletersPanel from '../../app/components/modules/FiltersPanel/FiltersPanel';
 import NotFound from '../../app/components/modules/NotFound/NotFound';
 import SearchResultsTemplate from '../../app/components/templates/SearchResults/SearchResultsTemplate';
-
+import Avatar from '../../app/components/elements/Avatar/Avatar';
+import { LogoColor } from '../../app/components/elements/Icons/Shared';
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
 
 import { defaultDates } from '../../app/utils/formatDates';
 import applyAllSettings from '../../app/utils/applySearchCarSettings';
+import storageAuth from '../../app/utils/storageAuth';
+import styles from './search.module.scss';
+import MenuDesktop from '../../app/components/modules/MenuDesktop/MenuDesktop';
 
 function Cars() {
   const dispatch = useDispatch();
@@ -29,6 +33,8 @@ function Cars() {
   const searchCars = useApi(searchApi.findCarsByCity);
 
   const [cars, setCars] = useState([]);
+  const [user, setUser] = useState(null);
+  const [showMenuDesktop, setShowMenuDesktop] = useState(false);
 
   const { location } = router.query;
 
@@ -87,12 +93,21 @@ function Cars() {
     return { checkIn: start, checkOut: end };
   };
 
+  const handleAvatar = () => {
+    setShowMenuDesktop(!showMenuDesktop);
+  };
+
   useEffect(() => {
-    handleCarsQuery(getCheckInOut());
+    if (location) handleCarsQuery(getCheckInOut());
+  }, [location]);
+
+  useEffect(() => {
+    const user = storageAuth.getUser();
+    if (user) setUser(user.info);
   }, []);
 
   return (
-    <div>
+    <AppLayout withImage={false}>
       <Head>
         <title>{`Huru | Encuentra el carro perfecto en ${location}`}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -104,19 +119,50 @@ function Cars() {
 
       <ActivityIndicator visible={searchCars.loading} />
 
-      <AppLayout withImage={false}>
-        <SearchForm isCompact={true} showTopLabels={false} showBorder={true} />
+      <section className={styles.header}>
+        <div
+          onClick={() => {
+            router.push('/');
+          }}
+          className={styles.logo}
+        >
+          <LogoColor />
+        </div>
+
+        <div className={styles.searchBar}>
+          <SearchForm
+            isCompact={true}
+            showTopLabels={false}
+            showBorder={true}
+            startDateBorder={true}
+          />
+        </div>
+
+        <div className={styles.avatar} onClick={handleAvatar}>
+          {user ? <Avatar src={user.profilePicture} /> : <Avatar />}
+          {showMenuDesktop && (
+            <div className={styles.menuDesktop}>
+              <MenuDesktop user={user} />
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className={styles.inner}>
         <FiletersPanel />
 
-        {searchCars.error && <p>Ocurrio un error</p>}
+        <div className={styles.result}>
+          {searchCars.error && <p>Ocurrio un error</p>}
 
-        {!searchCars.loading && cars.length === 0 && (
-          <NotFound text="No se encontraron resultados para su búsqueda." />
-        )}
+          {!searchCars.loading && cars.length === 0 && (
+            <NotFound text="No se encontraron resultados para su búsqueda." />
+          )}
 
-        {!searchCars.loading && cars.length > 0 && <SearchResultsTemplate />}
-      </AppLayout>
-    </div>
+          {!searchCars.loading && cars.length > 0 && <SearchResultsTemplate />}
+        </div>
+      </section>
+    </AppLayout>
+    // </div>
   );
 }
 

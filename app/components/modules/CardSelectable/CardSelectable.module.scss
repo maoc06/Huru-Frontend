@@ -6,6 +6,10 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    cursor: pointer;
+    &:hover {
+        background-color: $gray_6;
+    }
     .icon {
         display: flex;
         justify-content: center;

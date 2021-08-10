@@ -9,10 +9,12 @@ import { capitalize } from '../../app/utils/capitalize';
 
 import Carousel from '../../app/components/elements/Carousel/Carousel';
 import PriceBottomBar from '../../app/components/modules/PriceBottomBar/PriceBottomBar';
+import CarDesktopPanel from '../../app/components/modules/CarDesktopPanel/CarDesktopPanel';
 import CarProfileTemplate from '../../app/components/templates/CarProfile/CarProfileTempate';
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
 
 import { typeTransmissionEnum } from '../../app/utils/enums';
+import styles from './car.module.scss';
 
 function CarSlug({ car, metaTitle }) {
   const router = useRouter();
@@ -26,9 +28,15 @@ function CarSlug({ car, metaTitle }) {
   const handleUserData = async (userId) => {
     const resUser = await getUser.request(userId);
     if (resUser.data !== undefined) {
-      const { isEmailVerified, isPhoneVerified } = resUser.data.data;
+      const { status: carEnabled } = car;
+      const { isEmailVerified, isPhoneVerified, status } = resUser.data.data;
 
-      if (!isEmailVerified) {
+      if (carEnabled !== 1) {
+        setUser({
+          ...user,
+          message: 'Este vehículo no se encuentra habilitado.',
+        });
+      } else if (!isEmailVerified) {
         setUser({
           ...user,
           message:
@@ -45,6 +53,12 @@ function CarSlug({ car, metaTitle }) {
           ...user,
           message:
             'Para continuar con la reserva, primero debes verificar tu email y número telefonico.',
+        });
+      } else if (status === 2) {
+        setUser({
+          ...user,
+          message:
+            'Para continuar con la reserva, el equipo de soporte primero debe verificar tu cuenta.',
         });
       } else {
         setUser({
@@ -77,20 +91,29 @@ function CarSlug({ car, metaTitle }) {
         <>
           <Carousel images={car.images} />
 
-          <CarProfileTemplate
-            carId={car.carId}
-            userId={car.userOwner.uuid}
-            username={car.userOwner.firstName}
-            userPic={car.userOwner.profilePhoto}
-            userJoinAt={car.userOwner.createdAt}
-            title={`${car.maker.name} ${car.model.name} ${car.year}`}
-            description={car.description}
-            numSeats={car.model.numOfSeats}
-            typeTransmission={typeTransmissionEnum[car.model.transmissionId]}
-            typeGas={car.fuel.name}
-            features={car.features}
-            reviews={car.reviews}
-          />
+          <section className={styles.info}>
+            <CarProfileTemplate
+              carId={car.carId}
+              userId={car.userOwner.uuid}
+              username={car.userOwner.firstName}
+              userPic={car.userOwner.profilePhoto}
+              userJoinAt={car.userOwner.createdAt}
+              title={`${car.maker.name} ${car.model.name} ${car.year}`}
+              description={car.description}
+              numSeats={car.model.numOfSeats}
+              typeTransmission={typeTransmissionEnum[car.model.transmissionId]}
+              typeGas={car.fuel.name}
+              features={car.features}
+              reviews={car.reviews}
+            />
+
+            <CarDesktopPanel
+              disableBooking={!user.enabled}
+              disabledMessage={user.message}
+              pricePerDay={car.price}
+              slug={car.carId}
+            />
+          </section>
 
           <PriceBottomBar
             disableBooking={!user.enabled}

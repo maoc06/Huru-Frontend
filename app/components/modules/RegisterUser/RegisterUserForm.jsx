@@ -16,10 +16,9 @@ import AuthGoogleButton from '../../elements/Button/AuthGoogleButton';
 import AuthFacebookButton from '../../elements/Button/AuthFacebookButton';
 import SubmitButton from '../../elements/Button/SubmitButton';
 import Divider from '../../elements/Divider/Divider';
-
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';
-
 import credentialsSchema from '../../../constants/validationSchema/credentials';
+import styles from './Register.module.scss';
 
 export default function RegisterUserCredentials({ setStep }) {
   const dispatch = useDispatch();
@@ -91,7 +90,7 @@ export default function RegisterUserCredentials({ setStep }) {
     <>
       <ActivityIndicator visible={checkEmailApi.loading} />
 
-      <div>
+      <div className={styles.container}>
         <h3>¡Empecemos el viaje!</h3>
 
         <p>Crea una cuenta para conectarte y disfrutar de Huru</p>

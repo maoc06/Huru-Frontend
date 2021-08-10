@@ -1,8 +1,13 @@
+import axios from 'axios';
 import client from './RestClient';
 
 const endpoint = '/auth';
 
-const signUp = (user) => client.post(`${endpoint}/signup`, user);
+const signUp = async (user) => {
+  const token = await client.post(`${endpoint}/signup`, user);
+  await axios.post('/api/verifyRequest/user', { token });
+  return token;
+};
 
 const signIn = (user) => client.post(`${endpoint}/signin`, user);
 

@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { setLicensePlate } from '../../../../redux/slices/vehicleRegisterSlice';
+import {
+  setLicensePlate,
+  setLicensePlateCity,
+} from '../../../../redux/slices/vehicleRegisterSlice';
 
 import useApi from '../../../../hooks/useApi';
 import vehicleApi from '../../../../api/VehicleApi';
@@ -27,14 +30,15 @@ export default function LicensePlate({ setStep, next }) {
     location: '',
   };
 
-  const handleSubmit = async (licensePlate) => {
+  const handleSubmit = async ({ licensePlate, location: { municipality } }) => {
     const existing = await findByLicense.request(licensePlate.licensePlate);
 
     if (
       Object.keys(existing.data.data).length === 0 &&
       existing.data.data.constructor === Object
     ) {
-      dispatch(setLicensePlate(licensePlate));
+      dispatch(setLicensePlate(licensePlate.toUpperCase()));
+      dispatch(setLicensePlateCity(municipality));
       setStep(next);
     } else {
       setApiError(true);

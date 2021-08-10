@@ -19,13 +19,19 @@ export default function NavBarLayout({ children }) {
     const user = storageAuth.getUser();
     if (user) setIsAuth(true);
 
-    // listen window resize (keyboard popup on mobile -> bottom navbar hide)
+    if (window.innerWidth > 720) setShowHideMobileNavbar(false);
+
+    // listen window resize
     window.addEventListener('resize', () => {
+      // keyboard popup on mobile -> bottom navbar hide
       if (window.innerHeight <= 450) {
         setShowHideMobileNavbar(false);
       } else {
         setShowHideMobileNavbar(true);
       }
+
+      // responsive
+      if (window.innerWidth > 720) setShowHideMobileNavbar(false);
     });
 
     setIsHostMood(app.getMood());

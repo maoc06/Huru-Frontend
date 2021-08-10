@@ -2,7 +2,13 @@
 .container {
     position: relative;
     display: flex;
-    // height: 55px;
+    align-items: center;
+    @media (min-width: 550px) {
+        flex: 1;
+        min-width: 100px;
+        max-width: 425px;
+        height: 55px;
+    }
     div {
         flex: 1;
         p {
@@ -19,6 +25,12 @@
             height: 22px;
         }
     }
+    .start_date {
+        @media (min-width: 720px) {
+            padding-left: 32px;
+            border-left: 1px solid $gray_4;
+        }
+    }
     .end_date {
         border-left: 1px solid $gray_4;
         text-align: right;
@@ -31,6 +43,9 @@
 
 .compact {
     padding: 0 8px 8px;
+    @media (min-width: 720px) {
+        padding: 0;
+    }
     div {
         p {
             font-size: 16px;

@@ -1,4 +1,4 @@
-const styles = ({ isCompact }) => {
+const styles = ({ isCompact, isMobile }) => {
   return {
     control: (provided, state) => ({
       ...provided,
@@ -8,6 +8,7 @@ const styles = ({ isCompact }) => {
       boxShadow: 'none',
       minHeight: isCompact ? 40 : 55,
       maxHeight: isCompact ? 40 : 55,
+      minWidth: isMobile ? 200 : 300,
     }),
     dropdownIndicator: (provided) => ({
       ...provided,

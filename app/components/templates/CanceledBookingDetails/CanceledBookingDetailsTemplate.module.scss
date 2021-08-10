@@ -1,8 +1,15 @@
 @import '../../../styles/abstracts/colors';
-.title {
-    line-height: 1.5;
-    margin: 0;
-    .cancel {
-        color: $secondary;
+.container {
+    @media (min-width: 720px) {
+        min-width: 450px;
+        max-width: 650px;
+        margin: auto;
+    }
+    .title {
+        line-height: 1.5;
+        margin: 0;
+        .cancel {
+            color: $secondary;
+        }
     }
 }

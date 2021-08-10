@@ -6,6 +6,9 @@ import useApi from '../../../hooks/useApi';
 import favoriteApi from '../../../api/FavoriteAPI';
 import bookingApi from '../../../api/BookingAPI';
 import carReviewApi from '../../../api/VehicleReviewAPI';
+import TransmissionIcon from '../../elements/Icons/TrasmissionIcon';
+import GasIcon from '../../elements/Icons/GasIcon';
+import ChairIcon from '../../elements/Icons/ChairIcon';
 
 import {
   FavoriteIcon,
@@ -36,6 +39,10 @@ export default function CardHorizontal({
   favorite = false,
   onRemoveFavorite,
   isEco = false,
+  description,
+  transmission,
+  seats,
+  fuel,
 }) {
   const addFavorite = useApi(favoriteApi.createFavorite);
   const deleteFavorite = useApi(favoriteApi.removeFavorite);
@@ -47,6 +54,7 @@ export default function CardHorizontal({
   const [countCompletedTrips, setCountTrips] = useState(0);
   const [averageRating, setAverageRating] = useState('1.0');
   const [pricePerDay, setPricePerDay] = useState(price);
+  const [isMobileWindow, setIsMobileWindow] = useState(true);
 
   const handleAddToFavorite = () => {
     setIsFavorite(true);
@@ -86,6 +94,11 @@ export default function CardHorizontal({
     }
   };
 
+  const handleMobileWindow = () => {
+    if (window.innerWidth > 720) setIsMobileWindow(false);
+    else setIsMobileWindow(true);
+  };
+
   useEffect(() => {
     if (carId) {
       handleCountTrips();
@@ -96,6 +109,13 @@ export default function CardHorizontal({
       const discount = price * DISCOUNT_ECO_FRIENDLY;
       setPricePerDay(price - discount);
     }
+
+    handleMobileWindow();
+    // listen window resize
+    window.addEventListener('resize', () => {
+      // responsive
+      handleMobileWindow();
+    });
   }, []);
 
   return (
@@ -154,10 +174,35 @@ export default function CardHorizontal({
                     </p>
                   </div>
 
-                  <p className={`${styles.price}`}>
-                    {`$${Number(pricePerDay).toLocaleString('en')} COP/`}
-                    <span>día</span>
-                  </p>
+                  {!isMobileWindow && (
+                    <p className={styles.description}>{description}</p>
+                  )}
+
+                  <div className={styles.extraInfo}>
+                    {!isMobileWindow && (
+                      <section>
+                        <div className={styles.firstFeat}>
+                          <TransmissionIcon width={18} height={18} />
+                          <p>{transmission}</p>
+                        </div>
+
+                        <div className={styles.mid}>
+                          <GasIcon width={18} height={18} />
+                          <p>{fuel}</p>
+                        </div>
+
+                        <div>
+                          <ChairIcon width={18} height={18} />
+                          <p>{seats} pers.</p>
+                        </div>
+                      </section>
+                    )}
+
+                    <p className={`${styles.price}`}>
+                      {`$${Number(pricePerDay).toLocaleString('en')} COP/`}
+                      <span>día</span>
+                    </p>
+                  </div>
                 </div>
 
                 {isEco && (

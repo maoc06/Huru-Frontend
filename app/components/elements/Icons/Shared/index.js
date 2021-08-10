@@ -5,6 +5,8 @@ import FillStartIcon from './Stars/FillStarIcon';
 import HalfStarIcon from './Stars/HalfStarIcon';
 import EmptyStarIcon from './Stars/EmptyStarIcon';
 import EcoIcon from './EcoIcon';
+import ExpandIcon from './ExpandIcon';
+import LogoColor from './LogoColor';
 import ProfileIcon from './ProfileIcon';
 import RefundIcon from './RefundIcon';
 import ReturnIcon from './ReturnIcon';
@@ -19,6 +21,8 @@ export {
   HalfStarIcon,
   EmptyStarIcon,
   EcoIcon,
+  ExpandIcon,
+  LogoColor,
   ProfileIcon,
   RefundIcon,
   ReturnIcon,

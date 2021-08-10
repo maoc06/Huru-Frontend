@@ -19,6 +19,7 @@ export default function Button({
   isDisabled = false,
   disabledMessage = '',
   isWarning = false,
+  isWhite = false,
   ...otherProps
 }) {
   const [openSnackBar, setOpenSnackBar] = useState(false);
@@ -36,14 +37,14 @@ export default function Button({
         className={`${styles.baseButton} ${
           isSecondary ? styles.sencondaryButton : styles.primaryButton
         } ${invert && !isSecondary && styles.invertButton} ${
-          marginTop && styles.margin_top
-        } ${marginBottom && styles.margin_bottom} ${
-          isRejectAction && styles.rejectButton
-        } ${tinyBorder && styles.tinyBorder} ${
-          withTinyMarginBottom && styles.withTinyMarginBottom
-        } ${isDisabled && styles.customDisabled} ${
-          isWarning && styles.warning
-        }`}
+          isWhite && styles.white
+        } ${marginTop && styles.margin_top} ${
+          marginBottom && styles.margin_bottom
+        } ${isRejectAction && styles.rejectButton} ${
+          tinyBorder && styles.tinyBorder
+        } ${withTinyMarginBottom && styles.withTinyMarginBottom} ${
+          isDisabled && styles.customDisabled
+        } ${isWarning && styles.warning}`}
       >
         {withIcon && icon}
         {children}
