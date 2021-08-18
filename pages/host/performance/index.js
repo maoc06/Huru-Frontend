@@ -1,10 +1,23 @@
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 
 import withAuth from '../../../app/HOC/withAuth';
 import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
 import UnderConstruction from '../../../app/components/modules/UnderConstruction/UnderConstruction';
 
 const Performance = () => {
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    if (window.innerWidth > 720) setIsMobile(false);
+
+    // listen window resize
+    window.addEventListener('resize', () => {
+      // responsive
+      if (window.innerWidth > 720) setIsMobile(false);
+    });
+  }, []);
+
   return (
     <div>
       <Head>
@@ -17,7 +30,7 @@ const Performance = () => {
       </Head>
 
       <AppLayout withImage={false}>
-        <UnderConstruction />
+        <UnderConstruction isMobile={isMobile} />
       </AppLayout>
     </div>
   );

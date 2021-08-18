@@ -1,9 +1,9 @@
 @import '../../../styles/abstracts/colors';
 .container {
     display: flex;
-    position: sticky;
+    // position: sticky;
+    // bottom: 0;
     padding: 8px 16px;
-    bottom: 0;
     min-height: 70px;
     max-height: 70px;
     background-color: $background;

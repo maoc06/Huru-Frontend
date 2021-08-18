@@ -4,17 +4,17 @@ import { useRouter } from 'next/router';
 import useApi from '../../../hooks/useApi';
 import useAuth from '../../../hooks/useAuth';
 import authApi from '../../../api/AuthAPI';
-import FBGraphApi from '../../../api/FBGraphAPI';
+// import FBGraphApi from '../../../api/FBGraphAPI';
 
 import Form from './Form';
 import Textfield from '../../elements/Textfield/Textfield';
 import AuxiliarLabel from '../../elements/AuxiliarLabel/AuxiliarLabel';
 import SubmitButton from '../../elements/Button/SubmitButton';
-import AuthFacebookButton from '../../elements/Button/AuthFacebookButton';
-import AuthGoogleButton from '../../elements/Button/AuthGoogleButton';
 import StatusIndicator from '../../elements/StatusIndicator/StatusIndicator';
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';
 import checkAnimationData from '../../../../public/animations/error-cone.json';
+// import AuthFacebookButton from '../../elements/Button/AuthFacebookButton';
+// import AuthGoogleButton from '../../elements/Button/AuthGoogleButton';
 
 import credentialsSchema from '../../../constants/validationSchema/credentials';
 import { errorHandlerLogin } from '../../../utils/errorHandler';
@@ -26,9 +26,12 @@ export default function LoginForm() {
   const router = useRouter();
 
   const validateCredentials = useApi(authApi.signIn);
-  const authGoogleApi = useApi(authApi.signInGoogle);
-  const authFacebookApi = useApi(authApi.signInFacebook);
-  const getFBUserApi = useApi(FBGraphApi.getUserInfo);
+
+  // For the current version of the system, the following functionalities are not enabled
+
+  // const authGoogleApi = useApi(authApi.signInGoogle);
+  // const authFacebookApi = useApi(authApi.signInFacebook);
+  // const getFBUserApi = useApi(FBGraphApi.getUserInfo);
 
   const [emailError, setEmailError] = useState(false);
   const [emailErrorMsg, setEmailErrorMsg] = useState('');
@@ -66,19 +69,21 @@ export default function LoginForm() {
     handleAuth({ accessToken: res.data.token });
   };
 
-  const handleAuthFacebook = async ({ accessToken, userID }) => {
-    const facebookRes = await getFBUserApi.request({ accessToken, userID });
-    if (facebookRes.data === undefined) return;
-    const facebookAccount = facebookRes.data;
+  // For the current version of the system, the following functionalities are not enabled
 
-    const res = await authFacebookApi.request({ email: facebookAccount.email });
-    handleAuth({ accessToken: res.data.accessToken, showErrorOnPopUp: true });
-  };
+  // const handleAuthFacebook = async ({ accessToken, userID }) => {
+  //   const facebookRes = await getFBUserApi.request({ accessToken, userID });
+  //   if (facebookRes.data === undefined) return;
+  //   const facebookAccount = facebookRes.data;
 
-  const handleAuthGoogle = async (googleData) => {
-    const res = await authGoogleApi.request({ token: googleData.tokenId });
-    handleAuth({ accessToken: res.data.accessToken, showErrorOnPopUp: true });
-  };
+  //   const res = await authFacebookApi.request({ email: facebookAccount.email });
+  //   handleAuth({ accessToken: res.data.accessToken, showErrorOnPopUp: true });
+  // };
+
+  // const handleAuthGoogle = async (googleData) => {
+  //   const res = await authGoogleApi.request({ token: googleData.tokenId });
+  //   handleAuth({ accessToken: res.data.accessToken, showErrorOnPopUp: true });
+  // };
 
   return (
     <>
@@ -127,7 +132,9 @@ export default function LoginForm() {
           <SubmitButton marginTop>Iniciar sesión</SubmitButton>
         </Form>
 
-        <p className={styles.alternative}>o entrar usando</p>
+        {/* For the current version of the system, the following functionalities are not enabled */}
+
+        {/* <p className={styles.alternative}>o entrar usando</p>
 
         <section className={styles.media}>
           <AuthFacebookButton
@@ -141,7 +148,7 @@ export default function LoginForm() {
             onSuccess={handleAuthGoogle}
             text="Google"
           />
-        </section>
+        </section> */}
       </div>
     </>
   );

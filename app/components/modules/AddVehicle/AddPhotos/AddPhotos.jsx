@@ -55,20 +55,7 @@ export default function AddPhotos({ setStep, next, showButton = true }) {
   };
 
   return (
-    <>
-      {/* <h3>Exhibe tu carro</h3>
-
-      <section>
-        <p>Toma fotos de alta calidad de tu carro.</p>
-
-        <br />
-
-        <p>
-          Recuerda que unas buenas fotos pueden aumentar tus ingresos
-          potenciales atrayendo a más clientes.
-        </p>
-      </section> */}
-
+    <div>
       <GridPhotosLayout>
         {photoUris.map((uri, index) => (
           <AddPhotoButton
@@ -94,6 +81,6 @@ export default function AddPhotos({ setStep, next, showButton = true }) {
           Continuar
         </Button>
       )}
-    </>
+    </div>
   );
 }

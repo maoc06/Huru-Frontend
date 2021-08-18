@@ -9,8 +9,8 @@ import Dropdown from '../../../elements/Dropdown/Dropdown';
 import SubmitButton from '../../../elements/Button/SubmitButton';
 
 import vehicleSchema from '../../../../constants/validationSchema/identifyVehicle';
-
 import vehicleYear from '../../../../constants/others/vehicleYears';
+import styles from './IndentifyVehicle.module.scss';
 
 const odometerErrorMsg =
   'No se aceptan vehículos con kilometraje superior a 130k Km';
@@ -70,7 +70,7 @@ function IdentifyVehicle({ setStep, next }) {
   }, [selectedMaker]);
 
   return (
-    <div>
+    <div className={styles.container}>
       <h3>Identifica tu carro</h3>
 
       <Form

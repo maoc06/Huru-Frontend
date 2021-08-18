@@ -1,14 +1,18 @@
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 
 import '../app/styles/base/_base.scss';
 import store from '../app/redux/store/store';
 
-// import ProtectRoute from '../app/components/layouts/ProtectRoute/ProtectRouteLayout';
+let persistor = persistStore(store);
 
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
-      <Component {...pageProps} />
+      <PersistGate loading={null} persistor={persistor}>
+        <Component {...pageProps} />
+      </PersistGate>
     </Provider>
   );
 }

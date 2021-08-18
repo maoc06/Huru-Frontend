@@ -7,6 +7,7 @@ import SubmitButton from '../../../elements/Button/SubmitButton';
 import RadioGroup from '../../RadioGroup/RadioGroup';
 
 import radioGroupSchema from '../../../../constants/validationSchema/radioGroup';
+import styles from './MinTripDuration.module.scss';
 
 export default function MinTripDuration({ setStep, next }) {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ export default function MinTripDuration({ setStep, next }) {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h3>¿Cúal será el viaje más corto que aceptarás?</h3>
 
       <Form

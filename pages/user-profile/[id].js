@@ -15,6 +15,7 @@ import SectionTitle from '../../app/components/elements/SectionTitle/SectionTitl
 import IndentityBadge from '../../app/components/modules/IndentityBadge/IndentityBadge';
 import UserProfileBasicInfo from '../../app/components/modules/UserProfileBasicInfo/UserProfileBasicInfo';
 import ScrollPanelCars from '../../app/components/modules/ScrollPanelCars/ScrollPanelCar';
+import styles from './UserProfile.module.scss';
 
 function ThridUserProfile() {
   const router = useRouter();
@@ -23,12 +24,12 @@ function ThridUserProfile() {
   const getCars = useApi(carApi.findByOwner);
   const getUser = useApi(userApi.findUser);
 
-  const [cars, setCars] = useState({});
+  const [cars, setCars] = useState([]);
   const [user, setUser] = useState({});
 
   const handleGetUserCars = async (userId) => {
     const resCar = await getCars.request(userId);
-    setCars(resCar.data.data);
+    if (resCar.data.data) setCars(resCar.data.data);
   };
 
   const handleUserData = async (userId) => {
@@ -58,7 +59,7 @@ function ThridUserProfile() {
 
       <AppLayout withImage={false}>
         {user.constructor === Object && Object.keys(user).length > 0 && (
-          <>
+          <div className={styles.container}>
             <UserProfileBasicInfo
               userId={id}
               name={`${user.firstName} ${user.lastName}`}
@@ -89,15 +90,27 @@ function ThridUserProfile() {
             <Divider size="mediumTop" />
 
             <SectionTitle title={`Sobre ${user.firstName}`} />
-            <ShowMoreText>
-              <p>{user.about}</p>
-            </ShowMoreText>
+            {user.about && (
+              <ShowMoreText>
+                <p>{user.about}</p>
+              </ShowMoreText>
+            )}
+            {!user.about && (
+              <span>{user.firstName} aún no ha escrito algo sobre él.</span>
+            )}
 
             <Divider size="mediumTop" />
 
             <SectionTitle title={`Vehículos de ${user.firstName}`} />
             {cars.constructor === Array && cars.length > 0 && (
               <ScrollPanelCars cars={cars} />
+            )}
+
+            {cars.constructor === Array && cars.length === 0 && (
+              <span>
+                {user.firstName} no tiene ningun vehículo listado o visible
+                dentro de la comunidad Huru.
+              </span>
             )}
 
             <Divider size="mediumTop" />
@@ -109,7 +122,7 @@ function ThridUserProfile() {
             >
               Reportar usuario
             </Button>
-          </>
+          </div>
         )}
       </AppLayout>
     </div>

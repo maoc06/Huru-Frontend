@@ -1,0 +1,9 @@
+.vehicles {
+    display: grid;
+    align-items: center;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    @media (min-width: 720px) {
+        gap: 64px 32px;
+    }
+}

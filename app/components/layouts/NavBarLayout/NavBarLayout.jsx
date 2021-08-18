@@ -46,10 +46,10 @@ export default function NavBarLayout({ children }) {
   };
 
   return (
-    <>
-      <main>{children}</main>
+    <main className={styles.wrapper}>
+      <div>{children}</div>
 
-      {showHideMobileNavbar && renderNavBar()}
-    </>
+      <div className={styles.nav}>{showHideMobileNavbar && renderNavBar()}</div>
+    </main>
   );
 }

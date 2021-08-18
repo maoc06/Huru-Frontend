@@ -17,7 +17,7 @@ export default function SelectCity({ setStep, next }) {
 
   const dispatch = useDispatch();
 
-  const [selected, setSelected] = useState({});
+  const [selected, setSelected] = useState({ cityId: 1, name: 'bogotá' });
   const [openDialog, setOpenDialog] = useState(false);
 
   const citiesOptions = useSelector(
@@ -34,7 +34,7 @@ export default function SelectCity({ setStep, next }) {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h3>Cuéntanos sobre tu carro</h3>
       <p>¿Dónde está ubicado tu vehículo?</p>
 

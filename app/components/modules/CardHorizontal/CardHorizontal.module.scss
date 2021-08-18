@@ -5,12 +5,12 @@
     flex-direction: column;
     border-radius: 10px;
     margin-bottom: 16px;
-    min-width: 90%;
-    max-width: 400px;
-    @media (min-width: 720px) {
-        max-height: 165px;
-        min-width: 100%;
-    }
+    // min-width: 90%;
+    min-width: 200px;
+    // max-width: 300px;
+    // @media (min-width: 720px) {
+    //     // min-width: 100%;
+    // }
     .fav {
         position: absolute;
         top: 0;
@@ -26,9 +26,6 @@
         z-index: 99;
         border-radius: inherit;
         overflow: hidden;
-        @media (min-width: 720px) {
-            flex-direction: row;
-        }
         .overlay {
             position: absolute;
             background-color: $background;
@@ -155,6 +152,18 @@
                 }
             }
         }
+    }
+    .rowDir {
+        @media (min-width: 720px) {
+            flex-direction: row;
+        }
+    }
+}
+
+.limitHeight {
+    @media (min-width: 720px) {
+        max-height: 192px;
+        min-width: 100%;
     }
 }
 

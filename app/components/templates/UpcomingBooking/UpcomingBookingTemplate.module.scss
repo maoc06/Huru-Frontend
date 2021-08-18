@@ -13,7 +13,10 @@
         }
         .info {
             padding-right: 64px;
-            border-right: 1px solid $gray_3;
+            border-right: 1px solid $gray_4;
+        }
+        .dynamic {
+            display: none;
         }
     }
 }

@@ -16,6 +16,9 @@ import ActivityIndicator from '../../app/components/elements/ActivityIndicator/A
 import { typeTransmissionEnum } from '../../app/utils/enums';
 import styles from './car.module.scss';
 
+const ELECTRIC_CAR_ID = 5;
+const DISCOUNT_ECO_FRIENDLY = 0.15;
+
 function CarSlug({ car, metaTitle }) {
   const router = useRouter();
   const getUser = useApi(userApi.findUser);
@@ -24,6 +27,8 @@ function CarSlug({ car, metaTitle }) {
     enabled: false,
     message: 'Inicia sesión para continuar con la reserva.',
   });
+  const [isEcoCar, setIsEcoCar] = useState(false);
+  const [discountPerDay, setDiscountPerDay] = useState(car.price);
 
   const handleUserData = async (userId) => {
     const resUser = await getUser.request(userId);
@@ -69,9 +74,27 @@ function CarSlug({ car, metaTitle }) {
     }
   };
 
+  const handlePriceEcoCar = () => {
+    const { price } = car;
+
+    const discount = price * DISCOUNT_ECO_FRIENDLY;
+    setDiscountPerDay(price - discount);
+  };
+
+  const hanldeIsEcoCar = () => {
+    const {
+      fuel: { fuelId },
+    } = car;
+    if (fuelId === ELECTRIC_CAR_ID) {
+      setIsEcoCar(true);
+      handlePriceEcoCar();
+    }
+  };
+
   useEffect(() => {
     const user = authStorage.getUser();
     if (user) handleUserData(user.info.uid);
+    hanldeIsEcoCar();
   }, []);
 
   return (
@@ -112,15 +135,19 @@ function CarSlug({ car, metaTitle }) {
               disabledMessage={user.message}
               pricePerDay={car.price}
               slug={car.carId}
+              discountPerDay={discountPerDay}
+              withDiscount={isEcoCar}
             />
           </section>
 
-          <PriceBottomBar
-            disableBooking={!user.enabled}
-            disabledMessage={user.message}
-            pricePerDay={car.price}
-            slug={car.carId}
-          />
+          <section className={styles.bottom}>
+            <PriceBottomBar
+              disableBooking={!user.enabled}
+              disabledMessage={user.message}
+              pricePerDay={car.price}
+              slug={car.carId}
+            />
+          </section>
         </>
       )}
     </div>

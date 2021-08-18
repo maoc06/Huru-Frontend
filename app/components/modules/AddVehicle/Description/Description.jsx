@@ -5,8 +5,8 @@ import { setDescription } from '../../../../redux/slices/vehicleRegisterSlice';
 import Form from '../../Forms/Form';
 import TextArea from '../../../elements/TextArea/TextArea';
 import SubmitButton from '../../../elements/Button/SubmitButton';
-
 import vehicleDescriptionSchema from '../../../../constants/validationSchema/vehicleDescription';
+import styles from './Description.module.scss';
 
 export default function VehicleDescription({ setStep, next }) {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export default function VehicleDescription({ setStep, next }) {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h3>Descripción</h3>
 
       <article>

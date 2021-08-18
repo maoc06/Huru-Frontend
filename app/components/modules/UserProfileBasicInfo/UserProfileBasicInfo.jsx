@@ -32,6 +32,7 @@ export default function UserProfileBasicInfo({
   withLink = false,
   href = '/',
   title,
+  cursorOnAvatar = false,
 }) {
   const router = useRouter();
   const getCountTrips = useApi(bookingApi.countCompletedTrips);
@@ -85,6 +86,7 @@ export default function UserProfileBasicInfo({
           src={profilePicture}
           size={avatarSize}
           userId={userId}
+          cursorPointer={cursorOnAvatar}
         />
 
         <div className={styles.info}>

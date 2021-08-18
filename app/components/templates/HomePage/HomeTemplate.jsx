@@ -66,6 +66,7 @@ const HomeTemplate = () => {
 
       <section className={styles.moments}>
         <div className={styles.card}>
+          <h2 className={styles.moment}>Viaje soñado</h2>
           <Image
             src={'/images/day-dream.png'}
             alt={'viaje soñado en carro'}
@@ -75,6 +76,7 @@ const HomeTemplate = () => {
         </div>
 
         <div className={styles.card}>
+          <h2 className={styles.moment}>Estilo</h2>
           <Image
             src={'/images/style.png'}
             alt={'viaje con estilo en carro'}
@@ -84,6 +86,7 @@ const HomeTemplate = () => {
         </div>
 
         <div className={styles.card}>
+          <h2 className={styles.moment}>Día a día</h2>
           <Image
             src={'/images/daytoday.png'}
             alt={'carro para el día a día'}
@@ -93,6 +96,7 @@ const HomeTemplate = () => {
         </div>
 
         <div className={styles.card}>
+          <h2 className={styles.moment}>Aventura</h2>
           <Image
             src={'/images/aventure.png'}
             alt={'aventura en carro'}

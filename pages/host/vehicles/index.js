@@ -13,6 +13,7 @@ import TitlePage from '../../../app/components/elements/TitlePage/TitlePage';
 import CardHorizontal from '../../../app/components/modules/CardHorizontal/CardHorizontal';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import AddVehicleCard from '../../../app/components/modules/AddVehicleCard/AddVehicleCard';
+import styles from './Vehicles.module.scss';
 
 export default function HostVehicles() {
   const router = useRouter();
@@ -31,7 +32,6 @@ export default function HostVehicles() {
 
   const handleGetData = async (uuid) => {
     const res = await getCarsByOwner.request(uuid);
-    console.log(res.data.data);
     setCars(res.data.data);
   };
 
@@ -51,27 +51,32 @@ export default function HostVehicles() {
       <AppLayout withImage={false}>
         <TitlePage>Mis vehículos</TitlePage>
 
-        <AddVehicleCard />
+        <section className={styles.vehicles}>
+          <AddVehicleCard />
 
-        {cars.map(({ carId, status, maker, model, year, images: [image] }) => {
-          const title = `${maker.name} ${model.name} ${year}`;
-          const extraLabel = withExtraLabelHosts({ status });
+          {cars.map(
+            ({ carId, status, maker, model, year, images: [image] }) => {
+              const title = `${maker.name} ${model.name} ${year}`;
+              const extraLabel = withExtraLabelHosts({ status });
 
-          return (
-            <CardHorizontal
-              key={carId}
-              title={title}
-              imageSrc={image.imagePath}
-              showPanelPrice={false}
-              showFavoriteIcon={false}
-              href={`/host/vehicles/details/${encodeURIComponent(carId)}`}
-              withOpacity={extraLabel.show}
-              withExtraLabel={extraLabel.show}
-              extraLabelText={extraLabel.text}
-              extraLabelColor={extraLabel.color}
-            />
-          );
-        })}
+              return (
+                <CardHorizontal
+                  key={carId}
+                  title={title}
+                  imageSrc={image.imagePath}
+                  showPanelPrice={false}
+                  showFavoriteIcon={false}
+                  href={`/host/vehicles/details/${encodeURIComponent(carId)}`}
+                  withOpacity={extraLabel.show}
+                  withExtraLabel={extraLabel.show}
+                  extraLabelText={extraLabel.text}
+                  extraLabelColor={extraLabel.color}
+                  forceRowDirection={false}
+                />
+              );
+            }
+          )}
+        </section>
       </AppLayout>
     </div>
   );

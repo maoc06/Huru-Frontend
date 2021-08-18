@@ -5,6 +5,7 @@ import { setFeatures } from '../../../../redux/slices/vehicleRegisterSlice';
 import { carFeaturesIcons } from '../../../../utils/enums';
 import Button from '../../../elements/Button/Button';
 import CardSelectableLayout from '../../../layouts/CardSelectableLayout/CardSelectableLayout';
+import styles from './SelectFeatures.module.scss';
 
 export default function SelectFeatures({ setStep, next }) {
   const dispatch = useDispatch();
@@ -22,17 +23,12 @@ export default function SelectFeatures({ setStep, next }) {
   }, []);
 
   const handleSubmit = () => {
-    // const selected = [];
-    // for (const item in state) {
-    //   if (state[item]) selected.push(item);
-    // }
-
     dispatch(setFeatures(selected));
     setStep(next);
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h3>Cuéntanos sobre tu carro</h3>
 
       {features.constructor === Array && Object.keys(features).length > 0 && (
@@ -48,34 +44,6 @@ export default function SelectFeatures({ setStep, next }) {
           lightBackground={true}
         />
       )}
-
-      {/* {features && (
-        <section className={styles.features}>
-          <FormControl component="fieldset">
-            <ThemeProvider theme={themeMaterialUI}>
-              <FormGroup>
-                {features.map((item) => {
-                  return (
-                    <FormControlLabel
-                      key={item.featureId}
-                      style={{ textTransform: 'capitalize' }}
-                      control={
-                        <Checkbox
-                          checked={state.featureId}
-                          onChange={handleChange}
-                          name={item.featureId}
-                          color="primary"
-                        />
-                      }
-                      label={item.name}
-                    />
-                  );
-                })}
-              </FormGroup>
-            </ThemeProvider>
-          </FormControl>
-        </section>
-      )} */}
 
       <Button onClick={handleSubmit} marginTop={true}>
         Continuar

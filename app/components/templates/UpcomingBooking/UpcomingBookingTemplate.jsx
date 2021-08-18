@@ -31,6 +31,10 @@ const UpcomingBookingTemplate = ({
           />
         </section>
 
+        <div className={styles.dynamic}>
+          <Divider size="mediumTop" />
+        </div>
+
         <section>
           <h6>Pago de la reserva</h6>
           <PaymentDetails

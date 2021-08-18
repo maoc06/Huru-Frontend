@@ -23,4 +23,19 @@
             font-weight: normal;
         }
     }
+    .contentPrice {
+        display: flex;
+        gap: 0 16px;
+    }
+    .discount {
+        margin-bottom: 0;
+    }
+    .old {
+        font-size: 1rem;
+        text-decoration: line-through;
+    }
+    .msgDiscount {
+        font-size: 0.9rem;
+        color: $success;
+    }
 }

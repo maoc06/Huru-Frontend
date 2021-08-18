@@ -12,6 +12,7 @@ export default function UnderConstruction({
   actionCopy = 'Volver al inicio',
   redirectTo = '/',
   showAnimation = true,
+  isMobile = true,
 }) {
   const router = useRouter();
 
@@ -29,8 +30,8 @@ export default function UnderConstruction({
       {showAnimation && (
         <Lottie
           options={defaultOptions}
-          height={314}
-          width={480}
+          height={isMobile ? 182 : 314}
+          width={isMobile ? 270 : 480}
           style={{ marginBottom: 32 }}
         />
       )}

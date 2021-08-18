@@ -25,8 +25,6 @@ export default function AdvanceNotice({ setStep, next }) {
 
   return (
     <div>
-      {/* <h3>¿Con cuánta antelación pueden reservar tu carro?</h3> */}
-
       <Form
         initialValues={initialValues}
         validationSchema={radioGroupSchema}

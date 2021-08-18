@@ -12,6 +12,7 @@ import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
 import CardHorizontal from '../../app/components/modules/CardHorizontal/CardHorizontal';
 import TitlePage from '../../app/components/elements/TitlePage/TitlePage';
 import NotFound from '../../app/components/modules/NotFound/NotFound';
+import styles from './Favorites.module.scss';
 
 const Favorites = () => {
   const getFavorites = useApi(favoriteApi.findByUser);
@@ -62,23 +63,26 @@ const Favorites = () => {
           />
         )}
 
-        {favorites.constructor === Array &&
-          favorites.length > 0 &&
-          favorites.map(({ car }) => {
-            return (
-              <CardHorizontal
-                carId={car.carId}
-                userId={user.uid}
-                key={car.carId}
-                imageSrc={car.images[0].imagePath}
-                href={`/car/${encodeURIComponent(car.carId)}`}
-                showPanelPrice={false}
-                title={`${car.maker.name} ${car.model.name} ${car.year}`}
-                favorite={true}
-                onRemoveFavorite={handleRemoveFavorite}
-              />
-            );
-          })}
+        <section className={styles.favorites}>
+          {favorites.constructor === Array &&
+            favorites.length > 0 &&
+            favorites.map(({ car }) => {
+              return (
+                <CardHorizontal
+                  carId={car.carId}
+                  userId={user.uid}
+                  key={car.carId}
+                  imageSrc={car.images[0].imagePath}
+                  href={`/car/${encodeURIComponent(car.carId)}`}
+                  showPanelPrice={false}
+                  title={`${car.maker.name} ${car.model.name} ${car.year}`}
+                  favorite={true}
+                  onRemoveFavorite={handleRemoveFavorite}
+                  forceRowDirection={false}
+                />
+              );
+            })}
+        </section>
       </AppLayout>
     </div>
   );

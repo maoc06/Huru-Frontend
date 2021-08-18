@@ -17,6 +17,7 @@ const ScrollPanelCars = ({ cars = [] }) => {
               href={`/car/${encodeURIComponent(carId)}`}
               showPanelDates={false}
               showPanelPrice={false}
+              forceRowDirection={false}
             />
           );
         })}

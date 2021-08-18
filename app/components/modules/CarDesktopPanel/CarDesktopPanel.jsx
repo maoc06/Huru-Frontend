@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { diffDays } from '../../../utils/formatDates';
 import useTravelDates from '../../../hooks/useTravelDates';
 
 import Button from '../../elements/Button/Button';
@@ -13,40 +14,66 @@ function CarDesktopPanel({
   countDays = 2,
   disableBooking,
   disabledMessage,
+  withDiscount = false,
+  discountPerDay = 0,
 }) {
+  const serviceFeePercentage = 0.17;
   const router = useRouter();
   const travel = useTravelDates();
-  const serviceFeePercentage = 0.17;
+  const [days, setDays] = useState(countDays);
 
   const handleContinue = () => {
     router.push(`/car/confirmation/${encodeURIComponent(slug)}`);
   };
 
-  // const dates = () => {
-  //   let {
-  //     raw: { start, end },
-  //   } = travel.getDates();
-  // };
+  const calcDays = () => {
+    const dates = travel.getDates();
 
-  // useEffect(() => {
-  //   // if (pricePerDay) calcTotal();
-  // }, [pricePerDay]);
+    const diff = diffDays({
+      dateOne: dates.raw.start,
+      dateTwo: dates.raw.end,
+      type: 'SQL',
+    });
+
+    setDays(diff);
+  };
+
+  useEffect(() => {
+    calcDays();
+  }, []);
 
   return (
     <section className={styles.panel}>
-      <p className={styles.price}>
-        ${Number(pricePerDay).toLocaleString('en')}
-        <span>/día</span>
-      </p>
+      {withDiscount && (
+        <p className={styles.msgDiscount}>
+          Descuento para vehículos amigables con medio ambiente.
+        </p>
+      )}
+
+      <div className={`${withDiscount && styles.contentPrice}`}>
+        {withDiscount && (
+          <p className={`${styles.price} ${styles.discount}`}>
+            ${Number(discountPerDay).toLocaleString('en')}
+            <span>/día</span>
+          </p>
+        )}
+        {/* {withDiscount && <p>{`Antes `}</p>} */}
+        <p className={`${styles.price} ${withDiscount && styles.old}`}>
+          ${Number(pricePerDay).toLocaleString('en')}
+          {!withDiscount && <span>/día</span>}
+        </p>
+      </div>
 
       <DatesPanel compact={true} />
 
       <PaymentDetails
         showTitle={false}
         pricePerDay={pricePerDay}
-        numberOfDays={countDays ? countDays : 2}
+        numberOfDays={days ? days : 2}
         serviceFeePercentage={serviceFeePercentage}
         withMargin={true}
+        discountPerDay={discountPerDay}
+        withDiscount={withDiscount}
       />
 
       <div className={styles.button}>

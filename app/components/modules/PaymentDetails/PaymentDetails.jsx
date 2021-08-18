@@ -1,5 +1,4 @@
 import formatPrice from '../../../utils/formatPrice';
-
 import styles from './PaymentDetails.module.scss';
 
 export default function PaymentDetails({
@@ -8,6 +7,8 @@ export default function PaymentDetails({
   numberOfDays = 2,
   showTitle = true,
   withMargin = false,
+  withDiscount = false,
+  discountPerDay = 0,
 }) {
   const priceDays = pricePerDay * numberOfDays;
   const serviceFee = Math.round(priceDays * serviceFeePercentage);
@@ -42,14 +43,51 @@ export default function PaymentDetails({
         </p>
       </div>
 
+      {withDiscount && (
+        <div>
+          <p>Sub-Total</p>
+          <p>
+            {formatPrice({
+              price: priceDays + serviceFee,
+              currencyDisplay: 'symbol',
+            })}
+          </p>
+        </div>
+      )}
+
+      {withDiscount && (
+        <div className={styles.discount}>
+          <p>Dcto. eco-friendly</p>
+          <p>
+            -
+            {formatPrice({
+              price: priceDays - discountPerDay * numberOfDays,
+              currencyDisplay: 'symbol',
+            })}
+          </p>
+        </div>
+      )}
+
       <div className={styles.total}>
         <p>Total</p>
-        <p>
-          {formatPrice({
-            price: priceDays + serviceFee,
-            currencyDisplay: 'symbol',
-          })}
-        </p>
+        {!withDiscount ? (
+          <p>
+            {formatPrice({
+              price: priceDays + serviceFee,
+              currencyDisplay: 'symbol',
+            })}
+          </p>
+        ) : (
+          <p>
+            {formatPrice({
+              price:
+                priceDays +
+                serviceFee -
+                (priceDays - discountPerDay * numberOfDays),
+              currencyDisplay: 'symbol',
+            })}
+          </p>
+        )}
       </div>
     </section>
   );

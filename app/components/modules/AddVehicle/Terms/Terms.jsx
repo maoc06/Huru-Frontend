@@ -17,6 +17,7 @@ import StatusIndicator from '../../../elements/StatusIndicator/StatusIndicator';
 import checkAnimationData from '../../../../../public/animations/check.json';
 import acceptTermsSchema from '../../../../constants/validationSchema/acceptTerms';
 import { odometerRange } from '../../../../utils/enums';
+import styles from './TermsVehicle.module.scss';
 
 export default function Terms() {
   const router = useRouter();
@@ -138,7 +139,7 @@ export default function Terms() {
         onClickButton={handleButtonPopUp}
       />
 
-      <div>
+      <div className={styles.container}>
         <h3>Terminamos</h3>
 
         <article>

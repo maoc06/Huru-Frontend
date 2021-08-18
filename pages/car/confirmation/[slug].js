@@ -129,6 +129,7 @@ const ConfirmationBooking = () => {
             })}
             pricePerDay={car.price}
             paymentMethod={defaultPayment}
+            isEcoCar={car.fuel.fuelId === 5}
             onSubmit={handleCreateBooking}
           />
         )}

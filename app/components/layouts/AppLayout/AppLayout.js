@@ -5,6 +5,7 @@ export default function AppLayout({
   isFullHeigh = true,
   withImage = true,
   centerContent = false,
+  widthAdap = false,
 }) {
   return (
     <>
@@ -13,7 +14,7 @@ export default function AppLayout({
           isFullHeigh ? styles.full : styles.inline
         } ${withImage && styles.with_image} ${
           centerContent && styles.center_content
-        }`}
+        } ${widthAdap && styles.adapat}`}
       >
         {children}
       </main>

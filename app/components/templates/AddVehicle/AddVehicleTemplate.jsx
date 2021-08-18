@@ -19,6 +19,8 @@ import MaxTripDuration from '../../modules/AddVehicle/MaxTripDuration/MaxTripDur
 import Terms from '../../modules/AddVehicle/Terms/Terms';
 import SelectCity from '../../modules/AddVehicle/SelectCity/SelectCity';
 
+import styles from './AddVehicleTemplate.module.scss';
+
 const AddVehcileTemplate = () => {
   const numOfSteps = 14;
   const [step, setStep] = useState(1);
@@ -31,7 +33,11 @@ const AddVehcileTemplate = () => {
             image={'/images/intro-add-vehicle.jpg'}
             alt={'Ganar dinero con mi carro'}
           >
-            <AppLayout isFullHeigh={false}>
+            <AppLayout
+              centerContent={true}
+              isFullHeigh={false}
+              widthAdap={true}
+            >
               <Intro setStep={setStep} next={2} />
             </AppLayout>
           </FullTopImageLayout>
@@ -81,40 +87,46 @@ const AddVehcileTemplate = () => {
       case 9:
         return (
           <AppLayout centerContent={true}>
-            <h3>Exhibe tu carro</h3>
+            <div className={styles.container}>
+              <h3>Exhibe tu carro</h3>
 
-            <section>
-              <p>Toma fotos de alta calidad de tu carro.</p>
+              <section>
+                <p>Toma fotos de alta calidad de tu carro.</p>
 
-              <br />
+                <br />
 
-              <p>
-                Recuerda que unas buenas fotos pueden aumentar tus ingresos
-                potenciales atrayendo a más clientes.
-              </p>
-            </section>
+                <p>
+                  Recuerda que unas buenas fotos pueden aumentar tus ingresos
+                  potenciales atrayendo a más clientes.
+                </p>
+              </section>
 
-            <AddPhotos setStep={setStep} next={10} />
+              <AddPhotos setStep={setStep} next={10} />
+            </div>
           </AppLayout>
         );
       case 10:
         return (
           <AppLayout centerContent={true}>
-            <h3>Precio</h3>
+            <div className={styles.container}>
+              <h3>Precio</h3>
 
-            <article>
-              <p>Configura el precio base por día de alquiler de tu carro.</p>
-            </article>
+              <article>
+                <p>Configura el precio base por día de alquiler de tu carro.</p>
+              </article>
 
-            <SetPricePerDay setStep={setStep} next={11} />
+              <SetPricePerDay setStep={setStep} next={11} />
+            </div>
           </AppLayout>
         );
       case 11:
         return (
           <AppLayout centerContent={true}>
-            <h3>¿Con cuánta antelación pueden reservar tu carro?</h3>
+            <div className={styles.container}>
+              <h3>¿Con cuánta antelación pueden reservar tu carro?</h3>
 
-            <AdvanceNotice setStep={setStep} next={12} />
+              <AdvanceNotice setStep={setStep} next={12} />
+            </div>
           </AppLayout>
         );
       case 12:

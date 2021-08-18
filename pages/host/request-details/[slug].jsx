@@ -15,7 +15,10 @@ import StatusIndicator from '../../../app/components/elements/StatusIndicator/St
 import checkAnimationData from '../../../public/animations/check.json';
 import { WarningIcon } from '../../../app/components/elements/Icons/Shared';
 
-import { convertToCompound } from '../../../app/utils/formatDates';
+import {
+  convertToCompound,
+  formatFullDate,
+} from '../../../app/utils/formatDates';
 
 export default function RequestDetail() {
   const router = useRouter();
@@ -107,7 +110,9 @@ export default function RequestDetail() {
             animationData={checkAnimationData}
             visible={openStatusIndicator}
             title={'Reserva aceptada'}
-            message={`Preparate para recibir a ${booking.bookedBy.firstName} ${booking.bookedBy.lastName}`}
+            message={`Preparate para recibir a ${booking.bookedBy.firstName} ${
+              booking.bookedBy.lastName
+            } el ${formatFullDate({ date: booking.checkin, type: 'ISO' })}`}
             buttonMsg={'Entendido'}
             onClickButton={handleButtonPopUp}
           />
@@ -126,6 +131,7 @@ export default function RequestDetail() {
           <Carousel images={booking.bookedCar.images} />
 
           <CarProfileTemplate
+            chageableDates={false}
             dates={convertToCompound({
               dateOne: booking.checkin,
               dateTwo: booking.checkout,
@@ -136,6 +142,7 @@ export default function RequestDetail() {
             username={`${booking.bookedBy.firstName} ${booking.bookedBy.lastName}`}
             userPic={booking.bookedBy.profilePhoto}
             userJoinAt={booking.bookedBy.createdAt}
+            userId={booking.bookedBy.uuid}
             showDescription={false}
             showSpecifications={false}
             showFeatures={false}

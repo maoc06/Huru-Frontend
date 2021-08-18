@@ -37,6 +37,7 @@ export default function CardHorizontal({
   extraLabelColor = 'blue',
   href = '/',
   favorite = false,
+  forceRowDirection = true,
   onRemoveFavorite,
   isEco = false,
   description,
@@ -119,7 +120,11 @@ export default function CardHorizontal({
   }, []);
 
   return (
-    <div className={`${styles.card} ${withExtraLabel && styles.extraMargin}`}>
+    <div
+      className={`${styles.card} ${forceRowDirection && styles.limitHeight} ${
+        withExtraLabel && styles.extraMargin
+      }`}
+    >
       {showFavoriteIcon && userId && (
         <div
           className={styles.fav}
@@ -139,7 +144,7 @@ export default function CardHorizontal({
       <Link href={href}>
         <a
           target="_blank"
-          className={`${styles.inner} ${
+          className={`${styles.inner} ${forceRowDirection && styles.rowDir} ${
             withExtraLabel && styles.extraSpacing
           } ${extraLabelColor === 'red' && styles.labelBorderRed} ${
             extraLabelColor === 'green' && styles.labelBorderGreen

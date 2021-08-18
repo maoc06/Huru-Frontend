@@ -1,15 +1,40 @@
 import { useSelector } from 'react-redux';
 
-import { defaultDates } from '../utils/formatDates';
+import { defaultDates, parsingDate } from '../utils/formatDates';
 
 const useTravelDates = () => {
   const searchParams = useSelector((state) => state.searchParams);
+
+  const isISO = ({ date }) => {
+    if (date.includes('T')) return true;
+    return false;
+  };
 
   const getDates = () => {
     if (searchParamsEmpty()) {
       return defaultDates();
     } else {
-      return searchParams.dates;
+      let dates = searchParams.dates;
+
+      let {
+        raw: { start, end },
+      } = dates;
+
+      if (isISO({ date: start })) {
+        dates = {
+          ...dates,
+          raw: { ...dates.raw, start: parsingDate({ date: start }) },
+        };
+      }
+
+      if (isISO({ date: end })) {
+        dates = {
+          ...dates,
+          raw: { ...dates.raw, end: parsingDate({ date: end }) },
+        };
+      }
+
+      return dates;
     }
   };
 

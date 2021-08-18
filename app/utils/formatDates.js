@@ -8,7 +8,7 @@ Date.shortMonths = [
   'May',
   'Jun',
   'Jul',
-  'Aug',
+  'Ago',
   'Sep',
   'Oct',
   'Nov',
@@ -39,6 +39,12 @@ const convertTo = ({ date, type = 'ISO' }) => {
   }
 
   return rawDate;
+};
+
+const parsingDate = ({ date, from = 'ISO', to = 'SQL' }) => {
+  if (from === 'ISO' && to === 'SQL') {
+    return DateTime.fromISO(date).toSQL(options);
+  }
 };
 
 const convertToCompound = ({ dateOne, dateTwo, type = 'ISO' }) => {
@@ -224,4 +230,5 @@ export {
   todayDate,
   lastDay,
   isObjEqual,
+  parsingDate,
 };

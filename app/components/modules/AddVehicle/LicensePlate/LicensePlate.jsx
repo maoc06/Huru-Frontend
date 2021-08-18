@@ -18,6 +18,7 @@ import { maskLicensePlate } from '../../../../utils/masksInputs';
 import licensePlateSchema from '../../../../constants/validationSchema/licensePlate';
 
 import locations from '../../../../constants/others/municipalities';
+import styles from './LicensePlate.module.scss';
 
 export default function LicensePlate({ setStep, next }) {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ export default function LicensePlate({ setStep, next }) {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h3>Matrícula</h3>
 
       <article>

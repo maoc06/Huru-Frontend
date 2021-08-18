@@ -6,9 +6,15 @@ import useApi from '../../../app/hooks/useApi';
 import bookingApi from '../../../app/api/BookingAPI';
 import authStorage from '../../../app/utils/storageAuth';
 
-import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
-import GridCardRequestLayout from '../../../app/components/layouts/GridCardRequestLayout/GridCardRequestLayout';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
+import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
+import Avatar from '../../../app/components/elements/Avatar/Avatar';
+import { LogoColor } from '../../../app/components/elements/Icons/Shared';
+import MenuDesktop from '../../../app/components/modules/MenuDesktop/MenuDesktop';
+import NotFound from '../../../app/components/modules/NotFound/NotFound';
+import TitlePage from '../../../app/components/elements/TitlePage/TitlePage';
+import GridCardRequestLayout from '../../../app/components/layouts/GridCardRequestLayout/GridCardRequestLayout';
+import styles from './Requests.module.scss';
 
 export default function RequestDetail() {
   const router = useRouter();
@@ -16,9 +22,16 @@ export default function RequestDetail() {
   const getRequests = useApi(bookingApi.findBookingRequests);
   const [requests, setRequests] = useState({});
 
+  const [user, setUser] = useState(null);
+  const [showMenuDesktop, setShowMenuDesktop] = useState(false);
+
   const handleGetData = async (uuid) => {
     const res = await getRequests.request({ uuid, limit: false });
     setRequests(res.data.data);
+  };
+
+  const handleAvatar = () => {
+    setShowMenuDesktop(!showMenuDesktop);
   };
 
   useEffect(() => {
@@ -26,6 +39,7 @@ export default function RequestDetail() {
     if (user) {
       const uuid = user.info.uid;
       handleGetData(uuid);
+      setUser(user.info);
     } else {
       router.push('/signin');
     }
@@ -45,13 +59,49 @@ export default function RequestDetail() {
       <ActivityIndicator visible={getRequests.loading} />
 
       <AppLayout withImage={false}>
-        {requests.length > 0 && (
-          <GridCardRequestLayout
-            requestList={requests}
-            showSeeAll={false}
-            sliceTo={requests.length}
-          />
-        )}
+        <main>
+          <section className={styles.header}>
+            <div
+              onClick={() => {
+                router.push('/');
+              }}
+              className={styles.logo}
+            >
+              <LogoColor />
+            </div>
+
+            <div>
+              <TitlePage>Solicitudes de Reserva</TitlePage>
+            </div>
+
+            <div className={styles.avatar} onClick={handleAvatar}>
+              {user ? (
+                <Avatar src={user.profilePicture} size="large" />
+              ) : (
+                <Avatar />
+              )}
+              {showMenuDesktop && (
+                <div className={styles.menuDesktop}>
+                  <MenuDesktop user={user} />
+                </div>
+              )}
+            </div>
+          </section>
+
+          <section className={styles.content}>
+            {requests.length === 0 && (
+              <NotFound text="No tienes solicitudes de reserva para mostrar. Asegurate de tener vehículos listados y habilitados." />
+            )}
+
+            {requests.length > 0 && (
+              <GridCardRequestLayout
+                requestList={requests}
+                showSeeAll={false}
+                sliceTo={requests.length}
+              />
+            )}
+          </section>
+        </main>
       </AppLayout>
     </div>
   );

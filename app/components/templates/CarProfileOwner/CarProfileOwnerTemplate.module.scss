@@ -1,5 +1,7 @@
 .wrapper {
-    margin: 0 auto;
-    min-width: 400px;
-    max-width: 550px;
+    @media (min-width: 720px) {
+        margin: 0 auto;
+        min-width: 400px;
+        max-width: 550px;
+    }
 }

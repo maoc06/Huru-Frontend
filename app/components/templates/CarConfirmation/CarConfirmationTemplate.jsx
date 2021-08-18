@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import AppTerms from '../../elements/Terms/Terms';
@@ -14,6 +15,9 @@ import acceptTermsSchema from '../../../constants/validationSchema/acceptTerms';
 
 import styles from './CarConfirmationTemplate.module.scss';
 
+const DISCOUNT_ECO_FRIENDLY = 0.15;
+const SERVICE_FEE_PERCENTAGE = 0.17;
+
 const CarConfirmationTemplate = ({
   uid,
   carId,
@@ -21,15 +25,19 @@ const CarConfirmationTemplate = ({
   countDays = 2,
   pricePerDay = 0,
   paymentMethod,
+  isEcoCar = false,
   onSubmit,
 }) => {
   const dates = useSelector((state) => state.searchParams.dates);
   const initialValues = { checkTerms: false };
-  const serviceFeePercentage = 0.17;
+
+  const [discountPerDay, setDiscountPerDay] = useState(pricePerDay);
 
   const handleSubmit = () => {
-    const priceDays = pricePerDay * countDays;
-    const serviceFee = priceDays * serviceFeePercentage;
+    const price = isEcoCar ? discountPerDay : pricePerDay;
+
+    const priceDays = price * countDays;
+    const serviceFee = priceDays * SERVICE_FEE_PERCENTAGE;
 
     const booking = {
       paymentId: paymentMethod.id,
@@ -43,6 +51,15 @@ const CarConfirmationTemplate = ({
 
     onSubmit(booking);
   };
+
+  const handlePriceEcoCar = () => {
+    const discount = pricePerDay * DISCOUNT_ECO_FRIENDLY;
+    setDiscountPerDay(pricePerDay - discount);
+  };
+
+  useEffect(() => {
+    handlePriceEcoCar();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -67,7 +84,9 @@ const CarConfirmationTemplate = ({
       <PaymentDetails
         pricePerDay={pricePerDay}
         numberOfDays={countDays ? countDays : 2}
-        serviceFeePercentage={serviceFeePercentage}
+        serviceFeePercentage={SERVICE_FEE_PERCENTAGE}
+        withDiscount={isEcoCar}
+        discountPerDay={discountPerDay}
       />
 
       <Divider size={'mediumTop'} />

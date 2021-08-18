@@ -3,29 +3,29 @@ import { useDispatch } from 'react-redux';
 
 import {
   setEmailPassword,
-  setPersonalData,
+  // setPersonalData,
 } from '../../../redux/slices/userRegisterSlice';
 
 import useApi from '../../../hooks/useApi';
 import authApi from '../../../api/AuthAPI';
-import FBGraphApi from '../../../api/FBGraphAPI';
+// import FBGraphApi from '../../../api/FBGraphAPI';
 
 import Form from '../Forms/Form';
 import Textfield from '../../elements/Textfield/Textfield';
-import AuthGoogleButton from '../../elements/Button/AuthGoogleButton';
-import AuthFacebookButton from '../../elements/Button/AuthFacebookButton';
 import SubmitButton from '../../elements/Button/SubmitButton';
-import Divider from '../../elements/Divider/Divider';
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';
 import credentialsSchema from '../../../constants/validationSchema/credentials';
 import styles from './Register.module.scss';
+// import AuthGoogleButton from '../../elements/Button/AuthGoogleButton';
+// import AuthFacebookButton from '../../elements/Button/AuthFacebookButton';
+// import Divider from '../../elements/Divider/Divider';
 
 export default function RegisterUserCredentials({ setStep }) {
   const dispatch = useDispatch();
 
   const checkEmailApi = useApi(authApi.checkEmail);
-  const authGoogleApi = useApi(authApi.signUpGoogle);
-  const getFBUserApi = useApi(FBGraphApi.getUserInfo);
+  // const authGoogleApi = useApi(authApi.signUpGoogle);
+  // const getFBUserApi = useApi(FBGraphApi.getUserInfo);
 
   const [apiError, setApiError] = useState(false);
 
@@ -42,49 +42,51 @@ export default function RegisterUserCredentials({ setStep }) {
     }
   };
 
-  const handleAuthGoogle = async (googleData) => {
-    const googleRes = await authGoogleApi.request({
-      token: googleData.tokenId,
-    });
+  // For the current version of the system, the following functionalities are not enabled
 
-    if (authGoogleApi.error) return;
-    if (googleRes.data === undefined) return;
+  // const handleAuthGoogle = async (googleData) => {
+  //   const googleRes = await authGoogleApi.request({
+  //     token: googleData.tokenId,
+  //   });
 
-    const googleAccount = googleRes.data.data;
-    handleDispatchInfo({
-      email: googleAccount.email,
-      firstName: googleAccount.firstName,
-      lastName: googleAccount.lastName,
-    });
-  };
+  //   if (authGoogleApi.error) return;
+  //   if (googleRes.data === undefined) return;
 
-  const handleAuthFacebook = async ({ accessToken, userID }) => {
-    const facebookRes = await getFBUserApi.request({ accessToken, userID });
+  //   const googleAccount = googleRes.data.data;
+  //   handleDispatchInfo({
+  //     email: googleAccount.email,
+  //     firstName: googleAccount.firstName,
+  //     lastName: googleAccount.lastName,
+  //   });
+  // };
 
-    if (facebookRes.data === undefined) return;
+  // const handleAuthFacebook = async ({ accessToken, userID }) => {
+  //   const facebookRes = await getFBUserApi.request({ accessToken, userID });
 
-    const facebookAccount = facebookRes.data;
-    handleDispatchInfo({
-      email: facebookAccount.email,
-      firstName: facebookAccount.first_name,
-      lastName: facebookAccount.last_name,
-    });
-  };
+  //   if (facebookRes.data === undefined) return;
 
-  const handleDispatchInfo = ({ email, firstName, lastName }) => {
-    dispatch(setEmailPassword({ email, password: null }));
+  //   const facebookAccount = facebookRes.data;
+  //   handleDispatchInfo({
+  //     email: facebookAccount.email,
+  //     firstName: facebookAccount.first_name,
+  //     lastName: facebookAccount.last_name,
+  //   });
+  // };
 
-    dispatch(
-      setPersonalData({
-        name: firstName,
-        lastname: lastName,
-        birth: null,
-        cc: null,
-      })
-    );
+  // const handleDispatchInfo = ({ email, firstName, lastName }) => {
+  //   dispatch(setEmailPassword({ email, password: null }));
 
-    setStep(2);
-  };
+  //   dispatch(
+  //     setPersonalData({
+  //       name: firstName,
+  //       lastname: lastName,
+  //       birth: null,
+  //       cc: null,
+  //     })
+  //   );
+
+  //   setStep(2);
+  // };
 
   return (
     <>
@@ -118,7 +120,9 @@ export default function RegisterUserCredentials({ setStep }) {
           <SubmitButton>Continuar</SubmitButton>
         </Form>
 
-        <Divider size="mediumTop" text="o" withText={true} />
+        {/* For the current version of the system, the following functionalities are not enabled */}
+
+        {/* <Divider size="mediumTop" text="o" withText={true} />
 
         <AuthGoogleButton
           text="Continuar con Google"
@@ -138,7 +142,7 @@ export default function RegisterUserCredentials({ setStep }) {
             console.error('error authenticating with facebook');
           }}
           marginBottom={true}
-        />
+        /> */}
       </div>
     </>
   );

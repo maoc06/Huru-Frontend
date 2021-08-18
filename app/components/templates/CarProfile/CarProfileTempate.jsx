@@ -11,7 +11,7 @@ import FeatureSimpleCompound from '../../modules/FeatureSimpleCompound/FeatureSi
 
 const CarProfileTemplate = ({
   carId,
-  dates,
+  dates = null,
   userId = '',
   username = '',
   userPic = '',
@@ -33,6 +33,7 @@ const CarProfileTemplate = ({
   showUser = true,
   showPolicies = true,
   withLinkToOwner = true,
+  chageableDates = true,
 }) => {
   return (
     <main className={styles.wrapper}>
@@ -79,10 +80,14 @@ const CarProfileTemplate = ({
       )}
 
       <article className={`${styles.inner} ${styles.dates}`}>
-        <DatesPanel compact={true} paramDates={dates} title={titleDates} />
+        <DatesPanel
+          compact={true}
+          paramDates={dates}
+          title={titleDates}
+          clickleable={chageableDates}
+        />
+        <Divider />
       </article>
-
-      <Divider />
 
       {showUser && (
         <>
@@ -95,6 +100,7 @@ const CarProfileTemplate = ({
               createdAt={userJoinAt}
               href={`/user-profile/${encodeURIComponent(userId)}`}
               withLink={withLinkToOwner}
+              cursorOnAvatar={true}
             />
           </article>
 

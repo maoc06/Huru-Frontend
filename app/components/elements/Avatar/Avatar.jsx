@@ -14,6 +14,7 @@ export default function AppAvatar({
   size = 'large',
   alt = 'Avatar',
   userId,
+  cursorPointer = false,
 }) {
   const classes = materialAvatarStyles();
   const updateUserPic = useApi(userApi.updateProfilePic);
@@ -55,7 +56,10 @@ export default function AppAvatar({
     <>
       <ActivityIndicator visible={updateUserPic.loading} />
 
-      <div onClick={clickeable ? handleAvatar : () => {}}>
+      <div
+        className={clickeable || (cursorPointer && styles.clickeable)}
+        onClick={clickeable ? handleAvatar : () => {}}
+      >
         <Avatar
           alt={alt}
           src={imageUrl}
@@ -63,7 +67,7 @@ export default function AppAvatar({
             size === 'large' && classes.large
           } ${size === 'medium' && classes.medium} ${
             size === 'xl' && classes.xl
-          }`}
+          } `}
         />
 
         <input

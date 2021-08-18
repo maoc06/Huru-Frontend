@@ -4,3 +4,9 @@
     display: flex;
     background-color: $background;
 }
+
+.bottom {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
