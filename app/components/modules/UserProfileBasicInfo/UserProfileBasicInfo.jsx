@@ -60,7 +60,8 @@ export default function UserProfileBasicInfo({
       };
       const sum = reviews.reduce(reducer, 0);
 
-      setAverageRating((sum / reviews.length).toFixed(1));
+      const calc = parseFloat(sum / reviews.length);
+      setAverageRating(calc.toFixed(1));
     }
   };
 
@@ -110,7 +111,7 @@ export default function UserProfileBasicInfo({
                 <span>
                   <FillStartIcon width={15} height={15} />
                 </span>
-                {averageRating.toFixed(1)}
+                {parseFloat(averageRating).toFixed(1)}
               </p>
             </div>
           )}

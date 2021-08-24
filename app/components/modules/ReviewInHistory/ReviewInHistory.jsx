@@ -26,7 +26,7 @@ export default function ReviewInHistory({
           <FillStartIcon height={15} width={15} />
         </span>
 
-        <span className={styles.rating}>{rating.toFixed(1)}</span>
+        <span className={styles.rating}>{parseFloat(rating).toFixed(1)}</span>
       </p>
 
       <TextareaAutosize

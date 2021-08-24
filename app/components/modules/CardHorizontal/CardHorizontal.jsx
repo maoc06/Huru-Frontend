@@ -91,7 +91,8 @@ export default function CardHorizontal({
       };
       const sum = res.data.data.reduce(reducer, 0);
 
-      setAverageRating((sum / res.data.data.length).toFixed(1));
+      const calc = parseFloat(sum / res.data.data.length);
+      setAverageRating(calc.toFixed(1));
     }
   };
 
