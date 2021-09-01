@@ -82,6 +82,13 @@ const BookingHistory = () => {
       bookedCar.model.name || ''
     } ${bookedCar.year || ''}`;
 
+    let carOwner = 'user name';
+    if (!imOwner) {
+      carOwner = `${bookedCar.userOwner.firstName} ${bookedCar.userOwner.lastName}`;
+    } else {
+      carOwner = `${bookedBy.firstName} ${bookedBy.lastName}`;
+    }
+
     return (
       <PastBookingTemplate
         alreadyReviewed={alreadyReviewed}
@@ -95,7 +102,7 @@ const BookingHistory = () => {
         })}
         bookingId={bookingId}
         carId={bookedCar.carId}
-        carOwner="Keanu Reeves"
+        carOwner={carOwner}
         initialStatePictures={[]}
         finishStatePictures={[]}
         reviewBy={uid}

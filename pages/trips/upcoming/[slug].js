@@ -89,7 +89,6 @@ const UpcomingBooking = () => {
 
           <UpcomingBookingTemplate
             title={`${booking.bookedCar.maker.name} ${booking.bookedCar.model.name} ${booking.bookedCar.year}`}
-            carOwner="Keanu Reeves"
             bookingDates={{
               checkin: booking.checkin,
               checkout: booking.checkout,

@@ -3,7 +3,7 @@ import DatesPanel from '../../modules/DatesPanel/DatesPanel';
 import PaymentDetails from '../../modules/PaymentDetails/PaymentDetails';
 import PostReview from '../../modules/PostReview/PostReview';
 import ReviewInHistory from '../../modules/ReviewInHistory/ReviewInHistory';
-import StatePictures from '../../modules/StatePictures/StatePictures';
+// import StatePictures from '../../modules/StatePictures/StatePictures';
 import AppLayout from '../../layouts/AppLayout/AppLayout';
 
 import { diffDays } from '../../../utils/formatDates';
@@ -16,16 +16,16 @@ const PastBookingTemplate = ({
   alreadyRating,
   title = '',
   carId,
-  carOwner,
+  carOwner = '',
   bookedBy,
   bookingId,
   bookingDates,
   reviewBy,
   reviewForCar,
   pricePerDay,
-  initialStatePictures,
-  finishStatePictures,
   showExtraInfoPanels = true,
+  // initialStatePictures,
+  // finishStatePictures,
 }) => {
   const serviceFeePercentage = 0.17;
 
@@ -40,7 +40,7 @@ const PastBookingTemplate = ({
 
           <Divider size="mediumTop" />
 
-          <h6>Estado inicial del vehículo</h6>
+          {/* <h6>Estado inicial del vehículo</h6>
           <StatePictures
             pictures={initialStatePictures}
             withMarginBottom={true}
@@ -49,7 +49,7 @@ const PastBookingTemplate = ({
           <h6>Estado final del vehículo</h6>
           <StatePictures pictures={finishStatePictures} />
 
-          <Divider size="mediumTop" />
+          <Divider size="mediumTop" /> */}
 
           <h6>Información de pago</h6>
           <PaymentDetails
@@ -71,7 +71,7 @@ const PastBookingTemplate = ({
               comment={alreadyComment}
               rating={alreadyRating}
               isForCar={reviewForCar}
-              guest={'Keanu Reeves'}
+              guest={carOwner}
             />
           ) : (
             <PostReview
@@ -79,7 +79,7 @@ const PastBookingTemplate = ({
               bookingId={bookingId}
               carId={carId}
               isForCar={reviewForCar}
-              ownerName={'Keanu Reeves'}
+              ownerName={carOwner}
               reviewBy={reviewBy}
             />
           )}

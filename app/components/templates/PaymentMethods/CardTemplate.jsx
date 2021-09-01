@@ -21,7 +21,7 @@ import style from './CardTemplate.module.scss';
 
 const CardTemplate = ({ uid, email, number = '', readOnly = false }) => {
   const router = useRouter();
-  const initialValues = { card_holder: '', number, expiry: '', cvc: '' };
+  const initialValues = { cardHolder: '', number, expiry: '', cvc: '' };
 
   const saveCard = useApi(paymentGatewayApi.savePaymentSourceCard);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -36,15 +36,15 @@ const CardTemplate = ({ uid, email, number = '', readOnly = false }) => {
     setShowFail(false);
   };
 
-  const handleSubmit = async ({ card_holder, cvc, expiry, number }) => {
+  const handleSubmit = async ({ cardHolder, cvc, expiry, number }) => {
     const exp = expiry.toString().split('/');
 
     const card = {
-      card_holder,
+      cardHolder,
       cvc,
       number: number.toString().replaceAll(' ', ''),
-      exp_month: exp[0],
-      exp_year: exp[1],
+      expMonth: exp[0],
+      expYear: exp[1],
       uid,
       email,
     };
@@ -90,7 +90,7 @@ const CardTemplate = ({ uid, email, number = '', readOnly = false }) => {
       >
         {!readOnly && (
           <Textfield
-            name="card_holder"
+            name="cardHolder"
             type="text"
             label="Titular"
             placeholder="Titular de la tarjeta"

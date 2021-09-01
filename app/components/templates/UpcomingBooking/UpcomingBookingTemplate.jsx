@@ -10,7 +10,6 @@ import { diffDays } from '../../../utils/formatDates';
 
 const UpcomingBookingTemplate = ({
   title,
-  carOwner,
   bookingDates,
   pricePerDay,
   onClickCancelButton,
@@ -20,7 +19,6 @@ const UpcomingBookingTemplate = ({
   return (
     <AppLayout withImage={false} isFullHeigh={false}>
       <h5 className={styles.car}>{title}</h5>
-      {/* <p>De {carOwner}</p> */}
 
       <div className={styles.container}>
         <section className={styles.info}>

@@ -32,7 +32,7 @@ export default function LicensePlate({ setStep, next }) {
   };
 
   const handleSubmit = async ({ licensePlate, location: { municipality } }) => {
-    const existing = await findByLicense.request(licensePlate.licensePlate);
+    const existing = await findByLicense.request(licensePlate);
 
     if (
       Object.keys(existing.data.data).length === 0 &&
@@ -68,6 +68,7 @@ export default function LicensePlate({ setStep, next }) {
           label="Matrícula"
           apiError={apiError}
           errorMsg={'La matrícula ya está registrada'}
+          typeChangeAux="license"
           upperCase
         />
 

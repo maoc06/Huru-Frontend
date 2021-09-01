@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 const cardSchema = Yup.object().shape({
-  card_holder: Yup.string()
+  cardHolder: Yup.string()
     .required('El titular es un campo obligatorio')
     .min(2, 'Debe tener al menos 2 caracteres')
     .max(255, 'No puede superar los 255 caracteres')

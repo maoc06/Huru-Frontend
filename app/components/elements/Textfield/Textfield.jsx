@@ -23,6 +23,7 @@ export default function Textfield({
   readOnly = false,
   onChangeAux,
   onChangePriceAux,
+  typeChangeAux = 'none',
   type,
   ...otherProps
 }) {
@@ -53,8 +54,25 @@ export default function Textfield({
     const value = event.target.value;
     setFieldValue(name, value);
 
-    if (typeof onChangeAux === 'function') {
+    if (typeof onChangeAux === 'function' && typeChangeAux === 'none') {
       onChangeAux(value);
+    }
+
+    if (typeChangeAux === 'license') {
+      let formattedValue = '';
+
+      if (value.length === 4) {
+        formattedValue = value.substring(0, 3) + ' ' + value.substring(3);
+      } else {
+        formattedValue = value;
+      }
+
+      const cursorAt = formattedValue.length - 1;
+      if (formattedValue.charAt(cursorAt) === ' ') {
+        formattedValue = formattedValue.slice(0, cursorAt);
+      }
+
+      setFieldValue(name, String(formattedValue).toUpperCase());
     }
   };
 

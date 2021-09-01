@@ -26,7 +26,10 @@ export default function RegisterUserPhone({ setStep }) {
 
   const handleSubmit = async ({ phone }) => {
     const phoneNumber = `+${countryCode} ${phone}`;
-    const res = await checkPhoneApi.request(phoneNumber);
+    const res = await checkPhoneApi.request(
+      `+${phoneNumber.replace(/\D/g, '')}`
+    );
+
     if (res.data.data.phone !== undefined) setApiError(true);
     else {
       dispatch(setPhone({ phoneNumber }));
