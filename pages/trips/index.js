@@ -20,6 +20,7 @@ const Trips = () => {
   const [bookingHistory, setBookingHistory] = useState([]);
 
   useEffect(() => {
+    console.log('RENDER TRIPS');
     const user = authStorage.getUser();
     if (user) {
       const uuid = user.info.uid;
@@ -30,6 +31,7 @@ const Trips = () => {
 
   const handleUpcomingBookings = async (uuid) => {
     const res = await getUpcomingBookings.request(uuid);
+    console.log(res.data.data);
     setUpcomingBookings(res.data.data);
   };
 
