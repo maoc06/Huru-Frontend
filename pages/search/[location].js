@@ -61,8 +61,6 @@ function Cars() {
 
       const resultsData = applyAllSettings({ data, checkIn, checkOut });
 
-      console.log(resultsData);
-
       setCars(resultsData);
       dispatch(setResults(JSON.stringify(resultsData)));
     }

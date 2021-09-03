@@ -70,7 +70,7 @@ const SearchResultsTemplate = () => {
                 key={slug}
                 title={`${name} ${model} ${year}`}
                 price={price}
-                imageSrc={image ? image : '../../'}
+                imageSrc={image ? image : '/images/default-car.png'}
                 href={`/car/${encodeURIComponent(slug)}`}
                 isEco={categories.includes(8)}
                 description={description}
