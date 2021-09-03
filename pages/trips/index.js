@@ -35,7 +35,6 @@ const Trips = () => {
 
   const handleBookingsHistory = async (uuid) => {
     const res = await getBookingsHistory.request(uuid);
-
     setBookingHistory(res.data.data);
   };
 

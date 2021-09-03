@@ -35,12 +35,14 @@ const FeatureSimpleCompound = ({
           return <FeatureSimple key={featureId} featureId={featureId} />;
         })}
 
-      <SeeAll
-        text={seeAllText}
-        href={`/car/details/features/${encodeURIComponent(carId)}`}
-        simulate={seeAllInline}
-        onSimulate={handleSimulateSeeAll}
-      />
+      {features.length > 0 && (
+        <SeeAll
+          text={seeAllText}
+          href={`/car/details/features/${encodeURIComponent(carId)}`}
+          simulate={seeAllInline}
+          onSimulate={handleSimulateSeeAll}
+        />
+      )}
     </>
   );
 };

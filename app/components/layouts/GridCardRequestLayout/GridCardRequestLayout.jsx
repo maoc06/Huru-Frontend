@@ -14,7 +14,11 @@ export default function GridCardRequestLayout({
       <div className={style.container}>
         {requestList.slice(0, sliceTo).map((request) => {
           const { firstName, lastName } = request.bookedBy;
-          const { images, maker, model, year } = request.bookedCar;
+          const { maker, model, year } = request.bookedCar;
+          const imageSrc =
+            request.bookedCar.images.length === 0
+              ? '/images/default-car.png'
+              : request.bookedCar.images[0].imagePath;
 
           const applicantName = `${firstName} ${lastName}`;
           const title = `${maker.name} ${model.name} ${year}`;
@@ -31,7 +35,7 @@ export default function GridCardRequestLayout({
               guestName={applicantName}
               guestImg={request.bookedBy.profilePhoto}
               carName={title}
-              carImg={images[0].imagePath}
+              carImg={imageSrc}
               dateStart={request.checkin}
               dateEnd={request.checkout}
               requestId={request.id}

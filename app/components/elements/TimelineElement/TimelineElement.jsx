@@ -17,8 +17,8 @@ function TimelineElement({
       className={`${styles.container} ${
         backgroundColor === 'yellow' && styles.yellow
       } ${backgroundColor === 'red' && styles.red} ${
-        isFirstElement && styles.first
-      }`}
+        backgroundColor === 'green' && styles.green
+      } ${isFirstElement && styles.first}`}
     >
       <div className={styles.icon}>{icon}</div>
 

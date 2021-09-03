@@ -53,6 +53,7 @@ const NequiTemplate = ({ uid, email, phone = '', readOnly = false }) => {
 
       <StatusIndicator
         animationData={checkAnimationData}
+        isLoop={false}
         visible={showConfirm}
         title={'Metodo agregado exitosamente'}
         message={
@@ -64,6 +65,7 @@ const NequiTemplate = ({ uid, email, phone = '', readOnly = false }) => {
 
       <StatusIndicator
         animationData={errorAnimationData}
+        isLoop={false}
         visible={showFail}
         title={'No se agregado el metodo'}
         message={`Revisa que la cuenta Nequi este activa o comunicate con el soporte tecnico.`}

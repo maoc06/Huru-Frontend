@@ -15,6 +15,7 @@ export default function AppDateRangePicker({
   onSelectEndHour,
   showTimes = true,
   showInline = false,
+  disabledDates = [],
 }) {
   const ref = useRef();
   const [state, setState] = useState([
@@ -64,6 +65,7 @@ export default function AppDateRangePicker({
         showDateDisplay={false}
         rangeColors={['#070d9a']}
         className={styles.date_range_calendar}
+        disabledDates={disabledDates}
       />
 
       {showTimes && (

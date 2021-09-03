@@ -5,5 +5,8 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     @media (min-width: 720px) {
         gap: 64px 32px;
+        // min-width: 320px;
+        // max-width: 550px;
+        // margin: 0 auto;
     }
 }

@@ -7,6 +7,8 @@ import bookingApi from '../../../app/api/BookingAPI';
 import withAuth from '../../../app/HOC/withAuth';
 
 import { todayDate } from '../../../app/utils/formatDates';
+import { calcBookingStage } from '../../../app/utils/bookingStage';
+import authStorage from '../../../app/utils/storageAuth';
 
 import Carousel from '../../../app/components/elements/Carousel/Carousel';
 import UpcomingBookingTemplate from '../../../app/components/templates/UpcomingBooking/UpcomingBookingTemplate';
@@ -23,17 +25,33 @@ const UpcomingBooking = () => {
   const cancelBooking = useApi(bookingApi.cancelBooking);
 
   const [booking, setBooking] = useState({});
+  const [imOwner, setImOwner] = useState(false);
+  const [bookingStage, setBookingStage] = useState(1);
   const [showConfimationModal, setShowConfirmModal] = useState(false);
 
   useEffect(() => {
-    if (slug) handleGetBooking();
+    if (slug) {
+      const user = authStorage.getUser();
+      if (user) handleGetBooking(user.info.uid);
+    }
   }, [slug]);
 
-  const handleGetBooking = async () => {
+  const handleGetBooking = async (uid) => {
     const res = await getBooking.request(slug);
     const booking = res.data.data;
 
     setBooking(booking);
+
+    setBookingStage(
+      calcBookingStage({
+        bookingStatus: booking.bookingStatus,
+        checkin: booking.checkin,
+        checkout: booking.checkout,
+      })
+    );
+
+    const loggedWithCarOwner = uid !== booking.bookedBy.uuid;
+    setImOwner(loggedWithCarOwner);
 
     return booking;
   };
@@ -49,7 +67,7 @@ const UpcomingBooking = () => {
     };
 
     await cancelBooking.request(canceled);
-    router.push('/trips');
+    !imOwner ? router.push('/trips') : router.push('/host/requests');
   };
 
   const handleShowConfirmModal = () => {
@@ -89,6 +107,7 @@ const UpcomingBooking = () => {
 
           <UpcomingBookingTemplate
             title={`${booking.bookedCar.maker.name} ${booking.bookedCar.model.name} ${booking.bookedCar.year}`}
+            bookingStage={bookingStage}
             bookingDates={{
               checkin: booking.checkin,
               checkout: booking.checkout,

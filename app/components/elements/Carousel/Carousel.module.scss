@@ -1,20 +1,38 @@
 @import '../../../styles/abstracts/colors';
+.scrollIndicator {
+    display: none;
+}
+
 .carousel {
     min-height: 200px;
     max-height: 100vw;
-    background-color: $gray_6;
+    background-color: $white;
+    .noSrcMessage {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: $primary;
+    }
     @media (min-width: 720px) {
         .slide {
             position: relative;
             height: 100vh;
-            // top: -50%;
-            // left: 0;
             max-height: 100vh;
             .image {
                 object-fit: fill;
-                // width: 100%;
-                // height: 100%;
             }
         }
+    }
+}
+
+@media (min-width: 720px) {
+    .scrollIndicator {
+        display: block;
+        position: absolute;
+        top: 90vh;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 998;
     }
 }

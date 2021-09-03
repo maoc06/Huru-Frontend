@@ -9,11 +9,15 @@ const ScrollPanelCars = ({ cars = [] }) => {
     <ScrollContainer vertical={false} activationDistance={5}>
       <div className={styles.cars_container}>
         {cars.map(({ carId, maker, model, images, year }) => {
+          const imageSrc =
+            images.length === 0
+              ? '/images/default-car.png'
+              : images[0].imagePath;
           return (
             <CardHorizontal
               key={carId}
               title={`${maker.name} ${model.name} ${year}`}
-              imageSrc={images[0].imagePath}
+              imageSrc={imageSrc}
               href={`/car/${encodeURIComponent(carId)}`}
               showPanelDates={false}
               showPanelPrice={false}

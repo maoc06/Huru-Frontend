@@ -1,10 +1,15 @@
+import { useEffect, useState } from 'react';
+
 import Divider from '../../elements/Divider/Divider';
 import DatesPanel from '../../modules/DatesPanel/DatesPanel';
 import AppLayout from '../../layouts/AppLayout/AppLayout';
 import styles from './CanceledBookingDetailsTemplate.module.scss';
-import { useEffect, useState } from 'react';
 
-const CanceledBookingDetailsTemplate = ({ title = '', type = 7 }) => {
+const CanceledBookingDetailsTemplate = ({
+  bookingDates,
+  title = '',
+  type = 7,
+}) => {
   const [typeText, setTypeText] = useState('Cancelada');
 
   useEffect(() => {
@@ -35,11 +40,11 @@ const CanceledBookingDetailsTemplate = ({ title = '', type = 7 }) => {
         <Divider size="mediumTop" />
 
         <h6>Marco de tiempo</h6>
-        <DatesPanel clickleable={false} />
+        <DatesPanel paramDates={bookingDates} clickleable={false} />
 
-        <Divider size="mediumTop" />
+        {/* <Divider size="mediumTop" />
 
-        <h6>Reembolso</h6>
+        <h6>Reembolso</h6> */}
       </div>
     </AppLayout>
   );

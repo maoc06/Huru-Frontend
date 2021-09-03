@@ -16,6 +16,7 @@ function CarDesktopPanel({
   disabledMessage,
   withDiscount = false,
   discountPerDay = 0,
+  disabledDates = [],
 }) {
   const serviceFeePercentage = 0.17;
   const router = useRouter();
@@ -40,7 +41,7 @@ function CarDesktopPanel({
 
   useEffect(() => {
     calcDays();
-  }, []);
+  }, [travel]);
 
   return (
     <section className={styles.panel}>
@@ -64,7 +65,7 @@ function CarDesktopPanel({
         </p>
       </div>
 
-      <DatesPanel compact={true} />
+      <DatesPanel compact={true} disabledDates={disabledDates} />
 
       <PaymentDetails
         showTitle={false}

@@ -15,6 +15,21 @@ Date.shortMonths = [
   'Dic',
 ];
 
+Date.largeMonths = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciciembre',
+];
+
 const options = { includeOffset: false, includeZone: false };
 
 const calcYearsOld = ({ birthday }) => {
@@ -98,13 +113,14 @@ const defaultDates = () => {
   return res;
 };
 
-const diffDays = ({ dateOne, dateTwo, type = 'ISO' }) => {
+const diffDays = ({ dateOne, dateTwo, type = 'ISO', returnInAbs = true }) => {
   const i1 = convertTo({ date: dateOne, type });
   const i2 = convertTo({ date: dateTwo, type });
 
   const calcDiff = i2.diff(i1, 'days').toObject();
 
-  return Math.floor(Math.abs(calcDiff.days));
+  if (returnInAbs) return Math.floor(Math.abs(calcDiff.days));
+  return Math.floor(calcDiff.days);
 };
 
 const formatDate = ({ date, type = 'SQL' }) => {
@@ -124,6 +140,16 @@ const formatTime = ({ date, type = 'SQL' }) => {
   const meridiem = rawDate.toFormat('a');
 
   return `${hours}:${minutes} ${meridiem}`;
+};
+
+const formatPrettyFull = ({ date, type = 'ISO' }) => {
+  const rawDate = convertTo({ date, type });
+  const time = formatTime({ date, type });
+
+  const month = rawDate.toLocaleString({ month: 'numeric' });
+  const day = rawDate.toLocaleString({ day: '2-digit' });
+
+  return `${day} de ${Date.largeMonths[month - 1]} a las ${time}`;
 };
 
 const formatMonthYear = (date) => {
@@ -185,6 +211,7 @@ const lastDay = ({ days = 1, date, type = 'SQL', outputFormat = 'simple' }) => {
 
   const lastDate = rawDate.minus({ days }).toISO();
 
+  if (outputFormat === 'raw') return lastDate;
   return formatFullDate({ date: lastDate, type: 'ISO', outputFormat });
 };
 
@@ -221,6 +248,7 @@ export {
   defaultDates,
   diffDays,
   formatDate,
+  formatPrettyFull,
   formatFullDate,
   formatTime,
   formatMonthYear,

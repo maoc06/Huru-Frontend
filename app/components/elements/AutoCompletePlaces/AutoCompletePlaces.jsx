@@ -7,7 +7,13 @@ import { setPlace } from '../../../redux/slices/searchParamsSlice';
 
 import { styles } from './styles';
 
-export default function AutoCompletePlaces({ name, placeholder, isCompact }) {
+export default function AutoCompletePlaces({
+  name,
+  placeholder,
+  isCompact,
+  detectChanges = false,
+  onDetectChanges = () => {},
+}) {
   const place = useSelector((state) => state.searchParams.place);
   const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext();
@@ -45,6 +51,8 @@ export default function AutoCompletePlaces({ name, placeholder, isCompact }) {
   const handleChangePlace = (place) => {
     setFieldValue(name, place);
     dispatch(setPlace(place));
+
+    if (detectChanges) onDetectChanges(place);
   };
 
   return (
@@ -54,6 +62,8 @@ export default function AutoCompletePlaces({ name, placeholder, isCompact }) {
       apiOptions={{ language: 'es', region: 'CO' }}
       autocompletionRequest={{ types: ['(cities)'] }}
       selectProps={{
+        noOptionsMessage: ({}) => 'No hay resultados',
+        loadingMessage: ({}) => 'Buscando...',
         instanceId: 'search-form-by-city',
         value: values[name],
         onChange: handleChangePlace,

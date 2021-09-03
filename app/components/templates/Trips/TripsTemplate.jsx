@@ -34,6 +34,9 @@ const TripsTemplate = ({ renderList, domain }) => {
           alreadyReviewed,
         } = item || {};
 
+        const imageSrc =
+          images.length === 0 ? '/images/default-car.png' : images[0].imagePath;
+
         const extraLabel = withExtraLabelGuests({
           already: alreadyReviewed,
           status: bookingStatus,
@@ -47,7 +50,7 @@ const TripsTemplate = ({ renderList, domain }) => {
             slug={id}
             title={`${maker.name} ${model.name} ${year}`}
             showPanelDates={true}
-            imageSrc={images[0].imagePath}
+            imageSrc={imageSrc}
             href={`/trips/${domain}/${encodeURIComponent(id)}`}
             withExtraLabel={extraLabel.show}
             extraLabelText={extraLabel.text}

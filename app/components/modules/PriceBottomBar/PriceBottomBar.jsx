@@ -23,7 +23,7 @@ export default function PriceBottomBar({
 
   useEffect(() => {
     if (pricePerDay) calcTotal();
-  }, [pricePerDay]);
+  }, [pricePerDay, travel]);
 
   const calcTotal = () => {
     let {

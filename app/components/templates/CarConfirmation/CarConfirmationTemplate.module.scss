@@ -2,6 +2,10 @@
 .container {
     max-width: 450px;
     margin: auto;
+    .car {
+        font-weight: bold;
+        text-transform: capitalize;
+    }
     .title_edit {
         display: flex;
         justify-content: space-between;

@@ -12,6 +12,7 @@ import FeatureSimpleCompound from '../../modules/FeatureSimpleCompound/FeatureSi
 const CarProfileTemplate = ({
   carId,
   dates = null,
+  disabledDates = [],
   userId = '',
   username = '',
   userPic = '',
@@ -85,6 +86,7 @@ const CarProfileTemplate = ({
           paramDates={dates}
           title={titleDates}
           clickleable={chageableDates}
+          disabledDates={disabledDates}
         />
         <Divider />
       </article>

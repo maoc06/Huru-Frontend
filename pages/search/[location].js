@@ -36,7 +36,8 @@ function Cars() {
   const [user, setUser] = useState(null);
   const [showMenuDesktop, setShowMenuDesktop] = useState(false);
 
-  const { location } = router.query;
+  const [location, setLocation] = useState(router.query);
+  // const { location } = router.query;
 
   const handleCarsQuery = async ({ checkIn, checkOut }) => {
     if (!checkIn.toString().includes('T')) {
@@ -59,6 +60,8 @@ function Cars() {
       } = res;
 
       const resultsData = applyAllSettings({ data, checkIn, checkOut });
+
+      console.log(resultsData);
 
       setCars(resultsData);
       dispatch(setResults(JSON.stringify(resultsData)));
@@ -91,6 +94,14 @@ function Cars() {
     } = rawData;
 
     return { checkIn: start, checkOut: end };
+  };
+
+  const handleListenPlaces = (place) => {
+    setLocation(place.value.structured_formatting.main_text);
+  };
+
+  const handleListenDates = () => {
+    handleCarsQuery(getCheckInOut());
   };
 
   const handleAvatar = () => {
@@ -135,6 +146,10 @@ function Cars() {
             showTopLabels={false}
             showBorder={true}
             startDateBorder={true}
+            listenPlaces={true}
+            listenDates={true}
+            listenerPlaces={handleListenPlaces}
+            listenerDates={handleListenDates}
           />
         </div>
 

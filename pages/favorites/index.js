@@ -31,7 +31,6 @@ const Favorites = () => {
     const res = await getFavorites.request(userId);
     if (res !== undefined && res.data !== undefined) {
       setFavorites(res.data.data);
-      console.log(res.data.data);
     }
   };
 
@@ -67,12 +66,17 @@ const Favorites = () => {
           {favorites.constructor === Array &&
             favorites.length > 0 &&
             favorites.map(({ car }) => {
+              const imageSrc =
+                car.images.length === 0
+                  ? '/images/default-car.png'
+                  : car.images[0].imagePath;
+
               return (
                 <CardHorizontal
                   carId={car.carId}
                   userId={user.uid}
                   key={car.carId}
-                  imageSrc={car.images[0].imagePath}
+                  imageSrc={imageSrc}
                   href={`/car/${encodeURIComponent(car.carId)}`}
                   showPanelPrice={false}
                   title={`${car.maker.name} ${car.model.name} ${car.year}`}

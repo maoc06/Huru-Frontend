@@ -4,17 +4,18 @@ import { useRouter } from 'next/router';
 
 import useApi from '../../app/hooks/useApi';
 import userApi from '../../app/api/UserAPI';
+import disableDayApi from '../../app/api/DisableDayAPI';
 import authStorage from '../../app/utils/storageAuth';
 import { capitalize } from '../../app/utils/capitalize';
+import { typeTransmissionEnum } from '../../app/utils/enums';
+import { constraintsContinueBooking } from '../../app/utils/constraintsContinueBooking';
 
+import styles from './car.module.scss';
 import Carousel from '../../app/components/elements/Carousel/Carousel';
 import PriceBottomBar from '../../app/components/modules/PriceBottomBar/PriceBottomBar';
 import CarDesktopPanel from '../../app/components/modules/CarDesktopPanel/CarDesktopPanel';
 import CarProfileTemplate from '../../app/components/templates/CarProfile/CarProfileTempate';
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
-
-import { typeTransmissionEnum } from '../../app/utils/enums';
-import styles from './car.module.scss';
 
 const ELECTRIC_CAR_ID = 5;
 const DISCOUNT_ECO_FRIENDLY = 0.15;
@@ -22,6 +23,7 @@ const DISCOUNT_ECO_FRIENDLY = 0.15;
 function CarSlug({ car, metaTitle }) {
   const router = useRouter();
   const getUser = useApi(userApi.findUser);
+  const getDisableDays = useApi(disableDayApi.listByCar);
 
   const [user, setUser] = useState({
     enabled: false,
@@ -29,48 +31,22 @@ function CarSlug({ car, metaTitle }) {
   });
   const [isEcoCar, setIsEcoCar] = useState(false);
   const [discountPerDay, setDiscountPerDay] = useState(car.price);
+  const [disabledDates, setDisabledDates] = useState([]);
 
   const handleUserData = async (userId) => {
+    const { status: carEnabled } = car;
     const resUser = await getUser.request(userId);
-    if (resUser.data !== undefined) {
-      const { status: carEnabled } = car;
-      const { isEmailVerified, isPhoneVerified, status } = resUser.data.data;
 
-      if (carEnabled !== 1) {
-        setUser({
-          ...user,
-          message: 'Este vehículo no se encuentra habilitado.',
-        });
-      } else if (!isEmailVerified) {
-        setUser({
-          ...user,
-          message:
-            'Para continuar con la reserva, primero debes verificar tu email.',
-        });
-      } else if (!isPhoneVerified) {
-        setUser({
-          ...user,
-          message:
-            'Para continuar con la reserva, primero debes verificar tu número telefonico.',
-        });
-      } else if (!isEmailVerified && !isPhoneVerified) {
-        setUser({
-          ...user,
-          message:
-            'Para continuar con la reserva, primero debes verificar tu email y número telefonico.',
-        });
-      } else if (status === 2) {
-        setUser({
-          ...user,
-          message:
-            'Para continuar con la reserva, el equipo de soporte primero debe verificar tu cuenta.',
-        });
-      } else {
-        setUser({
-          ...user,
-          enabled: true,
-        });
-      }
+    if (resUser.data !== undefined) {
+      const { isEmailVerified, isPhoneVerified, status } = resUser.data.data;
+      constraintsContinueBooking({
+        carEnabled,
+        isEmailVerified,
+        isPhoneVerified,
+        setUser,
+        status,
+        user,
+      });
     }
   };
 
@@ -91,10 +67,27 @@ function CarSlug({ car, metaTitle }) {
     }
   };
 
+  const handleGetDisableDays = async (carId) => {
+    let disabledDates = [];
+    const res = await getDisableDays.request(carId);
+
+    if (res.data) {
+      const days = res.data.data;
+
+      days.forEach((day) =>
+        disabledDates.push(new Date(day.disableDay.replace(/-/g, '/')))
+      );
+
+      setDisabledDates(disabledDates);
+    }
+  };
+
   useEffect(() => {
     const user = authStorage.getUser();
     if (user) handleUserData(user.info.uid);
+
     hanldeIsEcoCar();
+    handleGetDisableDays(car.carId);
   }, []);
 
   return (
@@ -123,6 +116,7 @@ function CarSlug({ car, metaTitle }) {
               userJoinAt={car.userOwner.createdAt}
               title={`${car.maker.name} ${car.model.name} ${car.year}`}
               description={car.description}
+              disabledDates={disabledDates}
               numSeats={car.model.numOfSeats}
               typeTransmission={typeTransmissionEnum[car.model.transmissionId]}
               typeGas={car.fuel.name}
@@ -137,6 +131,7 @@ function CarSlug({ car, metaTitle }) {
               slug={car.carId}
               discountPerDay={discountPerDay}
               withDiscount={isEcoCar}
+              disabledDates={disabledDates}
             />
           </section>
 

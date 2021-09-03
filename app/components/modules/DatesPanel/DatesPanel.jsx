@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useTravelDates from '../../../hooks/useTravelDates';
@@ -23,16 +23,16 @@ export default function DatesPanel({
   startDateBorder = false,
   paramDates,
   title,
+  detectChanges = false,
+  onDetectChanges = () => {},
+  disabledDates = [],
 }) {
   const dispatch = useDispatch();
   const travel = useTravelDates();
 
   const [selectionDates, setSelectionDates] = useState(defaultDates());
   const [showDates, setShowDates] = useState(false);
-
-  useEffect(() => {
-    setGlobaltDates(paramDates ? paramDates : travel.getDates());
-  }, []);
+  const prevShowDatesRef = useRef();
 
   const handleShowDates = () => {
     setShowDates(!showDates);
@@ -41,6 +41,10 @@ export default function DatesPanel({
   const setGlobaltDates = (dates) => {
     setSelectionDates(dates);
     dispatch(setDates(JSON.stringify(dates)));
+  };
+
+  const setChanges = (dates) => {
+    setGlobaltDates(dates);
   };
 
   const handleChangeDates = ({ selection: { startDate, endDate } }) => {
@@ -54,7 +58,7 @@ export default function DatesPanel({
       },
     };
 
-    setGlobaltDates(selectedDates);
+    setChanges(selectedDates);
   };
 
   const handleChangeStartHour = (event) => {
@@ -72,7 +76,7 @@ export default function DatesPanel({
       },
     };
 
-    setGlobaltDates(selectedDates);
+    setChanges(selectedDates);
   };
 
   const handleChangeEndHour = (event) => {
@@ -90,8 +94,21 @@ export default function DatesPanel({
       },
     };
 
-    setGlobaltDates(selectedDates);
+    setChanges(selectedDates);
   };
+
+  useEffect(() => {
+    setGlobaltDates(paramDates ? paramDates : travel.getDates());
+  }, []);
+
+  useEffect(() => {
+    const prevStateShowDates = prevShowDatesRef.current;
+    if (!showDates && prevStateShowDates && detectChanges) onDetectChanges();
+  }, [showDates]);
+
+  useEffect(() => {
+    prevShowDatesRef.current = showDates;
+  });
 
   const renderSection = ({ title, date, hour, isEnd = false }) => {
     return (
@@ -137,6 +154,7 @@ export default function DatesPanel({
           onSelectEndHour={handleChangeEndHour}
           setShow={setShowDates}
           show={showDates}
+          disabledDates={disabledDates}
         />
       </section>
     </>

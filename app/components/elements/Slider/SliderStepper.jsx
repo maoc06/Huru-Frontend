@@ -14,15 +14,13 @@ export default function AppSlider({
   message,
   onChange,
 }) {
-  const valuetext = (value) => {
-    return `${value} ${message}`;
-  };
+  const valuetext = (value) => `${value} ${message}`;
 
   const [value, setValue] = useState(valuetext(defaultStep));
 
-  const handleChange = (event) => {
-    setValue(event.target.ariaValueText);
-    onChange(event.target.ariaValueNow);
+  const handleChange = (_, number) => {
+    setValue(valuetext(number));
+    onChange(number);
   };
 
   return (

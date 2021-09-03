@@ -64,7 +64,13 @@ export default function LoginForm() {
     }
   };
 
+  const resetErrors = () => {
+    setEmailError(false);
+    setPasswordError(false);
+  };
+
   const handleSubmit = async (user) => {
+    resetErrors();
     const res = await validateCredentials.request(user);
     handleAuth({ accessToken: res.data.token });
   };
@@ -115,6 +121,7 @@ export default function LoginForm() {
             placeholder="ejemplo@correo.com"
             apiError={emailError}
             errorMsg={emailErrorMsg}
+            onChangeAux={() => setEmailError(false)}
           />
 
           <Textfield
@@ -124,6 +131,7 @@ export default function LoginForm() {
             placeholder="Digita tu contraseña"
             apiError={passwordError}
             errorMsg={passwordErrorMsg}
+            onChangeAux={() => setPasswordError(false)}
             withSmallBottomMargin
           />
 

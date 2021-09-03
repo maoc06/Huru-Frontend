@@ -73,9 +73,9 @@ export default function CountryPicker({ setCountryCode, initialCode = '57' }) {
 
   return (
     <>
-      <div className={styles.container} onClick={handleClick}>
+      <div className={styles.container} onClick={() => {}}>
         <Image src={countrySelected.flag} width={31} height={21} />
-        <ExpandMoreRounded />
+        {/* <ExpandMoreRounded /> */}
       </div>
 
       <StyledMenu

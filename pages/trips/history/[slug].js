@@ -115,14 +115,22 @@ const BookingHistory = () => {
   };
 
   const canceledBookingDetailsTemplate = () => {
-    const { bookingStatus, bookedCar } = booking || {};
+    const { checkin, checkout, bookingStatus, bookedCar } = booking || {};
 
     const title = `${bookedCar.maker.name || 'Vehículo'} ${
       bookedCar.model.name || ''
     } ${bookedCar.year || ''}`;
 
     return (
-      <CanceledBookingDetailsTemplate title={title} type={bookingStatus} />
+      <CanceledBookingDetailsTemplate
+        bookingDates={convertToCompound({
+          dateOne: checkin,
+          dateTwo: checkout,
+          type: 'ISO',
+        })}
+        title={title}
+        type={bookingStatus}
+      />
     );
   };
 

@@ -64,7 +64,8 @@ const CarConfirmationTemplate = ({
   return (
     <div className={styles.container}>
       <p>
-        Estas a un paso de reservar el {carName}. Revisa y confirma la
+        Estas a un paso de reservar el{' '}
+        <span className={styles.car}>{carName}</span>. Revisa y confirma la
         información presentada a continuación.
       </p>
 
@@ -72,9 +73,9 @@ const CarConfirmationTemplate = ({
 
       <div className={styles.title_edit}>
         <h5>Periodo de reserva</h5>
-        <Link href="">
+        {/* <Link href="">
           <a>Editar</a>
-        </Link>
+        </Link> */}
       </div>
 
       <DatesPanel clickleable={false} compact={true} />
@@ -94,7 +95,7 @@ const CarConfirmationTemplate = ({
       <div className={styles.title_edit}>
         <h5>Metodo de pago</h5>
         <Link href="/profile/payment-methods">
-          <a>Editar</a>
+          <a target="_blank">Editar</a>
         </Link>
       </div>
       {paymentMethod ? (

@@ -1,5 +1,9 @@
 const styles = ({ isCompact, isMobile }) => {
   return {
+    container: (provided) => ({
+      ...provided,
+      zIndex: 999,
+    }),
     control: (provided, state) => ({
       ...provided,
       backgroundColor: 'transparent',

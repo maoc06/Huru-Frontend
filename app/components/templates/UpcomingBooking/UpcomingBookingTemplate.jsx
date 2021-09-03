@@ -13,6 +13,7 @@ const UpcomingBookingTemplate = ({
   bookingDates,
   pricePerDay,
   onClickCancelButton,
+  bookingStage = 1,
 }) => {
   const serviceFeePercentage = 0.17;
 
@@ -23,9 +24,23 @@ const UpcomingBookingTemplate = ({
       <div className={styles.container}>
         <section className={styles.info}>
           <h6>Itinerario de la reserva</h6>
+
+          {bookingStage === 1 && (
+            <span className={styles.pending}>
+              La reserva está pendiente de aprovación
+            </span>
+          )}
+
+          {bookingStage === 5 && (
+            <span className={styles.finished}>
+              El servicio se finalizo con exito
+            </span>
+          )}
+
           <Timeline
             checkin={bookingDates.checkin}
             checkout={bookingDates.checkout}
+            initialStage={bookingStage}
           />
         </section>
 
@@ -46,15 +61,19 @@ const UpcomingBookingTemplate = ({
             showTitle={false}
           />
 
-          <Divider size="mediumTop" />
+          {bookingStage < 4 && (
+            <>
+              <Divider size="mediumTop" />
 
-          <Button
-            isSecondary={true}
-            onClick={onClickCancelButton}
-            marginTop={true}
-          >
-            Cancelar viaje
-          </Button>
+              <Button
+                isSecondary={true}
+                onClick={onClickCancelButton}
+                marginTop={true}
+              >
+                Cancelar viaje
+              </Button>
+            </>
+          )}
         </section>
       </div>
     </AppLayout>

@@ -54,28 +54,31 @@ export default function HostVehicles() {
         <section className={styles.vehicles}>
           <AddVehicleCard />
 
-          {cars.map(
-            ({ carId, status, maker, model, year, images: [image] }) => {
-              const title = `${maker.name} ${model.name} ${year}`;
-              const extraLabel = withExtraLabelHosts({ status });
+          {cars.map((car) => {
+            const { carId, status, maker, model, year } = car;
+            const title = `${maker.name} ${model.name} ${year}`;
+            const extraLabel = withExtraLabelHosts({ status });
+            const imageSrc =
+              car.images.length === 0
+                ? '/images/default-car.png'
+                : car.images[0].imagePath;
 
-              return (
-                <CardHorizontal
-                  key={carId}
-                  title={title}
-                  imageSrc={image.imagePath}
-                  showPanelPrice={false}
-                  showFavoriteIcon={false}
-                  href={`/host/vehicles/details/${encodeURIComponent(carId)}`}
-                  withOpacity={extraLabel.show}
-                  withExtraLabel={extraLabel.show}
-                  extraLabelText={extraLabel.text}
-                  extraLabelColor={extraLabel.color}
-                  forceRowDirection={false}
-                />
-              );
-            }
-          )}
+            return (
+              <CardHorizontal
+                key={carId}
+                title={title}
+                imageSrc={imageSrc}
+                showPanelPrice={false}
+                showFavoriteIcon={false}
+                href={`/host/vehicles/details/${encodeURIComponent(carId)}`}
+                withOpacity={extraLabel.show}
+                withExtraLabel={extraLabel.show}
+                extraLabelText={extraLabel.text}
+                extraLabelColor={extraLabel.color}
+                forceRowDirection={false}
+              />
+            );
+          })}
         </section>
       </AppLayout>
     </div>

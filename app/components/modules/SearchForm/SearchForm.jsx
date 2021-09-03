@@ -16,6 +16,10 @@ export default function SearchForm({
   showTopLabels = true,
   startDateBorder = false,
   withMarginBottom = true,
+  listenPlaces = false,
+  listenerPlaces = () => {},
+  listenDates = false,
+  listenerDates = () => {},
 }) {
   const router = useRouter();
   const initialValues = { location: '' };
@@ -40,6 +44,8 @@ export default function SearchForm({
           name="location"
           placeholder={'Ciudad o punto de referencia'}
           isCompact={isCompact}
+          detectChanges={listenPlaces}
+          onDetectChanges={listenerPlaces}
         />
 
         <DatesPanel
@@ -47,6 +53,8 @@ export default function SearchForm({
           showTopLabels={showTopLabels}
           clickleable={clickleable}
           startDateBorder={startDateBorder}
+          detectChanges={listenDates}
+          onDetectChanges={listenerDates}
         />
 
         <div clas={styles.action}>

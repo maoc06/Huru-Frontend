@@ -17,7 +17,7 @@ import { WarningIcon } from '../../../app/components/elements/Icons/Shared';
 
 import {
   convertToCompound,
-  formatFullDate,
+  formatPrettyFull,
 } from '../../../app/utils/formatDates';
 
 export default function RequestDetail() {
@@ -108,11 +108,16 @@ export default function RequestDetail() {
         <>
           <StatusIndicator
             animationData={checkAnimationData}
+            isLoop={false}
             visible={openStatusIndicator}
             title={'Reserva aceptada'}
             message={`Preparate para recibir a ${booking.bookedBy.firstName} ${
               booking.bookedBy.lastName
-            } el ${formatFullDate({ date: booking.checkin, type: 'ISO' })}`}
+            } el ${formatPrettyFull({
+              date: booking.checkin,
+            })} hasta el ${formatPrettyFull({
+              date: booking.checkout,
+            })}.`}
             buttonMsg={'Entendido'}
             onClickButton={handleButtonPopUp}
           />

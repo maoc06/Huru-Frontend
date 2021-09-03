@@ -2,6 +2,10 @@ import Button from '../../../elements/Button/Button';
 import styles from './Intro.module.scss';
 
 export default function Intro({ setStep, next }) {
+  const handleClick = () => {
+    setStep(next);
+  };
+
   return (
     <div className={styles.container}>
       <h3>Gana dinero como Huru Amigo</h3>
@@ -20,7 +24,7 @@ export default function Intro({ setStep, next }) {
         </p>
       </article>
 
-      <Button onClick={() => setStep(next)}>Empezar</Button>
+      <Button onClick={handleClick}>Empezar</Button>
     </div>
   );
 }

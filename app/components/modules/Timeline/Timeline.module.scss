@@ -20,10 +20,43 @@
             left: 0;
             top: 0;
             width: 4px;
-            height: 18%;
+            height: 1%;
             border-radius: 50px;
             background: $primary;
             margin: 1px;
+        }
+    }
+}
+
+.approvedStage {
+    ul {
+        &:after {
+            height: 18%;
+        }
+    }
+}
+
+.refundStage {
+    ul {
+        &:after {
+            height: 36%;
+        }
+    }
+}
+
+.startStage {
+    ul {
+        &:after {
+            height: 72%;
+        }
+    }
+}
+
+.finishStage {
+    ul {
+        &:after {
+            height: 100%;
+            background: $success;
         }
     }
 }

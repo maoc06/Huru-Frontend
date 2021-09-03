@@ -13,10 +13,7 @@ import Form from '../../Forms/Form';
 import Textfield from '../../../elements/Textfield/Textfield';
 import Dropdown from '../../../elements/Dropdown/Dropdown';
 import SubmitButton from '../../../elements/Button/SubmitButton';
-
-import { maskLicensePlate } from '../../../../utils/masksInputs';
 import licensePlateSchema from '../../../../constants/validationSchema/licensePlate';
-
 import locations from '../../../../constants/others/municipalities';
 import styles from './LicensePlate.module.scss';
 

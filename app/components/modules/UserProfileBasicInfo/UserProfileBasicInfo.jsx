@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
@@ -76,47 +77,55 @@ export default function UserProfileBasicInfo({
     <>
       {title && <SectionTitle title={title} />}
 
-      <section
-        onClick={withLink ? handleGoTo : () => {}}
-        className={`${styles.container} ${withTopMargin && styles.topMargin} ${
-          withBottomMargin && styles.bottomMargin
-        }`}
+      <Link
+        href={href}
+        // onClick={withLink ? handleGoTo : () => {}}
+        // className={`${styles.container} ${withTopMargin && styles.topMargin} ${
+        //   withBottomMargin && styles.bottomMargin
+        // }`}
       >
-        <Avatar
-          clickeable={editablePicture}
-          src={profilePicture}
-          size={avatarSize}
-          userId={userId}
-          cursorPointer={cursorOnAvatar}
-        />
+        <a
+          target="_blank"
+          className={`${styles.container} ${
+            withTopMargin && styles.topMargin
+          } ${withBottomMargin && styles.bottomMargin}`}
+        >
+          <Avatar
+            clickeable={editablePicture}
+            src={profilePicture}
+            size={avatarSize}
+            userId={userId}
+            cursorPointer={cursorOnAvatar}
+          />
 
-        <div className={styles.info}>
-          <p className={styles.name}>{name}</p>
+          <div className={styles.info}>
+            <p className={styles.name}>{name}</p>
 
-          {showBirthday && (
-            <p>{`${calcYearsOld({ birthday })} años (${formatMonthDayYear({
-              date: new Date(birthday),
-              type: 'JS',
-            })})`}</p>
-          )}
+            {showBirthday && (
+              <p>{`${calcYearsOld({ birthday })} años (${formatMonthDayYear({
+                date: new Date(birthday),
+                type: 'JS',
+              })})`}</p>
+            )}
 
-          <p>{`${domain} ${formatMonthYear(createdAt)}`}</p>
+            <p>{`${domain} ${formatMonthYear(createdAt)}`}</p>
 
-          {showExtra && (
-            <div className={styles.extra}>
-              <p>{countTrips} viajes</p>
+            {showExtra && (
+              <div className={styles.extra}>
+                <p>{countTrips} viajes</p>
 
-              <p className={styles.average}>
-                Promedio de
-                <span>
-                  <FillStartIcon width={15} height={15} />
-                </span>
-                {parseFloat(averageRating).toFixed(1)}
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
+                <p className={styles.average}>
+                  Promedio de
+                  <span>
+                    <FillStartIcon width={15} height={15} />
+                  </span>
+                  {parseFloat(averageRating).toFixed(1)}
+                </p>
+              </div>
+            )}
+          </div>
+        </a>
+      </Link>
     </>
   );
 }
