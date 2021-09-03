@@ -71,7 +71,7 @@ const Trips = () => {
       <AppLayout withImage={false}>
         <TitlePage>Viajes</TitlePage>
 
-        <TabsLayout tabs={tabs} />
+        {/* <TabsLayout tabs={tabs} /> */}
       </AppLayout>
     </div>
   );
