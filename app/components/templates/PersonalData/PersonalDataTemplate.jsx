@@ -136,6 +136,7 @@ const PersonalDataTemplate = ({
           withTopMargin={true}
           showBirthday={showBirthday}
           editablePicture={editablePicture}
+          openInNewTab={false}
         />
 
         <Divider size="mediumTop" />

@@ -16,10 +16,15 @@ const PolicyCancellationSection = ({
   const [dateFreeCancellation, setDateFreeCancellation] = useState({});
 
   useEffect(() => {
+    let type = 'SQL';
     const dates = travel.getDates();
+
+    if (dates.raw.start.includes('T')) type = 'ISO';
+
     const compundLastDate = lastDay({
       date: dates.raw.start,
       outputFormat: 'compound',
+      type,
     });
     setDateFreeCancellation(compundLastDate);
   }, []);

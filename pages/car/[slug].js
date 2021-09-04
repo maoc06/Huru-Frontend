@@ -71,14 +71,16 @@ function CarSlug({ car, metaTitle }) {
     let disabledDates = [];
     const res = await getDisableDays.request(carId);
 
-    if (res.data) {
-      const days = res.data.data;
+    if (typeof res !== 'undefined') {
+      if (res.data) {
+        const days = res.data.data;
 
-      days.forEach((day) =>
-        disabledDates.push(new Date(day.disableDay.replace(/-/g, '/')))
-      );
+        days.forEach((day) =>
+          disabledDates.push(new Date(day.disableDay.replace(/-/g, '/')))
+        );
 
-      setDisabledDates(disabledDates);
+        setDisabledDates(disabledDates);
+      }
     }
   };
 

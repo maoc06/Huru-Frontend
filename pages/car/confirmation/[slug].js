@@ -33,6 +33,7 @@ const ConfirmationBooking = () => {
   const [car, setCar] = useState({});
   const [user, setUser] = useState({});
   const [dates, setDates] = useState({});
+  const [datesType, setDatesType] = useState('SQL');
   const [defaultPayment, setDefaultPayment] = useState({});
   const [showConfirm, setShowConfirm] = useState(false);
   const [showFail, setShowFail] = useState(false);
@@ -65,10 +66,16 @@ const ConfirmationBooking = () => {
     setShowFail(false);
   };
 
+  const setParamDates = () => {
+    const dates = travel.getDates();
+    if (dates.raw.start.includes('T')) setDatesType('ISO');
+    setDates(dates);
+  };
+
   useEffect(() => {
     if (slug) {
       const user = storageAuth.getUser();
-      setDates(travel.getDates());
+      setParamDates();
       if (user) {
         setUser(user.info);
         handleDate(user.info.uid);
@@ -125,7 +132,7 @@ const ConfirmationBooking = () => {
             countDays={diffDays({
               dateOne: dates.raw.start,
               dateTwo: dates.raw.end,
-              type: 'SQL',
+              type: datesType,
             })}
             pricePerDay={car.price}
             paymentMethod={defaultPayment}

@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DateTime } from 'luxon';
 
 import { setResults } from '../../app/redux/slices/filterSearchSlice';
-import { setDates } from '../../app/redux/slices/searchParamsSlice';
+// import { setDates } from '../../app/redux/slices/searchParamsSlice';
 
 import useApi from '../../app/hooks/useApi';
 import searchApi from '../../app/api/SearchApi';
+import useTravelDates from '../../app/hooks/useTravelDates';
 
 import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
 import SearchForm from '../../app/components/modules/SearchForm/SearchForm';
@@ -19,15 +20,16 @@ import Avatar from '../../app/components/elements/Avatar/Avatar';
 import { LogoColor } from '../../app/components/elements/Icons/Shared';
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
 
-import { defaultDates } from '../../app/utils/formatDates';
+// import { defaultDates } from '../../app/utils/formatDates';
 import applyAllSettings from '../../app/utils/applySearchCarSettings';
 import storageAuth from '../../app/utils/storageAuth';
 import styles from './search.module.scss';
 import MenuDesktop from '../../app/components/modules/MenuDesktop/MenuDesktop';
 
-function Cars() {
+const Cars = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const travel = useTravelDates();
   const searchParams = useSelector((state) => state.searchParams);
 
   const searchCars = useApi(searchApi.findCarsByCity);
@@ -36,10 +38,10 @@ function Cars() {
   const [user, setUser] = useState(null);
   const [showMenuDesktop, setShowMenuDesktop] = useState(false);
 
-  const [location, setLocation] = useState(router.query);
-  // const { location } = router.query;
+  const { location: param } = router.query;
+  const [location, setLocation] = useState(param);
 
-  const handleCarsQuery = async ({ checkIn, checkOut }) => {
+  const handleCarsQuery = async ({ location, checkIn, checkOut }) => {
     if (!checkIn.toString().includes('T')) {
       checkIn = DateTime.fromSQL(checkIn).toISO();
     }
@@ -77,29 +79,23 @@ function Cars() {
   };
 
   const getCheckInOut = () => {
-    let rawData = {};
+    let rawData = travel.getDates();
 
-    if (checkEmptyDates()) {
-      const dates = defaultDates();
-      dispatch(setDates(JSON.stringify(dates)));
-      rawData = dates;
-    } else {
+    if (!checkEmptyDates()) {
       rawData = searchParams.dates;
     }
 
-    const {
-      raw: { start, end },
-    } = rawData;
-
-    return { checkIn: start, checkOut: end };
+    return { checkIn: rawData.raw.start, checkOut: rawData.raw.end };
   };
 
   const handleListenPlaces = (place) => {
-    setLocation(place.value.structured_formatting.main_text);
+    const listenPlace = place.value.structured_formatting.main_text;
+    setLocation(listenPlace);
+    handleCarsQuery({ ...getCheckInOut(), location: listenPlace });
   };
 
   const handleListenDates = () => {
-    handleCarsQuery(getCheckInOut());
+    handleCarsQuery({ ...getCheckInOut(), location });
   };
 
   const handleAvatar = () => {
@@ -107,8 +103,11 @@ function Cars() {
   };
 
   useEffect(() => {
-    if (location) handleCarsQuery(getCheckInOut());
-  }, [location]);
+    if (param) {
+      handleCarsQuery({ ...getCheckInOut(), location: param });
+      setLocation(param);
+    }
+  }, [param]);
 
   useEffect(() => {
     const user = storageAuth.getUser();
@@ -118,7 +117,9 @@ function Cars() {
   return (
     <AppLayout withImage={false}>
       <Head>
-        <title>{`Huru | Encuentra el carro perfecto en ${location}`}</title>
+        <title>{`Huru | Encuentra el carro perfecto en ${
+          param || 'Colombia'
+        }`}</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"
@@ -171,12 +172,14 @@ function Cars() {
             <NotFound text="No se encontraron resultados para su búsqueda." />
           )}
 
-          {!searchCars.loading && cars.length > 0 && <SearchResultsTemplate />}
+          {!searchCars.loading && cars.length > 0 && (
+            <SearchResultsTemplate initialState={cars} />
+          )}
         </div>
       </section>
     </AppLayout>
     // </div>
   );
-}
+};
 
 export default Cars;

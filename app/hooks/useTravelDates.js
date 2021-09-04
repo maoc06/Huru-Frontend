@@ -11,7 +11,9 @@ const useTravelDates = () => {
   };
 
   const getDates = () => {
-    if (searchParamsEmpty()) {
+    if (!localStorageDatesEmpty()) {
+      return JSON.parse(localStorage.getItem('dates'));
+    } else if (searchParamsEmpty()) {
       return defaultDates();
     } else {
       let dates = searchParams.dates;
@@ -46,6 +48,14 @@ const useTravelDates = () => {
       return true;
     }
     return false;
+  };
+
+  const localStorageDatesEmpty = () => {
+    const isClient = typeof window !== 'undefined';
+    if (isClient) {
+      if (window.localStorage.getItem('dates') !== null) return false;
+    }
+    return true;
   };
 
   return { getDates };

@@ -33,11 +33,10 @@
         "react-indiana-drag-scroll": "^1.8.1",
         "react-lottie": "^1.2.3",
         "react-rating-stars-component": "^2.2.0",
-        "react-redux": "^7.2.2",
+        "react-redux": "^7.2.4",
         "react-responsive-carousel": "^3.2.14",
         "react-show-more-text": "^1.4.6",
         "redux": "^4.0.5",
-        "redux-persist": "^6.0.0",
         "sass": "^1.32.8",
         "yup": "^0.32.9"
     },

@@ -29,11 +29,13 @@ function CarDesktopPanel({
 
   const calcDays = () => {
     const dates = travel.getDates();
+    let type = 'SQL';
+    if (dates.raw.start.includes('T')) type = 'ISO';
 
     const diff = diffDays({
       dateOne: dates.raw.start,
       dateTwo: dates.raw.end,
-      type: 'SQL',
+      type,
     });
 
     setDays(diff);

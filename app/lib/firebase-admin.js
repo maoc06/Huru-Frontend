@@ -8,7 +8,7 @@ if (!admin.apps.length) {
       databaseURL: 'https://huru-admin-app.firebaseio.com',
     });
   } catch (error) {
-    console.log('Firebase admin initialization error', error.stack);
+    console.error('initialization error', error.stack);
   }
 }
 

@@ -20,7 +20,6 @@ const Trips = () => {
   const [bookingHistory, setBookingHistory] = useState([]);
 
   useEffect(() => {
-    console.log('RENDER TRIPS');
     const user = authStorage.getUser();
     if (user) {
       const uuid = user.info.uid;
@@ -31,7 +30,6 @@ const Trips = () => {
 
   const handleUpcomingBookings = async (uuid) => {
     const res = await getUpcomingBookings.request(uuid);
-    console.log(res.data.data);
     setUpcomingBookings(res.data.data);
   };
 
@@ -71,7 +69,7 @@ const Trips = () => {
       <AppLayout withImage={false}>
         <TitlePage>Viajes</TitlePage>
 
-        {/* <TabsLayout tabs={tabs} /> */}
+        <TabsLayout tabs={tabs} />
       </AppLayout>
     </div>
   );

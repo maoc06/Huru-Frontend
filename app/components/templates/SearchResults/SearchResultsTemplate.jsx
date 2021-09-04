@@ -10,17 +10,17 @@ import NotFound from '../../modules/NotFound/NotFound';
 import styles from './SearchResultsTemplate.module.scss';
 import { typeTransmissionEnum, typeFuelEnum } from '../../../utils/enums';
 
-const SearchResultsTemplate = () => {
+const SearchResultsTemplate = ({ initialState = [] }) => {
   const filterStore = useSelector((state) => state.filterSearch);
   const getFavorites = useApi(favoriteApi.findByUser);
 
   const [user, setUser] = useState({});
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(initialState);
   const [favorites, setFavorites] = useState([]);
 
   const handleGetFavorites = async (userId) => {
     const res = await getFavorites.request(userId);
-    setFavorites(res.data);
+    if (typeof res !== 'undefined') setFavorites(res.data);
   };
 
   const handleCheckIsFavorite = (carId) => {
@@ -36,9 +36,8 @@ const SearchResultsTemplate = () => {
   }, []);
 
   useEffect(() => {
-    if (filterStore.filterRes.length > 0) {
+    if (filterStore.filterRes.length > 0)
       setItems(JSON.parse(filterStore.filterRes));
-    }
   }, [filterStore.filterRes]);
 
   return (

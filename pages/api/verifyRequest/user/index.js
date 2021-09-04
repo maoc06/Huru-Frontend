@@ -2,7 +2,6 @@ import jwtDecode from 'jwt-decode';
 import firebaseAdmin from '../../../../app/lib/firebase-admin';
 
 export default async (req, res) => {
-  // console.log('REQ', req.body);
   try {
     const {
       token: {

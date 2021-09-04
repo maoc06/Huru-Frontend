@@ -34,6 +34,7 @@ export default function UserProfileBasicInfo({
   href = '/',
   title,
   cursorOnAvatar = false,
+  openInNewTab = true,
 }) {
   const router = useRouter();
   const getCountTrips = useApi(bookingApi.countCompletedTrips);
@@ -42,9 +43,9 @@ export default function UserProfileBasicInfo({
   const [countTrips, setCountTrips] = useState(0);
   const [averageRating, setAverageRating] = useState(1.0);
 
-  const handleGoTo = () => {
-    router.push(href);
-  };
+  // const handleGoTo = () => {
+  //   router.push(href);
+  // };
 
   const handleGetCount = async (userId) => {
     const res = await getCountTrips.request(userId);
@@ -66,6 +67,31 @@ export default function UserProfileBasicInfo({
     }
   };
 
+  const LinkProfile = ({ children }) => {
+    if (openInNewTab) {
+      return (
+        <a
+          target="_blank"
+          className={`${styles.container} ${
+            withTopMargin && styles.topMargin
+          } ${withBottomMargin && styles.bottomMargin}`}
+        >
+          {children}
+        </a>
+      );
+    }
+
+    return (
+      <a
+        className={`${styles.container} ${withTopMargin && styles.topMargin} ${
+          withBottomMargin && styles.bottomMargin
+        }`}
+      >
+        {children}
+      </a>
+    );
+  };
+
   useEffect(() => {
     if (userId) {
       handleGetCount(userId);
@@ -77,19 +103,8 @@ export default function UserProfileBasicInfo({
     <>
       {title && <SectionTitle title={title} />}
 
-      <Link
-        href={href}
-        // onClick={withLink ? handleGoTo : () => {}}
-        // className={`${styles.container} ${withTopMargin && styles.topMargin} ${
-        //   withBottomMargin && styles.bottomMargin
-        // }`}
-      >
-        <a
-          target="_blank"
-          className={`${styles.container} ${
-            withTopMargin && styles.topMargin
-          } ${withBottomMargin && styles.bottomMargin}`}
-        >
+      <Link href={href}>
+        <LinkProfile>
           <Avatar
             clickeable={editablePicture}
             src={profilePicture}
@@ -124,7 +139,7 @@ export default function UserProfileBasicInfo({
               </div>
             )}
           </div>
-        </a>
+        </LinkProfile>
       </Link>
     </>
   );

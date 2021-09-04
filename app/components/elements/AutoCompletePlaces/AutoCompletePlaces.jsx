@@ -27,6 +27,12 @@ export default function AutoCompletePlaces({
   useEffect(() => {
     if (!checkEmptyPlace()) {
       handleChangePlace(place);
+    } else {
+      const isClient = typeof window !== 'undefined';
+      if (isClient) {
+        const place = JSON.parse(window.localStorage.getItem('place'));
+        if (place !== null) setFieldValue(name, place);
+      }
     }
   }, [place]);
 

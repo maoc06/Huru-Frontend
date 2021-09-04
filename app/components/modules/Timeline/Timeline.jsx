@@ -13,6 +13,7 @@ import TimelineElement from '../../elements/TimelineElement/TimelineElement';
 import styles from './Timeline.module.scss';
 
 function Timeline({ checkin, checkout, initialStage = 1 }) {
+  let type = 'SQL';
   const travel = useTravelDates();
   const [dates, setDates] = useState({
     start: checkin,
@@ -23,15 +24,14 @@ function Timeline({ checkin, checkout, initialStage = 1 }) {
   useEffect(() => {
     if (!checkin || !checkout) {
       const defaultDates = travel.getDates();
+      if (defaultDates.raw.start.includes('T')) type = 'ISO';
       setDates({
         ...dates,
         start: defaultDates.raw.start,
         end: defaultDates.raw.end,
-        type: 'SQL',
+        type,
       });
     }
-
-    console.log('STAGE', initialStage);
   }, []);
 
   return (

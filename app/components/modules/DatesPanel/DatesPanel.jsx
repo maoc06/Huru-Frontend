@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
-import useTravelDates from '../../../hooks/useTravelDates';
+import useParams from '../../../hooks/useParams';
 import { setDates } from '../../../redux/slices/searchParamsSlice';
 
 import AppDateRangePicker from '../../elements/DateRangePicker/DateRangePicker';
@@ -28,7 +28,7 @@ export default function DatesPanel({
   disabledDates = [],
 }) {
   const dispatch = useDispatch();
-  const travel = useTravelDates();
+  const searchParams = useParams();
 
   const [selectionDates, setSelectionDates] = useState(defaultDates());
   const [showDates, setShowDates] = useState(false);
@@ -98,7 +98,14 @@ export default function DatesPanel({
   };
 
   useEffect(() => {
-    setGlobaltDates(paramDates ? paramDates : travel.getDates());
+    const localDates = searchParams.getDates();
+    if (localDates !== null) {
+      localDates.constructor === Object && Object.keys(localDates).length > 0
+        ? setGlobaltDates(paramDates ? paramDates : searchParams.getDates())
+        : setGlobaltDates(paramDates ? paramDates : defaultDates());
+    } else {
+      setGlobaltDates(paramDates ? paramDates : defaultDates());
+    }
   }, []);
 
   useEffect(() => {
@@ -113,9 +120,9 @@ export default function DatesPanel({
   const renderSection = ({ title, date, hour, isEnd = false }) => {
     return (
       <div
-        className={`${isEnd && styles.end_date} ${
-          startDateBorder && styles.start_date
-        }`}
+        className={`${clickleable && styles.showCursor} ${
+          isEnd && styles.end_date
+        } ${startDateBorder && styles.start_date}`}
         onClick={clickleable ? handleShowDates : () => {}}
       >
         {showTopLabels && <p className={styles.top_label}>{title}</p>}

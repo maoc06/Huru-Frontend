@@ -1,8 +1,8 @@
 import Form from '../../modules/Forms/Form';
 import Textfield from '../../elements/Textfield/Textfield';
 import SubmitButton from '../../elements/Button/SubmitButton';
-
 import updatePasswordSchema from '../../../constants/validationSchema/updatePassword';
+import styles from './EditPasswordTemplate.module.scss';
 
 function EditPasswordTemplate({ onUpdate, currPasswordError = false, userId }) {
   const initialValues = {
@@ -16,36 +16,38 @@ function EditPasswordTemplate({ onUpdate, currPasswordError = false, userId }) {
   };
 
   return (
-    <Form
-      initialValues={initialValues}
-      validationSchema={updatePasswordSchema}
-      onSubmit={handleSubmit}
-    >
-      <Textfield
-        name="currPassword"
-        type="password"
-        label="Contraseña actual"
-        placeholder="Digita tu contraseña actual"
-        apiError={currPasswordError}
-        errorMsg="La contraseña no es correcta"
-      />
+    <div className={styles.container}>
+      <Form
+        initialValues={initialValues}
+        validationSchema={updatePasswordSchema}
+        onSubmit={handleSubmit}
+      >
+        <Textfield
+          name="currPassword"
+          type="password"
+          label="Contraseña actual"
+          placeholder="Digita tu contraseña actual"
+          apiError={currPasswordError}
+          errorMsg="La contraseña no es correcta"
+        />
 
-      <Textfield
-        name="newPassword"
-        type="password"
-        label="Contraseña nueva"
-        placeholder="Digita la nueva contraseña"
-      />
+        <Textfield
+          name="newPassword"
+          type="password"
+          label="Contraseña nueva"
+          placeholder="Digita la nueva contraseña"
+        />
 
-      <Textfield
-        name="confirmNewPassword"
-        type="password"
-        label="Confirmar contraseña nueva"
-        placeholder="Digita nuevamente la nueva contraseña"
-      />
+        <Textfield
+          name="confirmNewPassword"
+          type="password"
+          label="Confirmar contraseña nueva"
+          placeholder="Digita nuevamente la nueva contraseña"
+        />
 
-      <SubmitButton marginTop={true}>Actualizar contraseña</SubmitButton>
-    </Form>
+        <SubmitButton marginTop={true}>Actualizar contraseña</SubmitButton>
+      </Form>
+    </div>
   );
 }
 

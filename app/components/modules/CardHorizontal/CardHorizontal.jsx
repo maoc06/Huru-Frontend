@@ -106,12 +106,10 @@ export default function CardHorizontal({
       handleCountTrips();
       handleAvg();
     }
-
     if (isEco) {
       const discount = price * DISCOUNT_ECO_FRIENDLY;
       setPricePerDay(price - discount);
     }
-
     handleMobileWindow();
     // listen window resize
     window.addEventListener('resize', () => {
@@ -221,6 +219,12 @@ export default function CardHorizontal({
                 )}
               </>
             )}
+
+            {/* <DatesPanel
+              // currRender={showPanelDates}
+              paramDates={dates}
+              clickleable={false}
+            /> */}
 
             {showPanelDates && (
               <DatesPanel paramDates={dates} clickleable={false} />
