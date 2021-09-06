@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
 import useApi from '../../../hooks/useApi';
 import carReviewApi from '../../../api/VehicleReviewAPI';
@@ -36,16 +35,15 @@ export default function UserProfileBasicInfo({
   cursorOnAvatar = false,
   openInNewTab = true,
 }) {
-  const router = useRouter();
   const getCountTrips = useApi(bookingApi.countCompletedTrips);
   const getAllReviews = useApi(carReviewApi.getAllReviewsByUser);
 
   const [countTrips, setCountTrips] = useState(0);
   const [averageRating, setAverageRating] = useState(1.0);
 
-  // const handleGoTo = () => {
-  //   router.push(href);
-  // };
+  const classes = `${styles.container} ${withTopMargin && styles.topMargin} ${
+    withBottomMargin && styles.bottomMargin
+  }`;
 
   const handleGetCount = async (userId) => {
     const res = await getCountTrips.request(userId);
@@ -68,28 +66,18 @@ export default function UserProfileBasicInfo({
   };
 
   const LinkProfile = ({ children }) => {
-    if (openInNewTab) {
+    console.log('href is empty? ', href);
+    if (href !== '/' && href !== '') {
       return (
-        <a
-          target="_blank"
-          className={`${styles.container} ${
-            withTopMargin && styles.topMargin
-          } ${withBottomMargin && styles.bottomMargin}`}
-        >
-          {children}
-        </a>
+        <Link href={href}>
+          <a className={classes} target={openInNewTab ? '_blank' : '_self'}>
+            {children}
+          </a>
+        </Link>
       );
     }
 
-    return (
-      <a
-        className={`${styles.container} ${withTopMargin && styles.topMargin} ${
-          withBottomMargin && styles.bottomMargin
-        }`}
-      >
-        {children}
-      </a>
-    );
+    return <section className={classes}>{children}</section>;
   };
 
   useEffect(() => {
@@ -103,44 +91,42 @@ export default function UserProfileBasicInfo({
     <>
       {title && <SectionTitle title={title} />}
 
-      <Link href={href}>
-        <LinkProfile>
-          <Avatar
-            clickeable={editablePicture}
-            src={profilePicture}
-            size={avatarSize}
-            userId={userId}
-            cursorPointer={cursorOnAvatar}
-          />
+      <LinkProfile>
+        <Avatar
+          clickeable={editablePicture}
+          src={profilePicture}
+          size={avatarSize}
+          userId={userId}
+          cursorPointer={cursorOnAvatar}
+        />
 
-          <div className={styles.info}>
-            <p className={styles.name}>{name}</p>
+        <div className={styles.info}>
+          <p className={styles.name}>{name}</p>
 
-            {showBirthday && (
-              <p>{`${calcYearsOld({ birthday })} años (${formatMonthDayYear({
-                date: new Date(birthday),
-                type: 'JS',
-              })})`}</p>
-            )}
+          {showBirthday && (
+            <p>{`${calcYearsOld({ birthday })} años (${formatMonthDayYear({
+              date: new Date(birthday),
+              type: 'JS',
+            })})`}</p>
+          )}
 
-            <p>{`${domain} ${formatMonthYear(createdAt)}`}</p>
+          <p>{`${domain} ${formatMonthYear(createdAt)}`}</p>
 
-            {showExtra && (
-              <div className={styles.extra}>
-                <p>{countTrips} viajes</p>
+          {showExtra && (
+            <div className={styles.extra}>
+              <p>{countTrips} viajes</p>
 
-                <p className={styles.average}>
-                  Promedio de
-                  <span>
-                    <FillStartIcon width={15} height={15} />
-                  </span>
-                  {parseFloat(averageRating).toFixed(1)}
-                </p>
-              </div>
-            )}
-          </div>
-        </LinkProfile>
-      </Link>
+              <p className={styles.average}>
+                Promedio de
+                <span>
+                  <FillStartIcon width={15} height={15} />
+                </span>
+                {parseFloat(averageRating).toFixed(1)}
+              </p>
+            </div>
+          )}
+        </div>
+      </LinkProfile>
     </>
   );
 }

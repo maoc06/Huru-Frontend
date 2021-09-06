@@ -120,6 +120,7 @@ export default function Terms() {
       />
 
       <StatusIndicator
+      loop={false}
         animationData={checkAnimationData}
         visible={
           !postVehicleFeatures.error &&

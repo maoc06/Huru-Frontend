@@ -1,5 +1,6 @@
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
-import { Calendar } from '@hassanmojab/react-modern-calendar-datepicker';
+import { Calendar, utils } from '@hassanmojab/react-modern-calendar-datepicker';
+import customLocale from '../../../constants/others/custom-calendar-values';
 
 import styles from './Calendar.module.scss';
 
@@ -18,6 +19,8 @@ export default function AppCalendar({
       onChange={onSelectDay}
       onDisabledDayError={onSelectDisableDay}
       disabledDays={disabledDays} // here we pass them
+      minimumDate={utils().getToday()}
+      locale={customLocale}
     />
   );
 }

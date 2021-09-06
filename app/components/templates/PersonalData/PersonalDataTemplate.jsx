@@ -137,6 +137,7 @@ const PersonalDataTemplate = ({
           showBirthday={showBirthday}
           editablePicture={editablePicture}
           openInNewTab={false}
+          cursorOnAvatar={true}
         />
 
         <Divider size="mediumTop" />

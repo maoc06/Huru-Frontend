@@ -14,6 +14,8 @@ import NequiTemplate from '../../../../app/components/templates/PaymentMethods/N
 import PaymentEditControlls from '../../../../app/components/modules/PaymentEditControlls/PaymentEditControlls';
 import ActivityIndicator from '../../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 
+import styles from './EditPayment.module.scss';
+
 function PaymentMethods() {
   const router = useRouter();
 
@@ -41,9 +43,11 @@ function PaymentMethods() {
   };
 
   useEffect(() => {
-    const user = authStorage.getUser();
-    if (user) handleGetData(user.info.uid);
-  }, []);
+    if (slug) {
+      const user = authStorage.getUser();
+      if (user) handleGetData(user.info.uid);
+    }
+  }, [slug]);
 
   const renderTemplate = () => {
     switch (payment.type) {
@@ -83,15 +87,17 @@ function PaymentMethods() {
 
           {Object.keys(payment).length > 0 && payment.constructor === Object && (
             <>
-              {renderTemplate()}
+              <section className={styles.container}>
+                {renderTemplate()}
 
-              {!getDefaultPayment.loading && (
-                <PaymentEditControlls
-                  defaultId={defaultPayment.id}
-                  paymentId={payment.id}
-                  isDefault={payment.isDefault}
-                />
-              )}
+                {!getDefaultPayment.loading && (
+                  <PaymentEditControlls
+                    defaultId={defaultPayment.id}
+                    paymentId={payment.id}
+                    isDefault={payment.isDefault}
+                  />
+                )}
+              </section>
             </>
           )}
         </AppLayout>

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+
+import UploadingIndicator from '../UploadingIndicator/UploadingIndicator';
 import styles from './AddPhotoButton.module.scss';
 
 export default function AddPhotoButton({
@@ -72,10 +74,13 @@ export default function AddPhotoButton({
       )}
 
       {photoUri && (
-        <img
-          src={photoUri}
-          className={`${styles.image} ${isLoading && styles.loading}`}
-        />
+        <div className={styles.uploading}>
+          <UploadingIndicator visible={isLoading} />
+          <img
+            src={photoUri}
+            className={`${styles.image} ${isLoading && styles.loading}`}
+          />
+        </div>
       )}
     </div>
   );

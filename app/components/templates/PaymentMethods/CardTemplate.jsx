@@ -62,6 +62,7 @@ const CardTemplate = ({ uid, email, number = '', readOnly = false }) => {
       <ActivityIndicator visible={saveCard.loading} />
 
       <StatusIndicator
+        loop={false}
         animationData={checkAnimationData}
         visible={showConfirm}
         title={'Metodo agregado exitosamente'}
@@ -73,6 +74,7 @@ const CardTemplate = ({ uid, email, number = '', readOnly = false }) => {
       />
 
       <StatusIndicator
+        loop={false}
         animationData={errorAnimationData}
         visible={showFail}
         title={'No se agregado el metodo'}
