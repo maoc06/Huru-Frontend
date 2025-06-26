@@ -35,3 +35,13 @@
     width: unset;
     max-width: unset;
 }
+
+.liquid_mode {
+    background: transparent;
+    padding: 0;
+    
+    // Remove default background when using liquid background
+    &.with_image {
+        background-image: none;
+    }
+}

@@ -37,7 +37,7 @@ export const filterSearchSlice = createSlice({
     },
     filterByMaker: (state, action) => {
       const filter = { ...state.listFilters };
-      const isAlreadyExists = filter.name.includes(action.payload);
+      const isAlreadyExists = filter.name && filter.name.includes(action.payload);
       let applyFilter = [];
 
       if (isAlreadyExists) {
@@ -45,7 +45,7 @@ export const filterSearchSlice = createSlice({
           (maker) => maker !== action.payload
         );
       } else {
-        applyFilter = [...filter.name, action.payload];
+        applyFilter = [...(filter.name || []), action.payload];
       }
 
       filter.name = applyFilter;
@@ -124,7 +124,7 @@ export const filterSearchSlice = createSlice({
     },
     filterByCategory: (state, action) => {
       const filter = { ...state.listFilters };
-      const isAlreadyExists = filter.categories.includes(action.payload);
+      const isAlreadyExists = filter.categories && filter.categories.includes(action.payload);
       let applyFilter = [];
 
       if (isAlreadyExists) {
@@ -132,7 +132,7 @@ export const filterSearchSlice = createSlice({
           (category) => category !== action.payload
         );
       } else {
-        applyFilter = [...filter.categories, action.payload];
+        applyFilter = [...(filter.categories || []), action.payload];
       }
 
       filter.categories = applyFilter;
@@ -145,7 +145,7 @@ export const filterSearchSlice = createSlice({
     },
     filterByFeatures: (state, action) => {
       const filter = { ...state.listFilters };
-      const isAlreadyExists = filter.features.includes(action.payload);
+      const isAlreadyExists = filter.features && filter.features.includes(action.payload);
       let applyFilter = [];
 
       if (isAlreadyExists) {
@@ -153,7 +153,7 @@ export const filterSearchSlice = createSlice({
           (feature) => feature !== action.payload
         );
       } else {
-        applyFilter = [...filter.features, action.payload];
+        applyFilter = [...(filter.features || []), action.payload];
       }
 
       filter.features = applyFilter;

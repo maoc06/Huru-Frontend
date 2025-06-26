@@ -44,6 +44,7 @@ export default function SearchForm({
           name="location"
           placeholder={'Ciudad o punto de referencia'}
           isCompact={isCompact}
+          noBorder={!isCompact && !showBorder}
           detectChanges={listenPlaces}
           onDetectChanges={listenerPlaces}
         />
@@ -57,7 +58,7 @@ export default function SearchForm({
           onDetectChanges={listenerDates}
         />
 
-        <div clas={styles.action}>
+        <div className={styles.action}>
           {!isCompact && <SubmitButton>Buscar</SubmitButton>}
         </div>
       </Form>

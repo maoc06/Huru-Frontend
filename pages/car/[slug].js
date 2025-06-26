@@ -11,7 +11,7 @@ import { typeTransmissionEnum } from '../../app/utils/enums';
 import { constraintsContinueBooking } from '../../app/utils/constraintsContinueBooking';
 
 import styles from './car.module.scss';
-import Carousel from '../../app/components/elements/Carousel/Carousel';
+import CarImageGrid from '../../app/components/modules/CarImageGrid/CarImageGrid';
 import PriceBottomBar from '../../app/components/modules/PriceBottomBar/PriceBottomBar';
 import CarDesktopPanel from '../../app/components/modules/CarDesktopPanel/CarDesktopPanel';
 import CarProfileTemplate from '../../app/components/templates/CarProfile/CarProfileTempate';
@@ -84,6 +84,12 @@ function CarSlug({ car, metaTitle }) {
     }
   };
 
+  const handleViewAllPhotos = (images) => {
+    // You can implement a modal or lightbox here to show all photos
+    console.log('View all photos:', images);
+    // For now, we'll just log the images
+  };
+
   useEffect(() => {
     const user = authStorage.getUser();
     if (user) handleUserData(user.info.uid);
@@ -107,7 +113,12 @@ function CarSlug({ car, metaTitle }) {
 
       {car.constructor === Object && Object.keys(car).length > 0 && (
         <>
-          <Carousel images={car.images} />
+          <div className={styles.imageContainer}>
+            <CarImageGrid 
+              images={car.images} 
+              onViewAllPhotos={handleViewAllPhotos}
+            />
+          </div>
 
           <section className={styles.info}>
             <CarProfileTemplate

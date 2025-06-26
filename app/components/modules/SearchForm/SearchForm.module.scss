@@ -1,40 +1,147 @@
 @import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/mixins';
+
 .container {
     display: flex;
     flex-direction: column;
     width: 100%;
     margin: 0 auto;
     max-width: 850px;
-    border-radius: 10px;
+    border-radius: 50px;
+    position: relative;
+    
     @media (min-width: 720px) {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        gap: 32px;
+        gap: 24px;
     }
 }
 
 .container_full {
     height: 230px;
     max-height: 230px;
-    padding: 16px;
-    background: linear-gradient(#f3f7fbb3, #fdfdfdcc);
-    box-shadow: 4px 8px 16px #b8c0c6;
+    padding: 24px;
+    position: relative;
+    isolation: isolate;
+    overflow: visible;
+    
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.75), 
+        rgba(255, 255, 255, 0.64)
+    );
+    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50px;
+    
+    box-shadow: 
+        0 8px 32px 0 rgba(31, 38, 135, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 2px 8px 0 rgba(0, 0, 0, 0.05);
+    
+    @supports not (backdrop-filter: blur()) {
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    
     @media (min-width: 720px) {
-        height: 72px;
+        height: 80px;
+        padding: 18px 28px;
     }
 }
 
 .action {
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+    
     @media (min-width: 720px) {
-        min-width: 200px !important;
+        min-width: 140px;
+        margin-top: 0;
+        flex-shrink: 0;
+        margin-left: 8px;
     }
 }
 
 .container_border {
-    border: 1px solid $gray_3;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid $gray_5;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-radius: 50px;
+    overflow: visible;
+    
+    &:hover {
+        border-color: $gray_4;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    
+    &:focus-within {
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba(8, 29, 61, 0.1);
+    }
 }
 
 .margin_bottom {
     margin-bottom: 32px;
+}
+
+.container {
+    // Style the vertical dividers with secondary color
+    :global(.MuiDivider-root) {
+        background-color: $secondary;
+        opacity: 0.6;
+    }
+    
+    // Remove borders from AutoCompletePlaces (place search field)
+    :global(.AutoCompletePlaces) {
+        input {
+            border: none !important;
+            box-shadow: none !important;
+            
+            &:focus {
+                border: none !important;
+                box-shadow: none !important;
+                outline: none !important;
+            }
+            
+            &:hover {
+                border: none !important;
+                box-shadow: none !important;
+            }
+        }
+        
+        .MuiOutlinedInput-root {
+            border: none !important;
+            
+            &:hover .MuiOutlinedInput-notchedOutline {
+                border: none !important;
+            }
+            
+            &.Mui-focused .MuiOutlinedInput-notchedOutline {
+                border: none !important;
+            }
+            
+            .MuiOutlinedInput-notchedOutline {
+                border: none !important;
+            }
+        }
+    }
+    
+    // Ensure dropdowns appear above other elements
+    :global(.react-select__menu) {
+        z-index: 9999 !important;
+    }
+    
+    :global(.MuiPopper-root) {
+        z-index: 9999 !important;
+    }
+    
+    :global(.MuiPaper-root) {
+        z-index: 9999 !important;
+    }
 }

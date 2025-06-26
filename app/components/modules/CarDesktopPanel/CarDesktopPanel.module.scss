@@ -8,7 +8,6 @@
     background-color: $white;
     border-radius: 10px;
     box-shadow: 10px 10px 20px #9999996b;
-    margin: 32px 64px;
     z-index: 9999;
     padding: 32px;
     @media (min-width: 720px) {
@@ -16,7 +15,7 @@
     }
     .price {
         font-weight: bold;
-        font-size: 1.2rem;
+        font-size: 2rem;
         margin-bottom: 32px;
         span {
             font-size: 1rem;

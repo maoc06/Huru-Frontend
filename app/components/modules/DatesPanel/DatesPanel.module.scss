@@ -1,39 +1,109 @@
 @import '../../../styles/abstracts/colors';
+
 .container {
     position: relative;
     display: flex;
     align-items: center;
+    padding: 16px 8px;
+    border-radius: 12px;
+    background-color: $background;
+    border: 1px solid $gray_5;
+    box-shadow: $shadow-drop;
+    gap: 8px;
+    
     @media (min-width: 720px) {
         flex: 1;
         min-width: 100px;
-        max-width: 425px;
-        height: 55px;
+        max-width: 550px;
+        height: auto;
+        padding: 20px 12px;
+        gap: 12px;
     }
+    
     div {
         flex: 1;
+        padding: 0 4px;
+        min-width: 0;
+        
         p {
             text-transform: capitalize;
+            margin: 2px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            
             &:nth-child(2) {
-                font-size: 14px;
+                font-size: 15px;
                 color: $gray_2;
+                font-weight: 600;
+                white-space: nowrap;
+                margin-top: 4px;
             }
         }
+        
         .top_label {
             font-size: 12px;
             color: $gray_3;
-            margin-top: 6px;
-            height: 22px;
+            margin-top: 0;
+            margin-bottom: 4px;
+            height: auto;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.2;
         }
     }
+    
     .start_date {
+        text-align: left;
+        padding-left: 4px;
+        
         @media (min-width: 720px) {
-            padding-left: 32px;
-            border-left: 1px solid $gray_4;
+            padding-left: 8px;
+            border-left: none;
         }
     }
+    
     .end_date {
         border-left: 1px solid $gray_4;
         text-align: right;
+        position: relative;
+        padding-right: 4px;
+        padding-left: 16px;
+        
+        @media (min-width: 720px) {
+            padding-right: 8px;
+            padding-left: 20px;
+        }
+    }
+}
+
+.arrowButton {
+    position: absolute !important;
+    left: calc(50% + 0.5px);
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    background-color: $primary;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none !important;
+    z-index: 2;
+    box-shadow: $shadow-drop;
+    transition: all 0.2s ease;
+    
+    &:hover {
+        transform: translate(-50%, -50%) scale(1.05);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+    svg {
+        color: white;
+        width: 18px !important;
+        height: 18px !important;
     }
 }
 
@@ -42,14 +112,20 @@
 }
 
 .compact {
-    padding: 0 8px 8px;
+    padding: 16px 8px;
+    
     @media (min-width: 720px) {
-        padding: 0;
+        padding: 20px 12px;
     }
+    
     div {
         p {
             font-size: 16px;
             color: $gray_2;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 }

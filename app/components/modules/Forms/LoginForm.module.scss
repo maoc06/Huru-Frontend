@@ -1,13 +1,39 @@
+@import '../../../styles/abstracts/colors';
+
 .container {
     min-width: 290px;
     max-width: 550px;
     margin: auto;
+    
+    h2 {
+        // Liquid background mode
+        .liquid_mode & {
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+    }
+    
+    p {
+        // Liquid background mode
+        .liquid_mode & {
+            color: rgba(255, 255, 255, 0.85);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+    }
 }
 
 .alternative {
     text-align: center;
     margin-top: 32px;
     margin-bottom: 16px;
+    
+    // Liquid background mode
+    .liquid_mode & {
+        color: rgba(255, 255, 255, 0.8);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
 }
 
 .media {

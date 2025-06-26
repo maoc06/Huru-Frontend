@@ -1,48 +1,202 @@
 @import '../../../styles/abstracts/colors';
+
 .container {
     label {
-        font-weight: bold;
-        text-transform: 'capitalize';
+        font-weight: 600;
+        font-size: 16px;
+        color: $gray_1;
+        margin-bottom: 8px;
+        display: block;
+        text-transform: none;
     }
+    
     .textfield {
         display: flex;
         width: 100%;
-        border-radius: 4px;
-        border: 1px solid $gray_3;
+        border-radius: 16px;
+        border: 2px solid $gray_5;
         color: $black_2;
         align-items: center;
+        background: $white;
+        transition: all 0.25s ease-in-out;
+        position: relative;
+        overflow: hidden;
+        
+        // Enhanced glassmorphism for liquid background
+        :global(.liquidBackground) & {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 
+                0 4px 16px rgba(8, 29, 61, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.7);
+        }
+        
         &:focus-within {
-            border: 1px solid $primary;
+            border: 2px solid $primary !important;
+            box-shadow: 0 0 0 3px rgba(8, 29, 61, 0.1);
+            
+            :global(.liquidBackground) & {
+                background: rgba(255, 255, 255, 0.95);
+                border: 2px solid rgba(124, 189, 181, 0.8) !important;
+                box-shadow: 
+                    0 4px 20px rgba(8, 29, 61, 0.12),
+                    0 0 0 3px rgba(124, 189, 181, 0.2),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            }
+        }
+        
+        &:hover:not(:focus-within) {
+            border-color: $gray_4;
+            
+            :global(.liquidBackground) & {
+                background: rgba(255, 255, 255, 0.93);
+                border-color: rgba(255, 255, 255, 0.7);
+                box-shadow: 
+                    0 6px 20px rgba(8, 29, 61, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            }
         }
     }
+    
     input {
         flex: 1;
         height: 55px;
-        padding: 16px 24px;
+        padding: 16px 20px;
         background-color: transparent;
         border: 0;
         font-size: 16px;
+        font-weight: 400;
+        color: $black_2;
         outline: 0;
         width: 100%;
         white-space: nowrap;
         text-overflow: ellipsis;
+        border-radius: 14px;
+        
+        &::placeholder {
+            color: $gray_3;
+            font-weight: 400;
+            
+            :global(.liquidBackground) & {
+                color: rgba(79, 79, 79, 0.8);
+            }
+        }
+        
         &:invalid {
-            border: 1px solid $error;
+            border: none;
+        }
+        
+        &:disabled {
+            background-color: $gray_6;
+            color: $gray_3;
+            cursor: not-allowed;
+            
+            :global(.liquidBackground) & {
+                background-color: rgba(242, 242, 242, 0.6);
+                color: rgba(130, 130, 130, 0.8);
+            }
         }
     }
+    
     .visibility {
         padding-right: 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0 14px 14px 0;
+        transition: all 0.25s ease-in-out;
+        
+        svg {
+            color: $gray_3;
+            transition: color 0.25s ease-in-out;
+            
+            &:hover {
+                color: $gray_2;
+            }
+        }
+        
+        :global(.liquidBackground) & {
+            svg {
+                color: rgba(130, 130, 130, 0.8);
+                
+                &:hover {
+                    color: rgba(79, 79, 79, 0.9);
+                }
+            }
+        }
     }
+    
     .upperCase {
         text-transform: uppercase;
     }
-    .inputError {
-        border: 1px solid $error;
+    
+    &.inputError {
+        border: 2px solid $error !important;
+        box-shadow: 0 0 0 3px rgba(223, 6, 17, 0.1) !important;
+        
+        :global(.liquidBackground) & {
+            background: rgba(255, 240, 240, 0.95) !important;
+            border: 2px solid rgba(223, 6, 17, 0.8) !important;
+            box-shadow: 
+                0 4px 20px rgba(223, 6, 17, 0.15),
+                0 0 0 3px rgba(223, 6, 17, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+        }
+        
+        &:focus-within {
+            border: 2px solid $error !important;
+            box-shadow: 0 0 0 3px rgba(223, 6, 17, 0.2) !important;
+            
+            :global(.liquidBackground) & {
+                background: rgba(255, 235, 235, 0.98) !important;
+                border: 2px solid rgba(223, 6, 17, 0.9) !important;
+                box-shadow: 
+                    0 6px 24px rgba(223, 6, 17, 0.2),
+                    0 0 0 3px rgba(223, 6, 17, 0.2),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+            }
+        }
+        
+        &:hover:not(:focus-within) {
+            :global(.liquidBackground) & {
+                background: rgba(255, 245, 245, 0.96) !important;
+                border: 2px solid rgba(223, 6, 17, 0.85) !important;
+            }
+        }
+        
+        .visibility {
+            svg {
+                color: rgba(223, 6, 17, 0.7) !important;
+                
+                &:hover {
+                    color: rgba(223, 6, 17, 0.9) !important;
+                }
+            }
+            
+            :global(.liquidBackground) & {
+                svg {
+                    color: rgba(223, 6, 17, 0.8) !important;
+                    
+                    &:hover {
+                        color: rgba(223, 6, 17, 1) !important;
+                    }
+                }
+            }
+        }
     }
+    
     .paddingIcon {
         padding-left: 16px;
+        
         input {
-            padding: 16px;
+            padding: 16px 16px 16px 8px;
+        }
+        
+        svg {
+            color: $gray_3;
         }
     }
 }

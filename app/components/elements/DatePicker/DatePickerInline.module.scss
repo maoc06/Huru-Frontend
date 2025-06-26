@@ -1,8 +1,81 @@
 @import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/mixins';
+
 .contaniner {
     margin: 16px 0;
+    
     label {
-        font-weight: bold;
-        text-transform: 'capitalize';
+        font-weight: 600;
+        font-size: 16px;
+        color: $gray_1;
+        margin-bottom: 8px;
+        display: block;
+        text-transform: none;
+        
+        // Liquid background mode
+        .liquid_mode & {
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+    }
+}
+
+// Material-UI DatePicker overrides for liquid background theme
+.liquid_mode {
+    :global(.MuiFormControl-root) {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px !important;
+        transition: all 0.3s ease;
+        margin-top: 8px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        
+        &:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        &:focus-within {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(124, 189, 181, 0.6);
+            box-shadow: 0 0 0 3px rgba(124, 189, 181, 0.2), 0 8px 24px rgba(0, 0, 0, 0.2);
+            transform: translateY(-1px);
+        }
+    }
+    
+    :global(.MuiInputBase-input) {
+        color: rgba(255, 255, 255, 0.95) !important;
+        font-size: 16px;
+        font-weight: 400;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        
+        &::placeholder {
+            color: rgba(255, 255, 255, 0.6) !important;
+            opacity: 1;
+        }
+    }
+    
+    :global(.MuiIconButton-root) {
+        color: rgba(255, 255, 255, 0.8);
+        transition: all 0.2s ease;
+        
+        &:hover {
+            color: rgba(124, 189, 181, 0.9);
+            background: rgba(255, 255, 255, 0.1);
+        }
+    }
+    
+    // Error state
+    :global(.MuiFormControl-root.error) {
+        background: rgba(223, 6, 17, 0.15);
+        border-color: rgba(223, 6, 17, 0.5);
+        box-shadow: 0 0 0 3px rgba(223, 6, 17, 0.2);
+        
+        :global(.MuiInputBase-input) {
+            color: rgba(255, 255, 255, 0.95) !important;
+        }
     }
 }

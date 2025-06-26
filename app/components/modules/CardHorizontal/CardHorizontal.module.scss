@@ -6,6 +6,7 @@
     border-radius: 10px;
     margin-bottom: 16px;
     min-width: 200px;
+    box-shadow: $shadow-drop;
     .fav {
         position: absolute;
         top: 0;
@@ -20,7 +21,7 @@
         flex-direction: column;
         position: relative;
         min-width: 100%;
-        background-color: $gray_6;
+        background-color: $background;
         z-index: 99;
         border-radius: inherit;
         overflow: hidden;

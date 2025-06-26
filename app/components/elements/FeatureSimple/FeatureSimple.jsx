@@ -4,9 +4,11 @@ import styles from './FeatureSimple.module.scss';
 
 const FeatureSimple = ({ featureId }) => {
   return (
-    <div className={styles.container}>
-      <p>{carFeaturesNames[featureId]}</p>
-      {carFeaturesIcons[featureId]}
+    <div className={styles.card}>
+      <div className={styles.iconContainer}>
+        {carFeaturesIcons[featureId]}
+      </div>
+      <p className={styles.featureName}>{carFeaturesNames[featureId]}</p>
     </div>
   );
 };

@@ -1,8 +1,38 @@
 @import '../../app/styles/abstracts/colors';
+
+.imageContainer {
+    padding: 16px;
+    background-color: $background;
+    
+    @media (min-width: 768px) {
+        padding: 24px;
+    }
+    
+    @media (min-width: 1024px) {
+        padding: 32px 64px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+
 .info {
     position: relative;
     display: flex;
     background-color: $background;
+    padding: 16px;
+    gap: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+    @media (min-width: 768px) {
+        padding: 24px;
+        gap: 24px;
+    }
+    
+    @media (min-width: 1024px) {
+        padding: 32px 64px;
+        gap: 32px;
+    }
 }
 
 .bottom {

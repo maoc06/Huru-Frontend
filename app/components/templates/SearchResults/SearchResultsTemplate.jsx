@@ -71,7 +71,7 @@ const SearchResultsTemplate = ({ initialState = [] }) => {
                 price={price}
                 imageSrc={image ? image : '/images/default-car.png'}
                 href={`/car/${encodeURIComponent(slug)}`}
-                isEco={categories.includes(8)}
+                isEco={categories && categories.includes(8)}
                 description={description}
                 seats={number_of_seats}
                 transmission={typeTransmissionEnum[transmission_id]}
@@ -110,7 +110,7 @@ const SearchResultsTemplate = ({ initialState = [] }) => {
                 }
                 href={`/car/${encodeURIComponent(slug)}`}
                 favorite={() => handleCheckIsFavorite(slug)}
-                isEco={categories.includes(8)}
+                isEco={categories && categories.includes(8)}
                 description={description}
                 seats={number_of_seats}
                 transmission={typeTransmissionEnum[transmission_id]}

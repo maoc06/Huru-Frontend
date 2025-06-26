@@ -1,12 +1,14 @@
 @import '../../../styles/abstracts/colors';
 .wrapper {
-    padding: 32px 0 100px;
-    background-color: $background;
-    @media (min-width: 720px) {
-        padding: 32px 64px;
-    }
+    padding: 16px 0 100px;
+    background-color: transparent;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    
     .inner {
-        margin: 0 32px;
+        margin: 0;
     }
     .dates {
         @media (min-width: 720px) {
@@ -14,7 +16,7 @@
         }
     }
     .inner_left {
-        margin-left: 32px;
+        margin: 0;
         .reviews_container {
             display: flex;
             padding-bottom: 32px;
@@ -44,5 +46,14 @@
     }
     h5 {
         text-transform: capitalize;
+        font-size: 32px;
+        line-height: 1.2;
+        font-weight: 700;
+        margin-bottom: 20px;
+        
+        @media (max-width: 768px) {
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
     }
 }

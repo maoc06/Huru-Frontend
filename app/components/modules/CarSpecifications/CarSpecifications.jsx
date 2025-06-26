@@ -16,20 +16,20 @@ export default function CarSpecification({
       {title && <SectionTitle title={title} />}
 
       <div className={styles.container}>
-        <section>
-          <TransmissionIcon />
-          <p>{typeTransmission}</p>
-        </section>
+        <div className={styles.badge}>
+          <ChairIcon color="#282828" width="16" height="16" />
+          <span>{numSeats} asientos</span>
+        </div>
 
-        <section>
-          <ChairIcon />
-          <p>{numSeats} sillas</p>
-        </section>
+        <div className={styles.badge}>
+          <GasIcon color="#282828" width="16" height="16" />
+          <span>{typeGas}</span>
+        </div>
 
-        <section>
-          <GasIcon />
-          <p>{typeGas}</p>
-        </section>
+        <div className={styles.badge}>
+          <TransmissionIcon color="#282828" width="16" height="16" />
+          <span>{typeTransmission}</span>
+        </div>
       </div>
     </>
   );

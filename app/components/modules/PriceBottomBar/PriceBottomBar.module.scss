@@ -8,6 +8,7 @@
     max-height: 70px;
     background-color: $background;
     box-shadow: 0 -4px 20px #99999999;
+    border-radius: 16px 16px 0 0;
     @media (min-width: 720px) {
         display: none;
     }

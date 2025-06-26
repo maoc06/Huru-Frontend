@@ -3,6 +3,8 @@ import FeatureSimple from '../../elements/FeatureSimple/FeatureSimple';
 import SectionTitle from '../../elements/SectionTitle/SectionTitle';
 import { useState } from 'react';
 
+import styles from './FeatureSimpleCompound.module.scss';
+
 const FeatureSimpleCompound = ({
   carId,
   title,
@@ -23,17 +25,20 @@ const FeatureSimpleCompound = ({
   };
 
   return (
-    <>
+    <div className={styles.container}>
       {title && <SectionTitle title={title} />}
 
       {features.length === 0 && (
         <p>Este carro no tiene caracteristicas asignadas.</p>
       )}
 
-      {features.length > 0 &&
-        features.slice(0, limit).map(({ featureId }) => {
-          return <FeatureSimple key={featureId} featureId={featureId} />;
-        })}
+      {features.length > 0 && (
+        <div className={styles.featuresGrid}>
+          {features.slice(0, limit).map(({ featureId }) => {
+            return <FeatureSimple key={featureId} featureId={featureId} />;
+          })}
+        </div>
+      )}
 
       {features.length > 0 && (
         <SeeAll
@@ -43,7 +48,7 @@ const FeatureSimpleCompound = ({
           onSimulate={handleSimulateSeeAll}
         />
       )}
-    </>
+    </div>
   );
 };
 

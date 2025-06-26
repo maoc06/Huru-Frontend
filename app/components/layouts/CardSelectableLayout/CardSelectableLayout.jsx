@@ -26,11 +26,11 @@ export default function CardSelectableLayout({
   const handleClick = (index, value) => {
     let selected = [];
 
-    if (selectedIndex.includes(index)) {
+    if (selectedIndex && selectedIndex.includes(index)) {
       selected = selectedIndex.filter((selected) => selected !== index);
       // setSelectedIndex(selected);
     } else {
-      selected = [...selectedIndex, index];
+      selected = [...(selectedIndex || []), index];
       // setSelectedIndex([...selectedIndex, index]);
     }
 
@@ -66,7 +66,7 @@ export default function CardSelectableLayout({
                 valueNested ? item[propValue][propValueNested] : item[propValue]
               }
               selected={
-                isAllActives ? true : selectedIndex.includes(item[propKey])
+                isAllActives ? true : selectedIndex && selectedIndex.includes(item[propKey])
               }
               {...otherProps}
             />

@@ -15,7 +15,7 @@ export default function Signin() {
         />
       </Head>
 
-      <AppLayout centerContent={true}>
+      <AppLayout centerContent={true} withLiquidBackground={true}>
         <LoginTemplate />
       </AppLayout>
     </div>

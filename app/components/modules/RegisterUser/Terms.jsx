@@ -22,7 +22,6 @@ export default function Terms() {
   const router = useRouter();
   const auth = useAuth();
   const singUp = useApi(authApi.signUp);
-  const signIn = useApi(authApi.signIn);
   let user = useSelector((state) => state.userRegister);
 
   const [popUpOpen, setPopUpOpen] = useState(false);
@@ -35,18 +34,21 @@ export default function Terms() {
     router.push('/');
   };
 
-  const handleSubmit = async (checkTerms) => {
+  const handleSubmit = async ({ checkTerms }) => {
     if (checkTerms) {
       const res = await singUp.request(user);
 
-      auth.logIn(res.data.accessToken);
-      setPopUpOpen(true);
+      if (res.ok) {
+        auth.logIn(res.data.accessToken);
+        setPopUpOpen(true);
+      }
+      // You could add an else block here to handle registration errors
     }
   };
 
   return (
     <>
-      <ActivityIndicator visible={singUp.loading || signIn.loading} />
+      <ActivityIndicator visible={singUp.loading} />
 
       <StatusIndicator
         animationData={emailAnimationData}

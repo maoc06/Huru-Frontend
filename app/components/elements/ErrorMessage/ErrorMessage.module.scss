@@ -1,6 +1,33 @@
 @import '../../../styles/abstracts/colors';
+
+.errorContainer {
+    min-height: 22px; // Reserve space to prevent layout shift
+    margin-top: 6px;
+}
+
 .statusMsg {
     font-size: 14px;
     line-height: 19px;
     color: $error;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    
+    // Enhanced styling for liquid background
+    :global(.liquidBackground) & {
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+        font-weight: 600;
+    }
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hidden {
+    opacity: 0;
+    transform: translateY(-4px);
+    color: transparent;
 }

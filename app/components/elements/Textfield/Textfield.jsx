@@ -118,7 +118,9 @@ export default function Textfield({
       <div
         className={`${styles.textfield} ${
           withLabel && styles.with_margin_to_label
-        } ${withIcon && styles.paddingIcon}`}
+        } ${withIcon && styles.paddingIcon} ${
+          touched[name] && errors[name] && styles.inputError
+        }`}
       >
         {withIcon && <div>{iconComponent}</div>}
 
@@ -128,9 +130,7 @@ export default function Textfield({
           value={values[name]}
           name={name}
           type={type === 'password' ? typePassword : type}
-          className={`${styles.input} ${
-            touched[name] && errors[name] && styles.inputError
-          } ${upperCase && styles.upperCase} `}
+          className={`${styles.input} ${upperCase && styles.upperCase} `}
           placeholder={placeholder}
           disabled={readOnly}
           {...otherProps}

@@ -34,8 +34,14 @@ const RegisterUserPage = () => {
 
   return (
     <>
-      <StepBarProgress numOfSteps={numOfSteps} currStep={step} />
-      <AppLayout centerContent={true}>{renderStep()}</AppLayout>
+      <AppLayout 
+        centerContent={true} 
+        withLiquidBackground={true}
+        withImage={false}
+      >
+        <StepBarProgress numOfSteps={numOfSteps} currStep={step} />
+        {renderStep()}
+      </AppLayout>
     </>
   );
 };

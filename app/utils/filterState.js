@@ -52,7 +52,7 @@ const filterData = (data, query) => {
           if (item[key] !== query[key]) {
             return false;
           }
-        } else if (!query[key].includes(item[key])) {
+        } else if (query[key] && !query[key].includes(item[key])) {
           return false;
         }
       }

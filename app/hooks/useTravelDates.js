@@ -6,7 +6,7 @@ const useTravelDates = () => {
   const searchParams = useSelector((state) => state.searchParams);
 
   const isISO = ({ date }) => {
-    if (date.includes('T')) return true;
+    if (date && date.includes('T')) return true;
     return false;
   };
 

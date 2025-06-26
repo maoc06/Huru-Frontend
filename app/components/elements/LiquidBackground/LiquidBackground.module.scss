@@ -1,0 +1,106 @@
+@import '../../../styles/app.scss';
+
+.liquidBackground {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, 
+    rgba(246, 255, 252, 0.9) 0%,
+    rgba(246, 255, 252, 0.8) 50%,
+    rgba(246, 255, 252, 0.9) 100%);
+}
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  filter: blur(1px);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: radial-gradient(
+    circle at 30% 20%,
+    rgba(124, 189, 181, 0.15) 0%,
+    transparent 50%
+  ),
+  radial-gradient(
+    circle at 70% 80%,
+    rgba(98, 194, 161, 0.12) 0%,
+    transparent 50%
+  ),
+  radial-gradient(
+    circle at 60% 40%,
+    rgba(8, 29, 61, 0.08) 0%,
+    transparent 50%
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+
+  // Button enhancements with subtle glassmorphism
+  :global(button) {
+    background: rgba(124, 189, 181, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(124, 189, 181, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(124, 189, 181, 0.25);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(107, 168, 159, 1);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(124, 189, 181, 0.35);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .content {
+    padding: 1rem;
+  }
+}
+
+// Performance optimization - reduce effects on lower-end devices
+@media (prefers-reduced-motion: reduce) {
+  .canvas {
+    animation: none;
+  }
+  
+  .overlay {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  .content {
+    .container,
+    [class*="container"] {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+  }
+} 

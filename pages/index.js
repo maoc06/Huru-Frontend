@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 
 import useMood from '../app/hooks/useMood';
 
-import NavBarLayout from '../app/components/layouts/NavBarLayout/NavBarLayout';
-import HeroImageLayout from '../app/components/layouts/HeroImageLayout/HeroImageLayout';
 import HomeTemplate from '../app/components/templates/HomePage/HomeTemplate';
 import HomeHostTemplate from '../app/components/templates/HomeHostMode/HomeHostTemplate';
 
@@ -27,15 +25,11 @@ export default function Home() {
         />
       </Head>
 
-      <NavBarLayout>
-        {hostMode ? (
-          <HomeHostTemplate />
-        ) : (
-          <HeroImageLayout>
-            <HomeTemplate />
-          </HeroImageLayout>
-        )}
-      </NavBarLayout>
+      {hostMode ? (
+        <HomeHostTemplate />
+      ) : (
+        <HomeTemplate />
+      )}
     </div>
   );
 }

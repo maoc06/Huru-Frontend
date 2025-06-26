@@ -41,24 +41,24 @@ const CarProfileTemplate = ({
       <article className={styles.inner}>
         <h5>{title}</h5>
 
-        {showDescription && (
-          <ShowMoreText>
-            <p className={styles.long_text}>{description}</p>
-          </ShowMoreText>
+        {showSpecifications && (
+          <CarSpecifications
+            typeTransmission={typeTransmission}
+            numSeats={numSeats}
+            typeGas={typeGas}
+          />
         )}
       </article>
 
       <Divider />
 
-      {showSpecifications && (
+      {showDescription && (
         <>
           <article className={styles.inner}>
-            <CarSpecifications
-              title="Especificaciones"
-              typeTransmission={typeTransmission}
-              numSeats={numSeats}
-              typeGas={typeGas}
-            />
+            <h6>Descripción</h6>
+            <ShowMoreText>
+              <p className={styles.long_text}>{description}</p>
+            </ShowMoreText>
           </article>
 
           <Divider />

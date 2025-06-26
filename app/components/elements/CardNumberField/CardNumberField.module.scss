@@ -1,41 +1,85 @@
 @import '../../../styles/abstracts/colors';
+
 .container {
     margin: 16px 0;
+    
     label {
-        font-weight: bold;
-        text-transform: 'capitalize';
+        font-weight: 600;
+        font-size: 16px;
+        color: $gray_1;
+        margin-bottom: 8px;
+        display: block;
+        text-transform: none;
     }
+    
     .textfield {
         display: flex;
         width: 100%;
-        border-radius: 4px;
-        border: 1px solid $gray_3;
+        border-radius: 28px;
+        border: 2px solid $gray_5;
         color: $black_2;
         align-items: center;
         margin-top: 8px;
+        background: $white;
+        transition: all 0.25s ease-in-out;
+        
         &:focus-within {
-            border: 1px solid $primary;
+            border: 2px solid $primary !important;
+            box-shadow: 0 0 0 3px rgba(8, 29, 61, 0.1);
         }
+        
+        &:hover:not(:focus-within) {
+            border-color: $gray_4;
+        }
+        
         .iconPayment {
-            padding-right: 8px;
+            padding-right: 16px;
+            
+            svg {
+                width: 24px;
+                height: 24px;
+            }
         }
     }
+    
     input {
         flex: 1;
         height: 55px;
-        padding: 16px 24px;
+        padding: 16px 20px;
         background-color: transparent;
         border: 0;
         font-size: 16px;
+        font-weight: 400;
+        color: $black_2;
         outline: 0;
         width: 100%;
         white-space: nowrap;
         text-overflow: ellipsis;
+        border-radius: 28px;
+        
+        &::placeholder {
+            color: $gray_3;
+            font-weight: 400;
+        }
+        
         &:invalid {
-            border: 1px solid $error;
+            border: none;
+        }
+        
+        &:disabled {
+            background-color: $gray_6;
+            color: $gray_3;
+            cursor: not-allowed;
         }
     }
+    
     .inputError {
-        border: 1px solid $error;
+        border: 2px solid $error !important;
+        box-shadow: 0 0 0 3px rgba(223, 6, 17, 0.1) !important;
+        
+        &:focus-within {
+            border: 2px solid $error !important;
+            box-shadow: 0 0 0 3px rgba(223, 6, 17, 0.2) !important;
+        }
     }
 }

@@ -1,0 +1,27 @@
+// Frosted glass effect variables
+$overlay-color: rgba(255, 255, 255, 0.25);
+$backdrop-blur: 30px;
+
+// Mixin reutilizable for frosted glass effect
+@mixin frosted-glass {
+  // More solid background with better visibility
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.2), 
+    rgba(255, 255, 255, 0.35)
+  );
+  
+  // Enhanced backdrop filter for stronger blur
+  -webkit-backdrop-filter: blur($backdrop-blur) saturate(150%);
+  backdrop-filter: blur($backdrop-blur) saturate(150%);
+  
+  // Fallback for browsers that don't support backdrop-filter
+  @supports not (backdrop-filter: blur()) {
+    background: rgba(255, 255, 255, 0.85);
+  }
+  
+  // Enhanced border and shadow for more solid appearance
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}

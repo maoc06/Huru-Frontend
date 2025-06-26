@@ -11,6 +11,7 @@ export default function AutoCompletePlaces({
   name,
   placeholder,
   isCompact,
+  noBorder = false,
   detectChanges = false,
   onDetectChanges = () => {},
 }) {
@@ -74,9 +75,13 @@ export default function AutoCompletePlaces({
         value: values[name],
         onChange: handleChangePlace,
         placeholder,
+        menuPortalTarget: typeof document !== 'undefined' ? document.body : null,
+        menuPosition: 'absolute',
+        menuPlacement: 'auto',
         styles: styles({
           isCompact,
           isMobile,
+          noBorder,
         }),
       }}
     />

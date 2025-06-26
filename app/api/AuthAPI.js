@@ -4,8 +4,9 @@ import client from './RestClient';
 const endpoint = '/auth';
 
 const signUp = async (user) => {
+  console.log('user signup - auth api', user);
   const token = await client.post(`${endpoint}/signup`, user);
-  await axios.post('/api/verifyRequest/user', { token });
+  await axios.post('/api/verifyRequest/user', { token: { data: token.data } });
   return token;
 };
 

@@ -74,6 +74,7 @@ export default function DatePickerInline({
             disableFuture={true}
             className={clsx(classes.field, {
               [classes.fieldError]: color === 'error',
+              'error': color === 'error'
             })}
           />
         </MuiPickersUtilsProvider>

@@ -16,6 +16,22 @@ import {
 
 import styles from './DatesPanel.module.scss';
 
+// Arrow Right Icon Component
+const ArrowRightIcon = ({ width = 16, height = 16, color = '#ffffff' }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={width}
+    height={height}
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <path
+      fill={color}
+      d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+    />
+  </svg>
+);
+
 export default function DatesPanel({
   compact = false,
   clickleable = true,
@@ -146,6 +162,11 @@ export default function DatesPanel({
           date: selectionDates.format.startDate,
           hour: selectionDates.format.startHour,
         })}
+
+        {/* Circular Arrow Button */}
+        <div className={styles.arrowButton}>
+          <ArrowRightIcon width={18} height={18} />
+        </div>
 
         {renderSection({
           title: 'Fecha y hora de fin',
