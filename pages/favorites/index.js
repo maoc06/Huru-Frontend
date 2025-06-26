@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 import useApi from '../../app/hooks/useApi';
 import favoriteApi from '../../app/api/FavoriteAPI';
@@ -29,6 +30,7 @@ const Favorites = () => {
 
   const handleGetFavorites = async (userId) => {
     const res = await getFavorites.request(userId);
+    console.log('favorites', res);
     if (res !== undefined && res.data !== undefined) {
       setFavorites(res.data.data);
     }
@@ -62,31 +64,34 @@ const Favorites = () => {
           />
         )}
 
-        <section className={styles.favorites}>
-          {favorites.constructor === Array &&
-            favorites.length > 0 &&
-            favorites.map(({ car }) => {
+        <div className={styles.grid_container}>
+          <section className={styles.grid}>
+            {favorites.map(({ car }) => {
+              if (!car) return null;
               const imageSrc =
-                car.images.length === 0
-                  ? '/images/default-car.png'
-                  : car.images[0].imagePath;
+                car?.images?.[0]?.imagePath || '/images/default-car.png';
 
               return (
-                <CardHorizontal
-                  carId={car.carId}
-                  userId={user.uid}
-                  key={car.carId}
-                  imageSrc={imageSrc}
-                  href={`/car/${encodeURIComponent(car.carId)}`}
-                  showPanelPrice={false}
-                  title={`${car.maker.name} ${car.model.name} ${car.year}`}
-                  favorite={true}
-                  onRemoveFavorite={handleRemoveFavorite}
-                  forceRowDirection={false}
-                />
+                <Link href={`/car/${car.slug}`} key={car.id}>
+                  <a>
+                    <CardHorizontal
+                      carId={car.id}
+                      userId={user.uid}
+                      key={car.id}
+                      imageSrc={imageSrc}
+                      brand={car.brand}
+                      model={car.model}
+                      year={car.year}
+                      city={car.city.name}
+                      price={car.price}
+                      isVerified={car.isVerified}
+                    />
+                  </a>
+                </Link>
               );
             })}
-        </section>
+          </section>
+        </div>
       </AppLayout>
     </div>
   );

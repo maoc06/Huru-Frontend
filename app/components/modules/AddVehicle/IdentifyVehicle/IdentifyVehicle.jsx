@@ -91,6 +91,7 @@ function IdentifyVehicle({ setStep, next }) {
           label={'Fabricante'}
           setSelectItem={setSelectMaker}
           propKey={'makerId'}
+          propName={'name'}
           marginBottom
         />
 
@@ -99,6 +100,7 @@ function IdentifyVehicle({ setStep, next }) {
           list={modelsByMaker}
           label="Modelo"
           propKey={'modelId'}
+          propName={'name'}
           marginBottom
         />
 
@@ -116,6 +118,7 @@ function IdentifyVehicle({ setStep, next }) {
           list={transmissions}
           label={'Transmisión'}
           propKey={'transmissionId'}
+          propName={'name'}
           marginBottom
         />
 

@@ -25,9 +25,9 @@ export default function Dropdown({
   defaultValue,
 }) {
   const classes = materialStyles();
-  const [selected, setSelect] = useState(list[0][propName]);
+  const { setFieldValue, touched, errors, values } = useFormikContext();
 
-  const { setFieldValue, touched, errors } = useFormikContext();
+  const [selected, setSelect] = useState(list[0]);
 
   const getObjectByPropName = (item) => {
     return list.find((obj) => {
@@ -41,8 +41,8 @@ export default function Dropdown({
   }, []);
 
   useEffect(() => {
-    setSelect(list[0][propName]);
-    setFieldValue(name, getObjectByPropName(list[0][propName]));
+    setSelect(list[0]);
+    setFieldValue(name, list[0]);
   }, [list]);
 
   const handleChange = (event) => {
@@ -70,11 +70,10 @@ export default function Dropdown({
       <FormControl className={classes.formControl}>
         <Select
           name={name}
-          value={selected}
+          value={values[name]?.[propName] || ''}
           onChange={handleChange}
           displayEmpty
           disableUnderline
-          defaultValue={defaultValue ? defaultValue : ''}
           inputProps={{ 'aria-label': 'Without label' }}
           classes={{ root: classes.root }}
         >

@@ -36,3 +36,4 @@ yarn-error.log*
 # sass
 *.css
 *.css.map
+app/lib/serviceAccountKey.json

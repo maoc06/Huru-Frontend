@@ -30,12 +30,16 @@ const Trips = () => {
 
   const handleUpcomingBookings = async (uuid) => {
     const res = await getUpcomingBookings.request(uuid);
-    setUpcomingBookings(res.data.data);
+    if (res?.data) {
+      setUpcomingBookings(res.data.data);
+    }
   };
 
   const handleBookingsHistory = async (uuid) => {
     const res = await getBookingsHistory.request(uuid);
-    setBookingHistory(res.data.data);
+    if (res?.data) {
+      setBookingHistory(res.data.data);
+    }
   };
 
   const tabs = [

@@ -1,10 +1,12 @@
-import Lottie from 'react-lottie';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
 import Button from '../../elements/Button/Button';
 import TitlePage from '../../elements/TitlePage/TitlePage';
 import styles from './UnderConstruction.module.scss';
 import animationData from '../../../../public/animations/construction.json';
+
+const Lottie = dynamic(() => import('react-lottie'), { ssr: false });
 
 export default function UnderConstruction({
   title = 'BAJO CONSTRUCCIÓN',

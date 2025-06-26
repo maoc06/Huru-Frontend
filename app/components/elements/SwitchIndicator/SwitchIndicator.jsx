@@ -1,7 +1,9 @@
-import Lottie from 'react-lottie';
+import dynamic from 'next/dynamic';
 import animationData from '../../../../public/animations/change.json';
 
 import styles from './SwitchIndicator.module.scss';
+
+const Lottie = dynamic(() => import('react-lottie'), { ssr: false });
 
 export default function SwitchIndicator({ visible = false }) {
   const defaultOptions = {

@@ -34,7 +34,7 @@ function PaymentMethods() {
 
   const handleGetDefault = async (uid) => {
     const res = await getDefaultPayment.request(uid);
-    setDefaultPayment(res.data.data[0]);
+    setDefaultPayment(res.data.data[0] || {});
   };
 
   const handleGetData = (uid) => {
@@ -92,7 +92,7 @@ function PaymentMethods() {
 
                 {!getDefaultPayment.loading && (
                   <PaymentEditControlls
-                    defaultId={defaultPayment.id}
+                    defaultId={defaultPayment?.id}
                     paymentId={payment.id}
                     isDefault={payment.isDefault}
                   />

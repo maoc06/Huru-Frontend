@@ -13,6 +13,7 @@ const storeToken = (authToken) => {
 const getToken = () => {
   try {
     const token = localStorage.getItem(key);
+    console.log('👉 token', JSON.parse(token));
     return JSON.parse(token);
   } catch (error) {
     console.error('Error getting the token', error);

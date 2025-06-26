@@ -1,6 +1,8 @@
-import Lottie from 'react-lottie';
+import dynamic from 'next/dynamic';
 import animationData from '../../../../public/animations/uploading.json';
 import styles from './UploadingIndicator.module.scss';
+
+const Lottie = dynamic(() => import('react-lottie'), { ssr: false });
 
 export default function UploadingIndicator({ visible = false }) {
   const defaultOptions = {

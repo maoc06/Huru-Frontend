@@ -18,7 +18,10 @@ export default function SelfieTime({ setStep }) {
     if (formData.get('file') !== undefined && formData.get('file') !== null) {
       const profilePicUrl = await uploadProfilePic.request(formData);
 
-      dispatch(setProfilePhoto(profilePicUrl.data.url));
+      if (profilePicUrl && profilePicUrl.data) {
+        dispatch(setProfilePhoto(profilePicUrl.data.url));
+      }
+      
       setStep(6);
     }
   };

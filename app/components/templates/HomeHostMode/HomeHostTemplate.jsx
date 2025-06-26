@@ -19,7 +19,9 @@ export default function HomeHostTemplate() {
 
   const handleGetData = async (uuid) => {
     const res = await getBookingRequests.request({ uuid, limit: true });
-    setBookingRequest(res.data.data);
+    if (res && res.data) {
+      setBookingRequest(res.data.data);
+    }
   };
 
   const handleAvatar = () => {

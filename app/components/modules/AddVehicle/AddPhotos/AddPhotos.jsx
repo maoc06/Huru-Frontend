@@ -25,6 +25,7 @@ export default function AddPhotos({ setStep, next, showButton = true }) {
 
   const handleUploadSelected = async (form) => {
     const user = storageAuth.getUser();
+    console.log('form', form.values);
     form.set('uid', user.info.uid);
 
     if (photosUploaded.length === 0) {
@@ -34,7 +35,10 @@ export default function AddPhotos({ setStep, next, showButton = true }) {
     }
 
     const pic = await vehicleImageApi.request(form);
-    setPhotoUploaded([...photosUploaded, pic.data.data]);
+    console.log('vehicle image pic', pic);
+    if (pic && !vehicleImageApi.error) {
+      setPhotoUploaded([...photosUploaded, pic.data.data]);
+    }
   };
 
   const handleRemove = (uri) => {

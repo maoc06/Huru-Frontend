@@ -1,8 +1,10 @@
-import Lottie from 'react-lottie';
+import dynamic from 'next/dynamic';
 
 import Button from '../Button/Button';
 
 import styles from './StatusIndicator.module.scss';
+
+const DynamicLottie = dynamic(() => import('react-lottie'), { ssr: false });
 
 export default function StatusIndicator({
   animationData,
@@ -27,7 +29,7 @@ export default function StatusIndicator({
   return (
     <div className={styles.background}>
       <div className={styles.overlay}>
-        <Lottie
+        <DynamicLottie
           options={defaultOptions}
           height={125}
           width={125}

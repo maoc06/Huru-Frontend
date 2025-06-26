@@ -4,6 +4,7 @@ import storageAuth from '../utils/storageAuth';
 const endpoint = '/payment';
 
 const savePaymentSourceCard = async (card) => {
+  console.log('savePaymentSourceCard', card);
   return await client.post(`${endpoint}/source-card`, card, {
     headers: { Authorization: `Bearer ${storageAuth.getToken()}` },
   });

@@ -1,7 +1,9 @@
-import Lottie from 'react-lottie';
+import dynamic from 'next/dynamic';
 
 import animationData from '../../../../public/animations/not-found.json';
 import styles from './NotFound.module.scss';
+
+const Lottie = dynamic(() => import('react-lottie'), { ssr: false });
 
 export default function NotFound({
   text = 'No se encontraron resultados.',
