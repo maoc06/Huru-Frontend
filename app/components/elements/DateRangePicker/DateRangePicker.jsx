@@ -48,12 +48,18 @@ export default function AppDateRangePicker({
   };
 
   return (
-    <div
-      className={`${styles.container} ${show ? styles.show : styles.hide} ${
-        showInline && styles.inline
-      }`}
-      ref={ref}
-    >
+    <>
+      {/* Mobile backdrop overlay */}
+      {show && !showInline && (
+        <div className={styles.backdrop} onClick={() => setShow(false)} />
+      )}
+      
+      <div
+        className={`${styles.container} ${show ? styles.show : styles.hide} ${
+          showInline && styles.inline
+        }`}
+        ref={ref}
+      >
       <DateRange
         editableDateInputs={true}
         onChange={handleDatesChange}
@@ -90,6 +96,7 @@ export default function AppDateRangePicker({
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }

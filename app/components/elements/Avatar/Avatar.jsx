@@ -63,12 +63,7 @@ export default function AppAvatar({
         <Avatar
           alt={alt}
           src={imageUrl}
-          className={[
-            size === 'small' && classes.small,
-            size === 'large' && classes.large,
-            size === 'medium' && classes.medium,
-            size === 'xl' && classes.xl
-          ].filter(Boolean).join(' ')}
+          className={classes[size] || classes.medium}
         />
 
         <input

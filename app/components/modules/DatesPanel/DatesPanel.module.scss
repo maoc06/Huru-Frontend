@@ -4,33 +4,81 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding: 16px 8px;
+    padding: 20px 12px;
     border-radius: 12px;
-    background-color: $background;
-    border: 1px solid $gray_5;
-    box-shadow: $shadow-drop;
-    gap: 8px;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    gap: 12px;
+    overflow: visible;
+    
+    // Prevent flexbox from affecting absolutely positioned arrow button
+    @media (min-width: 720px) {
+        &:not(.compact) {
+            align-items: stretch;
+            
+            // Ensure arrow button container doesn't get stretched
+            .arrowButton {
+                align-self: center;
+            }
+        }
+    }
+    
+    // Vertical divider (mobile behind arrow, desktop standalone)
+    &::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 1px;
+        background-color: $gray_4;
+        z-index: 1;
+        height: 50px;
+        
+        @media (min-width: 720px) {
+            height: 40px;
+        }
+    }
+    
+
     
     @media (min-width: 720px) {
         flex: 1;
-        min-width: 100px;
-        max-width: 550px;
+        min-width: 200px;
+        max-width: 600px;
         height: auto;
-        padding: 20px 12px;
-        gap: 12px;
+        padding: 16px 12px;
+        gap: 8px;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        position: relative;
     }
     
     div {
         flex: 1;
-        padding: 0 4px;
+        padding: 0 8px;
         min-width: 0;
+        
+        @media (min-width: 720px) {
+            flex: 1;
+            min-width: 160px;
+            padding: 0 8px;
+        }
         
         p {
             text-transform: capitalize;
-            margin: 2px 0;
+            margin: 4px 0;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            
+            @media (min-width: 720px) {
+                white-space: nowrap;
+                overflow: visible;
+                text-overflow: initial;
+            }
             
             &:nth-child(2) {
                 font-size: 15px;
@@ -38,6 +86,12 @@
                 font-weight: 600;
                 white-space: nowrap;
                 margin-top: 4px;
+                
+                @media (min-width: 720px) {
+                    white-space: nowrap;
+                    overflow: visible;
+                    text-overflow: initial;
+                }
             }
         }
         
@@ -51,15 +105,21 @@
             overflow: hidden;
             text-overflow: ellipsis;
             line-height: 1.2;
+            
+            @media (min-width: 720px) {
+                white-space: nowrap;
+                overflow: visible;
+                text-overflow: initial;
+            }
         }
     }
     
     .start_date {
         text-align: left;
-        padding-left: 4px;
+        padding-left: 8px;
         
         @media (min-width: 720px) {
-            padding-left: 8px;
+            padding-left: 4px;
             border-left: none;
         }
     }
@@ -68,12 +128,13 @@
         border-left: 1px solid $gray_4;
         text-align: right;
         position: relative;
-        padding-right: 4px;
-        padding-left: 16px;
+        padding-right: 8px;
+        padding-left: 20px;
         
         @media (min-width: 720px) {
+            border-left: none;
             padding-right: 8px;
-            padding-left: 20px;
+            padding-left: 12px;
         }
     }
 }
@@ -91,9 +152,11 @@
     align-items: center;
     justify-content: center;
     flex: none !important;
-    z-index: 2;
+    z-index: 3;
     box-shadow: $shadow-drop;
     transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
     
     &:hover {
         transform: translate(-50%, -50%) scale(1.05);
@@ -109,23 +172,101 @@
 
 .not_compact {
     margin: 16px 0;
+    
+    // Home page mobile optimizations (when used in SearchForm with container_full)
+    @media (max-width: 719px) {
+        margin: 0px;
+        padding: 0px;
+        gap: 8px;
+    }
+    
+    // Ensure arrow button maintains proper dimensions in non-compact mode (home page)
+    @media (min-width: 720px) {
+        position: relative;
+        
+        .arrowButton {
+            position: absolute !important;
+            left: 50% !important;
+            top: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            width: 36px !important;
+            height: 36px !important;
+            min-width: 36px !important;
+            min-height: 36px !important;
+            max-width: 36px !important;
+            max-height: 36px !important;
+            border-radius: 50% !important;
+            flex-shrink: 0 !important;
+            flex-grow: 0 !important;
+            
+            &:hover {
+                transform: translate(-50%, -50%) scale(1.05) !important;
+            }
+        }
+    }
 }
 
 .compact {
-    padding: 16px 8px;
+    padding: 16px 12px;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
     
     @media (min-width: 720px) {
-        padding: 20px 12px;
+        padding: 8px 12px;
+        position: relative;
+        width: 100%;
+        flex-grow: 1;
+        max-width: none;
+        
+        div {
+            p {
+                &:nth-child(2) {
+                    font-size: 14px;
+                    color: $gray_2;
+                    font-weight: 600;
+                }
+            }
+            
+            .top_label {
+                font-size: 11px;
+                color: $gray_3;
+                margin-bottom: 2px;
+            }
+        }
+        
+        // Ensure arrow button maintains proper dimensions in compact mode
+        .arrowButton {
+            position: absolute !important;
+            left: 50% !important;
+            top: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            width: 36px !important;
+            height: 36px !important;
+            min-width: 36px !important;
+            min-height: 36px !important;
+            max-width: 36px !important;
+            max-height: 36px !important;
+            border-radius: 50% !important;
+            flex-shrink: 0 !important;
+            
+            &:hover {
+                transform: translate(-50%, -50%) scale(1.05) !important;
+            }
+        }
     }
     
     div {
         p {
-            font-size: 16px;
+            font-size: 14px;
             color: $gray_2;
             font-weight: 600;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            
+            @media (min-width: 720px) {
+                font-size: 16px;
+            }
         }
     }
 }

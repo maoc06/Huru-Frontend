@@ -7,14 +7,63 @@
     width: 100%;
     margin: 0 auto;
     max-width: 850px;
-    border-radius: 50px;
+    border-radius: 20px;
     position: relative;
     
     @media (min-width: 720px) {
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
-        gap: 24px;
+        gap: 16px;
+        border-radius: 50px;
+    }
+    
+    // Specific styling for compact version (search page)
+    &:not(.container_full) {
+        @media (min-width: 720px) {
+            align-items: center;
+            gap: 16px;
+            
+            > form {
+                display: flex;
+                width: 100%;
+                align-items: center;
+                
+                .placesSection {
+                    flex: 0 0 auto; // Don't grow, don't shrink, use auto width
+                }
+                
+                section, 
+                div:not(.placesSection):not(.action) {
+                    flex: 1; // Grow to take remaining space
+                }
+                
+                .action {
+                    flex: 0 0 auto; // Don't grow, don't shrink, use auto width
+                }
+            }
+            
+            .placesSection {
+                flex: 0 0 35%;
+                
+                :global(.react-select__control) {
+                    height: 40px !important;
+                    min-height: 40px !important;
+                }
+                
+                :global(.react-select__single-value),
+                :global(.react-select__placeholder) {
+                    transform: translateY(-2px) !important;
+                }
+            }
+            
+            // Ensure DatesPanel maintains proper positioning for arrow button
+            > form > div:not(.placesSection):not(.action) {
+                position: relative;
+                overflow: visible;
+                z-index: auto;
+            }
+        }
     }
 }
 
@@ -33,7 +82,30 @@
     -webkit-backdrop-filter: blur(30px);
     backdrop-filter: blur(30px);
     border: 1px solid rgba(255, 255, 255, 0.35);
-    border-radius: 50px;
+    border-radius: 20px;
+    
+    @media (max-width: 719px) {
+        height: auto;
+        min-height: 180px;
+        padding: 16px;
+    }
+    
+    @media (min-width: 720px) {
+        border-radius: 50px;
+    }
+    
+    // Home page specific mobile optimizations
+    @media (max-width: 719px) {
+        .action {
+            margin-top: 16px;
+        }
+        
+        .placesSection {
+            height: 42px;
+        }
+        
+
+    }
     
     box-shadow: 
         0 8px 32px 0 rgba(31, 38, 135, 0.25),
@@ -62,7 +134,7 @@
         min-width: 140px;
         margin-top: 0;
         flex-shrink: 0;
-        margin-left: 8px;
+        margin-left: auto;
     }
 }
 
@@ -72,8 +144,12 @@
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    border-radius: 50px;
+    border-radius: 20px;
     overflow: visible;
+    
+    @media (min-width: 720px) {
+        border-radius: 50px;
+    }
     
     &:hover {
         border-color: $gray_4;
@@ -88,17 +164,101 @@
 
 .margin_bottom {
     margin-bottom: 32px;
+    
+    @media (max-width: 719px) {
+        margin-bottom: 16px;
+    }
+}
+
+// Places section with search icon
+.placesSection {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    height: 40px;
+    
+    @media (min-width: 720px) {
+        flex: 0 0 200px;
+        height: auto;
+    }
+    
+    // Make AutoCompletePlaces fill remaining space
+    :global(.react-select__container) {
+        flex: 1;
+        height: 100%;
+    }
+    
+    :global(.react-select__control) {
+        height: 100% !important;
+        min-height: 100% !important;
+        padding-left: 42px !important;
+    }
+}
+
+// Search icon positioning
+.searchIcon {
+    position: absolute;
+    left: 14px;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 100%;
+    
+    @media (min-width: 720px) {
+        left: 16px;
+        display: flex;
+    }
+    
+    svg {
+        width: 20px;
+        height: 20px;
+        color: #828282;
+        display: block;
+    }
+}
+
+// Specific search icon positioning for compact version
+.container:not(.container_full) {
+    .searchIcon {
+        @media (min-width: 720px) {
+            align-items: center;
+            
+            svg {
+                width: 16px;
+                height: 16px;
+                transform: translateY(-3px);
+            }
+        }
+    }
+}
+
+// Horizontal divider between places and dates
+.divider {
+    height: 1px;
+    background-color: $gray_4;
+    margin: 12px 0;
+    width: 100%;
+    
+    @media (min-width: 720px) {
+        display: none;
+    }
 }
 
 .container {
-    // Style the vertical dividers with secondary color
-    :global(.MuiDivider-root) {
+    // Style the vertical dividers with secondary color (only within SearchForm)
+    > form :global(.MuiDivider-root) {
         background-color: $secondary;
         opacity: 0.6;
     }
     
-    // Remove borders from AutoCompletePlaces (place search field)
-    :global(.AutoCompletePlaces) {
+    // Remove borders from AutoCompletePlaces (place search field - only within SearchForm)
+    > form :global(.AutoCompletePlaces) {
         input {
             border: none !important;
             box-shadow: none !important;
@@ -132,16 +292,57 @@
         }
     }
     
-    // Ensure dropdowns appear above other elements
-    :global(.react-select__menu) {
-        z-index: 9999 !important;
+    // Ensure dropdowns appear above other elements (only within SearchForm)
+    > form :global(.react-select__menu) {
+        z-index: 1050 !important;
     }
     
-    :global(.MuiPopper-root) {
-        z-index: 9999 !important;
+    > form :global(.MuiPopper-root) {
+        z-index: 1050 !important;
     }
     
-    :global(.MuiPaper-root) {
-        z-index: 9999 !important;
+    > form :global(.MuiPaper-root) {
+        z-index: 1050 !important;
+    }
+}
+
+// Ensure proper desktop layout for dates panel
+.container {
+    @media (min-width: 720px) {
+        // DatesPanel positioning in desktop layout
+        > form > div:not(.placesSection):not(.action) {
+            flex: 1;
+            min-width: 0; // Allow the DatesPanel to shrink if needed
+            max-width: none; // Remove max-width constraint
+            margin: 0 8px;
+        }
+    }
+}
+
+// For the compact version (search page), we need specific styles
+.container:not(.container_full) {
+    @media (min-width: 720px) {
+        // Allow DatesPanel to expand fully in search page
+        > form > section,
+        > form > div:not(.placesSection):not(.action) {
+            flex: 1;
+            width: 100%;
+            min-width: 0;
+            max-width: none;
+        }
+    }
+    
+    .placesSection {
+        @media (min-width: 720px) {
+            height: 20px; // Force height to 20px in desktop search page
+            
+            // Target the inner value container
+            :global(.css-1hwfws3),
+            :global(div[class*="css"][class*="-ValueContainer"]) {
+                height: 20px !important;
+                min-height: 20px !important;
+                max-height: 20px !important;
+            }
+        }
     }
 }

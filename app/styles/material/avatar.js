@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+// Add a stable name to the styles to ensure consistent class generation
 export const materialAvatarStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(3),
@@ -17,4 +18,4 @@ export const materialAvatarStyles = makeStyles((theme) => ({
     width: theme.spacing(10),
     height: theme.spacing(10),
   },
-}));
+}), { name: 'HuruAvatar' });
