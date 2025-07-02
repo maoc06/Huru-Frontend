@@ -1,0 +1,82 @@
+@import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/breakpoints';
+@import '../../../styles/abstracts/mixins';
+
+.authNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  @include responsive-padding(1rem);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  
+  // Transparent background
+  background: transparent;
+  
+  @include respond-up(md) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.logoSection {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  margin-left: 0.5rem;
+  
+  @include respond-up(sm) {
+    margin-left: 0.75rem;
+  }
+  
+  @include respond-up(md) {
+    margin-left: 1rem;
+  }
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+  
+  // Logo styling with primary color
+  svg {
+    height: 40px;
+    width: auto;
+    
+    @include respond-up(sm) {
+      height: 44px;
+    }
+    
+    @include respond-up(md) {
+      height: 48px;
+    }
+    
+    @include respond-up(lg) {
+      height: 52px;
+    }
+    
+    // Apply primary color to logo paths
+    path {
+      fill: $primary !important;
+    }
+    
+    // Handle different logo structures
+    * {
+      fill: $primary !important;
+    }
+  }
+}
+
+
+
+// Styles for pages using this navigation component
+.authPageContent {
+  margin-top: 80px;
+  
+  @include respond-up(md) {
+    margin-top: 88px;
+  }
+} 

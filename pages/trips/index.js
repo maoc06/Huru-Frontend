@@ -6,11 +6,13 @@ import bookingApi from '../../app/api/BookingAPI';
 import authStorage from '../../app/utils/storageAuth';
 import withAuth from '../../app/HOC/withAuth';
 
-import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
+import CarNavBar from '../../app/components/modules/NavBar/CarNavBar';
+import carNavStyles from '../../app/components/modules/NavBar/CarNavBar.module.scss';
 import TabsLayout from '../../app/components/layouts/TabsLayout/TabsLayout';
 import TripsTemplate from '../../app/components/templates/Trips/TripsTemplate';
 import TitlePage from '../../app/components/elements/TitlePage/TitlePage';
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
+import styles from './Trips.module.scss';
 
 const Trips = () => {
   const getUpcomingBookings = useApi(bookingApi.findUpcomingBookings);
@@ -66,15 +68,19 @@ const Trips = () => {
         />
       </Head>
 
+      <CarNavBar />
+
       <ActivityIndicator
         visible={getUpcomingBookings.loading || getBookingsHistory.loading}
       />
 
-      <AppLayout withImage={false}>
-        <TitlePage>Viajes</TitlePage>
+      <div className={`${carNavStyles.carPageContent} ${styles.tripsContainer}`}>
+        <div className={styles.tripsContent}>
+          <TitlePage>Viajes</TitlePage>
 
-        <TabsLayout tabs={tabs} />
-      </AppLayout>
+          <TabsLayout tabs={tabs} />
+        </div>
+      </div>
     </div>
   );
 };

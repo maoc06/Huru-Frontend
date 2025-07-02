@@ -1,5 +1,6 @@
 import Head from 'next/head';
 
+import AuthNavBar from '../app/components/modules/NavBar/AuthNavBar';
 import RegisterUserTemplate from '../app/components/templates/RegisterUserPage/RegisterUserPage';
 
 export default function Signup() {
@@ -14,9 +15,8 @@ export default function Signup() {
         />
       </Head>
 
-      <>
-        <RegisterUserTemplate />
-      </>
+      <AuthNavBar />
+      <RegisterUserTemplate />
     </div>
   );
 }

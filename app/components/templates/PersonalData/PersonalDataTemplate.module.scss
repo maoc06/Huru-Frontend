@@ -1,9 +1,7 @@
-@import '../../../styles/abstracts/colors';
 @import '../../../styles/abstracts/breakpoints';
 
 .container {
-    min-width: 290px;
-    max-width: 550px;
+    max-width: 650px;
     margin: 0; // Remove auto centering to align with back arrow
     padding-left: 1rem; // Add comfortable spacing from left edge
     padding-right: 0.5rem;
@@ -22,12 +20,4 @@
         padding-left: 1.5rem;
         padding-right: 1rem;
     }
-    
-    .subtitle {
-        margin-bottom: 32px;
-    }
-    .empty {
-        color: $primary;
-        margin-bottom: 16px;
-    }
-}
+} 

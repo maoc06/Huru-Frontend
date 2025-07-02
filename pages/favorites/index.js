@@ -9,7 +9,8 @@ import authStorage from '../../app/utils/storageAuth';
 import withAuth from '../../app/HOC/withAuth';
 
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
-import AppLayout from '../../app/components/layouts/AppLayout/AppLayout';
+import CarNavBar from '../../app/components/modules/NavBar/CarNavBar';
+import carNavStyles from '../../app/components/modules/NavBar/CarNavBar.module.scss';
 import CardHorizontal from '../../app/components/modules/CardHorizontal/CardHorizontal';
 import TitlePage from '../../app/components/elements/TitlePage/TitlePage';
 import NotFound from '../../app/components/modules/NotFound/NotFound';
@@ -82,9 +83,11 @@ const Favorites = () => {
         />
       </Head>
 
+      <CarNavBar />
+
       <ActivityIndicator visible={isLoading || getFavorites.loading} />
 
-      <AppLayout withImage={false}>
+      <div className={carNavStyles.carPageContent}>
         <TitlePage>Favoritos</TitlePage>
 
         {error && (
@@ -142,7 +145,7 @@ const Favorites = () => {
             })}
           </section>
         </div>
-      </AppLayout>
+      </div>
     </div>
   );
 };

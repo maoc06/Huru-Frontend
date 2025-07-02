@@ -1,4 +1,64 @@
+@import '../../../styles/abstracts/breakpoints';
+
 .title {
     text-align: center;
     text-transform: capitalize;
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;
+    font-size: 2rem;
+    font-weight: 700;
+    
+    // Mobile adjustments
+    @include respond-up(sm) {
+        padding: 0 1.5rem;
+        margin-bottom: 2rem;
+        font-size: 2.25rem;
+    }
+    
+    // Tablet and desktop
+    @include respond-up(md) {
+        padding: 0 2rem;
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+    }
+    
+    // Desktop spacing
+    @include respond-up(lg) {
+        padding: 0 1rem;
+        margin-bottom: 2.5rem;
+    }
+}
+
+// Left-aligned version for profile pages
+.titleLeft {
+    text-align: left;
+    text-transform: capitalize;
+    margin-bottom: 1.5rem;
+    padding-left: 0.5rem; // Align with back arrow position
+    padding-right: 1rem;
+    font-size: 2rem;
+    font-weight: 700;
+    
+    // Mobile adjustments
+    @include respond-up(sm) {
+        padding-left: 0.75rem; // Align with back arrow position
+        padding-right: 1.5rem;
+        margin-bottom: 2rem;
+        font-size: 2.25rem;
+    }
+    
+    // Tablet and desktop
+    @include respond-up(md) {
+        padding-left: 1rem; // Align with back arrow position
+        padding-right: 2rem;
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+    }
+    
+    // Desktop spacing
+    @include respond-up(lg) {
+        padding-left: 1rem; // Align with back arrow position
+        padding-right: 1rem;
+        margin-bottom: 2.5rem;
+    }
 }

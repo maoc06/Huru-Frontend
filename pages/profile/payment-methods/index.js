@@ -6,7 +6,8 @@ import authStorage from '../../../app/utils/storageAuth';
 import paymentUserApi from '../../../app/api/PaymentUserAPI';
 import withAuth from '../../../app/HOC/withAuth';
 
-import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
+import ProfileNavBar from '../../../app/components/modules/NavBar/ProfileNavBar';
+import profileNavStyles from '../../../app/components/modules/NavBar/ProfileNavBar.module.scss';
 import PaymentMethodsTemplate from '../../../app/components/templates/PaymentMethods/PaymentMethodsTemplate';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 
@@ -35,16 +36,18 @@ const PaymentMethods = () => {
         />
       </Head>
 
+      <ProfileNavBar />
+
       <ActivityIndicator visible={paymentMethodsByUser.loading} />
 
-      <AppLayout>
+      <div className={profileNavStyles.profilePageContent}>
         <div className="payment-methods-content">
           {/* Always render the template, but with empty list while loading */}
           <PaymentMethodsTemplate 
             list={!paymentMethodsByUser.loading ? paymentMethods : []} 
           />
         </div>
-      </AppLayout>
+      </div>
     </div>
   );
 };

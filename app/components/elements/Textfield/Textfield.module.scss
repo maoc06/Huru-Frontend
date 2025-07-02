@@ -1,6 +1,10 @@
 @import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/breakpoints';
 
 .container {
+    // Ensure left alignment on mobile for the entire container
+    text-align: left;
+    
     label {
         font-weight: 600;
         font-size: 16px;
@@ -8,6 +12,8 @@
         margin-bottom: 8px;
         display: block;
         text-transform: none;
+        // Ensure labels are left-aligned on mobile
+        text-align: left;
     }
     
     .textfield {
@@ -74,10 +80,14 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         border-radius: 14px;
+        // Ensure input text is left-aligned
+        text-align: left;
         
         &::placeholder {
             color: $gray_3;
             font-weight: 400;
+            // Ensure placeholder text is left-aligned
+            text-align: left;
             
             :global(.liquidBackground) & {
                 color: rgba(79, 79, 79, 0.8);

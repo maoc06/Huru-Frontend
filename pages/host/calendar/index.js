@@ -1,7 +1,8 @@
 import Head from 'next/head';
 
 import withAuth from '../../../app/HOC/withAuth';
-import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
+import CarNavBar from '../../../app/components/modules/NavBar/CarNavBar';
+import carNavStyles from '../../../app/components/modules/NavBar/CarNavBar.module.scss';
 import UnderConstruction from '../../../app/components/modules/UnderConstruction/UnderConstruction';
 
 const Calendar = () => {
@@ -16,9 +17,11 @@ const Calendar = () => {
         />
       </Head>
 
-      <AppLayout withImage={false}>
+      <CarNavBar />
+
+      <div className={carNavStyles.carPageContent}>
         <UnderConstruction />
-      </AppLayout>
+      </div>
     </div>
   );
 };

@@ -1,37 +1,55 @@
 @import '../../app/styles/abstracts/colors';
+@import '../../app/styles/abstracts/breakpoints';
 
 .imageContainer {
-    padding: 16px;
+    padding: 1rem;
     background-color: $background;
     
-    @media (min-width: 768px) {
-        padding: 24px;
+    @include respond-up(md) {
+        padding: 1.5rem;
     }
     
-    @media (min-width: 1024px) {
-        padding: 32px 64px;
+    @include respond-up(lg) {
+        padding: 2rem 4rem;
         max-width: 1200px;
         margin: 0 auto;
     }
 }
 
 .info {
-    position: relative;
     display: flex;
     background-color: $background;
-    padding: 16px;
-    gap: 16px;
+    padding: 1rem;
+    gap: 1rem;
     max-width: 1200px;
     margin: 0 auto;
+    // Ensure enough height for the absolutely positioned panel
+    min-height: calc(100vh - 200px); // Account for header and images above
     
-    @media (min-width: 768px) {
-        padding: 24px;
-        gap: 24px;
+    // Positioning context for absolutely positioned children
+    position: relative;
+    
+    @include respond-up(md) {
+        padding: 1.5rem;
+        gap: 1.5rem;
     }
     
-    @media (min-width: 1024px) {
-        padding: 32px 64px;
-        gap: 32px;
+    @include respond-up(lg) {
+        padding: 2rem 4rem;
+        gap: 2rem;
+        align-items: flex-start;
+        
+        // Reserve space for the absolutely positioned panel on the right
+        padding-right: calc(4rem + 400px + 2rem); // padding + panel width + gap
+        
+        // Ensure container has enough height so the panel has room
+        min-height: calc(100vh - 200px);
+    }
+    
+    // Stack vertically on mobile
+    @include respond-down(md) {
+        flex-direction: column;
+        min-height: auto; // Reset min-height on mobile
     }
 }
 
@@ -39,4 +57,9 @@
     width: 100%;
     position: fixed;
     bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    // Ensure it doesn't cause horizontal overflow
+    box-sizing: border-box;
 }

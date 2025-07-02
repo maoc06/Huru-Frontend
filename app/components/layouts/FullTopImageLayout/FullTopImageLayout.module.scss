@@ -1,20 +1,33 @@
+@import '../../../styles/abstracts/breakpoints';
+
 .wrapper {
     display: flex;
     flex-direction: column;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
-    max-width: 100vw;
+    overflow-x: hidden;
     .top_image {
         position: relative;
         width: 100%;
         min-height: 250px;
         max-height: 286px;
         overflow: hidden;
-        @media (min-width: 500px) {
+        @include respond-up(sm) {
             max-height: unset;
         }
     }
-    @media (min-width: 820px) {
+    .content {
+        flex: 1;
+        padding: 1rem;
+        overflow-x: hidden;
+        @include respond-up(sm) {
+            padding: 1.5rem;
+        }
+        @include respond-up(md) {
+            padding: 2rem;
+        }
+    }
+    @include respond-up(lg) {
         flex-direction: row;
         .top_image {
             flex: 1;

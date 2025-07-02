@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import authStorage from '../../../../app/utils/storageAuth';
 import withAuth from '../../../../app/HOC/withAuth';
 
-import AppLayout from '../../../../app/components/layouts/AppLayout/AppLayout';
+import ProfileNavBar from '../../../../app/components/modules/NavBar/ProfileNavBar';
+import profileNavStyles from '../../../../app/components/modules/NavBar/ProfileNavBar.module.scss';
 import AddPaymentMethodLayout from '../../../../app/components/layouts/AddPaymentMethod/AddPaymentMethodLayout';
 
 const CreatePaymentMethod = () => {
@@ -26,11 +27,13 @@ const CreatePaymentMethod = () => {
         />
       </Head>
 
-      <AppLayout>
+      <ProfileNavBar />
+
+      <div className={profileNavStyles.profilePageContent}>
         {Object.keys(user).length > 0 && user.constructor === Object && (
           <AddPaymentMethodLayout uid={user.uid} email={user.email} />
         )}
-      </AppLayout>
+      </div>
     </div>
   );
 };

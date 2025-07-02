@@ -1,33 +1,64 @@
 @import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/breakpoints';
 
 .container {
-    min-width: 290px;
+    // Better responsive width handling
+    width: 100%;
     max-width: 550px;
-    margin: auto;
+    // Fix: Use margin for horizontal centering only, control vertical margins
+    margin: 0 auto;
+    padding: 0 1rem;
+    
+    // Remove min-width on very small screens to prevent overflow
+    @include respond-up(sm) {
+        min-width: 290px;
+        padding: 0;
+    }
     
     h2 {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        margin-bottom: 1.5rem;
+        text-align: center;
+        
         // Liquid background mode
         .liquid_mode & {
             color: rgba(255, 255, 255, 0.95);
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             font-weight: 600;
-            margin-bottom: 1.5rem;
         }
     }
     
     p {
+        text-align: center;
+        margin-bottom: 2rem;
+        
         // Liquid background mode
         .liquid_mode & {
             color: rgba(255, 255, 255, 0.85);
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
     }
+    
+    // Ensure form fields are left-aligned on mobile
+    form,
+    .form {
+        text-align: left;
+        
+        // Override any inherited centering for form elements
+        input,
+        label,
+        div[class*="container"],
+        div[class*="textfield"] {
+            text-align: left;
+        }
+    }
 }
 
 .alternative {
     text-align: center;
-    margin-top: 32px;
-    margin-bottom: 16px;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
     
     // Liquid background mode
     .liquid_mode & {
@@ -38,5 +69,11 @@
 
 .media {
     display: flex;
-    gap: 16px;
+    gap: 1rem;
+    flex-direction: column;
+    
+    @include respond-up(sm) {
+        flex-direction: row;
+        gap: 1rem;
+    }
 }

@@ -1,25 +1,37 @@
 @import '../../../styles/app.scss';
+
 .container {
     display: flex;
     flex-direction: column;
     background: $background;
-    width: 100vw;
-    max-width: 100vw;
-    padding: 32px;
-    overflow: hidden;
-    @media (min-width: 720px) {
-        padding: 32px 64px;
+    width: 100%;
+    min-height: 100vh;
+    padding: 1rem;
+    overflow-x: hidden;
+    
+    @include respond-up(sm) {
+        padding: 1.5rem;
+    }
+    
+    @include respond-up(md) {
+        padding: 2rem;
+    }
+    
+    @include respond-up(lg) {
+        padding: 2rem 4rem;
     }
 }
 
 .center_content {
     justify-content: center;
+    align-items: center;
 }
 
 .with_image {
     background-image: url('/images/mobile-bg.png');
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
 }
 
 .full {
@@ -29,11 +41,13 @@
 
 .inline {
     height: 100%;
+    min-height: auto;
 }
 
 .adapat {
     width: unset;
     max-width: unset;
+    padding: 0;
 }
 
 .liquid_mode {
@@ -43,5 +57,10 @@
     // Remove default background when using liquid background
     &.with_image {
         background-image: none;
+    }
+    
+    // Ensure proper mobile handling in liquid mode
+    @include respond-down(md) {
+        padding: 1rem;
     }
 }

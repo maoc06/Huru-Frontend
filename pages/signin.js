@@ -1,7 +1,9 @@
 import Head from 'next/head';
 
 import AppLayout from '../app/components/layouts/AppLayout/AppLayout';
+import AuthNavBar from '../app/components/modules/NavBar/AuthNavBar';
 import LoginTemplate from '../app/components/templates/LoginPage/LoginTemplate';
+import authNavStyles from '../app/components/modules/NavBar/AuthNavBar.module.scss';
 
 export default function Signin() {
   return (
@@ -15,8 +17,12 @@ export default function Signin() {
         />
       </Head>
 
+      <AuthNavBar />
+      
       <AppLayout centerContent={true} withLiquidBackground={true}>
-        <LoginTemplate />
+        <div className={authNavStyles.authPageContent}>
+          <LoginTemplate />
+        </div>
       </AppLayout>
     </div>
   );

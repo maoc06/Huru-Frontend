@@ -10,6 +10,8 @@ import { todayDate } from '../../../app/utils/formatDates';
 import { calcBookingStage } from '../../../app/utils/bookingStage';
 import authStorage from '../../../app/utils/storageAuth';
 
+import CarNavBar from '../../../app/components/modules/NavBar/CarNavBar';
+import carNavStyles from '../../../app/components/modules/NavBar/CarNavBar.module.scss';
 import Carousel from '../../../app/components/elements/Carousel/Carousel';
 import UpcomingBookingTemplate from '../../../app/components/templates/UpcomingBooking/UpcomingBookingTemplate';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
@@ -85,6 +87,8 @@ const UpcomingBooking = () => {
         />
       </Head>
 
+      <CarNavBar />
+
       <ActivityIndicator
         visible={getBooking.loading || cancelBooking.loading}
       />
@@ -102,20 +106,30 @@ const UpcomingBooking = () => {
       />
 
       {booking.constructor === Object && Object.keys(booking).length > 0 && (
-        <>
+        <div className={carNavStyles.carPageContent} style={{
+          backgroundColor: '#f8f9fa',
+          minHeight: 'calc(100vh - 80px)',
+          paddingBottom: '2rem'
+        }}>
           <Carousel images={booking.bookedCar.images} />
 
-          <UpcomingBookingTemplate
-            title={`${booking.bookedCar.maker.name} ${booking.bookedCar.model.name} ${booking.bookedCar.year}`}
-            bookingStage={bookingStage}
-            bookingDates={{
-              checkin: booking.checkin,
-              checkout: booking.checkout,
-            }}
-            pricePerDay={booking.pricePerDay}
-            onClickCancelButton={handleShowConfirmModal}
-          />
-        </>
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            padding: '0 1rem'
+          }}>
+            <UpcomingBookingTemplate
+              title={`${booking.bookedCar.maker.name} ${booking.bookedCar.model.name} ${booking.bookedCar.year}`}
+              bookingStage={bookingStage}
+              bookingDates={{
+                checkin: booking.checkin,
+                checkout: booking.checkout,
+              }}
+              pricePerDay={booking.pricePerDay}
+              onClickCancelButton={handleShowConfirmModal}
+            />
+          </div>
+        </div>
       )}
     </div>
   );

@@ -1,4 +1,6 @@
 @import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/breakpoints';
+
 .tab {
     align-items: center;
     border: 1px solid $primary;
@@ -6,9 +8,26 @@
     display: flex;
     height: 38px;
     justify-content: center;
-    width: 160px;
+    flex: 1;
+    min-width: 120px;
+    max-width: 200px;
     transition: all 0.1s ease-in;
     cursor: pointer;
+    font-size: 0.9rem;
+    
+    // Mobile adjustments
+    @include respond-up(sm) {
+        height: 42px;
+        font-size: 1rem;
+        min-width: 140px;
+    }
+    
+    // Tablet and desktop
+    @include respond-up(md) {
+        height: 44px;
+        min-width: 160px;
+        max-width: 220px;
+    }
 }
 
 .active {

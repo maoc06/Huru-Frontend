@@ -7,7 +7,8 @@ import withAuth from '../../../app/HOC/withAuth';
 
 import authStorage from '../../../app/utils/storageAuth';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
-import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
+import ProfileNavBar from '../../../app/components/modules/NavBar/ProfileNavBar';
+import profileNavStyles from '../../../app/components/modules/NavBar/ProfileNavBar.module.scss';
 import PersonalDataTemplate from '../../../app/components/templates/PersonalData/PersonalDataTemplate';
 
 const PersonalData = () => {
@@ -35,9 +36,11 @@ const PersonalData = () => {
         />
       </Head>
 
+      <ProfileNavBar />
+
       <ActivityIndicator visible={getUser.loading} />
 
-      <AppLayout withImage={false}>
+      <div className={profileNavStyles.profilePageContent}>
         {user.constructor === Object && Object.keys(user).length > 0 && (
           <PersonalDataTemplate
             biography={
@@ -57,7 +60,7 @@ const PersonalData = () => {
             editablePicture={true}
           />
         )}
-      </AppLayout>
+      </div>
     </div>
   );
 };

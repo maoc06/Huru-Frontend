@@ -16,6 +16,8 @@ import PriceBottomBar from '../../app/components/modules/PriceBottomBar/PriceBot
 import CarDesktopPanel from '../../app/components/modules/CarDesktopPanel/CarDesktopPanel';
 import CarProfileTemplate from '../../app/components/templates/CarProfile/CarProfileTempate';
 import ActivityIndicator from '../../app/components/elements/ActivityIndicator/ActivityIndicator';
+import CarNavBar from '../../app/components/modules/NavBar/CarNavBar';
+import carNavStyles from '../../app/components/modules/NavBar/CarNavBar.module.scss';
 
 const ELECTRIC_CAR_ID = 5;
 const DISCOUNT_ECO_FRIENDLY = 0.15;
@@ -109,10 +111,12 @@ function CarSlug({ car, metaTitle }) {
         />
       </Head>
 
+      <CarNavBar />
+
       <ActivityIndicator visible={router.isFallback} />
 
       {car.constructor === Object && Object.keys(car).length > 0 && (
-        <>
+        <div className={carNavStyles.carPageContent}>
           <div className={styles.imageContainer}>
             <CarImageGrid 
               images={car.images} 
@@ -156,7 +160,7 @@ function CarSlug({ car, metaTitle }) {
               slug={car.carId}
             />
           </section>
-        </>
+        </div>
       )}
     </div>
   );

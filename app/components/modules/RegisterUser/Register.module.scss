@@ -1,57 +1,80 @@
+@import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/breakpoints';
+
 .container {
-    // Default styles for non-liquid background
-    @media (min-width: 720px) {
+    width: 100%;
+    max-width: 420px;
+    margin: auto;
+    padding: 0 1rem;
+    
+    @include respond-up(sm) {
         min-width: 320px;
-        max-width: 420px;
-        margin: auto;
+        padding: 0;
     }
     
-    // Enhanced styles when used with liquid background - transparent container
-    :global(.liquidBackground) & {
-        background: transparent;
-        padding: 2rem 1rem;
-        margin: 1rem;
-        position: relative;
-
-        @media (min-width: 720px) {
-            min-width: 380px;
-            max-width: 480px;
-            margin: 1rem auto;
-            padding: 3rem 2rem;
-        }
-
-        // Enhanced text styling with better contrast
-        h3 {
-            color: #081D3D;
-            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.9);
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            font-size: 2rem;
-            text-align: center;
-        }
-
-        p {
-            color: #1d1d1d;
-            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-
-        article p {
-            color: #282828;
-            font-size: 1rem;
-            line-height: 1.7;
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
+    @include respond-up(md) {
+        min-width: 380px;
+        max-width: 480px;
+    }
+    
+    h3 {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        margin-bottom: 1rem;
+        text-align: center;
+        
+        // Liquid background mode
+        .liquid_mode & {
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
         }
     }
+    
+    p {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: clamp(0.875rem, 1.5vw, 1rem);
+        
+        // Liquid background mode
+        .liquid_mode & {
+            color: rgba(255, 255, 255, 0.85);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+    }
+}
 
-    // Responsive adjustments for liquid background
-    @media (max-width: 768px) {
-        :global(.liquidBackground) & {
-            padding: 1.5rem 1rem;
-            margin: 0.5rem;
+.preview {
+    width: 100%;
+    max-width: 550px;
+    margin: auto;
+    padding: 0 1rem;
+    
+    @include respond-up(sm) {
+        min-width: 320px;
+        padding: 0;
+    }
+    
+    @include respond-up(md) {
+        min-width: 380px;
+        max-width: 480px;
+    }
+}
+
+.terms {
+    width: 100%;
+    max-width: 650px;
+    margin: auto;
+    padding: 0 1rem;
+    
+    @include respond-up(sm) {
+        padding: 0;
+    }
+    
+    // Better responsive handling for terms content
+    .terms_content {
+        @include respond-down(md) {
+            font-size: 0.875rem;
+            line-height: 1.4;
         }
     }
 }

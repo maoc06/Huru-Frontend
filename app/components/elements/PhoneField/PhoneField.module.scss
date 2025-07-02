@@ -1,7 +1,9 @@
 @import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/breakpoints';
 
 .wrapper {
     margin-top: 16px;
+    text-align: left;
     
     label {
         font-weight: 600;
@@ -10,6 +12,7 @@
         margin-bottom: 8px;
         display: block;
         text-transform: none;
+        text-align: left;
     }
     
     .container {
@@ -52,10 +55,12 @@
                 outline: 0;
                 border: 0;
                 border-radius: 28px;
+                text-align: left;
                 
                 &::placeholder {
                     color: $gray_3;
                     font-weight: 400;
+                    text-align: left;
                 }
                 
                 &:invalid {

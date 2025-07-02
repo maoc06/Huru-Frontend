@@ -1,15 +1,17 @@
 @import '../../../styles/app.scss';
+
 .container {
     position: relative;
     display: flex;
     flex-direction: column;
     background: $background;
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
     height: fit-content;
-    padding: 32px;
+    @include responsive-padding(1rem);
     justify-content: center;
     overflow-x: hidden;
+    
     .hero {
         position: absolute;
         top: 0;
@@ -20,7 +22,9 @@
         background-image: url('/images/home-hero-mobile.png');
         background-size: contain;
         background-repeat: no-repeat;
-        @media (min-width: 750px) {
+        background-position: center;
+        
+        @include respond-up(md) {
             background-image: url('/images/home-hero-desktop.png');
             background-size: cover;
             background-position: 0% 95%;

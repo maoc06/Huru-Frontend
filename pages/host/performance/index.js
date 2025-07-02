@@ -2,7 +2,8 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
 import withAuth from '../../../app/HOC/withAuth';
-import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
+import CarNavBar from '../../../app/components/modules/NavBar/CarNavBar';
+import carNavStyles from '../../../app/components/modules/NavBar/CarNavBar.module.scss';
 import UnderConstruction from '../../../app/components/modules/UnderConstruction/UnderConstruction';
 
 const Performance = () => {
@@ -29,9 +30,11 @@ const Performance = () => {
         />
       </Head>
 
-      <AppLayout withImage={false}>
+      <CarNavBar />
+
+      <div className={carNavStyles.carPageContent}>
         <UnderConstruction isMobile={isMobile} />
-      </AppLayout>
+      </div>
     </div>
   );
 };

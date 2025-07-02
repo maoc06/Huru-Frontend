@@ -10,6 +10,8 @@ import authStorage from '../../../app/utils/storageAuth';
 import withAuth from '../../../app/HOC/withAuth';
 import { convertToCompound } from '../../../app/utils/formatDates';
 
+import CarNavBar from '../../../app/components/modules/NavBar/CarNavBar';
+import carNavStyles from '../../../app/components/modules/NavBar/CarNavBar.module.scss';
 import Carousel from '../../../app/components/elements/Carousel/Carousel';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import PastBookingTemplate from '../../../app/components/templates/PastBooking/PastBookingTemplate';
@@ -157,6 +159,8 @@ const BookingHistory = () => {
         />
       </Head>
 
+      <CarNavBar />
+
       <ActivityIndicator
         visible={
           getBooking.loading ||
@@ -169,11 +173,21 @@ const BookingHistory = () => {
         Object.keys(booking).length > 0 &&
         !getCarAlreadyReviewed.loading &&
         !getUserAlreadyReviewed.loading && (
-          <>
+          <div className={carNavStyles.carPageContent} style={{
+            backgroundColor: '#f8f9fa',
+            minHeight: 'calc(100vh - 80px)',
+            paddingBottom: '2rem'
+          }}>
             <Carousel images={booking.bookedCar.images} />
 
-            {renderTemplate()}
-          </>
+            <div style={{
+              maxWidth: '1200px',
+              margin: '0 auto',
+              padding: '0 1rem'
+            }}>
+              {renderTemplate()}
+            </div>
+          </div>
         )}
     </div>
   );

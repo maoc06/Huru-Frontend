@@ -1,9 +1,27 @@
+@import '../../../styles/abstracts/breakpoints';
+
 .wrapper {
-    @media (min-width: 720px) {
+    padding-left: 1rem; // Add comfortable spacing from left edge
+    padding-right: 0.5rem;
+    
+    @include respond-up(sm) {
+        padding-left: 1.25rem;
+        padding-right: 0.75rem;
+    }
+    
+    @include respond-up(md) {
         min-width: 320px;
         max-width: 550px;
-        margin: auto;
+        margin: 0; // Remove auto centering to align with back arrow
+        padding-left: 1.5rem;
+        padding-right: 1rem;
     }
+    
+    @include respond-up(lg) {
+        padding-left: 1.5rem;
+        padding-right: 1rem;
+    }
+    
     header {
         display: flex;
         align-items: center;

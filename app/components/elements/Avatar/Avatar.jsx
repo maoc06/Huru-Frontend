@@ -57,17 +57,18 @@ export default function AppAvatar({
       <ActivityIndicator visible={updateUserPic.loading} />
 
       <div
-        className={clickeable || (cursorPointer && styles.clickeable)}
+        className={clickeable || cursorPointer ? styles.clickeable : undefined}
         onClick={clickeable ? handleAvatar : () => {}}
       >
         <Avatar
           alt={alt}
           src={imageUrl}
-          className={`${size === 'small' && classes.small} ${
-            size === 'large' && classes.large
-          } ${size === 'medium' && classes.medium} ${
+          className={[
+            size === 'small' && classes.small,
+            size === 'large' && classes.large,
+            size === 'medium' && classes.medium,
             size === 'xl' && classes.xl
-          } `}
+          ].filter(Boolean).join(' ')}
         />
 
         <input

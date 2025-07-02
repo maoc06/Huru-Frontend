@@ -1,0 +1,107 @@
+@import '../../../styles/abstracts/breakpoints';
+@import '../../../styles/abstracts/colors';
+
+.profileNavBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  
+  background: transparent;
+  
+  height: 60px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  
+  padding: 0 0.5rem;
+  
+  @include respond-up(sm) {
+    height: 64px;
+    padding: 0 0.75rem;
+  }
+  
+  @include respond-up(md) {
+    height: 68px;
+    padding: 0 1rem;
+  }
+}
+
+.backButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  width: 56px;
+  height: 56px;
+  
+  border-radius: 50%;
+  
+  color: $primary;
+  
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: transparentize($primary, 0.92);
+    transform: translateX(-2px);
+  }
+  
+  &:active {
+    background: transparentize($primary, 0.88);
+    transform: translateX(-1px);
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px transparentize($primary, 0.8);
+  }
+  
+  svg {
+    width: 44px;
+    height: 44px;
+    
+    @include respond-up(sm) {
+      width: 46px;
+      height: 46px;
+    }
+    
+    @include respond-up(md) {
+      width: 48px;
+      height: 48px;
+    }
+  }
+}
+
+// Content spacing utility class
+.profilePageContent {
+  margin-top: 80px; // Increased top spacing
+  padding-left: 0.5rem; // Align with header arrow position
+  padding-right: 1rem;
+  
+  @include respond-up(sm) {
+    margin-top: 88px; // Increased top spacing
+    padding-left: 0.75rem; // Align with header arrow position
+    padding-right: 1.5rem;
+  }
+  
+  @include respond-up(md) {
+    margin-top: 96px; // Increased top spacing
+    padding-left: 1rem; // Align with header arrow position
+    padding-right: 2rem;
+  }
+  
+  @include respond-up(lg) {
+    margin-top: 104px; // Increased top spacing
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem; // Align with header arrow position
+    padding-right: 2rem;
+  }
+} 

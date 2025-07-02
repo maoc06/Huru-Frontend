@@ -1,17 +1,39 @@
 @import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/breakpoints';
+
 .panel {
     display: none;
     min-width: 400px;
+    width: 400px;
     min-height: 100px;
     height: fit-content;
-    max-height: 510px;
     background-color: $white;
     border-radius: 10px;
-    box-shadow: 10px 10px 20px #9999996b;
-    z-index: 9999;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     padding: 32px;
-    @media (min-width: 720px) {
+    
+    @include respond-up(md) {
         display: block;
+        position: relative;
+        max-height: 600px;
+    }
+    
+    // Absolute positioning relative to the .info container - stays within layout bounds
+    @include respond-up(lg) {
+        position: absolute;
+        top: 2rem; // Position at the top of the .info container with some margin
+        right: 2rem; // Position at the right of the .info container with some margin
+        z-index: 100;
+        width: 400px;
+        max-height: calc(100vh - 220px); // Leave space for header, images, and margins
+        overflow-y: auto;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        
+        // Red border for visibility as requested
+        border: 2px solid red;
+        
+        // Remove from flex flow since it's absolutely positioned
+        flex-shrink: 0;
     }
     .price {
         font-weight: bold;
@@ -36,5 +58,10 @@
     .msgDiscount {
         font-size: 0.9rem;
         color: $success;
+    }
+    
+    .button {
+        width: 100%;
+        margin-top: 1rem;
     }
 }

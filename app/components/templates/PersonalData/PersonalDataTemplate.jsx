@@ -27,6 +27,8 @@ import userPhoneSchema from '../../../constants/validationSchema/userPhone';
 import aboutUserSchema from '../../../constants/validationSchema/aboutUser';
 import identityDocumentSchema from '../../../constants/validationSchema/identityDocument';
 
+import styles from './PersonalDataTemplate.module.scss';
+
 const PersonalDataTemplate = ({
   biography = '',
   birthday,
@@ -121,9 +123,9 @@ const PersonalDataTemplate = ({
         onCloseModal={() => setOpenModal(false)}
       />
 
-      {showTitlePage && <TitlePage>Información personal</TitlePage>}
+      {showTitlePage && <TitlePage align="left">Información personal</TitlePage>}
 
-      <section style={{ maxWidth: 650, margin: 'auto' }}>
+      <section className={styles.container}>
         <UserProfileBasicInfo
           birthday={birthday}
           userId={userId}

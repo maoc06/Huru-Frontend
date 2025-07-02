@@ -9,7 +9,8 @@ import withAuth from '../../../../app/HOC/withAuth';
 import ActivityIndicator from '../../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 import StatusIndicator from '../../../../app/components/elements/StatusIndicator/StatusIndicator';
 import checkAnimationData from '../../../../public/animations/check.json';
-import AppLayout from '../../../../app/components/layouts/AppLayout/AppLayout';
+import ProfileNavBar from '../../../../app/components/modules/NavBar/ProfileNavBar';
+import profileNavStyles from '../../../../app/components/modules/NavBar/ProfileNavBar.module.scss';
 import EditPasswordTemplate from '../../../../app/components/templates/EditPassword/EditPasswordTemplate';
 import TitlePage from '../../../../app/components/elements/TitlePage/TitlePage';
 import storageAuth from '../../../../app/utils/storageAuth';
@@ -46,6 +47,8 @@ const EditPasswordPage = () => {
         />
       </Head>
 
+      <ProfileNavBar />
+
       <ActivityIndicator visible={updatePassword.loading} />
 
       <StatusIndicator
@@ -61,15 +64,15 @@ const EditPasswordPage = () => {
         onClickButton={() => router.push('/profile/personal-data')}
       />
 
-      <AppLayout withImage={false}>
-        <TitlePage>Editar contraseña</TitlePage>
+      <div className={profileNavStyles.profilePageContent}>
+        <TitlePage align="left">Editar contraseña</TitlePage>
 
         <EditPasswordTemplate
           currPasswordError={wrongPassword}
           onUpdate={handleUpdatePassword}
           userId={user.uid}
         />
-      </AppLayout>
+      </div>
     </div>
   );
 };

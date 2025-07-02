@@ -1,11 +1,18 @@
 @import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/breakpoints';
 
 .link_register {
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: bold;
     color: $gray_1;
-    margin-top: 64px;
+    margin-top: 1.5rem;
     text-align: center;
+    padding: 0 1rem;
+    
+    @include respond-up(sm) {
+        padding: 0;
+        margin-top: 2rem;
+    }
     
     // Liquid background mode
     .liquid_mode & {

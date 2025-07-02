@@ -8,10 +8,27 @@ import RegisterUserPhone from '../../modules/RegisterUser/RegisterUserPhoneForm'
 import ValidatePhone from '../../modules/RegisterUser/ValidatePhone/ValidatePhone';
 import SelfieTime from '../../modules/RegisterUser/SelfieTime';
 import Terms from '../../modules/RegisterUser/Terms';
+import authNavStyles from '../../modules/NavBar/AuthNavBar.module.scss';
 
-const RegisterUserPage = () => {
+const RegisterUserPage = ({ onBackNavigation }) => {
   const numOfSteps = 6;
-  const [step, setSetp] = useState(3);
+  const [step, setSetp] = useState(1);
+
+  const handleBackNavigation = () => {
+    if (step > 1) {
+      setSetp(step - 1);
+    } else if (onBackNavigation) {
+      onBackNavigation();
+    } else {
+      // Fallback to browser back if no custom handler
+      window.history.back();
+    }
+  };
+
+  // Pass the back navigation handler to parent component if needed
+  if (typeof window !== 'undefined' && window.registerUserBackHandler !== handleBackNavigation) {
+    window.registerUserBackHandler = handleBackNavigation;
+  }
 
   const renderStep = () => {
     switch (step) {
@@ -39,8 +56,10 @@ const RegisterUserPage = () => {
         withLiquidBackground={true}
         withImage={false}
       >
-        <StepBarProgress numOfSteps={numOfSteps} currStep={step} />
-        {renderStep()}
+        <div className={authNavStyles.authPageContent}>
+          <StepBarProgress numOfSteps={numOfSteps} currStep={step} />
+          {renderStep()}
+        </div>
       </AppLayout>
     </>
   );

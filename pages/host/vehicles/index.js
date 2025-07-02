@@ -8,7 +8,8 @@ import authStorage from '../../../app/utils/storageAuth';
 
 import { withExtraLabelHosts } from '../../../app/utils/extraLabelText';
 
-import AppLayout from '../../../app/components/layouts/AppLayout/AppLayout';
+import CarNavBar from '../../../app/components/modules/NavBar/CarNavBar';
+import carNavStyles from '../../../app/components/modules/NavBar/CarNavBar.module.scss';
 import TitlePage from '../../../app/components/elements/TitlePage/TitlePage';
 import CardHorizontal from '../../../app/components/modules/CardHorizontal/CardHorizontal';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
@@ -46,10 +47,12 @@ export default function HostVehicles() {
         />
       </Head>
 
+      <CarNavBar />
+
       <ActivityIndicator visible={getCarsByOwner.loading} />
 
-      <AppLayout withImage={false}>
-        <TitlePage>Mis vehículos</TitlePage>
+      <div className={carNavStyles.carPageContent}>
+        <TitlePage align="left">Mis vehículos</TitlePage>
 
         <section className={styles.vehicles}>
           <AddVehicleCard />
@@ -80,7 +83,7 @@ export default function HostVehicles() {
             );
           })}
         </section>
-      </AppLayout>
+      </div>
     </div>
   );
 }

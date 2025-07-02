@@ -1,8 +1,11 @@
 @import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/breakpoints';
 
 .errorContainer {
     min-height: 22px; // Reserve space to prevent layout shift
     margin-top: 6px;
+    // Ensure left alignment on mobile
+    text-align: left;
 }
 
 .statusMsg {
@@ -13,6 +16,8 @@
     padding: 0;
     transition: all 0.3s ease;
     font-weight: 500;
+    // Ensure left alignment on mobile
+    text-align: left;
     
     // Enhanced styling for liquid background
     :global(.liquidBackground) & {

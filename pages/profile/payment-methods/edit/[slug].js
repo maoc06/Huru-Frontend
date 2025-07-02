@@ -8,7 +8,8 @@ import authStorage from '../../../../app/utils/storageAuth';
 import withAuth from '../../../../app/HOC/withAuth';
 
 import TitlePage from '../../../../app/components/elements/TitlePage/TitlePage';
-import AppLayout from '../../../../app/components/layouts/AppLayout/AppLayout';
+import ProfileNavBar from '../../../../app/components/modules/NavBar/ProfileNavBar';
+import profileNavStyles from '../../../../app/components/modules/NavBar/ProfileNavBar.module.scss';
 import CardTemplate from '../../../../app/components/templates/PaymentMethods/CardTemplate';
 import NequiTemplate from '../../../../app/components/templates/PaymentMethods/NequiTemplate';
 import PaymentEditControlls from '../../../../app/components/modules/PaymentEditControlls/PaymentEditControlls';
@@ -77,31 +78,31 @@ function PaymentMethods() {
         />
       </Head>
 
-      <>
-        <ActivityIndicator
-          visible={getPayment.loading || getDefaultPayment.loading}
-        />
+      <ProfileNavBar />
 
-        <AppLayout withImage={false}>
-          <TitlePage>Metodo de pago</TitlePage>
+      <ActivityIndicator
+        visible={getPayment.loading || getDefaultPayment.loading}
+      />
 
-          {Object.keys(payment).length > 0 && payment.constructor === Object && (
-            <>
-              <section className={styles.container}>
-                {renderTemplate()}
+      <div className={profileNavStyles.profilePageContent}>
+        <TitlePage align="left">Metodo de pago</TitlePage>
 
-                {!getDefaultPayment.loading && (
-                  <PaymentEditControlls
-                    defaultId={defaultPayment?.id}
-                    paymentId={payment.id}
-                    isDefault={payment.isDefault}
-                  />
-                )}
-              </section>
-            </>
-          )}
-        </AppLayout>
-      </>
+        {Object.keys(payment).length > 0 && payment.constructor === Object && (
+          <>
+            <section className={styles.container}>
+              {renderTemplate()}
+
+              {!getDefaultPayment.loading && (
+                <PaymentEditControlls
+                  defaultId={defaultPayment?.id}
+                  paymentId={payment.id}
+                  isDefault={payment.isDefault}
+                />
+              )}
+            </section>
+          </>
+        )}
+      </div>
     </div>
   );
 }
