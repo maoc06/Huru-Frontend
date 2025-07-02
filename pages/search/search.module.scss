@@ -63,9 +63,15 @@
 .inner {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 16px;
+    
     @media (min-width: 720px) {
-        flex-direction: row;
+        padding: 0 24px;
     }
+    
     .result {
         width: 100%;
     }
@@ -73,12 +79,18 @@
 
 .header {
     width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
+    padding: 0 16px;
+    
     @media (min-width: 720px) {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         gap: 32px;
+        margin-bottom: 32px;
+        padding: 0 24px;
     }
+    
     .logo,
     .avatar {
         display: none;
@@ -116,7 +128,6 @@
     }
     .searchBar {
         width: 100%;
-        // overflow: hidden;
         @media (min-width: 720px) {
             width: 60%;
         }

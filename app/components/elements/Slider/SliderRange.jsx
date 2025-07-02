@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 
@@ -12,14 +12,25 @@ export default function AppSliderRange({
   numStep,
   min,
   max,
+  defaultMin,
+  defaultMax,
   onChange,
   formatToPrice = false,
 }) {
-  const [value, setValue] = useState([min, max]);
+  const [value, setValue] = useState([defaultMin || min, defaultMax || max]);
+  const sliderRef = useRef(null);
+
+  // Update value when defaultMin/defaultMax change
+  useEffect(() => {
+    setValue([defaultMin || min, defaultMax || max]);
+  }, [defaultMin, defaultMax, min, max]);
 
   const handleChange = (event, newValue) => {
+    if (!sliderRef.current) return; // Prevent error if slider is unmounted
     setValue(newValue);
-    onChange({ min: newValue[0], max: newValue[1] });
+    if (onChange) {
+      onChange({ min: newValue[0], max: newValue[1] });
+    }
   };
 
   return (
@@ -36,6 +47,7 @@ export default function AppSliderRange({
 
       <ThemeProvider theme={themeMaterialUI}>
         <Slider
+          ref={sliderRef}
           value={value}
           onChange={handleChange}
           aria-labelledby="range-slider"
