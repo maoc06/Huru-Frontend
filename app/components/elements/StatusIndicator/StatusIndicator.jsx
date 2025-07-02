@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import { useState, useEffect } from 'react';
 
 import Button from '../Button/Button';
 
@@ -14,7 +15,21 @@ export default function StatusIndicator({
   message,
   buttonMsg,
   onClickButton,
+  delay = 0,
 }) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (visible && delay > 0) {
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+      }, delay);
+      return () => clearTimeout(timer);
+    } else {
+      setIsVisible(visible);
+    }
+  }, [visible, delay]);
+
   const defaultOptions = {
     loop: isLoop,
     autoPlay: true,
@@ -24,7 +39,7 @@ export default function StatusIndicator({
     },
   };
 
-  if (!visible) return null;
+  if (!isVisible) return null;
 
   return (
     <div className={styles.background}>

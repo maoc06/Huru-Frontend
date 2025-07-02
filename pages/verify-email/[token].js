@@ -41,7 +41,7 @@ function VerifyEmail() {
         visible={verifyEmailApi.loading && token !== undefined}
       />
 
-      <AppLayout>
+      <AppLayout withLiquidBackground centerContent>
         <VerifyEmailTemplate
           verifyEmailApi={verifyEmailApi}
           isValid={isValid}

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import StatusIndicator from '../../elements/StatusIndicator/StatusIndicator';
-import checkAnimationData from '../../../../public/animations/check.json';
+import checkAnimationData from '../../../../public/animations/check-secondary.json';
 import errorAnimationData from '../../../../public/animations/error-cone.json';
 
 const VerifyEmailTemplate = ({ verifyEmailApi, isValid }) => {
@@ -21,6 +21,8 @@ const VerifyEmailTemplate = ({ verifyEmailApi, isValid }) => {
         <StatusIndicator
           animationData={checkAnimationData}
           visible={true}
+          isLoop={false}
+          delay={500}
           title={`Tu email ha sido verficado`}
           message={
             'Ya puedes aprovechar al maximo las posibilidades que te brinda Huru.'
