@@ -16,22 +16,34 @@ const SearchResultsTemplate = ({ initialState = [] }) => {
 
   const [user, setUser] = useState({});
   const [items, setItems] = useState(initialState);
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState({});
 
   const handleGetFavorites = async (userId) => {
+    console.log('🔍 handleGetFavorites called with userId:', userId);
     const res = await getFavorites.request(userId);
-    if (typeof res !== 'undefined') setFavorites(res.data);
+    console.log('📦 getFavorites response:', res);
+    if (typeof res !== 'undefined' && res.data) {
+      setFavorites(res);
+      console.log('✅ Favorites set:', res);
+    } else {
+      console.log('❌ No favorites data received');
+    }
   };
 
   const handleCheckIsFavorite = (carId) => {
-    return favorites.data.some((favorite) => favorite.car.carId === carId);
+    return favorites?.data?.some((favorite) => favorite.car.carId === carId) || false;
   };
 
   useEffect(() => {
     const user = authStorage.getUser();
+    console.log('👤 User from authStorage:', user);
     if (user) {
+      console.log('👤 User info:', user.info);
+      console.log('🔑 User type:', user.info?.userType);
       setUser(user.info);
       handleGetFavorites(user.info.uid);
+    } else {
+      console.log('❌ No user found in authStorage');
     }
   }, []);
 
@@ -47,8 +59,7 @@ const SearchResultsTemplate = ({ initialState = [] }) => {
       >{`${items.length} resultados de busquedas`}</h6>
 
       {/* If not logged  */}
-      {user.constructor === Object &&
-        Object.keys(user).length === 0 &&
+      {(!user || (user.constructor === Object && Object.keys(user).length === 0)) &&
         items.map(
           ({
             car_id: slug,
@@ -82,8 +93,8 @@ const SearchResultsTemplate = ({ initialState = [] }) => {
         )}
 
       {/* If logged */}
-      {favorites.constructor === Object &&
-        Object.keys(favorites).length > 0 &&
+      {user.constructor === Object &&
+        Object.keys(user).length > 0 &&
         items.map(
           ({
             car_id: slug,
@@ -106,7 +117,7 @@ const SearchResultsTemplate = ({ initialState = [] }) => {
                 title={`${name} ${model} ${year}`}
                 price={price}
                 imageSrc={
-                  image.length === 0 ? '/images/default-car.png' : image
+                  !image || image.length === 0 ? '/images/default-car.png' : image
                 }
                 href={`/car/${encodeURIComponent(slug)}`}
                 favorite={() => handleCheckIsFavorite(slug)}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useFormikContext } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
@@ -19,8 +19,12 @@ export default function AutoCompletePlaces({
   const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext();
   const [isMobile, setIsMobile] = useState(true);
+  const isMountedRef = useRef(true);
 
   const handleWindow = () => {
+    // Only update state if component is still mounted
+    if (!isMountedRef.current) return;
+    
     if (window.innerWidth > 720) setIsMobile(false);
     else setIsMobile(true);
   };
@@ -39,11 +43,20 @@ export default function AutoCompletePlaces({
 
   useEffect(() => {
     handleWindow();
-    // listen window resize
-    window.addEventListener('resize', () => {
-      // responsive
+    
+    // Create a named function for the event listener
+    const handleResize = () => {
       handleWindow();
-    });
+    };
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup function to remove event listener when component unmounts
+    return () => {
+      isMountedRef.current = false;
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const checkEmptyPlace = () => {

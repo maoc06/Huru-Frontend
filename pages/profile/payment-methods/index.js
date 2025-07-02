@@ -25,7 +25,7 @@ const PaymentMethods = () => {
   }, []);
 
   return (
-    <div>
+    <div className="payment-methods-page">
       <Head>
         <title>Huru | Metodos de pago</title>
         <link rel="icon" href="/favicon.ico" />
@@ -35,15 +35,16 @@ const PaymentMethods = () => {
         />
       </Head>
 
-      <>
-        <ActivityIndicator visible={paymentMethodsByUser.loading} />
+      <ActivityIndicator visible={paymentMethodsByUser.loading} />
 
-        <AppLayout>
-          {!paymentMethodsByUser.loading && (
-            <PaymentMethodsTemplate list={paymentMethods} />
-          )}
-        </AppLayout>
-      </>
+      <AppLayout>
+        <div className="payment-methods-content">
+          {/* Always render the template, but with empty list while loading */}
+          <PaymentMethodsTemplate 
+            list={!paymentMethodsByUser.loading ? paymentMethods : []} 
+          />
+        </div>
+      </AppLayout>
     </div>
   );
 };

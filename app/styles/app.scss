@@ -2,3 +2,23 @@
 @import 'abstracts/mixins';
 @import 'abstracts/functions';
 @import 'base/fonts';
+
+.auth-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-methods-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .payment-methods-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}

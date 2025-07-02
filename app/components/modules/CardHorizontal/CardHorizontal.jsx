@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 import useApi from '../../../hooks/useApi';
 import favoriteApi from '../../../api/FavoriteAPI';
@@ -56,8 +56,12 @@ export default function CardHorizontal({
   const [averageRating, setAverageRating] = useState('1.0');
   const [pricePerDay, setPricePerDay] = useState(price);
   const [isMobileWindow, setIsMobileWindow] = useState(true);
+  const isMountedRef = useRef(true);
 
   const handleAddToFavorite = () => {
+    // Only update state if component is still mounted
+    if (!isMountedRef.current) return;
+    
     setIsFavorite(true);
     addFavorite.request({
       addedBy: userId,
@@ -66,6 +70,9 @@ export default function CardHorizontal({
   };
 
   const handleRemoveFavorite = () => {
+    // Only update state if component is still mounted
+    if (!isMountedRef.current) return;
+    
     setIsFavorite(false);
     deleteFavorite.request({
       addedBy: userId,
@@ -78,25 +85,40 @@ export default function CardHorizontal({
   };
 
   const handleCountTrips = async () => {
-    const res = await countTrips.request(carId);
-    setCountTrips(res.data.count);
+    try {
+      const res = await countTrips.request(carId);
+      // Only update state if component is still mounted
+      if (isMountedRef.current && res && res.data) {
+        setCountTrips(res.data.count);
+      }
+    } catch (error) {
+      console.error('Error fetching trip count:', error);
+    }
   };
 
   const handleAvg = async () => {
-    const res = await reviews.request(carId);
+    try {
+      const res = await reviews.request(carId);
 
-    if (res.data && res.data.data && res.data.data.length > 0) {
-      const reducer = (accumulator, currentValue) => {
-        return accumulator + currentValue.rating;
-      };
-      const sum = res.data.data.reduce(reducer, 0);
+      // Only update state if component is still mounted
+      if (isMountedRef.current && res.data && res.data.data && res.data.data.length > 0) {
+        const reducer = (accumulator, currentValue) => {
+          return accumulator + currentValue.rating;
+        };
+        const sum = res.data.data.reduce(reducer, 0);
 
-      const calc = parseFloat(sum / res.data.data.length);
-      setAverageRating(calc.toFixed(1));
+        const calc = parseFloat(sum / res.data.data.length);
+        setAverageRating(calc.toFixed(1));
+      }
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
     }
   };
 
   const handleMobileWindow = () => {
+    // Only update state if component is still mounted
+    if (!isMountedRef.current) return;
+    
     if (window.innerWidth > 720) setIsMobileWindow(false);
     else setIsMobileWindow(true);
   };
@@ -111,11 +133,20 @@ export default function CardHorizontal({
       setPricePerDay(price - discount);
     }
     handleMobileWindow();
-    // listen window resize
-    window.addEventListener('resize', () => {
-      // responsive
+    
+    // Create a named function for the event listener
+    const handleResize = () => {
       handleMobileWindow();
-    });
+    };
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup function to remove event listener when component unmounts
+    return () => {
+      isMountedRef.current = false;
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return (

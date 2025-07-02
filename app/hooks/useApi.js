@@ -8,11 +8,20 @@ const useApi = (apiFunc) => {
   const request = async (...args) => {
     let response;
     setLoading(true);
+    setError(false); // Reset error state
+    
     try {
       response = await apiFunc(...args);
       setData(response.data);
     } catch (error) {
+      console.error('API Error:', error);
       setError(true);
+      // Return error information for better debugging
+      response = {
+        ok: false,
+        error: error.response?.data || error.message || 'Network error',
+        status: error.response?.status
+      };
     }
     setLoading(false);
 

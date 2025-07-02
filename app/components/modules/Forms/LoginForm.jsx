@@ -43,12 +43,18 @@ export default function LoginForm() {
 
   const initialValues = { email: '', password: '' };
 
-  const handleAuth = ({ accessToken, showErrorOnPopUp = false }) => {
+  const handleAuth = async ({ accessToken, showErrorOnPopUp = false }) => {
     const errors = errorHandlerLogin(accessToken);
 
     if (errors === 0) {
-      router.push('/');
-      auth.logIn(accessToken);
+      try {
+        await auth.logIn(accessToken);
+        router.push('/');
+      } catch (error) {
+        console.error('Error during login process:', error);
+        setEmailError(true);
+        setEmailErrorMsg('Error durante el proceso de login');
+      }
     } else {
       if (errors.index === 0) {
         if (showErrorOnPopUp) {
@@ -71,8 +77,33 @@ export default function LoginForm() {
 
   const handleSubmit = async (user) => {
     resetErrors();
-    const res = await validateCredentials.request(user);
-    handleAuth({ accessToken: res.data.token });
+    console.log('Login attempt with:', user);
+    
+    try {
+      const res = await validateCredentials.request(user);
+      console.log('Login response:', res);
+      
+      if (res && res.data) {
+        // Handle different possible response structures
+        const token = res.data.token || res.data.accessToken || res.data.data?.token;
+        
+        if (token) {
+          await handleAuth({ accessToken: token });
+        } else {
+          console.error('No token found in response:', res.data);
+          setEmailError(true);
+          setEmailErrorMsg('Error en la respuesta del servidor');
+        }
+      } else {
+        console.error('Invalid response structure:', res);
+        setEmailError(true);
+        setEmailErrorMsg('Error de conexión con el servidor');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setEmailError(true);
+      setEmailErrorMsg('Error de conexión. Verifica tu conexión a internet.');
+    }
   };
 
   // For the current version of the system, the following functionalities are not enabled

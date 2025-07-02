@@ -20,14 +20,26 @@ export default function RequestDetail() {
   const router = useRouter();
 
   const getRequests = useApi(bookingApi.findBookingRequests);
-  const [requests, setRequests] = useState({});
+  const [requests, setRequests] = useState([]);
 
   const [user, setUser] = useState(null);
   const [showMenuDesktop, setShowMenuDesktop] = useState(false);
 
   const handleGetData = async (uuid) => {
-    const res = await getRequests.request({ uuid, limit: false });
-    setRequests(res.data.data);
+    try {
+      const res = await getRequests.request({ uuid, limit: false });
+      console.log('Requests response:', res);
+      
+      if (res?.data?.data && Array.isArray(res.data.data)) {
+        setRequests(res.data.data);
+      } else {
+        console.warn('Invalid requests data structure:', res);
+        setRequests([]);
+      }
+    } catch (error) {
+      console.error('Error fetching requests:', error);
+      setRequests([]);
+    }
   };
 
   const handleAvatar = () => {
@@ -89,11 +101,11 @@ export default function RequestDetail() {
           </section>
 
           <section className={styles.content}>
-            {requests.length === 0 && (
+            {!getRequests.loading && Array.isArray(requests) && requests.length === 0 && (
               <NotFound text="No tienes solicitudes de reserva para mostrar. Asegurate de tener vehículos listados y habilitados." />
             )}
 
-            {requests.length > 0 && (
+            {!getRequests.loading && Array.isArray(requests) && requests.length > 0 && (
               <GridCardRequestLayout
                 requestList={requests}
                 showSeeAll={false}
