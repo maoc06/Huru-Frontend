@@ -37,6 +37,7 @@ const Cars = () => {
   const [cars, setCars] = useState([]);
   const [user, setUser] = useState(null);
   const [showMenuDesktop, setShowMenuDesktop] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const { location: param } = router.query;
   const [location, setLocation] = useState(param);
@@ -101,6 +102,14 @@ const Cars = () => {
   const handleAvatar = () => {
     setShowMenuDesktop(!showMenuDesktop);
   };
+  
+  const handleMobileAvatar = () => {
+    setShowMobileMenu(!showMobileMenu);
+  };
+  
+  const handleLogoClick = () => {
+    router.push('/');
+  };
 
   useEffect(() => {
     if (param) {
@@ -129,11 +138,24 @@ const Cars = () => {
 
       <ActivityIndicator visible={searchCars.loading} />
 
+      {/* Mobile-only header with logo and avatar */}
+      <div className={styles.mobileHeader}>
+        <div className={styles.mobileLogo} onClick={handleLogoClick}>
+          <LogoColor />
+        </div>
+        <div className={styles.mobileAvatar} onClick={handleMobileAvatar}>
+          {user ? <Avatar src={user.profilePicture} /> : <Avatar />}
+          {showMobileMenu && (
+            <div className={styles.menuMobile}>
+              <MenuDesktop user={user} />
+            </div>
+          )}
+        </div>
+      </div>
+
       <section className={styles.header}>
         <div
-          onClick={() => {
-            router.push('/');
-          }}
+          onClick={handleLogoClick}
           className={styles.logo}
         >
           <LogoColor />

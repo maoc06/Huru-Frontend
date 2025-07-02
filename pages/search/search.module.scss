@@ -1,6 +1,58 @@
 @import '../../app/styles/abstracts/colors';
 @import '../../app/styles/abstracts/breakpoints';
 
+// Mobile-only header
+.mobileHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 8px;
+    
+    @media (min-width: 720px) {
+        display: none; // Hide on desktop
+    }
+    
+    .mobileLogo {
+        cursor: pointer;
+        svg {
+            height: 28px;
+            width: auto;
+        }
+    }
+    
+    .mobileAvatar {
+        cursor: pointer;
+        position: relative;
+        
+        .menuMobile {
+            position: absolute;
+            top: 48px;
+            right: 0;
+            display: block;
+            background-color: #fff;
+            border-radius: 10px;
+            min-width: 200px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            
+            &::after {
+                border-top: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-bottom: 8px solid #fff;
+                border-left: 8px solid transparent;
+                overflow: hidden;
+                content: '';
+                right: 10px;
+                position: absolute;
+                top: 0;
+                transform: translateY(-100%);
+            }
+        }
+    }
+}
+
 .container {
     width: 100%;
     max-width: 1200px;
@@ -74,11 +126,17 @@
 .header {
     width: 100%;
     margin-bottom: 16px;
+    
+    @media (max-width: 719px) {
+        padding-top: 0; // Remove top padding on mobile since we now have a mobile header
+    }
+    
     @media (min-width: 720px) {
         display: flex;
         justify-content: space-between;
         gap: 32px;
     }
+    
     .logo,
     .avatar {
         display: none;
@@ -116,7 +174,11 @@
     }
     .searchBar {
         width: 100%;
-        // overflow: hidden;
+        
+        @media (max-width: 719px) {
+            margin-top: 0; // Ensure no extra spacing
+        }
+        
         @media (min-width: 720px) {
             width: 60%;
         }

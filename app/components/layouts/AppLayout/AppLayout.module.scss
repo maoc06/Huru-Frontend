@@ -9,6 +9,8 @@
     padding: 1rem;
     overflow-x: hidden;
     
+    // Specific styling for search page can be handled with a custom class in the search page itself
+    
     @include respond-up(sm) {
         padding: 1.5rem;
     }
