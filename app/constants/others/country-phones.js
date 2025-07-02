@@ -20,10 +20,16 @@ const countryPhonesFormat = [
   },
   {
     id: 4,
+    country: 'Curaçao',
+    code: '599',
+    flag: '/images/country-flags/cw.svg',
+  },
+  {
+    id: 5,
     country: 'Mexico',
     code: '52',
     flag: '/images/country-flags/mx.svg',
   },
-  { id: 5, country: 'Perú', code: '51', flag: '/images/country-flags/pe.svg' },
+  { id: 6, country: 'Perú', code: '51', flag: '/images/country-flags/pe.svg' },
 ];
 export { countryPhonesFormat };

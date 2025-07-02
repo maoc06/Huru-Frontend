@@ -129,7 +129,7 @@ export default function ValidatePhone({ setStep }) {
           </TextFieldRowLayout>
 
           <p className={styles.bottom_label}>
-            ¿No llegó el SMS?
+            ¿No llegó el SMS? <br />
             <span
               className={`${!resendEnable && styles.resendUnable}`}
               onClick={resendEnable ? resendCode : () => {}}

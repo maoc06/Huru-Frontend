@@ -3,10 +3,11 @@
     margin-top: 4px;
     margin-bottom: 64px;
     span {
-        font-weight: bold;
+        font-weight: 500;
         color: $primary;
     }
     .resendUnable {
         color: $gray_2;
+        cursor: pointer;
     }
 }
