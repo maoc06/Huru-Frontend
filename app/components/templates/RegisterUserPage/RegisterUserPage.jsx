@@ -12,7 +12,7 @@ import authNavStyles from '../../modules/NavBar/AuthNavBar.module.scss';
 
 const RegisterUserPage = ({ onBackNavigation }) => {
   const numOfSteps = 6;
-  const [step, setSetp] = useState(1);
+  const [step, setSetp] = useState(2);
 
   const handleBackNavigation = () => {
     if (step > 1) {

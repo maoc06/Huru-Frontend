@@ -2,17 +2,17 @@ import { withExtraLabelRequests } from '../../../utils/extraLabelText';
 import RequestCard from '../../modules/RequestCard/RequestCard';
 import SeeAll from '../../elements/SeeAll/SeeAll';
 
-import style from './GridCardRequestLayout.module.scss';
+import style from './FlexCardRequestLayout.module.scss';
 
-export default function GridCardRequestLayout({
+export default function FlexCardRequestLayout({
   requestList = [],
-  sliceTo = 3,
+  sliceTo = 4, // Changed to 4 as per requirement
   showSeeAll = true,
-  horizontal = false,
+  horizontal = false, // This prop might not be as relevant for flex, but keeping for consistency
 }) {
   // Validate requestList
   if (!Array.isArray(requestList)) {
-    console.warn('GridCardRequestLayout: requestList is not an array', requestList);
+    console.warn('FlexCardRequestLayout: requestList is not an array', requestList);
     return null;
   }
 
@@ -22,7 +22,7 @@ export default function GridCardRequestLayout({
         {requestList.slice(0, sliceTo).map((request) => {
           // Skip invalid requests
           if (!request || !request.id) {
-            console.warn('GridCardRequestLayout: Invalid request object', request);
+            console.warn('FlexCardRequestLayout: Invalid request object', request);
             return null;
           }
           // Safely extract bookedBy info with defaults
@@ -50,37 +50,28 @@ export default function GridCardRequestLayout({
             checkout: request.checkout,
           });
 
-          // Debug logging for troubleshooting (only when there are issues)
-          if (!request.bookedCar?.images || !Array.isArray(request.bookedCar.images)) {
-            console.log('Request missing images data:', {
-              id: request.id,
-              hasBookedCar: !!request.bookedCar,
-              imagesType: typeof request.bookedCar?.images,
-              images: request.bookedCar?.images
-            });
-          }
-
           return (
-            <RequestCard
-              key={request.id}
-              guestName={applicantName}
-              guestImg={request.bookedBy?.profilePhoto || '/images/default-avatar.png'}
-              carName={title}
-              carImg={imageSrc}
-              dateStart={request.checkin || 'Fecha no especificada'}
-              dateEnd={request.checkout || 'Fecha no especificada'}
-              requestId={request.id}
-              extraLabelColor={extraLabel?.color || 'blue'}
-              extraLabelText={extraLabel?.text || 'Estado desconocido'}
-              withExtraLabel={extraLabel?.show || false}
-              href={extraLabel?.link || '#'}
-              horizontal={horizontal}
-            />
+            <div key={request.id} className={style['card-wrapper']}>
+              <RequestCard
+                guestName={applicantName}
+                guestImg={request.bookedBy?.profilePhoto || '/images/default-avatar.png'}
+                carName={title}
+                carImg={imageSrc}
+                dateStart={request.checkin || 'Fecha no especificada'}
+                dateEnd={request.checkout || 'Fecha no especificada'}
+                requestId={request.id}
+                extraLabelColor={extraLabel?.color || 'blue'}
+                extraLabelText={extraLabel?.text || 'Estado desconocido'}
+                withExtraLabel={extraLabel?.show || false}
+                href={extraLabel?.link || '#'}
+                horizontal={horizontal}
+              />
+            </div>
           );
         })}
 
-        {showSeeAll && <SeeAll href="/host/requests" />}
       </div>
+        {showSeeAll && <SeeAll href="/host/requests" />}
     </>
   );
 }

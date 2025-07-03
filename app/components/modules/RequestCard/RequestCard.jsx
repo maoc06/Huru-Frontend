@@ -18,6 +18,7 @@ export default function RequestCard({
   withExtraLabel = false,
   extraLabelText = '',
   extraLabelColor = 'blue',
+  horizontal = false,
 }) {
   const router = useRouter();
 
@@ -27,7 +28,9 @@ export default function RequestCard({
 
   return (
     <div
-      className={`${styles.card} ${withExtraLabel && styles.extraMargin}`}
+      className={`${styles.card} ${withExtraLabel && styles.extraMargin} ${
+        horizontal && styles.horizontal
+      }`}
       onClick={handleGoToDetails}
     >
       <div
@@ -50,7 +53,7 @@ export default function RequestCard({
             <p>{formatFullDate({ date: dateStart, type: 'ISO' })}</p>
           </div>
 
-          <div>
+          <div className={styles.start}>
             <p className={styles.date}>Fecha y hora de fin</p>
             <p>{formatFullDate({ date: dateEnd, type: 'ISO' })}</p>
           </div>

@@ -1,5 +1,17 @@
 @import '../../../styles/abstracts/colors';
 .container {
+    .title {
+        font-size: 2.5rem;
+        margin-bottom: 8px;
+        color: $primary;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+        color: $gray_2;
+        margin-bottom: 32px;
+    }
+
     .header {
         margin-bottom: 32px;
         display: none;
@@ -46,24 +58,30 @@
     }
     .content {
         @media (min-width: 720px) {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 32px;
             .requests {
-                flex: 0.4;
+                grid-column: 1 / 3;
             }
-            .stats,
-            .trips {
-                flex: 0.3;
-            }
-            .requests,
             .stats {
+                grid-column: 1 / 2;
                 border-right: 1px solid $gray_4;
-                padding-right: 64px;
+                padding-right: 32px;
+            }
+            .trips {
+                grid-column: 2 / 3;
             }
         }
         .upcoming {
-            color: $error;
-            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            color: $primary_hover;
+            min-height: 200px;
+            .upcomingIcon {
+                margin-right: 16px;
+                font-size: 2rem;
+            }
         }
     }
 }

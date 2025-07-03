@@ -1,6 +1,7 @@
 const nextConfig = {
   env: {
-    BASE_API_URL: 'http://localhost:4000/api',
+    //BASE_API_URL: 'http://localhost:4000/api',
+    BASE_API_URL: 'http://192.168.80.91:4000/api',
     // BASE_API_URL: 'http://192.168.0.14:4000/api',
     // BASE_API_URL: 'http://54.94.203.225/api',
     // BASE_API_URL: 'https://huru-app.herokuapp.com/api',

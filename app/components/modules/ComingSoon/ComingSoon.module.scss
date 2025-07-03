@@ -1,0 +1,17 @@
+@import '../../../styles/abstracts/colors';
+
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    color: $info;
+    margin-right: 16px;
+    font-size: 2rem;
+}
+
+.message {
+    color: $info;
+    text-align: left;
+}
