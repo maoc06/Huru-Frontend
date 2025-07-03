@@ -8,10 +8,16 @@
 }
 
 .margin_to_button {
-    margin-bottom: 32px;
+    margin-bottom: 2rem;
 }
 
 .statusMsg {
     font-size: 14px;
     color: $error;
+}
+
+.error {
+    color: #f44336;
+    font-size: 14px;
+    margin-top: 8px;
 }

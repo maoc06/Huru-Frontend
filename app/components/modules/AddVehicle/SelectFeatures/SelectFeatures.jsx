@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setFeatures } from '../../../../redux/slices/vehicleRegisterSlice';
@@ -9,13 +9,15 @@ import styles from './SelectFeatures.module.scss';
 
 export default function SelectFeatures({ setStep, next }) {
   const dispatch = useDispatch();
-  const [selected, setSelected] = useState([]);
+  const savedFeatures = useSelector((state) => state.vehicleRegister.features);
+  const [selected, setSelected] = useState(savedFeatures || []);
+  
   const features = useSelector(
     (state) => state.vehicleRegisterObjects.featuresOptions
   );
 
-  const handleChange = (featureId) => {
-    setSelected([...selected, featureId]);
+  const handleSelectionChange = (newSelection) => {
+    setSelected(newSelection);
   };
 
   useEffect(() => {
@@ -29,19 +31,16 @@ export default function SelectFeatures({ setStep, next }) {
 
   return (
     <div className={styles.container}>
-      <h3>Cuéntanos sobre tu carro</h3>
-
       {features.constructor === Array && Object.keys(features).length > 0 && (
         <CardSelectableLayout
           list={features}
           propSelect={'featureId'}
           propKey={'featureId'}
           propValue={'name'}
-          onSelect={handleChange}
+          onSelect={handleSelectionChange}
           withIconEnum={true}
           iconEnum={carFeaturesIcons}
-          cardSizes="large"
-          lightBackground={true}
+          selectedItems={selected}
         />
       )}
 

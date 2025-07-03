@@ -1,9 +1,11 @@
 import styles from './GridPhotos.module.scss';
 
-export default function GridPhotos({ children }) {
+export default function GridPhotos({ children, className = '' }) {
   return (
-    <>
-      <main className={`${styles.container}`}>{children}</main>
-    </>
+    <div className={`${styles.container} ${className}`}>
+      <div className={styles.grid}>
+        {children}
+      </div>
+    </div>
   );
 }

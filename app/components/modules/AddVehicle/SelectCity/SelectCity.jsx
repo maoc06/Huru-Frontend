@@ -13,20 +13,32 @@ import ResponsiveDialog from '../../ResponsiveDialog/ResponsiveDialog';
 import styles from './SelectCity.module.scss';
 
 export default function SelectCity({ setStep, next }) {
-  const initialValues = { city: '' };
-
   const dispatch = useDispatch();
 
-  const [selected, setSelected] = useState({ cityId: 1, name: 'bogotá' });
   const [openDialog, setOpenDialog] = useState(false);
 
   const citiesOptions = useSelector(
     (state) => state.vehicleRegisterObjects.citiesOptions
   );
+  
+  // Get current city from Redux state
+  const currentCity = useSelector((state) => state.vehicleRegister.city);
+
+  const [selected, setSelected] = useState(
+    currentCity?.cityId ? currentCity : (citiesOptions[0] || { cityId: 1, name: 'bogotá' })
+  );
+
+  const initialValues = { city: currentCity?.cityId ? currentCity : '' };
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (citiesOptions.length > 0) {
+      setSelected(citiesOptions[0]);
+    }
+  }, [citiesOptions]);
 
   const handleSubmit = () => {
     dispatch(setCity(selected));
@@ -35,9 +47,6 @@ export default function SelectCity({ setStep, next }) {
 
   return (
     <div className={styles.container}>
-      <h3>Cuéntanos sobre tu carro</h3>
-      <p>¿Dónde está ubicado tu vehículo?</p>
-
       {citiesOptions.constructor === Array &&
         Object.keys(citiesOptions).length > 0 && (
           <Form

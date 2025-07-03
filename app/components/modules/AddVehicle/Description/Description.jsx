@@ -22,22 +22,6 @@ export default function VehicleDescription({ setStep, next }) {
 
   return (
     <div className={styles.container}>
-      <h3>Descripción</h3>
-
-      <article>
-        <p>
-          Cuéntale a todos las razones por las que conducir tu carro es una
-          experiencia inigualable.
-        </p>
-
-        <br />
-
-        <p>
-          Recuerda que los vehículos con descripciones tienen más posibilidades
-          de ser reservados, así que aprovecha este espacio.
-        </p>
-      </article>
-
       <Form
         initialValues={initialValues}
         validationSchema={vehicleDescriptionSchema}

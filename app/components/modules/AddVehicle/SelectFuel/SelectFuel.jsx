@@ -10,18 +10,30 @@ import SubmitButton from '../../../elements/Button/SubmitButton';
 import styles from './SelectFuel.module.scss';
 
 export default function SelectFuel({ setStep, next }) {
-  const initialValues = { fuelType: '' };
-
   const dispatch = useDispatch();
 
-  const [selected, setSelected] = useState({ fuelId: 1, name: 'corriente' });
   const fuelOptions = useSelector(
     (state) => state.vehicleRegisterObjects.fuelOptions
   );
+  
+  // Get current fuel from Redux state
+  const currentFuel = useSelector((state) => state.vehicleRegister.fuel);
+  
+  const [selected, setSelected] = useState(
+    currentFuel?.fuelId ? currentFuel : (fuelOptions[0] || { fuelId: 1, name: 'corriente' })
+  );
+
+  const initialValues = { fuelType: currentFuel?.fuelId ? currentFuel : '' };
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (fuelOptions.length > 0) {
+      setSelected(fuelOptions[0]);
+    }
+  }, [fuelOptions]);
 
   const handleSubmit = () => {
     dispatch(setFuel(selected));
@@ -30,9 +42,6 @@ export default function SelectFuel({ setStep, next }) {
 
   return (
     <div className={styles.container}>
-      <h3>Cuéntanos sobre tu carro</h3>
-      <p>¿Qué tipo de combustible deberían usar para tu vehículo?</p>
-
       {fuelOptions.constructor === Array &&
         Object.keys(fuelOptions).length > 0 && (
           <Form

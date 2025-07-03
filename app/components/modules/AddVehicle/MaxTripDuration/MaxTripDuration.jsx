@@ -14,9 +14,12 @@ export default function MaxTripDuration({ setStep, next }) {
   const maxTripOptions = useSelector(
     (state) => state.vehicleRegisterObjects.maxTripOptions
   );
+  
+  // Get current max trip duration from Redux state
+  const currentMaxTripDuration = useSelector((state) => state.vehicleRegister.maxTripDuration);
 
   const initialValues = {
-    radioGroup: '',
+    radioGroup: currentMaxTripDuration?.id ? currentMaxTripDuration : '',
   };
 
   const handleSubmit = (radioGroup) => {
@@ -26,8 +29,6 @@ export default function MaxTripDuration({ setStep, next }) {
 
   return (
     <div className={styles.container}>
-      <h3>¿Cúal será el viaje más largo que aceptarás?</h3>
-
       <Form
         initialValues={initialValues}
         validationSchema={radioGroupSchema}

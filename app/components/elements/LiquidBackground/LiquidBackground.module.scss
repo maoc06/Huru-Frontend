@@ -58,9 +58,9 @@
 
   // Button enhancements with subtle glassmorphism
   :global(button) {
-    background: rgba(124, 189, 181, 0.95);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    // background: rgba(124, 189, 181, 0.95);
+    // backdrop-filter: blur(8px);
+    // -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(124, 189, 181, 0.2);
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(124, 189, 181, 0.25);

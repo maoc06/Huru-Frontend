@@ -1,49 +1,125 @@
 @import '../../../styles/abstracts/colors';
-.card {
-    border-radius: 8px;
-    box-shadow: 2px 4px 20px #9999994f;
-    background-color: $gray_5;
+
+.container {
+    // Modern card styling with a clean, light look.
+    background: rgba($white, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba($white, 0.2);
+    border-radius: 14px;
+    padding: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px rgba($primary, 0.04);
+    position: relative;
+    overflow: hidden;
+    
+    // Use flexbox to control the internal layout.
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    cursor: pointer;
-    &:hover {
-        background-color: $gray_6;
-    }
-    .icon {
+    justify-content: center;
+    align-items: center;
+
+    .iconWrapper {
+        height: 40px;
+        margin-bottom: 0.5rem;
         display: flex;
         justify-content: center;
         align-items: center;
-         :first-child {
-            width: 50px;
-            height: 50px;
+    }
+    
+    .iconContainer {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+        
+        svg {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            color: $gray_2;
+            transition: all 0.3s ease;
         }
     }
-    span {
-        color: $gray_3;
-        flex: 1;
+    
+    .label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: $gray_2;
+        line-height: 1.3;
+        transition: color 0.3s ease;
         text-transform: capitalize;
-        text-align: center;
-        margin: 0 8px 8px 8px;
-        font-size: 0.7rem;
-        overflow: hidden;
-        overflow-wrap: break-word;
     }
-}
-
-.lightBg {
-    background-color: $gray_6;
+    
+    &:hover {
+        transform: translateY(-5px);
+        background: rgba($white, 0.8);
+        box-shadow: 0 10px 20px rgba($primary, 0.08);
+        border-color: rgba($white, 0.4);
+        
+        .iconContainer {
+            transform: scale(1.1);
+            
+            svg {
+                color: $primary;
+            }
+        }
+    }
 }
 
 .selected {
-    border: 1px solid $primary;
-    box-shadow: 2px 4px 20px #070c9a2f;
-    .icon {
-        svg path {
-            fill: $primary !important;
-        }
+    // A strong, colorful border and shadow to indicate selection.
+    border-color: $secondary;
+    box-shadow: 0 8px 25px rgba($secondary, 0.2);
+    
+    // Make the background fully opaque on selection for better contrast.
+    &::before {
+        opacity: 1;
     }
-    span {
+    
+    .icon svg {
+        color: $secondary;
+        transform: scale(1.1);
+    }
+    
+    .label {
         color: $primary;
+        font-weight: 600;
+    }
+    
+    // A clear, animated checkmark in the corner to confirm selection.
+    &::after {
+        content: '✓';
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: $secondary;
+        color: $white;
+        font-size: 12px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 4px rgba($primary, 0.1);
+        animation: popIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
+// Keyframe animation for the checkmark to pop in.
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
     }
 }

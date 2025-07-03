@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useFormikContext } from 'formik';
+import { useEffect, useState } from 'react';
+import { useFormikContext, ErrorMessage } from 'formik';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
 
 import RadioButton from '../../elements/RadioButton/RadioButton';
+import styles from './RadioGroup.module.scss';
 
 export default function AppRadioGroup({
   name,
@@ -12,55 +12,58 @@ export default function AppRadioGroup({
   defaultSelected,
   onChangeAux,
 }) {
-  const keys = Object.keys(list[0]);
-  const propKey = keys[0];
-  const propName = keys[1];
+  const { setFieldValue, values } = useFormikContext();
 
-  const [value, setValue] = useState(defaultSelected);
-  const { setFieldValue, touched, errors } = useFormikContext();
-
-  const getObjectByPropName = (item) => {
-    return list.find((obj) => {
-      return obj[propName] === item;
-    });
-  };
+  const value = values[name];
+  const keys = list && list.length > 0 ? Object.keys(list[0]) : [];
+  const propKey = keys[0] || 'id';
+  const propName = keys[1] || 'name';
 
   useEffect(() => {
-    setFieldValue(name, list[0]);
-  }, []);
+    if (list && list.length > 0 && !values[name]) {
+      const defaultItem = defaultSelected
+        ? list.find((item) => item[propName] === defaultSelected)
+        : list[0];
+      if (defaultItem) {
+        setFieldValue(name, defaultItem);
+      }
+    }
+  }, [list, name, setFieldValue, defaultSelected, values[name], propName]);
+
+  const getObjectByPropName = (item) => {
+    return list.find((obj) => obj[propName] === item);
+  };
 
   const handleChange = (event) => {
-    const selectedItem = event.target.value;
-    setValue(selectedItem);
-    setFieldValue(name, getObjectByPropName(selectedItem));
+    const selectedValue = event.target.value;
+    const selectedObject = getObjectByPropName(selectedValue);
+
+    setFieldValue(name, selectedObject);
 
     if (typeof onChangeAux === 'function') {
-      onChangeAux(getObjectByPropName(selectedItem));
+      onChangeAux(selectedObject);
     }
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <FormControl component="fieldset">
-        <RadioGroup name={name} value={value} onChange={handleChange}>
-          {list.map((item) => {
-            return (
-              <RadioButton
-                key={item[propKey]}
-                label={item[propName]}
-                value={item[propName]}
-              />
-            );
-          })}
+        <RadioGroup
+          name={name}
+          value={value?.[propName] || ''}
+          onChange={handleChange}
+        >
+          {(list || []).map((item) => (
+            <RadioButton
+              key={item[propKey]}
+              label={item[propName]}
+              value={item[propName]}
+            />
+          ))}
         </RadioGroup>
       </FormControl>
 
-      {touched[name] && errors[name] && (
-        <p>
-          Lo sentimos, ocurrio un error inesperado. Vuelve a intertarlo más
-          tarde.
-        </p>
-      )}
-    </>
+      <ErrorMessage name={name} component="p" className={styles.error} />
+    </div>
   );
 }

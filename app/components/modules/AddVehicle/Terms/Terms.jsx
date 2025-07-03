@@ -141,24 +141,6 @@ export default function Terms() {
       />
 
       <div className={styles.container}>
-        <h3>Terminamos</h3>
-
-        <article>
-          <p>
-            Revisa la vista previa para asegurarte que todo está como lo deseas.
-            Una vez aceptes los términos y políticas de Huru, un miembro del
-            equipo de soporte validará la información del vehículo.
-          </p>
-
-          <br />
-
-          <p>
-            Si la información proporcionada es válida en menos de 48 horas el
-            vehículo se hará público en nuestra plataforma y estará listo para
-            ser reservado.
-          </p>
-        </article>
-
         <SeePreview
           dialogTitle="Vista previa del vehículo"
           type="car-preview"

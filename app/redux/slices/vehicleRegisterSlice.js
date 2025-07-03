@@ -18,6 +18,7 @@ const initialState = {
   maxTripDuration: {},
   fuel: {},
   city: {},
+  currentStep: 1,
 };
 
 export const vehicleRegisterSlice = createSlice({
@@ -72,6 +73,12 @@ export const vehicleRegisterSlice = createSlice({
     setMaxTripDuration: (state, action) => {
       state.maxTripDuration = action.payload;
     },
+    setCurrentStep: (state, action) => {
+      state.currentStep = action.payload;
+    },
+    resetVehicleRegister: (state) => {
+      return initialState;
+    },
   },
 });
 
@@ -89,6 +96,8 @@ export const {
   setAdvanceNotice,
   setMinTripDuration,
   setMaxTripDuration,
+  setCurrentStep,
+  resetVehicleRegister,
 } = vehicleRegisterSlice.actions;
 
 export default vehicleRegisterSlice.reducer;

@@ -1,78 +1,47 @@
-import { useState } from 'react';
-
 import CardSelectable from '../../modules/CardSelectable/CardSelectable';
-
 import styles from './CardSelectableLayout.module.scss';
 
 export default function CardSelectableLayout({
   list,
   propKey,
   propValue,
-  propValueNested,
   propSelect,
   onSelect,
-  selectFull = false,
   withIconEnum = false,
-  iconEnum = {},
-  initialSelected = [],
-  valueNested = false,
-  selectables = true,
-  isAllActives = false,
-  cardSizes = 'small',
-  ...otherProps
+  iconEnum,
+  selectedItems = [],
 }) {
-  const [selectedIndex, setSelectedIndex] = useState(initialSelected);
+  const handleSelect = (item) => {
+    const selectedValue = item[propSelect];
+    let newSelectedItems;
 
-  const handleClick = (index, value) => {
-    let selected = [];
-
-    if (selectedIndex && selectedIndex.includes(index)) {
-      selected = selectedIndex.filter((selected) => selected !== index);
-      // setSelectedIndex(selected);
+    if (selectedItems.includes(selectedValue)) {
+      newSelectedItems = selectedItems.filter((id) => id !== selectedValue);
     } else {
-      selected = [...(selectedIndex || []), index];
-      // setSelectedIndex([...selectedIndex, index]);
+      newSelectedItems = [...selectedItems, selectedValue];
     }
-
-    setSelectedIndex(selected);
-
-    if (selectFull) {
-      onSelect(selected);
-    } else {
-      onSelect(value);
-    }
+    onSelect(newSelectedItems);
   };
 
   return (
-    <div
-      className={`${styles.layout} ${cardSizes === 'small' && styles.small} ${
-        cardSizes === 'large' && styles.large
-      }`}
-    >
-      {list.map((item) => {
-        return (
-          <div
-            key={item[propKey]}
-            onClick={
-              selectables
-                ? () => handleClick(item[propKey], item[propSelect])
-                : () => {}
-            }
-          >
-            <CardSelectable
-              withIcon={withIconEnum}
-              icon={withIconEnum ? iconEnum[item[propKey]] : iconEnum}
-              title={
-                valueNested ? item[propValue][propValueNested] : item[propValue]
-              }
-              selected={
-                isAllActives ? true : selectedIndex && selectedIndex.includes(item[propKey])
-              }
-              {...otherProps}
-            />
-          </div>
-        );
-      })}
+    <div className={styles.container}>
+      <div className={styles.grid}>
+        {list.map((item) => {
+          const isSelected = selectedItems.includes(item[propSelect]);
+          return (
+            <div key={item[propKey]} className={styles.gridItem}>
+                <CardSelectable
+                item={item}
+                propKey={propKey}
+                propValue={propValue}
+                onSelect={() => handleSelect(item)}
+                isSelected={isSelected}
+                icon={withIconEnum ? iconEnum[item[propValue]] : null}
+                />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { setVIN } from '../../../../redux/slices/vehicleRegisterSlice';
 
@@ -20,11 +20,14 @@ import styles from './IdentifyVIN.module.scss';
 export default function IdentifyVIN({ setStep, next }) {
   const dispatch = useDispatch();
   const findByVin = useApi(vehicleApi.findByVin);
+  
+  // Get current VIN from Redux state
+  const currentVin = useSelector((state) => state.vehicleRegister.vin);
 
   const [openDialog, setOpenDialog] = useState(false);
   const [apiError, setApiError] = useState(false);
 
-  const initialValues = { vin: '' };
+  const initialValues = { vin: currentVin || '' };
 
   const handleSubmit = async (vin) => {
     const existing = await findByVin.request(vin.vin);
@@ -45,15 +48,6 @@ export default function IdentifyVIN({ setStep, next }) {
       <ActivityIndicator visible={findByVin.loading} />
 
       <div className={styles.container}>
-        <h3>Identifica tu carro</h3>
-
-        <article className={styles.content}>
-          <p>
-            Usa el Número de Identificación del Vehículo (VIN) para identificar
-            tu carro.
-          </p>
-        </article>
-
         <Form
           initialValues={initialValues}
           validationSchema={vinSchema}

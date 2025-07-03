@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { setPrice } from '../../../../redux/slices/vehicleRegisterSlice';
 
@@ -10,9 +10,12 @@ import setPircePerDaySchema from '../../../../constants/validationSchema/setPric
 
 export default function SetPricePerDay({ setStep, next }) {
   const dispatch = useDispatch();
+  
+  // Get current price from Redux state
+  const currentPrice = useSelector((state) => state.vehicleRegister.price);
 
   const initialValues = {
-    price: '',
+    price: currentPrice ? currentPrice.toString() : '',
   };
 
   const handleSubmit = (param) => {

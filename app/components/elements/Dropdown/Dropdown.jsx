@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useFormikContext } from 'formik';
+import { useEffect } from 'react';
+import { useFormikContext, ErrorMessage } from 'formik';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -25,38 +25,82 @@ export default function Dropdown({
   defaultValue,
 }) {
   const classes = materialStyles();
-  const { setFieldValue, touched, errors, values } = useFormikContext();
+  const { setFieldValue, values } = useFormikContext();
 
-  const [selected, setSelect] = useState(list[0]);
-
-  const getObjectByPropName = (item) => {
-    return list.find((obj) => {
-      return obj[propName] === item;
-    });
-  };
-
+  // Effect to handle initialization and default values
   useEffect(() => {
-    setFieldValue(name, getObjectByPropName(selected));
-    if (defaultValue) setSelect(defaultValue);
-  }, []);
+    const currentFieldValue = values[name];
+    const fieldHasValue = currentFieldValue && typeof currentFieldValue === 'object' && currentFieldValue[propKey];
+    
+    if (list && list.length > 0) {
+      // If field has no value, set the first item as default
+      if (!fieldHasValue) {
+        const defaultItem = defaultValue
+          ? list.find((item) => item[propName] === defaultValue)
+          : list[0];
 
-  useEffect(() => {
-    setSelect(list[0]);
-    setFieldValue(name, list[0]);
-  }, [list]);
+        if (defaultItem) {
+          setFieldValue(name, defaultItem);
+          if (typeof setSelectItem === 'function') {
+            setSelectItem(defaultItem);
+          }
+        }
+      } else {
+        // If field has a value, check if it's still valid in the new list
+        const isCurrentValueValid = list.some((item) => 
+          item[propKey] === currentFieldValue[propKey]
+        );
+        
+        if (!isCurrentValueValid) {
+          // Current value is not in the new list, reset to first item
+          const defaultItem = list[0];
+          setFieldValue(name, defaultItem);
+          if (typeof setSelectItem === 'function') {
+            setSelectItem(defaultItem);
+          }
+        }
+      }
+    } else {
+      // List is empty, clear the field
+      if (fieldHasValue) {
+        setFieldValue(name, null);
+        if (typeof setSelectItem === 'function') {
+          setSelectItem(null);
+        }
+      }
+    }
+  }, [
+    list,
+    name,
+    setFieldValue,
+    defaultValue,
+    propName,
+    propKey,
+    setSelectItem,
+  ]);
 
   const handleChange = (event) => {
-    const selectedItem = event.target.value;
-    setSelect(selectedItem);
+    const selectedValue = event.target.value;
+    const selectObject = list.find((item) => item[propName] === selectedValue);
 
-    const selectObject = getObjectByPropName(selectedItem);
-    setFieldValue(name, selectObject);
+    if (selectObject) {
+      setFieldValue(name, selectObject);
 
-    if (typeof setSelectItem === 'function') {
-      setSelectItem(selectObject);
+      if (typeof setSelectItem === 'function') {
+        setSelectItem(selectObject);
+      }
     }
 
     if (error) setError(false);
+  };
+
+  // Get the display value safely
+  const getDisplayValue = () => {
+    const fieldValue = values[name];
+    if (fieldValue && typeof fieldValue === 'object' && fieldValue[propName]) {
+      return fieldValue[propName];
+    }
+    return '';
   };
 
   return (
@@ -70,18 +114,17 @@ export default function Dropdown({
       <FormControl className={classes.formControl}>
         <Select
           name={name}
-          value={values[name]?.[propName] || ''}
+          value={getDisplayValue()}
           onChange={handleChange}
           displayEmpty
           disableUnderline
           inputProps={{ 'aria-label': 'Without label' }}
           classes={{ root: classes.root }}
         >
-          {list.map((item) => {
+          {(list || []).map((item) => {
             return (
               <MenuItem
                 key={item[propKey]}
-                defaultValue=""
                 value={item[propName]}
                 classes={{ root: classes.rootItem }}
               >
@@ -92,7 +135,7 @@ export default function Dropdown({
         </Select>
       </FormControl>
 
-      <ErroMessage visible={touched[name]} message={errors[name]} />
+      <ErrorMessage name={name} component="p" className={styles.error} />
       <ErroMessage visible={error} message={errorMsg} />
     </div>
   );

@@ -5,7 +5,7 @@
     flex-direction: column;
     background: $background;
     width: 100%;
-    min-height: 100vh;
+    min-height: 100svh;
     padding: 1rem;
     overflow-x: hidden;
     
@@ -35,12 +35,12 @@
 }
 
 .full {
-    min-height: 100vh;
+    min-height: 100svh;
     height: fit-content;
 }
 
 .inline {
-    height: 100%;
+    height: auto;
     min-height: auto;
 }
 
@@ -61,6 +61,22 @@
     
     // Ensure proper mobile handling in liquid mode
     @include respond-down(md) {
-        padding: 1rem;
+        padding: 0.5rem;
+    }
+    
+    // Better spacing for form inputs
+    @include respond-up(md) {
+        padding: 0;
+    }
+    
+    // Ensure proper height handling for scrollable content
+    &.inline {
+        height: auto;
+        min-height: auto;
+        overflow-y: visible;
+
+        @include respond-up(md) {
+            overflow-y: auto;
+        }
     }
 }

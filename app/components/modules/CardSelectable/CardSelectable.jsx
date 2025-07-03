@@ -1,21 +1,34 @@
+import parse from 'html-react-parser';
+
 import styles from './CardSelectable.module.scss';
 
 export default function CardSelectable({
-  withIcon = false,
+  item,
+  propKey,
+  propValue,
+  onSelect,
+  isSelected,
   icon,
-  title,
-  selected,
-  lightBackground = false,
 }) {
+  const handleClick = () => {
+    onSelect(item);
+  };
+
   return (
     <div
-      className={`${styles.card} ${lightBackground && styles.lightBg} ${
-        selected && styles.selected
-      }`}
+      className={`${styles.container} ${isSelected ? styles.selected : ''}`}
+      onClick={handleClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleClick()}
+      aria-pressed={isSelected}
     >
-      {withIcon && <div className={styles.icon}>{icon}</div>}
-
-      <span>{title}</span>
+      <div className={styles.iconWrapper}>
+        <div className={styles.iconContainer}>
+          {icon && parse(icon)}
+        </div>
+      </div>
+      <span className={styles.label}>{item[propValue]}</span>
     </div>
   );
 }

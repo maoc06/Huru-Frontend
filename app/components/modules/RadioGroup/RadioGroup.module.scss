@@ -1,0 +1,11 @@
+@import '../../../styles/abstracts/colors';
+
+.container {
+  width: 100%;
+}
+
+.error {
+  color: $error;
+  font-size: 14px;
+  margin-top: 8px;
+} 

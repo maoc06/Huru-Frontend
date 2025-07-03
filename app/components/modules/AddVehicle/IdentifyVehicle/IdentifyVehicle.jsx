@@ -17,7 +17,9 @@ const odometerErrorMsg =
 
 function IdentifyVehicle({ setStep, next }) {
   const dispatch = useDispatch();
-  const vin = useSelector((state) => state.vehicleRegister.vin);
+  
+  // Get current state from Redux
+  const vehicleState = useSelector((state) => state.vehicleRegister);
   const makers = useSelector((state) => state.vehicleRegisterObjects.makers);
   const models = useSelector(
     (state) => state.vehicleRegisterObjects.vehicleModels
@@ -29,23 +31,21 @@ function IdentifyVehicle({ setStep, next }) {
     (state) => state.vehicleRegisterObjects.odometerRanges
   );
 
-  const [selectedMaker, setSelectMaker] = useState(makers[0]);
+  const [selectedMaker, setSelectMaker] = useState(null);
   const [odometerOutRange, setOdometerOutRange] = useState(false);
-  const [modelsByMaker, setModelsByMaker] = useState([
-    { modelId: 0, name: 'Seleccionar modelo...' },
-  ]);
+  const [modelsByMaker, setModelsByMaker] = useState([]);
 
   const initialValues = {
-    vin: vin,
-    maker: '',
-    model: '',
-    year: '',
-    transmission: '',
-    odometer: '',
+    vin: vehicleState.vin || '',
+    maker: vehicleState.maker?.makerId ? vehicleState.maker : (makers && makers.length > 0 ? makers[0] : null),
+    model: vehicleState.model?.modelId ? vehicleState.model : null,
+    year: vehicleState.year?.year ? vehicleState.year : (vehicleYear.years && vehicleYear.years.length > 0 ? vehicleYear.years[0] : null),
+    transmission: vehicleState.transmission?.transmissionId ? vehicleState.transmission : (transmissions && transmissions.length > 0 ? transmissions[0] : null),
+    odometer: vehicleState.odometer?.odometerRangeId ? vehicleState.odometer : (odometerRanges && odometerRanges.length > 0 ? odometerRanges[0] : null),
   };
 
   const handleSubmit = (vehicleInfo) => {
-    if (vehicleInfo.odometer.odometerRangeId === 4) {
+    if (vehicleInfo.odometer && vehicleInfo.odometer.odometerRangeId === 4) {
       setOdometerOutRange(true);
     } else {
       dispatch(setBasicData(vehicleInfo));
@@ -54,25 +54,30 @@ function IdentifyVehicle({ setStep, next }) {
   };
 
   const handleSetModelByMaker = () => {
-    setModelsByMaker(
-      models.filter((item) => item.makerId === selectedMaker.makerId)
-    );
+    if (selectedMaker && selectedMaker.makerId && models && models.length > 0) {
+      const filteredModels = models.filter((item) => item.makerId === selectedMaker.makerId);
+      setModelsByMaker(filteredModels);
+    } else {
+      setModelsByMaker([]);
+    }
   };
 
   // On Init Component
   useEffect(() => {
-    handleSetModelByMaker();
-  }, []);
+    if (vehicleState.maker?.makerId) {
+      setSelectMaker(vehicleState.maker);
+    } else if (makers && makers.length > 0) {
+      setSelectMaker(makers[0]);
+    }
+  }, [makers, vehicleState.maker]);
 
-  // On Update Component
+  // On Update Component - when selectedMaker or models change
   useEffect(() => {
     handleSetModelByMaker();
-  }, [selectedMaker]);
+  }, [selectedMaker, models]);
 
   return (
     <div className={styles.container}>
-      <h3>Identifica tu carro</h3>
-
       <Form
         initialValues={initialValues}
         validationSchema={vehicleSchema}
@@ -87,7 +92,7 @@ function IdentifyVehicle({ setStep, next }) {
 
         <Dropdown
           name="maker"
-          list={makers}
+          list={makers || []}
           label={'Fabricante'}
           setSelectItem={setSelectMaker}
           propKey={'makerId'}
@@ -106,7 +111,7 @@ function IdentifyVehicle({ setStep, next }) {
 
         <Dropdown
           name="year"
-          list={vehicleYear.years}
+          list={vehicleYear.years || []}
           label={'Año'}
           propKey="id"
           propName="year"
@@ -115,7 +120,7 @@ function IdentifyVehicle({ setStep, next }) {
 
         <Dropdown
           name="transmission"
-          list={transmissions}
+          list={transmissions || []}
           label={'Transmisión'}
           propKey={'transmissionId'}
           propName={'name'}
@@ -124,7 +129,7 @@ function IdentifyVehicle({ setStep, next }) {
 
         <Dropdown
           name="odometer"
-          list={odometerRanges}
+          list={odometerRanges || []}
           label={'Kilometraje'}
           propKey={'odometerRangeId'}
           propName={'range'}

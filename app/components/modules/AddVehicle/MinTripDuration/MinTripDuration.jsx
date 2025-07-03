@@ -14,9 +14,12 @@ export default function MinTripDuration({ setStep, next }) {
   const minTripOptions = useSelector(
     (state) => state.vehicleRegisterObjects.minTripOptions
   );
+  
+  // Get current min trip duration from Redux state
+  const currentMinTripDuration = useSelector((state) => state.vehicleRegister.minTripDuration);
 
   const initialValues = {
-    radioGroup: '',
+    radioGroup: currentMinTripDuration?.id ? currentMinTripDuration : '',
   };
 
   const handleSubmit = (radioGroup) => {
@@ -26,8 +29,6 @@ export default function MinTripDuration({ setStep, next }) {
 
   return (
     <div className={styles.container}>
-      <h3>¿Cúal será el viaje más corto que aceptarás?</h3>
-
       <Form
         initialValues={initialValues}
         validationSchema={radioGroupSchema}

@@ -13,9 +13,12 @@ export default function AdvanceNotice({ setStep, next }) {
   const advanceNotices = useSelector(
     (state) => state.vehicleRegisterObjects.advanceNotices
   );
+  
+  // Get current advance notice from Redux state
+  const currentAdvanceNotice = useSelector((state) => state.vehicleRegister.advanceNotice);
 
   const initialValues = {
-    radioGroup: '',
+    radioGroup: currentAdvanceNotice?.id ? currentAdvanceNotice : '',
   };
 
   const handleSubmit = (radioGroup) => {

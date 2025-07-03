@@ -1,7 +1,185 @@
-.container {
+@import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/breakpoints';
+
+.container,
+.stepContainer,
+.IndentityVehicle_container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    max-width: 540px;
+    height: auto;
+    min-height: auto;
+
     @media (min-width: 720px) {
-        min-width: 320px;
-        max-width: 420px;
-        margin: auto;
+        max-width: 540px;
+        padding: 2rem 1.5rem;
+    }
+    @media (min-width: 1024px) {
+        max-width: 600px;
+        padding: 2.5rem 2rem;
+    }
+}
+
+.backButton {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    color: $primary;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    margin: 0;
+    margin-left: -12px;
+
+    &:hover {
+        background: transparentize($primary, 0.92);
+        transform: translateX(-2px);
+    }
+
+    &:active {
+        background: transparentize($primary, 0.88);
+        transform: translateX(-1px);
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px transparentize($primary, 0.8);
+    }
+
+    svg {
+        width: 44px;
+        height: 44px;
+        @include respond-up(sm) {
+            width: 46px;
+            height: 46px;
+        }
+        @include respond-up(md) {
+            width: 48px;
+            height: 48px;
+        }
+    }
+}
+
+// Special layout for photos step - wider container for better grid layout
+.photosStepContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    max-width: 100%;
+    height: auto;
+    min-height: auto;
+
+    @media (min-width: 720px) {
+        padding: 2rem 1.5rem;
+        max-width: 900px;
+    }
+    @media (min-width: 1024px) {
+        padding: 2rem;
+        max-width: 1100px;
+    }
+    @media (min-width: 1440px) {
+        max-width: 1200px;
+        padding: 2.5rem;
+    }
+}
+
+.stepHeaderWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+    
+    @media (min-width: 720px) {
+        margin-bottom: 2.5rem;
+    }
+    
+    @media (min-width: 1024px) {
+        margin-bottom: 3rem;
+    }
+}
+
+.stepHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    
+    @media (min-width: 720px) {
+        gap: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    @media (min-width: 1024px) {
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.photosHeaderContent {
+    flex: 1;
+    
+    h3 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: $gray_1;
+        text-align: left;
+        
+        @media (min-width: 720px) {
+            font-size: 1.75rem;
+        }
+        
+        @media (min-width: 1024px) {
+            font-size: 2rem;
+        }
+    }
+    
+    section {
+        text-align: left;
+        
+        p {
+            margin: 0;
+            font-size: 0.9375rem;
+            line-height: 1.5;
+            color: $gray_2;
+            
+            @media (min-width: 720px) {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+            
+            @media (min-width: 1024px) {
+                font-size: 1.0625rem;
+            }
+        }
+    }
+}
+
+.featuresStepContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    max-width: 100%;
+
+    @media (min-width: 768px) {
+        max-width: 720px;
+        padding: 2rem 1.5rem;
+    }
+    @media (min-width: 1024px) {
+        max-width: 900px;
+        padding: 2.5rem 2rem;
     }
 }

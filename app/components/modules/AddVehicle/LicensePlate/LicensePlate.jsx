@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   setLicensePlate,
@@ -20,12 +20,21 @@ import styles from './LicensePlate.module.scss';
 export default function LicensePlate({ setStep, next }) {
   const dispatch = useDispatch();
   const findByLicense = useApi(vehicleApi.findByLicensePlate);
+  
+  // Get current license plate data from Redux state
+  const currentLicensePlate = useSelector((state) => state.vehicleRegister.licensePlate);
+  const currentLicensePlateCity = useSelector((state) => state.vehicleRegister.licensePlateCity);
 
   const [apiError, setApiError] = useState(false);
 
+  // Find the location object that matches the saved city
+  const savedLocation = currentLicensePlateCity 
+    ? locations.municipalities.find(loc => loc.municipality === currentLicensePlateCity)
+    : null;
+
   const initialValues = {
-    licensePlate: '',
-    location: '',
+    licensePlate: currentLicensePlate || '',
+    location: savedLocation || '',
   };
 
   const handleSubmit = async ({ licensePlate, location: { municipality } }) => {
@@ -45,15 +54,6 @@ export default function LicensePlate({ setStep, next }) {
 
   return (
     <div className={styles.container}>
-      <h3>Matrícula</h3>
-
-      <article>
-        <p>
-          Debemos conocer la matrícula de tu carro para realizar algunas
-          validaciones. Esta información no será pública.
-        </p>
-      </article>
-
       <Form
         initialValues={initialValues}
         validationSchema={licensePlateSchema}
