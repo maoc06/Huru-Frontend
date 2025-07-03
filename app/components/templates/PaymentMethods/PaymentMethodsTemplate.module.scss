@@ -2,32 +2,654 @@
 @import '../../../styles/abstracts/breakpoints';
 
 .container {
-    min-width: 290px;
-    max-width: 550px;
-    margin: 0; // Remove auto centering to align with back arrow
-    padding-left: 1rem; // Add comfortable spacing from left edge
-    padding-right: 0.5rem;
-    
-    @include respond-up(sm) {
-        padding-left: 1.25rem;
-        padding-right: 0.75rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    min-height: calc(100vh - 200px);
+
+    @include respond-up(md) {
+        padding: 3rem 2rem;
+    }
+
+    @include respond-up(lg) {
+        padding: 0;
+        max-width: 100%;
+        margin: 0;
+        min-height: 100vh;
     }
     
-    @include respond-up(md) {
-        padding-left: 1.5rem;
-        padding-right: 1rem;
+    @include respond-up(xxl) {
+        max-width: 100vw;
+    }
+}
+
+// Desktop Layout with Image Panel
+.desktopLayout {
+    display: flex;
+    gap: 0;
+    min-height: calc(100vh - 200px);
+    
+    @include respond-down(lg) {
+        flex-direction: column;
+        padding: 2rem 1rem;
     }
     
     @include respond-up(lg) {
-        padding-left: 1.5rem;
-        padding-right: 1rem;
+        min-height: 100vh;
+        padding: 0;
+    }
+}
+
+// Left Image Panel - Desktop Only
+.imagePanel {
+    display: none;
+    
+    @include respond-up(lg) {
+        display: block;
+        flex: 0 0 42%;
+        max-width: 564px;
+        position: relative;
+        background: linear-gradient(135deg, $primary, $secondary);
+        overflow: hidden;
+        min-height: 100vh;
+        
+        // Subtle overlay for better visual consistency
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(52, 168, 133, 0.05) 0%,
+                rgba(98, 194, 161, 0.03) 50%,
+                rgba(52, 168, 133, 0.05) 100%
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+    }
+    
+    @include respond-up(xl) {
+        flex: 0 0 40%;
+        max-width: 564px;
+    }
+    
+    @include respond-up(xxl) {
+        flex: 0 0 38%;
+        max-width: 564px;
+    }
+}
+
+.imagePanelContent {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.panelImage {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    position: relative;
+    z-index: 0;
+    
+    // Adaptive positioning for different screen sizes
+    @media (min-width: 2560px) {
+        object-position: center 45%;
+    }
+    
+    @media (min-width: 1920px) and (max-width: 2559px) {
+        object-position: center 40%;
+    }
+    
+    @media (min-width: 1440px) and (max-width: 1919px) {
+        object-position: center 35%;
+    }
+    
+    @media (min-width: 1200px) and (max-width: 1439px) {
+        object-position: center 30%;
+    }
+    
+    @media (max-width: 1199px) {
+        object-position: center 25%;
+    }
+    
+    // Ensure smooth scaling and loading
+    transition: object-position 0.4s ease, opacity 0.3s ease;
+    
+    // Image loading states and error handling
+    &:not([src]), &[src=""] {
+        background: linear-gradient(135deg, $primary, $secondary);
+    }
+    
+    // Error state fallback
+    &[alt]:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, $primary, $secondary);
+        z-index: -1;
+    }
+    
+    // High-DPI support
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+// Right Content Area
+.contentArea {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    
+    @include respond-up(lg) {
+        max-width: none;
+        padding: 4rem 3rem 4rem 3rem;
+        min-height: 100vh;
+    }
+    
+    @include respond-up(xl) {
+        padding: 4rem 4rem 4rem 4rem;
+    }
+    
+    @include respond-up(xxl) {
+        padding: 5rem 5rem 5rem 5rem;
+    }
+}
+
+// Header Section
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    
+    @include respond-up(md) {
+        margin-bottom: 4rem;
+    }
+    
+    @include respond-up(lg) {
+        text-align: left;
+        margin-bottom: 3rem;
+    }
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $primary;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.02em;
+    
+    @include respond-up(md) {
+        font-size: 3rem;
+    }
+    
+    @include respond-up(lg) {
+        font-size: 2.75rem;
+    }
+}
+
+.subtitle {
+    font-size: 1.125rem;
+    color: $gray_2;
+    margin: 0;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    
+    @include respond-up(md) {
+        font-size: 1.25rem;
+    }
+    
+    @include respond-up(lg) {
+        margin: 0;
+        font-size: 1.125rem;
+    }
+}
+
+// Payment Methods Container
+.paymentMethodsContainer {
+    width: 100%;
+}
+
+// View Container for smooth transitions
+.viewContainer {
+    position: relative;
+    width: 100%;
+    min-height: 70vh;
+    overflow: hidden;
+    
+    @include respond-up(lg) {
+        min-height: 80vh;
+    }
+}
+
+// Cards View
+.cardsView {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    
+    &.active {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: all;
+    }
+}
+
+// Form View
+.formView {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    
+    &.active {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: all;
+    }
+}
+
+// Form Header
+.formHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    
+    @include respond-up(md) {
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    @include respond-up(lg) {
+        margin-bottom: 3rem;
+    }
+}
+
+.backButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $white;
+    border: 1.5px solid $gray_5;
+    color: $primary;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    align-self: flex-start;
+    box-shadow: 0 2px 8px rgba($primary, 0.08);
+    
+    @include respond-up(md) {
+        width: 48px;
+        height: 48px;
+    }
+    
+    &:hover {
+        background: rgba($primary, 0.05);
+        border-color: $primary;
+        transform: translateX(-2px);
+        box-shadow: 0 4px 12px rgba($primary, 0.15);
+    }
+    
+    &:active {
+        transform: translateX(-1px);
+        box-shadow: 0 2px 8px rgba($primary, 0.1);
+    }
+    
+    svg {
+        font-size: 1.5rem;
+        transition: transform 0.2s ease;
+    }
+    
+    &:hover svg {
+        transform: translateX(-2px);
+    }
+}
+
+.formTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: $primary;
+    margin: 0;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    
+    @include respond-up(md) {
+        font-size: 2rem;
+    }
+    
+    @include respond-up(lg) {
+        font-size: 2.25rem;
+    }
+}
+
+.formContent {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    
+    @include respond-up(lg) {
+        margin: 0;
+        max-width: 600px;
+    }
+    
+        // Global styles for the embedded form
+    :global {
+        // Clean up any unwanted spacing in the form
+        .wrapper {
+            max-width: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    }
+}
+
+// Loading Form
+.loadingForm {
+    width: 100%;
+    padding: 2rem 0;
+}
+
+.loadingSkeleton {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.skeletonLine {
+    height: 1.5rem;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    border-radius: 4px;
+    animation: loading 1.5s infinite;
+    
+    &:first-child {
+        width: 60%;
+    }
+    
+    &:nth-child(2) {
+        width: 40%;
+    }
+}
+
+.skeletonBlock {
+    height: 8rem;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    border-radius: 8px;
+    animation: loading 1.5s infinite;
+    margin-top: 1rem;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+// Cards Grid
+.cardsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1rem, 3vw, 2rem);
+    width: 100%;
+    max-width: min(600px, 90vw);
+    margin: 0 auto;
+    
+    @include respond-up(sm) {
+        grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+        max-width: min(800px, 90vw);
+    }
+    
+    @include respond-up(md) {
+        grid-template-columns: repeat(auto-fit, minmax(min(260px, 45%), 1fr));
+        max-width: min(900px, 85vw);
+    }
+    
+    @include respond-up(lg) {
+        grid-template-columns: repeat(auto-fit, minmax(min(240px, 45%), 1fr));
+        max-width: min(700px, 80vw);
+        margin: 0;
+    }
+}
+
+// Card Links
+.cardLink {
+    text-decoration: none;
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-4px);
+        text-decoration: none;
+    }
+}
+
+// Add Card
+.addCardLink {
+    text-decoration: none;
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-4px);
+        text-decoration: none;
+        
+        .addCard {
+            border-color: $secondary;
+            background: linear-gradient(135deg, rgba(98, 194, 161, 0.05), rgba(98, 194, 161, 0.1));
+        }
+        
+        .addIcon {
+            background: $secondary;
+            color: white;
+            transform: scale(1.1);
+        }
+    }
+}
+
+.addCard {
+    background: white;
+    border: 2px dashed $gray_4;
+    border-radius: 12px;
+    min-height: clamp(120px, 25vw, 180px);
+    padding: clamp(0.75rem, 3vw, 1.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1.586; // Credit card aspect ratio
+    width: 100%;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, transparent, rgba(98, 194, 161, 0.02));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    &:hover::before {
+        opacity: 1;
+    }
+}
+
+.addCardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    z-index: 1;
+}
+
+.addIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: $gray_5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $gray_3;
+    transition: all 0.3s ease;
+    
+    svg {
+        font-size: 24px;
+    }
+}
+
+.addText {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $gray_2;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+.addCardLink:hover .addText {
+    color: $secondary;
+}
+
+// Empty State
+.emptyState {
+    text-align: center;
+    padding: 4rem 2rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.emptyContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.emptyIcon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $gray_3;
+    margin-bottom: 1rem;
+    
+    svg {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+.emptyTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $primary;
+    margin: 0;
+}
+
+.emptyDescription {
+    font-size: 1rem;
+    color: $gray_2;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 400px;
+}
+
+.emptyAction {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: $secondary;
+    color: white;
+    padding: 0.875rem 1.5rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    
+    &:hover {
+        background: $secondary_hover;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(98, 194, 161, 0.3);
+        text-decoration: none;
+        color: white;
+    }
+}
+
+.emptyActionIcon {
+    font-size: 1.25rem;
+}
+
+// Responsive adjustments
+@include respond-down(sm) {
+    .desktopLayout {
+        padding: 1.5rem 1rem;
+    }
+    
+    .title {
+        font-size: 2rem;
     }
     
     .subtitle {
-        margin-bottom: 32px;
+        font-size: 1rem;
     }
-    .empty {
-        color: $primary;
-        margin-bottom: 16px;
+    
+    .header {
+        margin-bottom: 2rem;
+    }
+    
+    .cardsGrid {
+        gap: 1rem;
+        max-width: min(350px, 95vw);
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 320px) {
+    .cardsGrid {
+        max-width: min(280px, 95vw);
+        gap: 0.75rem;
     }
 }

@@ -23,31 +23,28 @@ const AddPaymentMethodLayout = ({ uid, email }) => {
 
   return (
     <main className={style.wrapper}>
-      <h3>Agregar metodo</h3>
+      <div className={style.formSection}>
+        <h6 className={style.sectionTitle}>Método de pago</h6>
 
-      <p className={style.info}>
-        Agrega tu metodo de pago para evitar demoras al momento de hacer tu
-        reserva.
-      </p>
+        <section className={style.tabs}>
+          <Tab
+            text="Tarjeta"
+            isActive={tabIndex === 0}
+            index={0}
+            onSelectTab={setTabIndex}
+          />
+          <Tab
+            text="Nequi"
+            isActive={tabIndex === 1}
+            index={1}
+            onSelectTab={setTabIndex}
+          />
+        </section>
 
-      <h6>Metodo de pago</h6>
-
-      <section className={style.tabs}>
-        <Tab
-          text="Tarjeta"
-          isActive={tabIndex === 0}
-          index={0}
-          onSelectTab={setTabIndex}
-        />
-        <Tab
-          text="Nequi"
-          isActive={tabIndex === 1}
-          index={1}
-          onSelectTab={setTabIndex}
-        />
-      </section>
-
-      {renderTab()}
+        <div className={style.formContent}>
+          {renderTab()}
+        </div>
+      </div>
     </main>
   );
 };

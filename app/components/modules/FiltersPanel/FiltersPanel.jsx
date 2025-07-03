@@ -88,7 +88,7 @@ export default function FiltersPanel() {
     getAllMakers();
     getAllCategories();
     getAllFeatures();
-    
+
     // Check if mobile
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 720);
@@ -554,9 +554,9 @@ export default function FiltersPanel() {
                 deg={openDropdown === 'transmission' ? 180 : 0}
               />
             )}
-          </div>
+        </div>
 
-          <div 
+      <div
             className={`${styles.filterTag} ${activeFilters.features ? styles.active : ''} ${openDropdown === 'features' ? styles.expanded : ''}`}
             onClick={(e) => handleFilterTagClick('features', e)}
           >
@@ -568,7 +568,7 @@ export default function FiltersPanel() {
                 deg={openDropdown === 'features' ? 180 : 0}
               />
             )}
-          </div>
+            </div>
 
           {/* All filters button */}
           <div 
@@ -629,7 +629,7 @@ export default function FiltersPanel() {
                 formatToPrice={true}
               />
             </div>
-          )}
+        )}
 
           {openDropdown === 'type' && !allCarCategories.loading && categories.length > 0 && (
             <div className={styles.dropdownContent}>
@@ -660,7 +660,7 @@ export default function FiltersPanel() {
                 withIconEnum={true}
                 iconEnum={carBrandLogos}
               />
-            </div>
+      </div>
           )}
 
           {openDropdown === 'year' && (
@@ -673,8 +673,8 @@ export default function FiltersPanel() {
                 defaultMin={filterSelections.year.min}
                 defaultMax={filterSelections.year.max}
                 onChange={handleFilterByYear}
-              />
-            </div>
+                />
+              </div>
           )}
 
           {openDropdown === 'seats' && (
@@ -710,17 +710,17 @@ export default function FiltersPanel() {
           {openDropdown === 'features' && !allFeatures.loading && features.length > 0 && (
             <div className={styles.dropdownContent}>
               <h4>Características</h4>
-              <CardSelectableLayout
-                list={features}
-                propKey={'featureId'}
-                propValue={'name'}
-                propSelect={'featureId'}
+                <CardSelectableLayout
+                  list={features}
+                  propKey={'featureId'}
+                  propValue={'name'}
+                  propSelect={'featureId'}
                 initialSelected={getFeatureIndices()}
-                onSelect={handleFilterByFeatures}
-                withIconEnum={true}
-                iconEnum={carFeaturesIcons}
-              />
-            </div>
+                  onSelect={handleFilterByFeatures}
+                  withIconEnum={true}
+                  iconEnum={carFeaturesIcons}
+                />
+              </div>
           )}
         </div>
       )}
@@ -766,22 +766,22 @@ export default function FiltersPanel() {
                   onChange={handleFilterByPrice}
                   formatToPrice={true}
                 />
-              </div>
-            )}
+            </div>
+          )}
 
             {/* Vehicle Type Filter */}
             {mobileFilterType === 'type' && !allCarCategories.loading && categories.length > 0 && (
               <div className={styles.filterSection}>
-                <CardSelectableLayout
+            <CardSelectableLayout
                   list={categories}
                   propKey={'categoryId'}
-                  propValue={'name'}
+              propValue={'name'}
                   propSelect={'categoryId'}
                   initialSelected={getTypeIndices()}
                   onSelect={handleFilterByCarType}
-                  withIconEnum={true}
+              withIconEnum={true}
                   iconEnum={carTypesIcons}
-                />
+            />
               </div>
             )}
 
@@ -799,7 +799,7 @@ export default function FiltersPanel() {
                   iconEnum={carBrandLogos}
                 />
               </div>
-            )}
+          )}
 
             {/* Year Filter */}
             {mobileFilterType === 'year' && (
@@ -812,8 +812,8 @@ export default function FiltersPanel() {
                   defaultMax={filterSelections.year.max}
                   onChange={handleFilterByYear}
                 />
-              </div>
-            )}
+        </div>
+      )}
 
             {/* Seats Filter */}
             {mobileFilterType === 'seats' && (
@@ -842,22 +842,22 @@ export default function FiltersPanel() {
                   selectedValue={filterSelections.transmission}
                   onSelect={handleFilterByTransmission}
                 />
-              </div>
-            )}
+            </div>
+          )}
 
             {/* Features Filter */}
             {mobileFilterType === 'features' && !allFeatures.loading && features.length > 0 && (
               <div className={styles.filterSection}>
-                <CardSelectableLayout
+            <CardSelectableLayout
                   list={features}
                   propKey={'featureId'}
-                  propValue={'name'}
+              propValue={'name'}
                   propSelect={'featureId'}
                   initialSelected={getFeatureIndices()}
                   onSelect={handleFilterByFeatures}
-                  withIconEnum={true}
+              withIconEnum={true}
                   iconEnum={carFeaturesIcons}
-                />
+            />
               </div>
             )}
 
@@ -886,25 +886,25 @@ export default function FiltersPanel() {
                     <div className={styles.filterSectionTitle}>
                       Tipo de Vehículo
                     </div>
-                    <CardSelectableLayout
-                      list={categories}
-                      propKey={'categoryId'}
-                      propValue={'name'}
-                      propSelect={'categoryId'}
+                <CardSelectableLayout
+                  list={categories}
+                  propKey={'categoryId'}
+                  propValue={'name'}
+                  propSelect={'categoryId'}
                       initialSelected={getTypeIndices()}
-                      onSelect={handleFilterByCarType}
-                      withIconEnum={true}
-                      iconEnum={carTypesIcons}
-                    />
-                  </div>
-                )}
+                  onSelect={handleFilterByCarType}
+                  withIconEnum={true}
+                  iconEnum={carTypesIcons}
+                />
+              </div>
+          )}
 
                 {/* Maker Filter */}
                 {!allMakers.loading && makers.length > 0 && (
                   <div className={styles.filterSection}>
                     <div className={styles.filterSectionTitle}>
                       Marca
-                    </div>
+        </div>
                     <CardSelectableLayout
                       list={makers}
                       propKey={'makerId'}
@@ -914,55 +914,55 @@ export default function FiltersPanel() {
                       onSelect={handleFilterByMaker}
                       withIconEnum={true}
                       iconEnum={carBrandLogos}
-                    />
-                  </div>
-                )}
+              />
+          </div>
+        )}
 
                 {/* Year Filter */}
                 <div className={styles.filterSection}>
                   <div className={styles.filterSectionTitle}>
                     Año del Vehículo
                   </div>
-                  <SliderRange
-                    numStep={1}
-                    min={2010}
-                    max={2021}
+          <SliderRange
+            numStep={1}
+            min={2010}
+            max={2021}
                     defaultMin={filterSelections.year.min}
                     defaultMax={filterSelections.year.max}
-                    onChange={handleFilterByYear}
-                  />
-                </div>
+                onChange={handleFilterByYear}
+              />
+            </div>
 
                 {/* Seats Filter */}
                 <div className={styles.filterSection}>
                   <div className={styles.filterSectionTitle}>
                     Número de Asientos
-                  </div>
-                  <SliderStepper
-                    label="Cantidad de asientos"
-                    numSteps={1}
-                    min={2}
-                    max={8}
+          </div>
+          <SliderStepper
+            label="Cantidad de asientos"
+            numSteps={1}
+            min={2}
+            max={8}
                     defaultStep={filterSelections.seats.min}
-                    message="o más"
-                    onChange={handleFilterByNumOfSeats}
-                  />
-                </div>
+                message="o más"
+                onChange={handleFilterByNumOfSeats}
+              />
+            </div>
 
                 {/* Transmission Filter */}
                 <div className={styles.filterSection}>
                   <div className={styles.filterSectionTitle}>
                     Transmisión
-                  </div>
-                  <SimpleList
-                    list={[
-                      { id: 0, name: 'todas' },
-                      { id: 1, name: 'mecánico' },
-                      { id: 2, name: 'automatico' },
-                    ]}
+          </div>
+          <SimpleList
+            list={[
+              { id: 0, name: 'todas' },
+              { id: 1, name: 'mecánico' },
+              { id: 2, name: 'automatico' },
+            ]}
                     selectedValue={filterSelections.transmission}
-                    onSelect={handleFilterByTransmission}
-                  />
+            onSelect={handleFilterByTransmission}
+          />
                 </div>
 
                 {/* Features Filter */}
@@ -1009,7 +1009,7 @@ export default function FiltersPanel() {
             </div>
           </div>
         </div>
-      )}
+        )}
     </div>
   );
 }

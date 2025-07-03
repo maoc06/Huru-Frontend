@@ -1,4 +1,17 @@
+@import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/breakpoints';
+
 .row_fields {
     display: flex;
-    gap: 16px;
+    gap: 1rem;
+    align-items: flex-start;
+    
+    @include respond-up(md) {
+        gap: 1.25rem;
+    }
+    
+    // Make both fields equal width
+    > div {
+        flex: 1;
+    }
 }

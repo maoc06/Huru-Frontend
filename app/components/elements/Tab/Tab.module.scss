@@ -3,34 +3,79 @@
 
 .tab {
     align-items: center;
-    border: 1px solid $primary;
-    border-radius: 6px;
     display: flex;
-    height: 38px;
+    height: 44px;
     justify-content: center;
     flex: 1;
-    min-width: 120px;
-    max-width: 200px;
-    transition: all 0.1s ease-in;
+    border-radius: 50px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     font-size: 0.9rem;
+    font-weight: 500;
+    background: transparent;
+    color: $gray_2;
+    border: none;
+    position: relative;
+    overflow: hidden;
     
     // Mobile adjustments
     @include respond-up(sm) {
-        height: 42px;
+        height: 48px;
         font-size: 1rem;
-        min-width: 140px;
     }
     
     // Tablet and desktop
     @include respond-up(md) {
-        height: 44px;
-        min-width: 160px;
-        max-width: 220px;
+        height: 52px;
+        font-size: 1rem;
+    }
+    
+    // Hover effect for inactive tabs
+    &:not(.active):hover {
+        background: rgba($secondary, 0.05);
+        color: $secondary;
+        transform: translateY(-1px);
+    }
+    
+    // Text styling
+    p {
+        margin: 0;
+        font-weight: inherit;
+        font-size: inherit;
+        color: inherit;
+        position: relative;
+        z-index: 2;
+        letter-spacing: -0.01em;
+    }
+    
+    // Active state background animation
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $secondary;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        border-radius: inherit;
+        z-index: 1;
     }
 }
 
 .active {
-    background: linear-gradient(to right, $primary, $primary_alt);
     color: $white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba($secondary, 0.25);
+    
+    &::before {
+        opacity: 1;
+    }
+    
+    // Enhanced hover effect for active tab
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba($secondary, 0.3);
+    }
 }
