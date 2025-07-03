@@ -7,12 +7,12 @@ import paymentUserApi from '../../../app/api/PaymentUserAPI';
 import withAuth from '../../../app/HOC/withAuth';
 
 import ProfileNavBar from '../../../app/components/modules/NavBar/ProfileNavBar';
-import profileNavStyles from '../../../app/components/modules/NavBar/ProfileNavBar.module.scss';
 import PaymentMethodsTemplate from '../../../app/components/templates/PaymentMethods/PaymentMethodsTemplate';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
 
 const PaymentMethods = () => {
   const [paymentMethods, setPaymentMethods] = useState([]);
+  const [user, setUser] = useState(null);
   const paymentMethodsByUser = useApi(paymentUserApi.findPaymentsByUser);
 
   const handleData = async (uuid) => {
@@ -21,14 +21,17 @@ const PaymentMethods = () => {
   };
 
   useEffect(() => {
-    const user = authStorage.getUser();
-    if (user) handleData(user.info.uid);
+    const userLogged = authStorage.getUser();
+    if (userLogged) {
+      setUser(userLogged.info);
+      handleData(userLogged.info.uid);
+    }
   }, []);
 
   return (
     <div className="payment-methods-page">
       <Head>
-        <title>Huru | Metodos de pago</title>
+        <title>Huru | Métodos de pago</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"
@@ -40,14 +43,25 @@ const PaymentMethods = () => {
 
       <ActivityIndicator visible={paymentMethodsByUser.loading} />
 
-      <div className={profileNavStyles.profilePageContent}>
-        <div className="payment-methods-content">
-          {/* Always render the template, but with empty list while loading */}
-          <PaymentMethodsTemplate 
-            list={!paymentMethodsByUser.loading ? paymentMethods : []} 
-          />
-        </div>
+      <div className="payment-methods-page-content">
+        {/* Always render the template, but with empty list while loading */}
+        <PaymentMethodsTemplate 
+          list={!paymentMethodsByUser.loading ? paymentMethods : []} 
+          user={user}
+        />
       </div>
+
+      <style jsx>{`
+        .payment-methods-page {
+          min-height: 100vh;
+          background-color: #F6FFFC;
+        }
+        
+        .payment-methods-page-content {
+          width: 100%;
+          background-color: #F6FFFC;
+        }
+      `}</style>
     </div>
   );
 };

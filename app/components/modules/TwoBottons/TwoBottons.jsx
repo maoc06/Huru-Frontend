@@ -17,7 +17,7 @@ export default function TwoBottons({
         withBackground && styles.withBackground
       } ${withMarginTop && styles.withMarginTop}`}
     >
-      <Button onClick={onSelectAffirmative}>{affirmativeText}</Button>
+      <Button onClick={onSelectAffirmative} className={styles.affirmativeButton}>{affirmativeText}</Button>
 
       <Button onClick={onSelectDelcined} isRejectAction={true}>
         {declinedText}

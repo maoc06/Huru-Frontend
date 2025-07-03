@@ -9,9 +9,17 @@ export default function AppSimpleList({
   list,
   propValue = 'id',
   propKey = 'id',
+  selectedValue,
   onSelect,
 }) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  // Find the initial selected index based on selectedValue
+  const getInitialSelectedIndex = () => {
+    if (!selectedValue) return 0;
+    const item = list.find(item => item[propValue] === selectedValue);
+    return item ? item[propKey] : 0;
+  };
+
+  const [selectedIndex, setSelectedIndex] = useState(getInitialSelectedIndex);
 
   const handleListItemClick = (event, index, value) => {
     setSelectedIndex(index);

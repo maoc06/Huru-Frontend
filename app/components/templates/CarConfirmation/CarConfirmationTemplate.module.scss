@@ -1,16 +1,678 @@
 @import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/breakpoints';
+
 .container {
-    max-width: 450px;
-    margin: auto;
-    .car {
-        font-weight: bold;
-        text-transform: capitalize;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+
+  @include respond-up(lg) {
+    padding: 0 2rem;
+  }
+}
+
+// Desktop Layout (hidden on mobile)
+.desktopLayout {
+  display: none;
+
+  @include respond-up(lg) {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @include respond-up(xl) {
+    grid-template-columns: 1fr 450px;
+    gap: 4rem;
+  }
+}
+
+// Left Column - Car Information
+.leftColumn {
+  .carHeader {
+    margin-bottom: 2rem;
+
+    .carTitle {
+      font-size: 2rem;
+      font-weight: 700;
+      color: $primary;
+      margin-bottom: 1rem;
+      text-transform: capitalize;
+
+      @include respond-up(xl) {
+        font-size: 2.5rem;
+      }
     }
-    .title_edit {
+
+    .carDescription {
+      font-size: 1.1rem;
+      color: $gray_2;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .ecoTag {
+      display: inline-flex;
+      align-items: center;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+
+      span {
         display: flex;
-        justify-content: space-between;
-        a {
-            color: $gray_3;
-        }
+        align-items: center;
+        gap: 0.5rem;
+      }
     }
+  }
+
+  .carImageSection {
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  // Section Headers (shared styles)
+  .sectionHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+
+    .sectionIcon {
+      color: $secondary;
+      font-size: 1.5rem;
+    }
+
+    h4 {
+      margin: 0;
+      color: $primary;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+  }
+
+  // Car Owner Section
+  .carOwnerSection {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    .ownerInfo {
+      .ownerProfile {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+
+        .ownerDetails {
+          flex: 1;
+          
+          .ownerName {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: $primary;
+            margin-bottom: 0.25rem;
+          }
+
+          .memberSince {
+            display: block;
+            font-size: 0.9rem;
+            color: $gray_3;
+            margin-bottom: 0.75rem;
+          }
+
+          .ownerRating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+
+            .ratingText {
+              font-size: 0.9rem;
+              color: $gray_2;
+            }
+          }
+
+          .tripCount {
+            font-size: 0.9rem;
+            color: $gray_2;
+          }
+        }
+      }
+    }
+  }
+
+  // Location Section
+  .locationSection {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    .locationInfo {
+      .locationText {
+        font-size: 1rem;
+        color: $gray_2;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+    }
+  }
+
+  // Car Specs Section
+  .carSpecs {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    .specsGrid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .specItem {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #f1f5f9;
+        border-color: $secondary;
+      }
+
+      .specIcon {
+        color: $secondary;
+        font-size: 1.25rem;
+        flex-shrink: 0;
+      }
+
+      .specContent {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+
+        .specLabel {
+          font-size: 0.85rem;
+          color: $gray_3;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        .specValue {
+          font-size: 1rem;
+          color: $primary;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+// Right Column - Booking Details
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+// Sticky Booking Card - stays visible while scrolling through car details
+.bookingCard {
+  position: sticky;
+  top: calc(80px + 1rem); // Account for navbar height + spacing
+  max-height: calc(100vh - 80px - 2rem); // Account for navbar
+  overflow-y: auto;
+  z-index: 10;
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  // Enhanced shadow when sticky
+  &.sticky-active {
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+    border-color: $secondary;
+    transform: translateY(-2px);
+  }
+
+  // Subtle hover effect that works with sticky
+  &:hover:not(.sticky-active) {
+    transform: translateY(-4px);
+  }
+
+  // Custom scrollbar for the booking card
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $secondary;
+    border-radius: 3px;
+    
+    &:hover {
+      background: darken($secondary, 10%);
+    }
+  }
+
+  // Responsive sticky behavior
+  @include respond-up(xl) {
+    max-height: calc(100vh - 80px - 1.5rem);
+    top: calc(80px + 0.75rem);
+  }
+
+  // Disable sticky on smaller screens  
+  @include respond-down(lg) {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+    top: auto;
+    z-index: auto;
+  }
+
+  // Smooth scrolling for internal content
+  scroll-behavior: smooth;
+
+  // Ensure content doesn't overflow
+  .section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0.5rem;
+  }
+
+  .section {
+    margin-bottom: 1.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .sectionHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      h4 {
+        margin: 0;
+        color: $primary;
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .editLink {
+        color: $secondary;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 0.25rem 0.5rem;
+        border-radius: 6px;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: rgba($secondary, 0.1);
+        }
+      }
+    }
+  }
+}
+
+// Mobile Layout (hidden on desktop)
+.mobileLayout {
+  display: block;
+
+  @include respond-up(lg) {
+    display: none;
+  }
+}
+
+.mobileContent {
+  max-width: 450px;
+  margin: auto;
+
+  // Mobile Car Header
+  .mobileCarHeader {
+    margin-bottom: 1.5rem;
+
+    .mobileCarTitle {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: $primary;
+      margin-bottom: 1rem;
+      text-transform: capitalize;
+      text-align: center;
+    }
+
+      .mobileEcoTag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+    margin: 1rem auto 0;
+    max-width: fit-content;
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+  }
+
+  .mobileDescription {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: $gray_2;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  // Mobile Image Section
+  .mobileImageSection {
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  // Mobile Sections (Owner, Location, Features)
+  .mobileSection {
+    padding: 0;
+  }
+
+  .mobileSectionHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+
+    .mobileSectionIcon {
+      color: $secondary;
+      font-size: 1.1rem;
+    }
+
+    h4 {
+      margin: 0;
+      color: $primary;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+  }
+
+  // Mobile Owner Section
+  .mobileOwnerInfo {
+    .mobileOwnerProfile {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+
+      .mobileOwnerDetails {
+        flex: 1;
+        
+        .mobileOwnerName {
+          display: block;
+          font-size: 1rem;
+          font-weight: 600;
+          color: $primary;
+          margin-bottom: 0.25rem;
+        }
+
+        .mobileMemberSince {
+          display: block;
+          font-size: 0.85rem;
+          color: $gray_3;
+          margin-bottom: 0.75rem;
+        }
+
+        .mobileOwnerRating {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin-bottom: 0.5rem;
+
+          .mobileRatingText {
+            font-size: 0.85rem;
+            color: $gray_2;
+          }
+        }
+
+        .mobileTripCount {
+          font-size: 0.85rem;
+          color: $gray_2;
+        }
+      }
+    }
+  }
+
+  // Mobile Location Section
+  .mobileLocationInfo {
+    .mobileLocationText {
+      font-size: 1rem;
+      color: $gray_2;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  // Mobile Car Specs Section
+  .mobileSpecsGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mobileSpecItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+
+    .mobileSpecIcon {
+      color: $secondary;
+      font-size: 1.125rem;
+      flex-shrink: 0;
+    }
+
+    .mobileSpecContent {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+
+      .mobileSpecLabel {
+        font-size: 0.75rem;
+        color: $gray_3;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .mobileSpecValue {
+        font-size: 0.9rem;
+        color: $primary;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .car {
+    font-weight: bold;
+    text-transform: capitalize;
+    color: $primary;
+  }
+
+  .title_edit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h5 {
+      margin: 0;
+      color: $primary;
+      font-size: 1.1rem;
+    }
+
+    a {
+      color: $secondary;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: rgba($secondary, 0.1);
+      }
+    }
+  }
+}
+
+// Responsive improvements
+@include respond-up(sm) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  // Enhanced mobile styles for small screens
+  .mobileContent {
+    max-width: 500px;
+
+    .mobileCarHeader {
+      .mobileCarTitle {
+        font-size: 2rem;
+      }
+    }
+
+    .mobileSection {
+      padding: 0;
+    }
+
+    .mobileOwnerInfo {
+      .mobileOwnerProfile {
+        gap: 1.25rem;
+
+        .mobileOwnerDetails {
+          .mobileOwnerName {
+            font-size: 1.1rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include respond-up(md) {
+  .container {
+    padding: 0 2rem;
+  }
+
+  // Enhanced mobile styles for medium screens (tablets)
+  .mobileContent {
+    max-width: 600px;
+
+    .mobileCarHeader {
+      .mobileCarTitle {
+        font-size: 2.25rem;
+      }
+    }
+
+    .mobileSection {
+      padding: 0;
+    }
+
+    .mobileSpecsGrid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .mobileSectionHeader {
+      h4 {
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+// Enhanced hover effects and animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.desktopLayout {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.mobileLayout {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+// Section animations
+.carOwnerSection,
+.locationSection,
+.carSpecs,
+.mobileSection,
+.mobileImageSection {
+  animation: fadeInUp 0.6s ease-out;
+  animation-fill-mode: both;
+
+  &:nth-child(2) { animation-delay: 0.1s; }
+  &:nth-child(3) { animation-delay: 0.2s; }
+  &:nth-child(4) { animation-delay: 0.3s; }
+  &:nth-child(5) { animation-delay: 0.4s; }
+  &:nth-child(6) { animation-delay: 0.5s; }
+}
+
+// Focus states for accessibility
+.editLink:focus,
+.title_edit a:focus {
+  outline: 2px solid $primary;
+  outline-offset: 2px;
 }

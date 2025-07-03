@@ -4,19 +4,20 @@ import { useRouter } from 'next/router';
 
 import useApi from '../../../app/hooks/useApi';
 import bookingApi from '../../../app/api/BookingAPI';
-import userApi from '../../../app/api/UserAPI';
 
-import CarProfileTemplate from '../../../app/components/templates/CarProfile/CarProfileTempate';
+import CarNavBar from '../../../app/components/modules/NavBar/CarNavBar';
 import TwoBottons from '../../../app/components/modules/TwoBottons/TwoBottons';
 import Modal from '../../../app/components/modules/Modal/Modal';
 import ActivityIndicator from '../../../app/components/elements/ActivityIndicator/ActivityIndicator';
-import Carousel from '../../../app/components/elements/Carousel/Carousel';
+import CarImageGrid from '../../../app/components/modules/CarImageGrid/CarImageGrid';
 import StatusIndicator from '../../../app/components/elements/StatusIndicator/StatusIndicator';
+import BookingDetails from '../../../app/components/modules/BookingDetails/BookingDetails';
 import checkAnimationData from '../../../public/animations/check.json';
 import { WarningIcon } from '../../../app/components/elements/Icons/Shared';
 
+import styles from '../../../app/components/modules/NavBar/CarNavBar.module.scss';
+
 import {
-  convertToCompound,
   formatPrettyFull,
 } from '../../../app/utils/formatDates';
 
@@ -24,11 +25,9 @@ export default function RequestDetail() {
   const router = useRouter();
 
   const getBooking = useApi(bookingApi.findBooking);
-  const getApplicantReviews = useApi(userApi.findUserReviews);
   const confirmBooking = useApi(bookingApi.confirmBookingRequest);
 
   const [booking, setBooking] = useState({});
-  const [reviews, setReviews] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [openStatusIndicator, setOpenStatusIndicator] = useState(false);
 
@@ -43,15 +42,7 @@ export default function RequestDetail() {
     return booking;
   };
 
-  const handleGetApplicantReviews = async (userId) => {
-    const res = await getApplicantReviews.request(userId);
-    setReviews(res.data.data);
-  };
 
-  const handleGetData = async () => {
-    const { bookedBy } = await handleGetBooking();
-    handleGetApplicantReviews(bookedBy.uuid);
-  };
 
   const handleAcceptBooking = async () => {
     await confirmBooking.request({
@@ -85,7 +76,7 @@ export default function RequestDetail() {
 
   useEffect(() => {
     if (slug) {
-      handleGetData();
+      handleGetBooking();
     }
   }, [slug]);
 
@@ -99,6 +90,9 @@ export default function RequestDetail() {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
+
+      {/* Responsive Navigation Bar */}
+      <CarNavBar />
 
       <ActivityIndicator
         visible={getBooking.loading || confirmBooking.loading}
@@ -133,35 +127,64 @@ export default function RequestDetail() {
             onCloseModal={() => setOpenModal(false)}
           />
 
-          <Carousel images={booking.bookedCar.images} />
+          {/* Main Content with proper spacing for navbar */}
+          <div className={styles.carPageContent} style={{
+            backgroundColor: '#F6FFFC',
+            minHeight: 'calc(100vh - 80px)',
+            paddingBottom: '2rem'
+          }}>
+            <div style={{
+              padding: '1rem',
+              backgroundColor: '#F6FFFC',
+              maxWidth: '1200px',
+              margin: '0 auto'
+            }}>
+              <CarImageGrid 
+                images={booking.bookedCar.images} 
+                onViewAllPhotos={(images) => console.log('📸 Request Details - View all photos clicked:', images.length, 'images')}
+              />
+            </div>
 
-          <CarProfileTemplate
-            chageableDates={false}
-            dates={convertToCompound({
-              dateOne: booking.checkin,
-              dateTwo: booking.checkout,
-            })}
-            title={`${booking.bookedCar.maker.name} ${booking.bookedCar.model.name} ${booking.bookedCar.year}`}
-            titleDates="Marco de tiempo"
-            titleUser="Solicitante"
-            username={`${booking.bookedBy.firstName} ${booking.bookedBy.lastName}`}
-            userPic={booking.bookedBy.profilePhoto}
-            userJoinAt={booking.bookedBy.createdAt}
-            userId={booking.bookedBy.uuid}
-            showDescription={false}
-            showSpecifications={false}
-            showFeatures={false}
-            showPolicies={false}
-            reviews={reviews}
-            reviewsDomain="usuario"
-          />
+            <div style={{
+              maxWidth: '1200px',
+              margin: '0 auto',
+              padding: '0 1rem',
+              paddingBottom: '80px' // Reduced space for smaller button container
+            }}>
+              {/* Comprehensive Booking Details */}
+              <BookingDetails booking={booking} />
+            </div>
 
-          <TwoBottons
-            affirmativeText="Aceptar"
-            declinedText="Rechazar"
-            onSelectAffirmative={handleAcceptBooking}
-            onSelectDelcined={() => setOpenModal(true)}
-          />
+            {/* Action Buttons Fixed at Bottom of Page */}
+            <div style={{
+              position: 'fixed',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              width: '100%',
+              backgroundColor: '#F6FFFC',
+              borderTop: '1px solid #E0E0E0',
+              padding: '12px 0',
+              zIndex: 1000,
+              boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.1)'
+            }}>
+              <div style={{
+                maxWidth: '1200px',
+                margin: '0 auto',
+                padding: '0 20px'
+              }}>
+                <TwoBottons
+                  affirmativeText="Aceptar"
+                  declinedText="Rechazar"
+                  onSelectAffirmative={handleAcceptBooking}
+                  onSelectDelcined={() => setOpenModal(true)}
+                  withPadding={false}
+                  withBackground={false}
+                  withMarginTop={false}
+                />
+              </div>
+            </div>
+          </div>
         </>
       )}
     </div>
