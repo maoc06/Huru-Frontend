@@ -5,8 +5,8 @@ import styles from './ShowMoreText.module.scss';
 const AppShowMoreText = ({
   children,
   lines = 3,
-  more = 'Mostrar más',
-  less = 'Mostrar menos',
+  more = 'Más',
+  less = 'Menos',
 }) => {
   return (
     <ShowMoreText

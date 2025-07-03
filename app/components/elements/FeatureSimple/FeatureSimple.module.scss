@@ -5,20 +5,31 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: $background;
+    background-color: $white;
     border: 1px solid $gray_5;
     border-radius: 16px;
-    padding: 16px;
-    width: 140px;
-    height: 100px;
-    box-shadow: $shadow-drop;
+    padding: 14px 12px;
+    min-width: 90px;
+    max-width: 150px;
+    width: auto;
+    height: 90px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
-    flex-shrink: 0; // Prevent shrinking in scroll container
+    flex-shrink: 0;
+    touch-action: pan-x;
+    pointer-events: auto;
     
     &:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         border-color: $secondary;
+    }
+    
+    @media (max-width: 768px) {
+        min-width: 80px;
+        max-width: 130px;
+        height: 80px;
+        padding: 10px 8px;
     }
 }
 
@@ -26,26 +37,44 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    touch-action: pan-x;
+    pointer-events: none;
     
     svg {
-        width: 40px !important;
-        height: 40px !important;
-        path {
-            fill: $primary !important;
-        }
-        * {
-            fill: $primary !important;
+        width: 28px;
+        height: 28px;
+        color: $primary;
+        stroke: $primary;
+        transition: color 0.2s ease;
+        pointer-events: none;
+        
+        @media (max-width: 768px) {
+            width: 24px;
+            height: 24px;
         }
     }
 }
 
+.card:hover .iconContainer svg {
+    color: $secondary;
+    stroke: $secondary;
+}
+
 .featureName {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     color: $black_3;
     text-transform: capitalize;
     text-align: center;
     margin: 0;
     line-height: 1.2;
+    word-wrap: break-word;
+    touch-action: pan-x;
+    pointer-events: none;
+    user-select: none;
+    
+    @media (max-width: 768px) {
+        font-size: 10px;
+    }
 }

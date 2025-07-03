@@ -8,9 +8,11 @@
     min-height: 100px;
     height: fit-content;
     background-color: $white;
-    border-radius: 10px;
+    border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    padding: 32px;
+    padding: 28px;
+    transition: box-shadow 0.3s ease;
+    border: 2px solid transparent;
     
     @include respond-up(md) {
         display: block;
@@ -18,7 +20,7 @@
         max-height: 600px;
     }
     
-    // Absolute positioning relative to the .info container - stays within layout bounds
+    // Standard positioning for desktop
     @include respond-up(lg) {
         position: absolute;
         top: 2rem; // Position at the top of the .info container with some margin
@@ -29,24 +31,46 @@
         overflow-y: auto;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
         
-        // Red border for visibility as requested
-        border: 2px solid red;
+        // Subtle border for visibility (consistent color)
+        border: 2px solid $gray_5;
         
-        // Remove from flex flow since it's absolutely positioned
-        flex-shrink: 0;
+        // Ensure panel is positioned relative to the viewport for consistent placement
+        margin-left: auto;
     }
+    
+    // Sticky state styles
+    &.sticky {
+        // Visual enhancements only - positioning handled by inline styles
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2) !important; // Enhanced shadow when sticky
+        max-height: calc(100vh - 120px) !important; // Adjusted for navbar + margin
+        overflow-y: auto;
+        
+        // Keep the same border color as normal state - no color change
+        border-color: $gray_5 !important; // Keep consistent gray border
+        
+        // Ensure the panel content doesn't shift
+        transform: none !important;
+        
+        // Optional: Add a subtle background change for additional feedback
+        background-color: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(10px);
+    }
+    
     .price {
         font-weight: bold;
         font-size: 2rem;
-        margin-bottom: 32px;
+        margin-bottom: 28px;
+        color: $black_3;
         span {
             font-size: 1rem;
             font-weight: normal;
+            color: $gray_3;
         }
     }
     .contentPrice {
         display: flex;
         gap: 0 16px;
+        margin-bottom: 16px;
     }
     .discount {
         margin-bottom: 0;
@@ -54,6 +78,7 @@
     .old {
         font-size: 1rem;
         text-decoration: line-through;
+        color: $gray_3;
     }
     .msgDiscount {
         font-size: 0.9rem;
@@ -62,6 +87,13 @@
     
     .button {
         width: 100%;
-        margin-top: 1rem;
+        margin-top: 20px;
+        
+        :global(button) {
+            width: 100%;
+            min-height: 50px;
+            font-size: 16px;
+            font-weight: 600;
+        }
     }
 }

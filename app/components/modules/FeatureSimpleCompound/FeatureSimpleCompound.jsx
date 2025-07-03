@@ -11,6 +11,24 @@ const FeatureSimpleCompound = ({
   features = [],
   seeAllInline = false,
 }) => {
+  // Debug logs
+  console.log('📋 FeatureSimpleCompound Component Debug:');
+  console.log('- Car ID:', carId);
+  console.log('- Title:', title);
+  console.log('- Features received:', features);
+  console.log('- Features length:', features.length);
+  console.log('- Features type:', typeof features);
+  console.log('- Features is array:', Array.isArray(features));
+  console.log('- seeAllInline:', seeAllInline);
+  
+  if (features.length > 0) {
+    console.log('- First feature:', features[0]);
+    console.log('- Feature structure:', Object.keys(features[0] || {}));
+    features.forEach((feature, index) => {
+      console.log(`- Feature ${index + 1}:`, feature);
+    });
+  }
+
   const [limit, setLimit] = useState(3);
   const [seeAllText, setSeeAllText] = useState('Ver todas');
 
@@ -24,6 +42,12 @@ const FeatureSimpleCompound = ({
     }
   };
 
+  if (features.length === 0) {
+    console.log('⚠️ No features found in FeatureSimpleCompound - showing empty state');
+  } else {
+    console.log(`✅ FeatureSimpleCompound rendering ${features.slice(0, limit).length} features (limit: ${limit})`);
+  }
+
   return (
     <div className={styles.container}>
       {title && <SectionTitle title={title} />}
@@ -34,20 +58,21 @@ const FeatureSimpleCompound = ({
 
       {features.length > 0 && (
         <div className={styles.featuresGrid}>
-          {features.slice(0, limit).map(({ featureId }) => {
-            return <FeatureSimple key={featureId} featureId={featureId} />;
+          {features.slice(0, limit).map((feature, index) => {
+            console.log(`- FeatureSimpleCompound rendering feature ${index + 1}:`, feature);
+            return <FeatureSimple key={feature.featureId || index} featureId={feature.featureId} />;
           })}
         </div>
       )}
 
-      {features.length > 0 && (
+      {/* {features.length > 0 && (
         <SeeAll
           text={seeAllText}
           href={`/car/details/features/${encodeURIComponent(carId)}`}
           simulate={seeAllInline}
           onSimulate={handleSimulateSeeAll}
         />
-      )}
+      )} */}
     </div>
   );
 };

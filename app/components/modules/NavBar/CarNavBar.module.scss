@@ -7,31 +7,24 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
   @include responsive-padding(1rem);
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-  
-  // Semi-transparent background with glassmorphism effect
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  height: 64px;
+  box-sizing: border-box;
   
-  // Show on all screen sizes (mobile and desktop)
   @include respond-up(md) {
     padding-left: 2rem;
     padding-right: 2rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-  }
-  
-  // Ensure it works well on mobile with bottom navigation
-  @include respond-down(md) {
-    padding-bottom: 0.75rem;
+    height: 72px;
   }
 }
 
@@ -138,32 +131,17 @@
 
 // Styles for pages using this navigation component
 .carPageContent {
-  margin-top: 100px; // Increased top spacing as requested
-  padding-left: 1rem; // Add horizontal padding aligned with header
-  padding-right: 1rem;
-  
-  @include respond-up(sm) {
-    margin-top: 104px; // Increased for small screens
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
+  padding-top: 64px;
+  width: 100%;
+  box-sizing: border-box;
   
   @include respond-up(md) {
-    margin-top: 108px; // Increased for medium screens
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-top: 72px;
   }
   
   @include respond-up(lg) {
-    margin-top: 112px; // Increased for large screens
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 2rem;
-    padding-right: 2rem;
   }
-  
-  // Ensure full width and proper box model
-  width: 100%;
-  box-sizing: border-box;
 } 

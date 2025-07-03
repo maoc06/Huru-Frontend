@@ -23,73 +23,65 @@ const ELECTRIC_CAR_ID = 5;
 const DISCOUNT_ECO_FRIENDLY = 0.15;
 
 function CarSlug({ car, metaTitle }) {
+  // Debug logs for car data
+  console.log('🚙 Car Details Page Debug:');
+  console.log('- Car object received:', car);
+  console.log('- Car features:', car?.features);
+  console.log('- Car features length:', car?.features?.length);
+  console.log('- Car features type:', typeof car?.features);
+  console.log('- Car features is array:', Array.isArray(car?.features));
+  
+  if (car?.features && car.features.length > 0) {
+    console.log('- First car feature:', car.features[0]);
+    console.log('- Car feature structure:', Object.keys(car.features[0] || {}));
+    car.features.forEach((feature, index) => {
+      console.log(`- Car feature ${index + 1}:`, feature);
+    });
+  }
+
   const router = useRouter();
   const getUser = useApi(userApi.findUser);
-  const getDisableDays = useApi(disableDayApi.listByCar);
+  const getDisableDays = useApi(disableDayApi.findDisabledDays);
 
   const [user, setUser] = useState({
-    enabled: false,
-    message: 'Inicia sesión para continuar con la reserva.',
+    enabled: true,
+    message: '',
   });
-  const [isEcoCar, setIsEcoCar] = useState(false);
-  const [discountPerDay, setDiscountPerDay] = useState(car.price);
   const [disabledDates, setDisabledDates] = useState([]);
+  const [isEcoCar, setIsEcoCar] = useState(false);
+  const [discountPerDay, setDiscountPerDay] = useState(0);
 
-  const handleUserData = async (userId) => {
-    const { status: carEnabled } = car;
-    const resUser = await getUser.request(userId);
+  const handleUserData = async (uid) => {
+    const resUser = await getUser.request(uid);
 
-    if (resUser.data !== undefined) {
-      const { isEmailVerified, isPhoneVerified, status } = resUser.data.data;
-      constraintsContinueBooking({
-        carEnabled,
-        isEmailVerified,
-        isPhoneVerified,
-        setUser,
-        status,
-        user,
+    if (resUser?.data?.status === 'success') {
+      setUser({
+        enabled: resUser.data.data.user.enabled,
+        message: resUser.data.data.user.message,
       });
     }
   };
 
-  const handlePriceEcoCar = () => {
-    const { price } = car;
+  const handleGetDisableDays = async (carId) => {
+    const res = await getDisableDays.request(carId);
 
-    const discount = price * DISCOUNT_ECO_FRIENDLY;
-    setDiscountPerDay(price - discount);
+    if (res?.data?.status === 'success') {
+      setDisabledDates(res.data.data);
+    }
+  };
+
+  const handleViewAllPhotos = () => {
+    // Handle photo gallery modal
+    console.log('View all photos clicked');
   };
 
   const hanldeIsEcoCar = () => {
-    const {
-      fuel: { fuelId },
-    } = car;
-    if (fuelId === ELECTRIC_CAR_ID) {
+    const isEco = car?.fuel?.name === 'Eléctrico';
+
+    if (isEco) {
       setIsEcoCar(true);
-      handlePriceEcoCar();
+      setDiscountPerDay(car.price * DISCOUNT_ECO_FRIENDLY);
     }
-  };
-
-  const handleGetDisableDays = async (carId) => {
-    let disabledDates = [];
-    const res = await getDisableDays.request(carId);
-
-    if (typeof res !== 'undefined') {
-      if (res.data) {
-        const days = res.data.data;
-
-        days.forEach((day) =>
-          disabledDates.push(new Date(day.disableDay.replace(/-/g, '/')))
-        );
-
-        setDisabledDates(disabledDates);
-      }
-    }
-  };
-
-  const handleViewAllPhotos = (images) => {
-    // You can implement a modal or lightbox here to show all photos
-    console.log('View all photos:', images);
-    // For now, we'll just log the images
   };
 
   useEffect(() => {
@@ -99,6 +91,8 @@ function CarSlug({ car, metaTitle }) {
     hanldeIsEcoCar();
     handleGetDisableDays(car.carId);
   }, []);
+
+  console.log('🎯 About to render CarProfileTemplate with features:', car?.features || []);
 
   return (
     <div>
@@ -115,11 +109,11 @@ function CarSlug({ car, metaTitle }) {
 
       <ActivityIndicator visible={router.isFallback} />
 
-      {car.constructor === Object && Object.keys(car).length > 0 && (
+      {!router.isFallback && car && car.constructor === Object && Object.keys(car).length > 0 && (
         <div className={carNavStyles.carPageContent}>
           <div className={styles.imageContainer}>
             <CarImageGrid 
-              images={car.images} 
+              images={car.images || []} 
               onViewAllPhotos={handleViewAllPhotos}
             />
           </div>
@@ -127,18 +121,18 @@ function CarSlug({ car, metaTitle }) {
           <section className={styles.info}>
             <CarProfileTemplate
               carId={car.carId}
-              userId={car.userOwner.uuid}
-              username={car.userOwner.firstName}
-              userPic={car.userOwner.profilePhoto}
-              userJoinAt={car.userOwner.createdAt}
-              title={`${car.maker.name} ${car.model.name} ${car.year}`}
+              userId={car.userOwner?.uuid}
+              username={car.userOwner?.firstName}
+              userPic={car.userOwner?.profilePhoto}
+              userJoinAt={car.userOwner?.createdAt}
+              title={`${car.maker?.name} ${car.model?.name} ${car.year}`}
               description={car.description}
               disabledDates={disabledDates}
-              numSeats={car.model.numOfSeats}
-              typeTransmission={typeTransmissionEnum[car.model.transmissionId]}
-              typeGas={car.fuel.name}
-              features={car.features}
-              reviews={car.reviews}
+              numSeats={car.model?.numOfSeats}
+              typeTransmission={typeTransmissionEnum[car.model?.transmissionId]}
+              typeGas={car.fuel?.name}
+              features={car.features || []}
+              reviews={car.reviews || []}
             />
 
             <CarDesktopPanel
@@ -152,14 +146,14 @@ function CarSlug({ car, metaTitle }) {
             />
           </section>
 
-          <section className={styles.bottom}>
-            <PriceBottomBar
-              disableBooking={!user.enabled}
-              disabledMessage={user.message}
-              pricePerDay={car.price}
-              slug={car.carId}
-            />
-          </section>
+          <PriceBottomBar
+            disableBooking={!user.enabled}
+            disabledMessage={user.message}
+            pricePerDay={car.price}
+            slug={car.carId}
+            withDiscount={isEcoCar}
+            discountPerDay={discountPerDay}
+          />
         </div>
       )}
     </div>

@@ -2,6 +2,8 @@
 @import '../../app/styles/abstracts/breakpoints';
 
 .imageContainer {
+    width: 100%;
+    box-sizing: border-box;
     padding: 1rem;
     background-color: $background;
     
@@ -23,11 +25,11 @@
     gap: 1rem;
     max-width: 1200px;
     margin: 0 auto;
-    // Ensure enough height for the absolutely positioned panel
-    min-height: calc(100vh - 200px); // Account for header and images above
-    
-    // Positioning context for absolutely positioned children
+    min-height: calc(100vh - 200px);
     position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    overflow-x: hidden;
     
     @include respond-up(md) {
         padding: 1.5rem;
@@ -38,18 +40,24 @@
         padding: 2rem 4rem;
         gap: 2rem;
         align-items: flex-start;
-        
-        // Reserve space for the absolutely positioned panel on the right
-        padding-right: calc(4rem + 400px + 2rem); // padding + panel width + gap
-        
-        // Ensure container has enough height so the panel has room
         min-height: calc(100vh - 200px);
+        
+        min-height: max(calc(100vh - 200px), 800px);
+        
+        padding-right: 4rem;
+        
+        justify-content: flex-start;
     }
     
-    // Stack vertically on mobile
     @include respond-down(md) {
         flex-direction: column;
-        min-height: auto; // Reset min-height on mobile
+        min-height: auto;
+        padding-bottom: 110px;
+    }
+    
+    > * {
+        min-width: 0;
+        box-sizing: border-box;
     }
 }
 
@@ -60,6 +68,5 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    // Ensure it doesn't cause horizontal overflow
     box-sizing: border-box;
 }

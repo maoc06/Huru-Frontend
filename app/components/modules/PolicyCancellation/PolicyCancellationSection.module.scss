@@ -1,6 +1,110 @@
+@import '../../../styles/abstracts/colors';
+
+.policyContainer {
+    width: 100%;
+}
+
+.titleSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    
+    svg {
+        color: $secondary;
+        flex-shrink: 0;
+    }
+    
+    h5,
+    [class*="SectionTitle"] {
+        margin: 0 !important;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.policyContent {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    
+    @media (min-width: 769px) {
+        gap: 20px;
+    }
+}
+
+.mainPolicy {
+    width: 100%;
+}
+
+.policyHighlight {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    border: 2px solid $gray_5;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    
+    &:hover {
+        border-color: $secondary;
+        background-color: rgba(98, 194, 161, 0.02);
+    }
+    
+    @media (max-width: 768px) {
+        padding: 16px;
+        gap: 12px;
+    }
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(98, 194, 161, 0.1);
+    border-radius: 10px;
+    flex-shrink: 0;
+    
+    svg {
+        color: $secondary;
+    }
+    
+    @media (max-width: 768px) {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+    }
+}
+
+.policyText {
+    flex: 1;
+    min-width: 0;
+}
+
+.policyTitle {
+    font-size: 18px;
+    font-weight: 600;
+    color: $gray_1;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+    
+    @media (max-width: 768px) {
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
+}
+
 .content {
-    margin-bottom: 16px;
-    font-size: 16px;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+    color: $gray_2;
+    
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
 }
 
 .limit {
@@ -9,4 +113,64 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+.additionalInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    
+    @media (min-width: 769px) {
+        flex-direction: row;
+        gap: 24px;
+    }
+}
+
+.infoItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background-color: $gray_6;
+    border-radius: 10px;
+    flex: 1;
+    
+    @media (max-width: 768px) {
+        padding: 14px;
+    }
+}
+
+.infoText {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.infoLabel {
+    font-size: 14px;
+    font-weight: 600;
+    color: $gray_1;
+    line-height: 1.3;
+    
+    @media (max-width: 768px) {
+        font-size: 13px;
+    }
+}
+
+.infoDescription {
+    font-size: 12px;
+    color: $gray_3;
+    line-height: 1.3;
+    
+    @media (max-width: 768px) {
+        font-size: 11px;
+    }
+}
+
+.seeMoreWrapper {
+    margin-top: 16px;
+    
+    @media (min-width: 769px) {
+        margin-top: 20px;
+    }
 }

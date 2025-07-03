@@ -15,15 +15,18 @@ export default function PriceBottomBar({
   slug,
   disableBooking = true,
   disabledMessage = '',
+  withDiscount = false,
+  discountPerDay = 0,
 }) {
   const router = useRouter();
   const travel = useTravelDates();
 
   const [total, setTotal] = useState(1);
+  const [days, setDays] = useState(1);
 
   useEffect(() => {
     if (pricePerDay) calcTotal();
-  }, [pricePerDay, travel]);
+  }, [pricePerDay, travel, withDiscount, discountPerDay]);
 
   const calcTotal = () => {
     let {
@@ -34,21 +37,27 @@ export default function PriceBottomBar({
       start = DateTime.fromSQL(start).toISO();
     if (!end.toString().includes('T')) end = DateTime.fromSQL(end).toISO();
 
-    const days = diffDays({ dateOne: start, dateTwo: end, type: 'ISO' });
-    const calc = pricePerDay * days;
-
-    setTotal(calc);
+    const calculatedDays = diffDays({ dateOne: start, dateTwo: end, type: 'ISO' });
+    setDays(calculatedDays);
+    
+    // Calculate total with discount if applicable
+    const basePrice = withDiscount ? pricePerDay - discountPerDay : pricePerDay;
+    const calculatedTotal = basePrice * calculatedDays;
+    
+    setTotal(calculatedTotal);
   };
 
   const handleContinue = () => {
     router.push(`/car/confirmation/${encodeURIComponent(slug)}`);
   };
 
+  const displayPrice = withDiscount ? pricePerDay - discountPerDay : pricePerDay;
+
   return (
     <main className={styles.container}>
       <div className={styles.price}>
         <p>
-          ${Number(pricePerDay).toLocaleString('en')}/<span>día</span>
+          ${Number(displayPrice).toLocaleString('en')}/<span>día</span>
         </p>
         <p>${Number(total).toLocaleString('en')} total</p>
       </div>
