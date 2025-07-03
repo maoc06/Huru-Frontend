@@ -1,4 +1,6 @@
 @import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/breakpoints';
+
 .wrapper {
     padding: 16px 0 100px;
     background-color: transparent;
@@ -6,9 +8,24 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    
+    // Desktop width constraints to account for sticky right panel
+    @include respond-up(lg) {
+        // Reserve space for the right panel (400px + margins + gap)
+        max-width: calc(100% - 432px); // 400px panel + 32px gap
+        width: calc(100% - 432px);
+        flex: none; // Prevent flex expansion when panel becomes sticky
+    }
     
     .inner {
         margin: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     .dates {
         @media (min-width: 720px) {
@@ -17,6 +34,10 @@
     }
     .inner_left {
         margin: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        
         .reviews_container {
             display: flex;
             padding-bottom: 32px;

@@ -1,34 +1,66 @@
 @import '../../../styles/abstracts/colors';
+
 .container {
     display: flex;
-    // position: sticky;
-    // bottom: 0;
-    padding: 8px 16px;
-    min-height: 70px;
-    max-height: 70px;
-    background-color: $background;
-    box-shadow: 0 -4px 20px #99999999;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 16px;
+    min-height: 84px;
+    background-color: $white;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
     border-radius: 16px 16px 0 0;
+    z-index: 1000;
+    align-items: center;
+    gap: 16px;
+    box-sizing: border-box;
+    
     @media (min-width: 720px) {
         display: none;
     }
+    
     .price {
-        flex: 0.5;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
         p {
+            margin: 0;
+            line-height: 1.4;
+            
             &:first-child {
                 font-weight: bold;
+                font-size: 20px;
+                color: $black_3;
+                
                 span {
-                    font-size: 16px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: $gray_3;
                 }
             }
+            
             &:last-child {
                 font-size: 14px;
                 color: $gray_3;
+                margin-top: 4px;
             }
         }
     }
+    
     .button {
-        flex: 0.5;
-        margin-left: 16px;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        :global(button) {
+            width: 100%;
+            min-height: 50px;
+            font-size: 16px;
+            font-weight: 600;
+        }
     }
 }

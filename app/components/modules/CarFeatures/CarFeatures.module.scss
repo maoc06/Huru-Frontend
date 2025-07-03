@@ -1,4 +1,168 @@
+@import '../../../styles/abstracts/colors';
+
 .title {
     display: flex;
     justify-content: space-between;
+}
+
+.featuresSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; // Prevent horizontal overflow
+  box-sizing: border-box;
+}
+
+.titleWrapper {
+  margin-bottom: 8px;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 6px;
+  }
+}
+
+.titleSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 0;
+  
+  svg {
+    color: $secondary;
+    flex-shrink: 0;
+  }
+  
+  // Target the SectionTitle component and its container
+  h5,
+  [class*="SectionTitle"] {
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+}
+
+.editLink {
+  font-size: 14px;
+  color: $secondary;
+  text-decoration: none;
+  font-weight: 500;
+  
+  &:hover {
+    color: $secondary_hover;
+  }
+}
+
+.sliderWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  touch-action: pan-x; // Enable horizontal touch scrolling
+}
+
+.scrollContainer {
+  flex: 1;
+  width: 100%;
+  min-width: 0; // Important for flex child to shrink
+  overflow: hidden;
+  cursor: grab;
+  box-sizing: border-box;
+  touch-action: pan-x; // Enable horizontal touch scrolling
+  -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+  
+  &:active {
+    cursor: grabbing;
+  }
+  
+  @media (max-width: 768px) {
+    cursor: default; // Remove grab cursor on mobile
+  }
+  
+  // Target the inner scroll div created by react-indiana-drag-scroll
+  :global(div) {
+    width: 100% !important;
+    height: auto !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-behavior: smooth !important;
+    box-sizing: border-box !important;
+    touch-action: pan-x !important; // Enable horizontal touch scrolling
+    -webkit-overflow-scrolling: touch !important; // Smooth scrolling on iOS
+    
+    // Custom scrollbar styling
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: $gray_6;
+      border-radius: 3px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: $gray_4;
+      border-radius: 3px;
+      
+      &:hover {
+        background: $gray_3;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      // Hide scrollbar on mobile but keep functionality
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      
+      // For Firefox
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+  }
+}
+
+.featuresContainer {
+  display: flex;
+  gap: 12px;
+  padding: 8px 0; // Remove horizontal padding to align with parent layout
+  width: max-content; // This ensures the container extends beyond viewport if needed
+  min-width: 100%;
+  box-sizing: border-box;
+  touch-action: pan-x; // Enable horizontal touch scrolling
+  
+  @media (max-width: 768px) {
+    gap: 10px;
+    padding: 8px 0;
+  }
+  
+  @media (min-width: 769px) {
+    gap: 14px;
+    padding: 8px 0;
+  }
+}
+
+.seeAllWrapper {
+  margin-top: 8px;
+  
+  @media (max-width: 768px) {
+    margin-top: 12px;
+  }
+}
+
+.noFeatures {
+  color: $gray_3;
+  font-size: 14px;
+  margin: 0;
+  padding: 16px 0;
+}
+
+// Legacy support for old title class
+.title {
+  display: flex;
+  justify-content: space-between;
 }

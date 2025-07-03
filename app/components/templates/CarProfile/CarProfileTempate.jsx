@@ -5,9 +5,9 @@ import UserProfileBasicInfo from '../../modules/UserProfileBasicInfo/UserProfile
 import ScrollPanelReviews from '../../modules/ScrollPanelReviews/ScrollPanelReviews';
 import DatesPanel from '../../modules/DatesPanel/DatesPanel';
 import PolicyCancellationSection from '../../modules/PolicyCancellation/PolicyCancellationSection';
+import CarFeatures from '../../modules/CarFeatures/CarFeatures';
 
 import styles from './CarProfileTemplate.module.scss';
-import FeatureSimpleCompound from '../../modules/FeatureSimpleCompound/FeatureSimpleCompound';
 
 const CarProfileTemplate = ({
   carId,
@@ -19,7 +19,7 @@ const CarProfileTemplate = ({
   userJoinAt = '',
   title,
   titleDates = 'Disponibilidad',
-  titleUser = 'Huru Amigo',
+  titleUser = 'Anfitrión',
   description,
   typeTransmission,
   numSeats,
@@ -36,6 +36,12 @@ const CarProfileTemplate = ({
   withLinkToOwner = true,
   chageableDates = true,
 }) => {
+  // Debug log for CarProfileTemplate
+  console.log('🎯 CarProfileTemplate Debug:');
+  console.log('- Features passed to template:', features);
+  console.log('- Features length:', features.length);
+  console.log('- Show features flag:', showFeatures);
+
   return (
     <main className={styles.wrapper}>
       <article className={styles.inner}>
@@ -68,11 +74,10 @@ const CarProfileTemplate = ({
       {showFeatures && (
         <>
           <article className={styles.inner}>
-            <FeatureSimpleCompound
-              carId={carId}
-              title="Caracteristicas"
+            <CarFeatures
               features={features}
-              seeAllInline={featuresInline}
+              title="Características"
+              href={`/car/details/features/${encodeURIComponent(carId)}`}
             />
           </article>
 
@@ -110,6 +115,16 @@ const CarProfileTemplate = ({
         </>
       )}
 
+      {showPolicies && (
+        <>
+          <article className={styles.inner}>
+            <PolicyCancellationSection />
+          </article>
+
+          <Divider />
+        </>
+      )}
+
       <article className={styles.inner_left}>
         <ScrollPanelReviews
           domain={reviewsDomain}
@@ -118,14 +133,6 @@ const CarProfileTemplate = ({
           href={`/car/details/reviews/${encodeURIComponent(carId)}`}
         />
       </article>
-
-      <Divider />
-
-      {showPolicies && (
-        <article className={styles.inner}>
-          <PolicyCancellationSection />
-        </article>
-      )}
     </main>
   );
 };

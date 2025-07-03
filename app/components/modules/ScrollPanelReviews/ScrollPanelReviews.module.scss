@@ -1,7 +1,95 @@
 @import '../../../styles/abstracts/colors';
+
+.reviewsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.titleWrapper {
+    margin-bottom: 8px;
+    
+    @media (max-width: 768px) {
+        margin-bottom: 6px;
+    }
+}
+
+.titleSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 0;
+    
+    svg {
+        color: $secondary;
+        flex-shrink: 0;
+    }
+    
+    // Target the SectionTitle component and its container
+    h5,
+    [class*="SectionTitle"] {
+        margin: 0 !important;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.ratingSummary {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.ratingDisplay {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ratingNumber {
+    font-size: 48px;
+    font-weight: 600;
+    color: $black_1;
+    line-height: 1;
+    
+    @media (min-width: 769px) {
+        font-size: 56px;
+    }
+}
+
+.ratingDisplay svg {
+    color: $secondary;
+    width: 24px;
+    height: 24px;
+    
+    @media (min-width: 769px) {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+.ratingCount {
+    font-size: 14px;
+    color: $gray_4;
+    margin: 0;
+    
+    @media (min-width: 769px) {
+        font-size: 16px;
+    }
+}
+
 .reviews_container {
     display: flex;
-    padding-bottom: 32px;
+    flex-direction: row;
+    gap: 16px;
+    padding: 8px 0;
+    max-width: 100%;
+    overflow-x: auto;
+    
+    @media (min-width: 769px) {
+        gap: 24px;
+    }
 }
 
 .see_details {
