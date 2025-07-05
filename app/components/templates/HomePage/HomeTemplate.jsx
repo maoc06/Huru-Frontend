@@ -1,13 +1,17 @@
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
+import { motion } from 'framer-motion';
+import { DateTime } from 'luxon';
 
 import Avatar from '../../elements/Avatar/Avatar';
 import Button from '../../elements/Button/Button';
 import { LogoColor } from '../../elements/Icons/Shared';
 import SearchForm from '../../modules/SearchForm/SearchForm';
-import MenuDesktop from '../../modules/MenuDesktop/MenuDesktop';
+import AvatarDropdown from '../../elements/AvatarDropdown/AvatarDropdown';
 import storageAuth from '../../../utils/storageAuth';
+import SearchApi from '../../../api/SearchApi';
+import UserAPI from '../../../api/UserAPI';
 import styles from './HomeTemplate.module.scss';
 
 // Modern Icons Components
@@ -32,21 +36,116 @@ const ShieldIcon = ({ className }) => (
 const HomeTemplate = () => {
   const router = useRouter();
   const [user, setUser] = useState(null);
-  const [showMenuDesktop, setShowMenuDesktop] = useState(false);
   const videoRef = useRef(null);
+  const [popularCars, setPopularCars] = useState([]);
+  const [testimonialUsers, setTestimonialUsers] = useState([]);
 
   const handleCallToAction = () => {
     if (user) router.push('/add-vehicle');
     else router.push('/signup');
   };
 
-  const handleAvatar = () => {
-    setShowMenuDesktop(!showMenuDesktop);
-  };
-
   useEffect(() => {
     const resUser = storageAuth.getUser();
     if (resUser) setUser(resUser.info);
+  }, []);
+
+  useEffect(() => {
+    const fetchPopularCars = async () => {
+      try {
+        const checkIn = DateTime.now().plus({ days: 1 }).toISO();
+        const checkOut = DateTime.now().plus({ days: 3 }).toISO();
+        
+        const response = await SearchApi.findCarsByCity("Bogota", checkIn, checkOut);
+
+        const carsData = response.data.data;
+        if (Array.isArray(carsData) && carsData.length > 0) {
+          const cars = carsData.slice(0, 3);
+          setPopularCars(cars);
+        } else if (typeof carsData === 'object' && carsData !== null && Object.keys(carsData).length === 0) {
+          // Try different city names
+          const cities = ['bogota', 'medellin', 'cali', 'cartagena'];
+          for (const city of cities) {
+            try {
+              const cityResponse = await SearchApi.findCarsByCity(city, checkIn, checkOut);
+              
+              if (Array.isArray(cityResponse.data.data) && cityResponse.data.data.length > 0) {
+                const cars = cityResponse.data.data.slice(0, 3);
+                setPopularCars(cars);
+                break;
+              }
+            } catch (cityError) {
+              console.log(`❌ Error with city ${city}:`, cityError);
+            }
+          }
+        } else {
+          console.error("❌ Unexpected data format:", carsData);
+        }
+      } catch (error) {
+        console.error("❌ Error fetching popular cars:", error);
+      }
+    };
+
+    fetchPopularCars();
+  }, []);
+
+  useEffect(() => {
+    const fetchTestimonialUsers = async () => {
+      try {
+        console.log('👥 === USER PROFILE DEBUGGING ===');
+        
+        // Real user IDs from the database
+        const userIds = [
+          '29876497-7371-4a3f-8086-b4b31aede8d4',
+          '1c17bd85-a943-49e3-9344-50d888886c6f',
+          '2e9cb961-b365-4a59-abfe-839234d7e9ec'
+        ];
+        
+        console.log('🔍 Fetching users with real IDs:', userIds);
+        
+        const userPromises = userIds.map(async (id) => {
+          console.log(`📡 Fetching user with ID: ${id}`);
+          try {
+            const response = await UserAPI.findUser(id);
+            console.log(`✅ Response for user ${id}:`, response);
+            return response;
+          } catch (userError) {
+            console.log(`❌ Error fetching user ${id}:`, userError.response?.status, userError.response?.data);
+            return null;
+          }
+        });
+        
+        const usersData = await Promise.all(userPromises);
+        console.log('📊 All user responses:', usersData);
+        
+        const validUsers = usersData
+          .filter(response => response && response.data && response.data.data)
+          .map(response => response.data.data);
+        
+        console.log('✅ Valid users found:', validUsers);
+        
+        if (validUsers.length > 0) {
+          console.log('🎉 Using valid users for testimonials');
+          validUsers.forEach((user, index) => {
+            console.log(`👤 User ${index + 1}:`, {
+              id: user.id,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              profilePhoto: user.profilePhoto,
+              city: user.city
+            });
+          });
+          setTestimonialUsers(validUsers);
+        } else {
+          console.log('⚠️ No valid users found, using fallback data');
+        }
+        
+      } catch (error) {
+        console.error('❌ Critical error fetching testimonial users:', error);
+      }
+    };
+
+    fetchTestimonialUsers();
   }, []);
 
   useEffect(() => {
@@ -75,6 +174,20 @@ const HomeTemplate = () => {
     };
   }, []);
 
+  // Framer Motion variants for animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: 'easeOut' } },
+  };
+
   return (
     <div className={styles.landingPage}>
       {/* Navigation */}
@@ -90,21 +203,12 @@ const HomeTemplate = () => {
           <div className={styles.navLinks}>
             <button onClick={() => router.push('/search/bogota')}>Explorar carros</button>
             <button onClick={() => router.push('/add-vehicle')}>Comparte tu carro</button>
-            <button onClick={() => router.push('/signin')}>Iniciar sesión</button>
+            {!user && (
+              <button onClick={() => router.push('/signin')}>Iniciar sesión</button>
+            )}
           </div>
 
-          <div className={styles.avatar} onClick={handleAvatar}>
-            {user ? (
-              <Avatar src={user.profilePicture} size="large" />
-            ) : (
-              <Avatar />
-            )}
-            {showMenuDesktop && (
-              <div className={styles.menuDesktop}>
-                <MenuDesktop user={user} />
-              </div>
-            )}
-          </div>
+          <AvatarDropdown user={user} />
         </div>
       </nav>
 
@@ -125,16 +229,20 @@ const HomeTemplate = () => {
         </div>
         
         <div className={styles.heroContainer}>
-          <div className={styles.heroContent}>
-            <h1 className={styles.heroTitle}>
-              El futuro de la <span className={styles.highlight}>movilidad urbana</span> está aquí
-            </h1>
-            <p className={styles.heroSubtitle}>
-              Renta el carro perfecto para cada momento o genera ingresos extra compartiendo el tuyo. 
-              Más de 10,000 usuarios confían en Huru para sus viajes.
-            </p>
+          <motion.div 
+            className={styles.heroContent}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.h1 className={styles.heroTitle} variants={itemVariants}>
+              Muévete a tu <span className={styles.highlight}>manera</span>
+            </motion.h1>
+            <motion.p className={styles.heroSubtitle} variants={itemVariants}>
+              Renta un carro para tu próxima aventura o gana dinero extra compartiendo el tuyo.
+            </motion.p>
             
-            <div className={styles.heroStats}>
+            <motion.div className={styles.heroStats} variants={itemVariants}>
               <div className={styles.stat}>
                 <span className={styles.statNumber}>10K+</span>
                 <span className={styles.statLabel}>Usuarios activos</span>
@@ -147,14 +255,16 @@ const HomeTemplate = () => {
                 <span className={styles.statNumber}>4.8★</span>
                 <span className={styles.statLabel}>Calificación promedio</span>
               </div>
-            </div>
+            </motion.div>
 
-            <SearchForm startDateBorder={true} />
+            <motion.div variants={itemVariants}>
+              <SearchForm startDateBorder={true} />
+            </motion.div>
 
             <div className={styles.heroTrust}>
               <p>Confiado por miles de usuarios en Colombia</p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -170,10 +280,10 @@ const HomeTemplate = () => {
             <div className={styles.stepCard}>
               <div className={styles.stepImageContainer}>
                 <Image
-                  src="/images/step-search.png"
+                  src="/images/home-image-1.jpeg"
                   alt="Busca y elige tu carro"
-                  width={200}
-                  height={150}
+                  layout="fill"
+                  objectFit="cover"
                   className={styles.stepImage}
                 />
               </div>
@@ -185,10 +295,10 @@ const HomeTemplate = () => {
             <div className={styles.stepCard}>
               <div className={styles.stepImageContainer}>
                 <Image
-                  src="/images/step-book.png"
+                  src="/images/home-image-2.jpeg"
                   alt="Reserva instantánea"
-                  width={200}
-                  height={150}
+                  layout="fill"
+                  objectFit="cover"
                   className={styles.stepImage}
                 />
               </div>
@@ -200,10 +310,10 @@ const HomeTemplate = () => {
             <div className={styles.stepCard}>
               <div className={styles.stepImageContainer}>
                 <Image
-                  src="/images/step-enjoy.png"
+                  src="/images/home-image-3.jpeg"
                   alt="Disfruta tu viaje"
-                  width={200}
-                  height={150}
+                  layout="fill"
+                  objectFit="cover"
                   className={styles.stepImage}
                 />
               </div>
@@ -288,62 +398,34 @@ const HomeTemplate = () => {
           </div>
 
           <div className={styles.carsGrid}>
-            <div className={styles.carCard}>
-              <div className={styles.carImage}>
-                <Image
-                  src="/images/car-sedan.png"
-                  alt="Sedan económico"
-                  width={300}
-                  height={200}
-                />
-              </div>
-              <div className={styles.carInfo}>
-                <h4>Chevrolet Onix 2022</h4>
-                <div className={styles.carRating}>
-                  <StarIcon className={styles.starIcon} />
-                  <span>4.9 (127 viajes)</span>
+            {popularCars.map((car) => (
+              <a 
+                key={car.car_id} 
+                href={`/car/${car.car_id}`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className={styles.carCard}
+              >
+                <div className={styles.carImage}>
+                  <Image
+                    src={car.image || "/images/car-sedan.png"}
+                    alt={`${car.name} ${car.model} ${car.year}`}
+                    layout="fill"
+                    objectFit="cover"
+                    className={styles.stepImage}
+                  />
                 </div>
-                <p className={styles.carPrice}>Desde $65,000/día</p>
-              </div>
-            </div>
-
-            <div className={styles.carCard}>
-              <div className={styles.carImage}>
-                <Image
-                  src="/images/car-suv.png"
-                  alt="SUV familiar"
-                  width={300}
-                  height={200}
-                />
-              </div>
-              <div className={styles.carInfo}>
-                <h4>Nissan X-Trail 2023</h4>
-                <div className={styles.carRating}>
-                  <StarIcon className={styles.starIcon} />
-                  <span>4.8 (89 viajes)</span>
+                <div className={styles.carInfo}>
+                  <h4>{`${car.name} ${car.model} ${car.year}`}</h4>
+                  <div className={styles.carRating}>
+                    <StarIcon className={styles.starIcon} />
+                    {/* Placeholder for rating and trips */}
+                    <span>{`${car.rating?.total || 4.5} (${car.totalBookings || Math.floor(Math.random() * 100) + 20} viajes)`}</span>
+                  </div>
+                  <p className={styles.carPrice}>{`Desde $${car.price?.toLocaleString('es-CO') || 'N/A'}/día`}</p>
                 </div>
-                <p className={styles.carPrice}>Desde $120,000/día</p>
-              </div>
-            </div>
-
-            <div className={styles.carCard}>
-              <div className={styles.carImage}>
-                <Image
-                  src="/images/car-luxury.png"
-                  alt="Carro de lujo"
-                  width={300}
-                  height={200}
-                />
-              </div>
-              <div className={styles.carInfo}>
-                <h4>BMW Serie 3 2023</h4>
-                <div className={styles.carRating}>
-                  <StarIcon className={styles.starIcon} />
-                  <span>5.0 (45 viajes)</span>
-                </div>
-                <p className={styles.carPrice}>Desde $250,000/día</p>
-              </div>
-            </div>
+              </a>
+            ))}
           </div>
 
           <div className={styles.sectionCta}>
@@ -362,68 +444,100 @@ const HomeTemplate = () => {
           </div>
 
           <div className={styles.testimonialsGrid}>
-            <div className={styles.testimonial}>
-              <div className={styles.testimonialRating}>
-                {[...Array(5)].map((_, i) => (
-                  <StarIcon key={i} className={styles.starIcon} />
-                ))}
-              </div>
-              <p>"Increíble experiencia. El carro estaba impecable y el proceso súper fácil. Definitivamente volveré a usar Huru."</p>
-              <div className={styles.testimonialAuthor}>
-                <Image
-                  src="/images/user-1.jpg"
-                  alt="María González"
-                  width={48}
-                  height={48}
-                />
-                <div>
-                  <span className={styles.authorName}>María González</span>
-                  <span className={styles.authorLocation}>Bogotá</span>
+            {testimonialUsers.length > 0 ? (
+              testimonialUsers.map((user, index) => (
+                <div key={user.id || index} className={styles.testimonial}>
+                  <div className={styles.testimonialRating}>
+                    {[...Array(5)].map((_, i) => (
+                      <StarIcon key={i} className={styles.starIcon} />
+                    ))}
+                  </div>
+                  <p>
+                    {index === 0 && "Increíble experiencia. El carro estaba impecable y el proceso súper fácil. Definitivamente volveré a usar Huru."}
+                    {index === 1 && "Genero ingresos extras compartiendo mi carro cuando no lo uso. La plataforma es muy confiable y segura."}
+                    {index === 2 && "Perfecto para viajes de fin de semana. Gran variedad de carros y precios muy competitivos."}
+                  </p>
+                  <div className={styles.testimonialAuthor}>
+                    <Image
+                      src={user.profilePhoto || "/images/default-profile-picture.jpg"}
+                      alt={`${user.firstName} ${user.lastName}`}
+                      width={48}
+                      height={48}
+                    />
+                    <div>
+                      <span className={styles.authorName}>{`${user.firstName} ${user.lastName}`}</span>
+                      <span className={styles.authorLocation}>{user.city || "Colombia"}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              ))
+            ) : (
+              // Fallback to original hardcoded testimonials
+              <>
+                <div className={styles.testimonial}>
+                  <div className={styles.testimonialRating}>
+                    {[...Array(5)].map((_, i) => (
+                      <StarIcon key={i} className={styles.starIcon} />
+                    ))}
+                  </div>
+                  <p>"Increíble experiencia. El carro estaba impecable y el proceso súper fácil. Definitivamente volveré a usar Huru."</p>
+                  <div className={styles.testimonialAuthor}>
+                    <Image
+                      src="/images/default-profile-picture.jpg"
+                      alt="María González"
+                      width={48}
+                      height={48}
+                    />
+                    <div>
+                      <span className={styles.authorName}>María González</span>
+                      <span className={styles.authorLocation}>Bogotá</span>
+                    </div>
+                  </div>
+                </div>
 
-            <div className={styles.testimonial}>
-              <div className={styles.testimonialRating}>
-                {[...Array(5)].map((_, i) => (
-                  <StarIcon key={i} className={styles.starIcon} />
-                ))}
-              </div>
-              <p>"Genero ingresos extras compartiendo mi carro cuando no lo uso. La plataforma es muy confiable y segura."</p>
-              <div className={styles.testimonialAuthor}>
-                <Image
-                  src="/images/user-2.jpg"
-                  alt="Carlos Mendoza"
-                  width={48}
-                  height={48}
-                />
-                <div>
-                  <span className={styles.authorName}>Carlos Mendoza</span>
-                  <span className={styles.authorLocation}>Medellín</span>
+                <div className={styles.testimonial}>
+                  <div className={styles.testimonialRating}>
+                    {[...Array(5)].map((_, i) => (
+                      <StarIcon key={i} className={styles.starIcon} />
+                    ))}
+                  </div>
+                  <p>"Genero ingresos extras compartiendo mi carro cuando no lo uso. La plataforma es muy confiable y segura."</p>
+                  <div className={styles.testimonialAuthor}>
+                    <Image
+                      src="/images/default-profile-picture.jpg"
+                      alt="Carlos Mendoza"
+                      width={48}
+                      height={48}
+                    />
+                    <div>
+                      <span className={styles.authorName}>Carlos Mendoza</span>
+                      <span className={styles.authorLocation}>Medellín</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            <div className={styles.testimonial}>
-              <div className={styles.testimonialRating}>
-                {[...Array(5)].map((_, i) => (
-                  <StarIcon key={i} className={styles.starIcon} />
-                ))}
-              </div>
-              <p>"Perfecto para viajes de fin de semana. Gran variedad de carros y precios muy competitivos."</p>
-              <div className={styles.testimonialAuthor}>
-                <Image
-                  src="/images/user-3.jpg"
-                  alt="Ana Rodríguez"
-                  width={48}
-                  height={48}
-                />
-                <div>
-                  <span className={styles.authorName}>Ana Rodríguez</span>
-                  <span className={styles.authorLocation}>Cali</span>
+                <div className={styles.testimonial}>
+                  <div className={styles.testimonialRating}>
+                    {[...Array(5)].map((_, i) => (
+                      <StarIcon key={i} className={styles.starIcon} />
+                    ))}
+                  </div>
+                  <p>"Perfecto para viajes de fin de semana. Gran variedad de carros y precios muy competitivos."</p>
+                  <div className={styles.testimonialAuthor}>
+                    <Image
+                      src="/images/default-profile-picture.jpg"
+                      alt="Ana Rodríguez"
+                      width={48}
+                      height={48}
+                    />
+                    <div>
+                      <span className={styles.authorName}>Ana Rodríguez</span>
+                      <span className={styles.authorLocation}>Cali</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -460,16 +574,16 @@ const HomeTemplate = () => {
                 </div>
               </div>
             </div>
-
-            <div className={styles.safetyImage}>
-              <Image
-                src="/images/safety-shield.png"
-                alt="Seguridad Huru"
-                width={400}
-                height={300}
-              />
-            </div>
           </div>
+        </div>
+        <div className={styles.safetyImageContainer}>
+          <Image
+            src="/images/home-insurance.jpeg"
+            alt="Seguridad Huru"
+            layout="fill"
+            objectFit="cover"
+            className={styles.safetyImage}
+          />
         </div>
       </section>
 

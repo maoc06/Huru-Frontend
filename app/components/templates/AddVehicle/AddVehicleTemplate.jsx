@@ -66,7 +66,12 @@ const AddVehcileTemplate = () => {
   const savedStep = useSelector((state) => state.vehicleRegister.currentStep);
   const [step, setStep] = useState(savedStep || 1);
 
-  // Save step to Redux whenever it changes
+  // Sync local state with Redux state when it changes (e.g., when form is reset)
+  useEffect(() => {
+    setStep(savedStep || 1);
+  }, [savedStep]);
+
+  // Save step to Redux whenever local state changes
   useEffect(() => {
     dispatch(setCurrentStep(step));
   }, [step, dispatch]);

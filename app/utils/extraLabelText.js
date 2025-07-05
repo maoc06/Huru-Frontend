@@ -16,7 +16,7 @@ const withExtraLabelGuests = ({ already = false, status, checkout = '' }) => {
       extraLabel = {
         show: true,
         text: 'Pendiente de aprobación',
-        color: 'blue',
+        color: 'yellow',
       };
       break;
     case APPROVED_BOOKING_ID:
@@ -39,6 +39,12 @@ const withExtraLabelGuests = ({ already = false, status, checkout = '' }) => {
           show: true,
           text: 'Cúentanos tu experiencia',
           color: 'blue',
+        };
+      } else {
+        extraLabel = {
+          show: true,
+          text: 'Reserva completada',
+          color: 'primary',
         };
       }
       break;

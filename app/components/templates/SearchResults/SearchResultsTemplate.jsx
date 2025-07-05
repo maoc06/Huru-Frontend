@@ -48,9 +48,9 @@ const SearchResultsTemplate = ({ initialState = [] }) => {
   }, []);
 
   useEffect(() => {
-    if (filterStore.filterRes.length > 0)
-      setItems(JSON.parse(filterStore.filterRes));
-  }, [filterStore.filterRes]);
+    const data = filterStore.filterRes.length > 0 ? filterStore.filterRes : initialState;
+    setItems(data);
+  }, [filterStore.filterRes, initialState]);
 
   return (
     <>

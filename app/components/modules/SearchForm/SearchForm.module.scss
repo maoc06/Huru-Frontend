@@ -19,8 +19,12 @@
 }
 
 .container_full {
-    height: 230px;
-    max-height: 230px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: .16rem;
+    height: auto;
+    max-height: none;
     padding: 24px;
     position: relative;
     isolation: isolate;
@@ -48,6 +52,9 @@
     }
     
     @media (min-width: 720px) {
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
         height: 80px;
         padding: 18px 28px;
     }
@@ -57,9 +64,11 @@
     margin-top: 20px;
     position: relative;
     z-index: 1;
+    width: 100%;
     
     @media (min-width: 720px) {
         min-width: 140px;
+        width: auto;
         margin-top: 0;
         flex-shrink: 0;
         margin-left: 8px;
@@ -144,4 +153,16 @@
     :global(.MuiPaper-root) {
         z-index: 9999 !important;
     }
+}
+
+.locationContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.locationIcon {
+    color: $gray-3;
+    flex-shrink: 0;
 }

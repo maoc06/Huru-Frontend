@@ -4,7 +4,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding: 16px 8px;
+    padding: 8px;
     border-radius: 12px;
     background-color: $background;
     border: 1px solid $gray_5;
@@ -16,7 +16,7 @@
         min-width: 100px;
         max-width: 550px;
         height: auto;
-        padding: 20px 12px;
+        padding: 12px;
         gap: 12px;
     }
     
@@ -108,14 +108,14 @@
 }
 
 .not_compact {
-    margin: 16px 0;
+    margin: 0;
 }
 
 .compact {
-    padding: 16px 8px;
+    padding: 8px;
     
     @media (min-width: 720px) {
-        padding: 20px 12px;
+        padding: 12px;
     }
     
     div {

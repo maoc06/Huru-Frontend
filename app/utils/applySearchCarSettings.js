@@ -11,7 +11,7 @@ const applyAdvanceNotice = ({ data, checkIn }) => {
 
   return arrData.filter((car) => {
     const propValue = car.advance_notice_id;
-    const paramDate = advanceNotice[propValue];
+    const paramDate = advanceNotice()[propValue];
     return checkIn > paramDate;
   });
 };
@@ -23,8 +23,8 @@ const applyMaxDuration = ({ data, differences = {} }) => {
     const propValueMax = car.max_trip_duration_id;
     const propValueMin = car.min_trip_duration_id;
 
-    const paramDateMax = maxTripDuration[propValueMax];
-    const paramDateMin = minTripDuration[propValueMin];
+    const paramDateMax = maxTripDuration()[propValueMax];
+    const paramDateMin = minTripDuration()[propValueMin];
 
     let diffSetting = { max: 0, min: 0 };
     let diffSearch = { max: 0, min: 0 };
@@ -75,12 +75,12 @@ const applyAllSettings = ({ data, checkIn, checkOut }) => {
   };
 
   arr = applyAdvanceNotice({
-    data,
+    data: arr,
     checkIn: checkinDate,
   });
 
   arr = applyMaxDuration({
-    data,
+    data: arr,
     differences,
   });
 

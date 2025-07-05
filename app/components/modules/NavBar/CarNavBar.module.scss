@@ -131,12 +131,13 @@
 
 // Styles for pages using this navigation component
 .carPageContent {
-  padding-top: 64px;
+  padding-top: 88px;
+  padding-bottom: 1.5rem;
   width: 100%;
   box-sizing: border-box;
   
   @include respond-up(md) {
-    padding-top: 72px;
+    padding-top: 96px;
   }
   
   @include respond-up(lg) {

@@ -80,28 +80,20 @@
 
 // Content spacing utility class
 .profilePageContent {
-  margin-top: 80px; // Increased top spacing
   padding-left: 0.5rem; // Align with header arrow position
   padding-right: 1rem;
   
   @include respond-up(sm) {
-    margin-top: 88px; // Increased top spacing
     padding-left: 0.75rem; // Align with header arrow position
     padding-right: 1.5rem;
   }
   
   @include respond-up(md) {
-    margin-top: 96px; // Increased top spacing
     padding-left: 1rem; // Align with header arrow position
     padding-right: 2rem;
   }
   
   @include respond-up(lg) {
-    margin-top: 104px; // Increased top spacing
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem; // Align with header arrow position
-    padding-right: 2rem;
+    padding: 0;
   }
 } 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
+import { CheckCircle } from '@material-ui/icons';
 
 import {
   setAbout,
@@ -12,15 +13,11 @@ import useApi from '../../../hooks/useApi';
 import userApi from '../../../api/UserAPI';
 
 import ActivityIndicator from '../../elements/ActivityIndicator/ActivityIndicator';
-import Divider from '../../elements/Divider/Divider';
 import Button from '../../elements/Button/Button';
 import { WarningIcon } from '../../elements/Icons/Shared';
-import SectionTitle from '../../elements/SectionTitle/SectionTitle';
-import TitlePage from '../../elements/TitlePage/TitlePage';
 import Modal from '../../modules/Modal/Modal';
 import SectionEditable from '../../modules/SectionEditable/SectionEditable';
 import UserProfileBasicInfo from '../../modules/UserProfileBasicInfo/UserProfileBasicInfo';
-import IndentityBadge from '../../modules/IndentityBadge/IndentityBadge';
 
 import emailSchema from '../../../constants/validationSchema/email';
 import userPhoneSchema from '../../../constants/validationSchema/userPhone';
@@ -123,103 +120,92 @@ const PersonalDataTemplate = ({
         onCloseModal={() => setOpenModal(false)}
       />
 
-      {showTitlePage && <TitlePage align="left">Información personal</TitlePage>}
+      <div className={styles.pageContainer}>
+        {showTitlePage && <h1>Información personal</h1>}
 
-      <section className={styles.container}>
-        <UserProfileBasicInfo
-          birthday={birthday}
-          userId={userId}
-          createdAt={userJoinAt}
-          domain="Me uní"
-          name={username}
-          profilePicture={picture}
-          showExtra={false}
-          avatarSize="xl"
-          withTopMargin={true}
-          showBirthday={showBirthday}
-          editablePicture={editablePicture}
-          openInNewTab={false}
-          cursorOnAvatar={true}
-        />
+        <div className={styles.section}>
+          <UserProfileBasicInfo
+            birthday={birthday}
+            userId={userId}
+            createdAt={userJoinAt}
+            domain="Me uní"
+            name={username}
+            profilePicture={picture}
+            showExtra={false}
+            avatarSize="xl"
+            withTopMargin={true}
+            showBirthday={showBirthday}
+            editablePicture={editablePicture}
+            openInNewTab={false}
+            cursorOnAvatar={true}
+          />
+          <div className={styles.sectionHeader} style={{ marginTop: '2rem' }}>
+            <h2 className={styles.sectionTitle}>Verificación de identidad</h2>
+          </div>
+          <div className={styles.infoRow}>
+            <span className={styles.infoLabel}>Correo electrónico</span>
+            <span className={styles.verifiedBadge}>
+              <CheckCircle />
+              {emailVerified ? 'Verificado' : 'No verificado'}
+            </span>
+          </div>
+          <div className={styles.infoRow}>
+            <span className={styles.infoLabel}>Número de teléfono</span>
+            <span className={styles.verifiedBadge}>
+              <CheckCircle />
+              {phoneVerified ? 'Verificado' : 'No verificado'}
+            </span>
+          </div>
+        </div>
 
-        <Divider size="mediumTop" />
+        <div className={styles.section}>
+          <SectionEditable
+            name="biography"
+            onSave={handleEditBiography}
+            schema={aboutUserSchema}
+            title="Sobre ti"
+            values={{ biography: aboutValue }}
+          />
+        </div>
 
-        <SectionTitle title="Verificación de identidad" />
-        <IndentityBadge
-          checked={emailVerified}
-          title={
-            emailVerified
-              ? 'Correo electrónico verificado'
-              : 'Correo electrónico sin verificar'
-          }
-        />
-        <IndentityBadge
-          checked={phoneVerified}
-          title={
-            phoneVerified
-              ? 'Número de teléfono verificado'
-              : 'Número de teléfono sin verificar'
-          }
-        />
+        <div className={styles.section}>
+          <SectionEditable
+            name="email"
+            type="email"
+            title="Email"
+            onSave={handleEditEmail}
+            schema={emailSchema}
+            values={{ email: emailValue }}
+            isEditable={emailEditable}
+          />
 
-        <Divider size="mediumTop" />
-
-        <SectionEditable
-          name="biography"
-          onSave={handleEditBiography}
-          schema={aboutUserSchema}
-          title="Sobre ti"
-          values={{ biography: aboutValue }}
-        />
-
-        <Divider size="mediumTop" />
-
-        <SectionEditable
-          name="email"
-          type="email"
-          title="Email"
-          onSave={handleEditEmail}
-          schema={emailSchema}
-          values={{ email: emailValue }}
-          isEditable={emailEditable}
-        />
-
-        {showPassword && (
-          <>
-            <Divider size="mediumTop" />
-
+          {showPassword && (
             <SectionEditable
               title="Contraseña"
               isLink={true}
               href={'/profile/personal-data/password'}
             />
-          </>
-        )}
+          )}
 
-        <Divider size="mediumTop" />
+          {editablePhone ? (
+            <SectionEditable
+              name="phone"
+              onSave={handleEditPhone}
+              schema={userPhoneSchema}
+              title="Télefono"
+              type="phone"
+              values={{ phone }}
+              countryCode={countryCode}
+              onSelectPhoneCountry={setCountryCode}
+            />
+          ) : (
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>Télefono</span>
+              <span className={styles.infoValue}>{`${countryCode} ${phone}`}</span>
+            </div>
+          )}
 
-        {editablePhone ? (
-          <SectionEditable
-            name="phone"
-            onSave={handleEditPhone}
-            schema={userPhoneSchema}
-            title="Télefono"
-            type="phone"
-            values={{ phone }}
-            countryCode={countryCode}
-            onSelectPhoneCountry={setCountryCode}
-          />
-        ) : (
-          <>
-            <SectionTitle title="Télefono" />
-            <p>{`${countryCode} ${phone}`}</p>
-          </>
-        )}
-
-        {showIndentityDocument && (
-          <>
-            <Divider size="mediumTop" />
-
+          {showIndentityDocument && (
             <SectionEditable
               name="indentityDocument"
               onSave={handleEditIdentityDocument}
@@ -228,23 +214,31 @@ const PersonalDataTemplate = ({
               type="number"
               values={{ indentityDocument: idDocument }}
             />
-          </>
-        )}
+          )}
+        </div>
 
         {showDeleteBotton && (
-          <>
-            <Divider size="mediumTop" />
-
-            <Button
-              isSecondary={true}
-              onClick={() => setOpenModal(true)}
-              marginTop={true}
-            >
-              Eliminar cuenta
-            </Button>
-          </>
+          <div className={styles.section}>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>Gestionar cuenta</h2>
+            </div>
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>
+                Eliminar tu cuenta de Huru
+              </span>
+              <button
+                className={styles.deleteButton}
+                onClick={() => setOpenModal(true)}
+              >
+                Eliminar cuenta
+              </button>
+            </div>
+            <p className={styles.deleteDescription}>
+              Esta acción es permanente y no se puede deshacer.
+            </p>
+          </div>
         )}
-      </section>
+      </div>
     </>
   );
 };

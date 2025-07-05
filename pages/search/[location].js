@@ -51,6 +51,7 @@ const Cars = () => {
     }
 
     const res = await searchCars.request(location, checkIn, checkOut);
+    console.log('API Response for cars:', res);
 
     if (
       res.data.data !== undefined &&
@@ -64,7 +65,7 @@ const Cars = () => {
       const resultsData = applyAllSettings({ data, checkIn, checkOut });
 
       setCars(resultsData);
-      dispatch(setResults(JSON.stringify(resultsData)));
+      dispatch(setResults(resultsData));
     }
   };
 

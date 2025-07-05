@@ -22,12 +22,11 @@ import SwitchIndicator from '../../elements/SwitchIndicator/SwitchIndicator';
 
 import styles from './UserProfile.module.scss';
 
-const UserProfile = ({ user, isHostMood }) => {
+const UserProfileLayout = ({ children, user, showName }) => {
   const app = useMood();
   const auth = useAuth();
   const router = useRouter();
   const [showIndicator, setShowIndicator] = useState(false);
-
   const [nameUser, setNameUser] = useState({ firstName: '', lastName: '' });
   const [picture, setPicture] = useState(null);
 
@@ -47,9 +46,11 @@ const UserProfile = ({ user, isHostMood }) => {
   };
 
   useEffect(() => {
-    const { firstName, lastName, profilePicture } = user;
-    setNameUser({ firstName, lastName });
-    setPicture(profilePicture);
+    if (user) {
+      const { firstName, lastName, profilePhoto } = user;
+      setNameUser({ firstName, lastName });
+      setPicture(profilePhoto);
+    }
   }, [user]);
 
   return (
@@ -57,18 +58,16 @@ const UserProfile = ({ user, isHostMood }) => {
       <SwitchIndicator visible={showIndicator} />
 
       <main className={styles.container}>
-        {/* Desktop Layout with Image Panel */}
         <div className={styles.desktopLayout}>
-          {/* Left Image Panel - Desktop Only */}
           <div className={styles.imagePanel}>
             <div className={styles.imagePanelContent}>
               <picture>
-                <source 
-                  media="(min-width: 1920px)" 
+                <source
+                  media="(min-width: 1920px)"
                   srcSet="/images/payment-methods-panel-pic.jpg"
                 />
-                <source 
-                  media="(min-width: 1200px)" 
+                <source
+                  media="(min-width: 1200px)"
                   srcSet="/images/payment-methods-panel-pic.jpg"
                 />
                 <img
@@ -81,80 +80,11 @@ const UserProfile = ({ user, isHostMood }) => {
               </picture>
             </div>
           </div>
-
-          {/* Right Content Area */}
-          <div className={styles.contentArea}>
-            <div className={styles.wrapper}>
-              <header>
-                <Avatar src={picture} />
-                <h5>
-                  {nameUser.firstName} {nameUser.lastName}
-                </h5>
-              </header>
-
-              <section>
-                <h6>Configuración de la cuenta</h6>
-
-                <List component="nav" aria-label="main mailbox folders">
-                  <ListItem
-                    text="Información personal"
-                    icon={<PersonOutlineOutlined />}
-                    href="/profile/personal-data"
-                  />
-
-                  <Divider />
-
-                  <ListItem
-                    text="Metodos de pago"
-                    icon={<LocalAtmOutlined />}
-                    href="/profile/payment-methods"
-                  />
-
-                  <Divider />
-
-                  <ListItem
-                    text="Modo Anfitrion"
-                    isLink={false}
-                    onSelectNotLink={handleSwitchMood}
-                    icon={<AppSwitch name="mood" checked={isHostMood} />}
-                  />
-
-                  <Divider />
-                </List>
-              </section>
-
-              <section>
-                <h6>Soporte</h6>
-
-                <List component="nav" aria-label="main mailbox folders">
-                  <ListItem text="¿Cómo funciona Huru?" icon={<InfoOutlined />} />
-
-                  <Divider />
-
-                  <ListItem text="Centro de seguridad" icon={<SecurityOutlined />} />
-
-                  <Divider />
-
-                  <ListItem text="Ayuda" icon={<HelpOutlineOutlined />} />
-
-                  <Divider />
-                </List>
-              </section>
-
-              <section onClick={handleLogOut}>
-                <ListItem
-                  text="Cerrar sesión"
-                  isLink={false}
-                  icon={<ExitToAppOutlined />}
-                  onSelectNotLink={handleLogOut}
-                />
-              </section>
-            </div>
-          </div>
+          <div className={styles.contentArea}>{children}</div>
         </div>
       </main>
     </>
   );
 };
 
-export default UserProfile;
+export default UserProfileLayout;

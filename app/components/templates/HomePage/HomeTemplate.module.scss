@@ -67,27 +67,12 @@
     }
 }
 
-.avatar {
-    position: relative;
-    cursor: pointer;
-    
-    .menuDesktop {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        margin-top: 0.5rem;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-        z-index: 1001;
-    }
-}
+
 
 // Hero Section
 .hero {
     padding: 120px 0 80px;
     position: relative;
-    overflow: hidden;
     min-height: 70vh;
     display: flex;
     align-items: center;
@@ -120,7 +105,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(8, 29, 61, 0.7) 0%, rgba(98, 194, 161, 0.3) 100%);
+    background: linear-gradient(135deg, rgba(8, 29, 61, 0.82) 0%, rgba(98, 194, 161, 0.38) 100%);
     z-index: 1;
 }
 
@@ -152,10 +137,7 @@
     word-wrap: break-word;
     
     .highlight {
-        background: linear-gradient(135deg, $primary 0%, $secondary 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: $secondary;
     }
 }
 
@@ -236,6 +218,8 @@
 .howItWorks {
     padding: 80px 0;
     background: white;
+    position: relative;
+    z-index: 1;
 }
 
 .stepsGrid {
@@ -247,10 +231,10 @@
 .stepCard {
     background: white;
     border-radius: 20px;
-    padding: 2rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
+    overflow: hidden;
     
     &:hover {
         transform: translateY(-5px);
@@ -259,13 +243,12 @@
 }
 
 .stepImageContainer {
-    margin-bottom: 1.5rem;
-    display: flex;
-    justify-content: center;
+    height: 200px;
+    width: 100%;
+    position: relative;
 }
 
 .stepImage {
-    border-radius: 16px;
     transition: transform 0.3s ease;
     
     .stepCard:hover & {
@@ -274,6 +257,7 @@
 }
 
 .stepContent {
+    padding: 2rem;
     h3 {
         font-size: 1.5rem;
         font-weight: 600;
@@ -503,19 +487,60 @@
 
 // Safety
 .safety {
-    padding: 80px 0;
+    padding: 80px 0 0 0;
     background: white;
+    display: flex;
+    align-items: center;
+    min-height: 600px;
+    
+    @media (max-width: 768px) {
+        flex-direction: column;
+        padding: 60px 0 0 0;
+        min-height: auto;
+        align-items: stretch;
+    }
 }
 
 .safetyContent {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
+    flex: 1;
+    max-width: 600px;
+    padding-right: 2rem;
     
     @media (max-width: 768px) {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+        flex: none;
+        padding-right: 0;
+        padding: 0 2rem;
+        text-align: center;
+        margin-bottom: 3rem;
+        width: 100%;
+        max-width: none;
+    }
+}
+
+.safetyImageContainer {
+    flex: 1;
+    position: relative;
+    height: 600px;
+    margin-left: 2rem;
+    
+    @media (max-width: 768px) {
+        flex: none;
+        width: 100%;
+        height: 500px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+    @media (max-width: 480px) {
+        height: 400px;
+    }
+}
+
+.safetyImage {
+    border-radius: 20px 0 0 20px;
+    
+    @media (max-width: 768px) {
+        border-radius: 0;
     }
 }
 
@@ -531,6 +556,11 @@
         font-size: 1.125rem;
         color: $gray_1;
         margin-bottom: 2rem;
+        
+        @media (max-width: 768px) {
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
+        }
     }
 }
 
@@ -538,12 +568,22 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    
+    @media (max-width: 768px) {
+        gap: 2rem;
+    }
 }
 
 .safetyFeature {
     display: flex;
     gap: 1rem;
     align-items: flex-start;
+    
+    @media (max-width: 768px) {
+        text-align: left;
+        max-width: 400px;
+        margin: 0 auto;
+    }
     
     h4 {
         font-size: 1.125rem;
@@ -555,6 +595,7 @@
     p {
         color: $gray_1;
         margin: 0;
+        line-height: 1.5;
     }
 }
 
@@ -564,15 +605,6 @@
     color: $primary;
     flex-shrink: 0;
     margin-top: 0.125rem;
-}
-
-.safetyImage {
-    display: flex;
-    justify-content: center;
-    
-    img {
-        border-radius: 16px;
-    }
 }
 
 // Final CTA
@@ -742,4 +774,9 @@
         @include responsive-text(1rem);
         color: $gray_2;
     }
+}
+
+.heroTrust {
+    margin-top: 20px;
+    text-align: center;
 }

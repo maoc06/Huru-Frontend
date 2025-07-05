@@ -21,6 +21,7 @@
         "firebase": "^8.8.1",
         "firebase-admin": "^9.11.0",
         "formik": "^2.2.6",
+        "framer-motion": "^7.10.2",
         "html-react-parser": "^5.2.5",
         "jwt-decode": "^3.1.2",
         "lucide-react": "^0.525.0",

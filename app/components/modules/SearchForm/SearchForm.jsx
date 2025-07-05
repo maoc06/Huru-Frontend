@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { Search } from 'lucide-react';
 
 import Form from '../Forms/Form';
 import DatesPanel from '../DatesPanel/DatesPanel';
@@ -40,14 +41,17 @@ export default function SearchForm({
         validationSchema={searchSchema}
         onSubmit={handleSubmit}
       >
-        <AutoCompletePlaces
-          name="location"
-          placeholder={'Ciudad o punto de referencia'}
-          isCompact={isCompact}
-          noBorder={!isCompact && !showBorder}
-          detectChanges={listenPlaces}
-          onDetectChanges={listenerPlaces}
-        />
+        <div className={styles.locationContainer}>
+          <Search size={20} className={styles.locationIcon} />
+          <AutoCompletePlaces
+            name="location"
+            placeholder={'Ciudad o punto de referencia'}
+            isCompact={isCompact}
+            noBorder={!isCompact && !showBorder}
+            detectChanges={listenPlaces}
+            onDetectChanges={listenerPlaces}
+          />
+        </div>
 
         <DatesPanel
           compact={isCompact}

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { setVehicleOptions } from '../app/redux/slices/vehicleRegisterObjectsSlice';
+import { resetVehicleRegister } from '../app/redux/slices/vehicleRegisterSlice';
 
 import useApi from '../app/hooks/useApi';
 import makerApi from '../app/api/MakerAPI';
@@ -82,6 +83,10 @@ const AddVehicle = () => {
   };
 
   useEffect(() => {
+    // Reset the vehicle registration form when the page loads
+    dispatch(resetVehicleRegister());
+    
+    // Load the vehicle options data
     handleData();
   }, []);
 

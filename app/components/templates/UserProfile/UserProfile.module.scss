@@ -46,10 +46,11 @@
         display: block;
         flex: 0 0 42%;
         max-width: 564px;
-        position: relative;
+        position: sticky;
+        top: 0;
+        height: 100vh;
         background: linear-gradient(135deg, $primary, $secondary);
         overflow: hidden;
-        min-height: 100vh;
         
         &::after {
             content: '';
@@ -147,6 +148,7 @@
     @include respond-up(lg) {
         max-width: none;
         padding: 4rem 3rem;
+        padding-top: 104px;
         min-height: 100vh;
         border-radius: 12px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -154,10 +156,12 @@
     
     @include respond-up(xl) {
         padding: 4rem 4rem;
+        padding-top: 104px;
     }
     
     @include respond-up(xxl) {
         padding: 5rem 5rem;
+        padding-top: 104px;
     }
 }
 

@@ -1,33 +1,60 @@
+@import '../../../styles/abstracts/colors';
 @import '../../../styles/abstracts/breakpoints';
 
 .tabs {
     display: flex;
-    gap: 8px;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-    padding: 0 1rem;
+    gap: 0;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5rem auto 2rem auto;
+    padding: 0.25rem;
     width: 100%;
     max-width: 100%;
-    
-    // Mobile adjustments
-    @include respond-up(sm) {
-        padding: 0 1.5rem;
-        margin-bottom: 2rem;
-        gap: 12px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 24px 0 rgba(9, 44, 76, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    // Remove fit-content and centering for mobile
+
+    // Mobile: full width, no max-width
+    @include respond-down(sm) {
+        width: 100%;
+        max-width: 100%;
+        padding: 0.25rem 0.5rem;
+        margin-left: 0;
+        margin-right: 0;
     }
-    
-    // Tablet and desktop
+
+    // Tablet and desktop: max-width for centering
     @include respond-up(md) {
-        padding: 0 2rem;
-        margin-bottom: 2rem;
         max-width: 700px;
         margin-left: auto;
         margin-right: auto;
+        padding: 0 2rem;
     }
-    
-    // Desktop spacing
     @include respond-up(lg) {
-        padding: 0 1rem;
         max-width: 800px;
+        padding: 0 1rem;
     }
+}
+
+.tabs :global(.tab),
+.tabs .tab {
+    flex: 1 1 0;
+    text-align: center;
+    padding: 0.75rem 0;
+    border-radius: 2rem;
+    background: transparent;
+    transition: background 0.2s, color 0.2s;
+}
+
+.tabs :global(.tabActive),
+.tabs .tabActive {
+    background: $secondary;
+    color: $white;
+    font-weight: bold;
 }

@@ -1,12 +1,42 @@
 @import '../../../styles/abstracts/colors';
+@import '../../../styles/abstracts/mixins';
+
 .card {
     position: relative;
     display: flex;
     flex-direction: column;
-    border-radius: 10px;
-    margin-bottom: 16px;
+    border-radius: 16px;
+    margin-bottom: 1rem;
     min-width: 200px;
-    box-shadow: $shadow-drop;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.08),
+        0 4px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+            0 16px 32px rgba(0, 0, 0, 0.12),
+            0 8px 16px rgba(0, 0, 0, 0.08);
+    }
+    
+    @include respond-down(sm) {
+        margin-bottom: 1.25rem;
+        box-shadow: 
+            0 4px 12px rgba(0, 0, 0, 0.06),
+            0 2px 4px rgba(0, 0, 0, 0.04);
+        
+        &:hover {
+            transform: none; // Disable hover transform on mobile
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.06),
+                0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+        
+        &:active {
+            transform: scale(0.98);
+        }
+    }
     .fav {
         position: absolute;
         top: 0;
@@ -36,31 +66,78 @@
         .image {
             flex: 1;
             position: relative;
-            min-height: 150px;
-            background-color: $gray_5;
-            @media (min-width: 720px) {
+            min-height: 180px;
+            background: linear-gradient(135deg, $gray_5 0%, $gray_4 100%);
+            overflow: hidden;
+            
+            @include respond-down(sm) {
+                min-height: 160px;
+                border-radius: 16px 16px 0 0;
+            }
+            
+            @include respond-up(md) {
                 flex: 0.4;
+                min-height: 150px;
+                border-radius: 16px 0 0 16px;
+            }
+            
+            // Add subtle overlay for better text contrast if needed
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 40px;
+                background: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s ease;
             }
         }
         .info {
             flex: 1;
             max-width: 100%;
-            padding: 16px;
-            @media (min-width: 720px) {
+            padding: 1.25rem;
+            
+            @include respond-down(sm) {
+                padding: 1rem;
+            }
+            
+            @include respond-up(md) {
                 flex: 0.6;
+                padding: 1.5rem;
             }
             .title {
                 display: flex;
                 align-items: center;
-                margin-bottom: 16px;
-                @media (min-width: 720px) {
-                    margin-bottom: 8px;
+                margin-bottom: 1rem;
+                
+                @include respond-down(sm) {
+                    margin-bottom: 0.75rem;
                 }
+                
+                @include respond-up(md) {
+                    margin-bottom: 0.5rem;
+                }
+                
                 h6 {
                     margin: 0;
-                    margin-right: 8px;
+                    margin-right: 0.5rem;
                     text-transform: capitalize;
-                    font-size: 16px;
+                    font-size: 1.125rem;
+                    font-weight: 600;
+                    color: $gray_1;
+                    line-height: 1.3;
+                    
+                    @include respond-down(sm) {
+                        font-size: 1rem;
+                        font-weight: 600;
+                    }
+                    
+                    @include respond-up(md) {
+                        font-size: 1.125rem;
+                    }
                 }
             }
             .bottom {
@@ -195,11 +272,11 @@
 }
 
 .labelBorderRed {
-    border-color: $secondary;
+    border-color: $error;
 }
 
 .labelBackgroundRed {
-    background-color: $secondary;
+    background-color: $error;
 }
 
 .labelBorderGreen {
@@ -216,4 +293,20 @@
 
 .labelBackgroundYellow {
     background-color: $warning;
+}
+
+.labelBorderBlue {
+    border-color: $info;
+}
+
+.labelBackgroundBlue {
+    background-color: $info;
+}
+
+.labelBorderPrimary {
+    border-color: $primary;
+}
+
+.labelBackgroundPrimary {
+    background-color: $primary;
 }

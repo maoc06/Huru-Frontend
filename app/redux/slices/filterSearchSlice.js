@@ -20,7 +20,7 @@ export const filterSearchSlice = createSlice({
   initialState,
   reducers: {
     setResults: (state, action) => {
-      let data = JSON.parse(action.payload);
+      let data = action.payload;
 
       data = data.map((item) => {
         let { categories, features } = item;
@@ -30,7 +30,6 @@ export const filterSearchSlice = createSlice({
 
         return { ...item, categories, features };
       });
-      data = JSON.stringify(data);
 
       state.originalRes = data;
       state.filterRes = data;
@@ -54,7 +53,7 @@ export const filterSearchSlice = createSlice({
       const query = buildFilter(JSON.stringify(filter));
       const result = filterData(state.originalRes, query);
 
-      state.filterRes = JSON.stringify(result);
+      state.filterRes = result;
     },
     filterByNumOfSeats: (state, action) => {
       const { payload } = action;
@@ -70,7 +69,7 @@ export const filterSearchSlice = createSlice({
       const query = buildFilter(JSON.stringify(filter));
       const result = filterData(state.originalRes, query);
 
-      state.filterRes = JSON.stringify(result);
+      state.filterRes = result;
     },
     filterByPrice: (state, action) => {
       const { payload } = action;
@@ -86,7 +85,7 @@ export const filterSearchSlice = createSlice({
       const query = buildFilter(JSON.stringify(filter));
       const result = filterData(state.originalRes, query);
 
-      state.filterRes = JSON.stringify(result);
+      state.filterRes = result;
     },
     filterByTransmission: (state, action) => {
       let applyFilter = [];
@@ -104,7 +103,7 @@ export const filterSearchSlice = createSlice({
       const query = buildFilter(JSON.stringify(filter));
       const result = filterData(state.originalRes, query);
 
-      state.filterRes = JSON.stringify(result);
+      state.filterRes = result;
     },
     filterByYear: (state, action) => {
       const { payload } = action;
@@ -120,7 +119,7 @@ export const filterSearchSlice = createSlice({
       const query = buildFilter(JSON.stringify(filter));
       const result = filterData(state.originalRes, query);
 
-      state.filterRes = JSON.stringify(result);
+      state.filterRes = result;
     },
     filterByCategory: (state, action) => {
       const filter = { ...state.listFilters };
@@ -141,7 +140,7 @@ export const filterSearchSlice = createSlice({
       const query = buildFilter(JSON.stringify(filter));
       const result = filterData(state.originalRes, query);
 
-      state.filterRes = JSON.stringify(result);
+      state.filterRes = result;
     },
     filterByFeatures: (state, action) => {
       const filter = { ...state.listFilters };
@@ -162,7 +161,7 @@ export const filterSearchSlice = createSlice({
       const query = buildFilter(JSON.stringify(filter));
       const result = filterData(state.originalRes, query);
 
-      state.filterRes = JSON.stringify(result);
+      state.filterRes = result;
     },
   },
 });

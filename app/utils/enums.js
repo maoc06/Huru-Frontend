@@ -62,7 +62,7 @@ const typeFuelEnum = Object.freeze({
 });
 
 // Advance notice
-const advanceNotice = Object.freeze({
+const advanceNotice = () => ({
   1: new Date(),
   2: addHours(new Date(), 6),
   3: addHours(new Date(), 12),
@@ -70,7 +70,7 @@ const advanceNotice = Object.freeze({
 });
 
 // Max trip duration
-const maxTripDuration = Object.freeze({
+const maxTripDuration = () => ({
   1: addDays(new Date(), 5),
   2: addWeeks(new Date(), 1),
   3: addWeeks(new Date(), 2),
@@ -80,7 +80,7 @@ const maxTripDuration = Object.freeze({
 });
 
 // Min trip duration
-const minTripDuration = Object.freeze({
+const minTripDuration = () => ({
   1: addDays(new Date(), 1),
   2: addDays(new Date(), 2),
   3: addDays(new Date(), 3),

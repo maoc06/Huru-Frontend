@@ -10,6 +10,7 @@ import ActivityIndicator from '../../../app/components/elements/ActivityIndicato
 import ProfileNavBar from '../../../app/components/modules/NavBar/ProfileNavBar';
 import profileNavStyles from '../../../app/components/modules/NavBar/ProfileNavBar.module.scss';
 import PersonalDataTemplate from '../../../app/components/templates/PersonalData/PersonalDataTemplate';
+import UserProfileLayout from '../../../app/components/templates/UserProfile/UserProfile';
 
 const PersonalData = () => {
   const [user, setUser] = useState({});
@@ -40,27 +41,29 @@ const PersonalData = () => {
 
       <ActivityIndicator visible={getUser.loading} />
 
-      <div className={profileNavStyles.profilePageContent}>
-        {user.constructor === Object && Object.keys(user).length > 0 && (
-          <PersonalDataTemplate
-            biography={
-              user.about
-                ? user.about
-                : 'Aún no tienes una descripción detallada de ti.'
-            }
-            userJoinAt={user.createdAt}
-            email={user.email}
-            emailVerified={user.isEmailVerified}
-            phone={user.phone.slice(3)}
-            phoneCountryCode={user.phone.slice(0, 3)}
-            phoneVerified={user.isPhoneVerified}
-            picture={user.profilePhoto}
-            username={`${user.firstName} ${user.lastName}`}
-            userId={user.uuid}
-            editablePicture={true}
-          />
-        )}
-      </div>
+      <UserProfileLayout user={user}>
+        <div className={profileNavStyles.profilePageContent}>
+          {user.constructor === Object && Object.keys(user).length > 0 && (
+            <PersonalDataTemplate
+              biography={
+                user.about
+                  ? user.about
+                  : 'Aún no tienes una descripción detallada de ti.'
+              }
+              userJoinAt={user.createdAt}
+              email={user.email}
+              emailVerified={user.isEmailVerified}
+              phone={user.phone.slice(3)}
+              phoneCountryCode={user.phone.slice(0, 3)}
+              phoneVerified={user.isPhoneVerified}
+              picture={user.profilePhoto}
+              username={`${user.firstName} ${user.lastName}`}
+              userId={user.uuid}
+              editablePicture={true}
+            />
+          )}
+        </div>
+      </UserProfileLayout>
     </div>
   );
 };

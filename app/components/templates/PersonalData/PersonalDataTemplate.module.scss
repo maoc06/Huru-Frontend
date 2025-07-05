@@ -1,23 +1,104 @@
 @import '../../../styles/abstracts/breakpoints';
+@import '../../../styles/abstracts/colors';
 
-.container {
-    max-width: 650px;
-    margin: 0; // Remove auto centering to align with back arrow
-    padding-left: 1rem; // Add comfortable spacing from left edge
-    padding-right: 0.5rem;
-    
-    @include respond-up(sm) {
-        padding-left: 1.25rem;
-        padding-right: 0.75rem;
-    }
-    
-    @include respond-up(md) {
-        padding-left: 1.5rem;
-        padding-right: 1rem;
-    }
-    
-    @include respond-up(lg) {
-        padding-left: 1.5rem;
-        padding-right: 1rem;
-    }
+.pageContainer {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+
+  @include respond-down(sm) {
+    padding: 1rem;
+  }
+}
+
+.section {
+  padding: 2rem 0;
+  border-bottom: 1px solid $modern_gray_border;
+  transition: all 0.3s ease;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $primary;
+}
+
+.editButton {
+  background: none;
+  border: none;
+  color: $primary;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: transparentize($primary, 0.9);
+  }
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.infoLabel {
+  font-weight: 500;
+  color: $gray_2;
+}
+
+.infoValue {
+  color: $gray_1;
+}
+
+.verifiedBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: $primary;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.deleteButton {
+  background-color: transparent;
+  border: 1px solid $error;
+  color: $error;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $error;
+    color: $white;
+  }
+}
+
+.deleteDescription {
+  color: $gray_3;
+  font-size: 0.9rem;
+  margin-top: 1rem;
 } 
